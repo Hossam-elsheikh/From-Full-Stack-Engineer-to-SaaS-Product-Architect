@@ -1,0 +1,189 @@
+{
+  "main": {
+    "id": "83607def4f7304b4",
+    "type": "split",
+    "children": [
+      {
+        "id": "8e712f0dee5201f4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "fc354ee4925e4d86",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "bdebd821a0634949",
+    "type": "split",
+    "children": [
+      {
+        "id": "8e2a645d9e6c7563",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2dbb33df902b6e7e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "b6d39562ee17259b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "277b31a9c95952b3",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "91df1d3eda165fe7",
+    "type": "split",
+    "children": [
+      {
+        "id": "752c6dc5df7326e8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "28159b6c556ba52e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook"
+            }
+          },
+          {
+            "id": "3a82135915cc3fcc",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook"
+            }
+          },
+          {
+            "id": "36d9bbccb2f03112",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "80c1e04439535223",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "b60e8a52174fa214",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "fc354ee4925e4d86",
+  "lastOpenFiles": [
+    "saas-architect-study-plan.md",
+    "study-system-and-retention-guide.md"
+  ]
+}
