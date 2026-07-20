@@ -11,12 +11,14 @@
             "id": "fc354ee4925e4d86",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "phase 0/the-pragmatic-programmer.pdf"
+                "file": "case-studies/case-studies.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "the-pragmatic-programmer"
+              "icon": "lucide-file",
+              "title": "case-studies"
             }
           }
         ]
@@ -92,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "phase 0/the-pragmatic-programmer.pdf",
+                "file": "case-studies/case-studies.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for the-pragmatic-programmer"
+              "title": "Backlinks for case-studies"
             }
           },
           {
@@ -111,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "phase 0/the-pragmatic-programmer.pdf",
+                "file": "case-studies/case-studies.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from the-pragmatic-programmer"
+              "title": "Outgoing links from case-studies"
             }
           },
           {
@@ -154,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "phase 0/the-pragmatic-programmer.pdf",
+                "file": "case-studies/case-studies.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of the-pragmatic-programmer"
+              "title": "Outline of case-studies"
             }
           }
         ]
@@ -183,9 +185,25 @@
   },
   "active": "fc354ee4925e4d86",
   "lastOpenFiles": [
-    "phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
-    "phase 0/the-pragmatic-programmer.pdf",
+    "concepts/concepts.md",
+    "case-studies/case-studies.md",
+    "decisions/decisions.md",
+    "reviews/reviews.md",
+    "patterns/patterns.md",
+    "inbox/inbox.md",
+    "phases/phase 0/the-pragmatic-programmer.pdf",
+    "progress-checklist.md",
+    "phases/phase 0/the pragmatic programmer tips.md",
+    "progress-checklist.md.tmp.111999.e643dea305fd",
     "saas-architect-study-plan.md",
-    "study-system-and-retention-guide.md"
+    "study-system-and-retention-guide.md",
+    "phases",
+    "reviews",
+    "case-studies",
+    "patterns",
+    "decisions",
+    "concepts",
+    "inbox",
+    "phases/phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf"
   ]
 }
