@@ -13,10 +13,10 @@
             "state": {
               "type": "pdf",
               "state": {
-                "file": "phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf"
+                "file": "phase 0/the-pragmatic-programmer.pdf"
               },
               "icon": "lucide-file-text",
-              "title": "Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook"
+              "title": "the-pragmatic-programmer"
             }
           }
         ]
@@ -92,7 +92,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
+                "file": "phase 0/the-pragmatic-programmer.pdf",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook"
+              "title": "Backlinks for the-pragmatic-programmer"
             }
           },
           {
@@ -111,12 +111,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
+                "file": "phase 0/the-pragmatic-programmer.pdf",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook"
+              "title": "Outgoing links from the-pragmatic-programmer"
             }
           },
           {
@@ -154,13 +154,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
+                "file": "phase 0/the-pragmatic-programmer.pdf",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook"
+              "title": "Outline of the-pragmatic-programmer"
             }
           }
         ]
@@ -183,6 +183,8 @@
   },
   "active": "fc354ee4925e4d86",
   "lastOpenFiles": [
+    "phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
+    "phase 0/the-pragmatic-programmer.pdf",
     "saas-architect-study-plan.md",
     "study-system-and-retention-guide.md"
   ]
