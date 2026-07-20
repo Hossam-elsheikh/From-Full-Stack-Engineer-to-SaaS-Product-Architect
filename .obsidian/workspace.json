@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "case-studies/case-studies.md",
+                "file": "phases/phase 0/additional resources.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "case-studies"
+              "title": "additional resources"
             }
           }
         ]
@@ -185,12 +185,17 @@
   },
   "active": "fc354ee4925e4d86",
   "lastOpenFiles": [
-    "concepts/concepts.md",
+    "inbox/phase 0.md",
+    "phases/phase 0/additional resources.md",
+    "Pasted image 20260720211712.png",
+    "Pasted image 20260720211652.png",
+    "Pasted image 20260720211523.png",
+    "Pasted image 20260720211448.png",
     "case-studies/case-studies.md",
+    "concepts/concepts.md",
     "decisions/decisions.md",
     "reviews/reviews.md",
     "patterns/patterns.md",
-    "inbox/inbox.md",
     "phases/phase 0/the-pragmatic-programmer.pdf",
     "progress-checklist.md",
     "phases/phase 0/the pragmatic programmer tips.md",
