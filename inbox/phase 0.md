@@ -92,9 +92,74 @@ Real World SLA Examples from the Industry
 - [AWS Service Level Agreements (SLAs)](https://aws.amazon.com/legal/service-level-agreements/?aws-sla-cards.sort-by=item.additionalFields.serviceNameLower&aws-sla-cards.sort-order=asc&awsf.tech-category-filter=*all)
 - [Google Cloud Platform Service Level Agreements](https://cloud.google.com/terms/sla)
 - [Microsoft Azure Service Level Agreement](https://azure.microsoft.com/en-us/support/legal/sla/)
- 
 
 #### **Other Examples**
 
 - [GitHub Enterprise Service Level Agreement](https://github.com/customer-terms/github-online-services-sla)
 - [Atlassian Products Service Level Agreement](https://support.atlassian.com/subscriptions-and-billing/docs/service-level-agreement-for-atlassian-cloud-products/)
+
+
+1. **Importance of APIs**: APIs serve as contracts between engineers and client applications, facilitating communication between various systems.
+    
+2. **Types of APIs**:
+    
+    - **Public APIs**: Open to any developer.
+    - **Private APIs**: Used internally within organizations.
+    - **Partner APIs**: Available to specific business partners under agreements.
+3. **Best Practices for API Design**:
+    
+    - **Encapsulation**: Clients should not need to understand the internal workings of the system.
+    - **User-friendliness**: APIs should be intuitive, with clear naming and consistent structures.
+    - **Idempotent Operations**: Ensures repeated requests do not cause unintended outcomes.
+    - **Pagination**: Helps manage large datasets by allowing clients to request smaller data segments.
+    - **Asynchronous APIs**: Suitable for long-running operations, allowing clients to receive immediate feedback.
+    - **Versioning**: Essential for managing API changes and ensuring smooth transitions for clients.
+
+
+# Remote Procedure Calls (RPC)
+which enable client applications to execute subroutines on remote servers just as if they were local method calls. Here are the main points covered:
+
+1. **Local Transparency**: Emphasizes that developers experience consistency in method invocation whether the call is local or remote.
+    
+2. **RPC Operation**: It explains how RPC functions, particularly the use of interface description languages for defining APIs and data types, and the subsequent generation of client and server stubs to manage remote communication.
+    
+3. **Key Components**:
+    
+    - **Server Stub**: Listens for client messages.
+    - **Client Stub**: Handles data encoding (serialization) and initiates communication.
+4. **Data Transfer Objects (DTOs)**: Generation from custom object types defined in the interface description language.
+    
+5. **Benefits of RPC**: Offers developers the convenience of abstracting network communication complexities, making method calls appear local.
+    
+6. **Drawbacks**: Addresses potential issues such as slower performance and unreliability due to network problems.
+    
+7. **Best Practices**: Suggests using asynchronous methods for long operations and ensuring idempotency to enhance reliability.
+    
+8. **When to Prefer RPC**: Discusses RPC's suitability for backend communications and scenarios needing network abstraction.
+
+#### [**gRPC**](https://grpc.io/)
+
+[_gRPC_](https://grpc.io/) is a modern open source high performance Remote Procedure Call (RPC) framework. It was originally developed by Google in 2015 as the next generation of its own internal RPC infrastructure.
+
+It uses [HTTP/2](https://en.wikipedia.org/wiki/HTTP/2) as its transport protocol and [Protocol Buffers](https://developers.google.com/protocol-buffers) as its **_Interface Description Language._**
+
+
+# REST API
+which stands for Representational State Transfer, an architectural style for designing web APIs. Here are the main points:
+
+1. **Resource-Oriented Architecture**: Unlike RPC APIs, which focus on method-based interactions, REST APIs are designed around resources, allowing clients to interact with named resources through a limited set of operations.
+    
+2. **Use of HTTP**: REST APIs utilize HTTP for requesting resources, with the server responding with the current state of the requested resource.
+    
+3. **Statelessness**: REST's stateless nature enhances scalability, allowing for distribution of requests across multiple servers without retaining session information.
+    
+4. **Cacheability**: Clients can store responses to reduce server load, improving performance and availability.
+    
+5. **Hierarchical Resource Organization**: REST APIs use a hierarchical structure where each resource is identified by a unique URI, and resources can have sub-resources.
+    
+6. **Naming Conventions**: Best practices include using clear, meaningful resource names and ensuring their uniqueness.
+    
+7. **Limited Operations**: The primary operations in REST APIs—create, update, delete, and retrieve—correspond to HTTP methods: POST, PUT, DELETE, and GET.
+    
+8. **Implementation Example**: A step-by-step example of creating a REST API is provided, focusing on a movie streaming service, which involves identifying entities, mapping them to URIs, selecting representations (like JSON), and determining HTTP methods for resource manipulation.
+
