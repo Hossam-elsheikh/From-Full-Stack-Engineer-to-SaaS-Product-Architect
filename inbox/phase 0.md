@@ -43,3 +43,21 @@ types of constraints
 - Regulatory/Legal constraints : HIPAA, GPDR ... etc
 `there's some constraints have a room of nogtioation and other haven't`
 `using loosly coupled architecture is good to do in case we're free from that constraint that we had before. i.e make sure that our system is not tightly coupled to a certain technology or APIs`
+
+
+
+# Most Important Quality attributes 
+## Performance
+metrics : 
+- response time = processing time + waiting time (latency)
+- Throughput : amount of tasks(or data processed in bits/bytes/MGbytes)/second 
+measuring response time : 
+- percentile distributions and tail latency analysis instead of simple averages and median measurements 
+- performance degradation - high resource utilization 
+
+## Scalability 
+1. **Vertical Scalability (Scaling Up)**: Upgrading existing resources on a single machine, like CPU or memory, to handle more load. This method is easy to implement but has limitations due to hardware constraints and can result in a centralized system with low availability and fault tolerance.
+    
+2. **Horizontal Scalability (Scaling Out)**: Adding more machines to distribute the load, which enhances performance and availability. While this method offers almost unlimited scaling potential, it adds complexity and may require significant code changes.
+    
+3. **Team Scalability**: Involves the productivity of development teams. As teams expand, productivity can increase initially but may decline due to coordination challenges. To counteract this, organizations can modularize codebases or adopt microservices for better team efficiency.

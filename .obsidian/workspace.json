@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "phases/phase 0/additional resources.md",
+                "file": "inbox/phase 0.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "additional resources"
+              "title": "phase 0"
             }
           }
         ]
@@ -185,8 +185,8 @@
   },
   "active": "fc354ee4925e4d86",
   "lastOpenFiles": [
-    "inbox/phase 0.md",
     "phases/phase 0/additional resources.md",
+    "inbox/phase 0.md",
     "Pasted image 20260720211712.png",
     "Pasted image 20260720211652.png",
     "Pasted image 20260720211523.png",
