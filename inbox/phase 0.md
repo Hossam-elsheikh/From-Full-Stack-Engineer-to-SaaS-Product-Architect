@@ -61,3 +61,40 @@ measuring response time :
 2. **Horizontal Scalability (Scaling Out)**: Adding more machines to distribute the load, which enhances performance and availability. While this method offers almost unlimited scaling potential, it adds complexity and may require significant code changes.
     
 3. **Team Scalability**: Involves the productivity of development teams. As teams expand, productivity can increase initially but may decline due to coordination challenges. To counteract this, organizations can modularize codebases or adopt microservices for better team efficiency.
+
+# Availability 
+Availability% =  uptime / (uptime + Downtime) 
+MTBF > mean time between failures (not considered in cloud services)
+MTTR > mean time to recovery (average downtime of our system)
+Availability = MTBF / (MTBF+MTTR)
+## The nines 
+99.9% 3 nines 
+99.99% 4 nines
+
+### Fault tolerance tactics 
+- failure prevention (running on multiple servers)
+time redundancy > running the request until succeed or give up
+-active - active arch 
+-active - passive arch 
+- failure detection
+-monitoring service send periodic health check messages
+- recovery from failure 
+
+
+SLA - service level agreement
+SLOs - service level objectives 
+SLIs - service level indicators 
+
+Real World SLA Examples from the Industry
+
+#### **Cloud Vendor SLA Examples**
+
+- [AWS Service Level Agreements (SLAs)](https://aws.amazon.com/legal/service-level-agreements/?aws-sla-cards.sort-by=item.additionalFields.serviceNameLower&aws-sla-cards.sort-order=asc&awsf.tech-category-filter=*all)
+- [Google Cloud Platform Service Level Agreements](https://cloud.google.com/terms/sla)
+- [Microsoft Azure Service Level Agreement](https://azure.microsoft.com/en-us/support/legal/sla/)
+ 
+
+#### **Other Examples**
+
+- [GitHub Enterprise Service Level Agreement](https://github.com/customer-terms/github-online-services-sla)
+- [Atlassian Products Service Level Agreement](https://support.atlassian.com/subscriptions-and-billing/docs/service-level-agreement-for-atlassian-cloud-products/)

@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "91df1d3eda165fe7",
@@ -94,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "case-studies/case-studies.md",
+                "file": "study-system-and-retention-guide.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +105,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for case-studies"
+              "title": "Backlinks for study-system-and-retention-guide"
             }
           },
           {
@@ -113,12 +114,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "case-studies/case-studies.md",
+                "file": "study-system-and-retention-guide.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from case-studies"
+              "title": "Outgoing links from study-system-and-retention-guide"
             }
           },
           {
@@ -156,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "case-studies/case-studies.md",
+                "file": "study-system-and-retention-guide.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of case-studies"
+              "title": "Outline of study-system-and-retention-guide"
             }
           }
         ]
@@ -174,6 +175,8 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "flashcards-obsidian:Generate flashcards": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -185,30 +188,25 @@
   },
   "active": "fc354ee4925e4d86",
   "lastOpenFiles": [
-    "phases/phase 0/additional resources.md",
-    "inbox/phase 0.md",
-    "Pasted image 20260720211712.png",
-    "Pasted image 20260720211652.png",
-    "Pasted image 20260720211523.png",
-    "Pasted image 20260720211448.png",
+    "phases/phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
+    "saas-architect-study-plan.md",
+    "decisions/decisions.md",
+    "inbox/inbox.md",
+    "study-system-and-retention-guide.md",
     "case-studies/case-studies.md",
     "concepts/concepts.md",
-    "decisions/decisions.md",
     "reviews/reviews.md",
     "patterns/patterns.md",
     "phases/phase 0/the-pragmatic-programmer.pdf",
     "progress-checklist.md",
     "phases/phase 0/the pragmatic programmer tips.md",
     "progress-checklist.md.tmp.111999.e643dea305fd",
-    "saas-architect-study-plan.md",
-    "study-system-and-retention-guide.md",
     "phases",
     "reviews",
     "case-studies",
     "patterns",
     "decisions",
     "concepts",
-    "inbox",
-    "phases/phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf"
+    "inbox"
   ]
 }

@@ -30,13 +30,13 @@ Folder structure — keep it stupid-simple:
 ## 1.2 The three formats — pick by question type
 Not everything should be a flashcard. Use this decision rule:
 
-| If the knowledge is... | Save it as... | Example |
-|---|---|---|
-| A fact / definition / threshold | **Anki flashcard** | "What are the 4 ACID properties?" |
-| A trade-off between options | **Decision table/diagram** | Shared schema vs DB-per-tenant |
-| A process / flow / structure | **Diagram** (Excalidraw/draw.io) | Request path through LB → app → cache → DB |
-| An insight in your own words | **Evergreen concept note** | "Why microservices tax small teams" |
-| A story of failure/success | **Case-study note** | "How GitLab lost their DB in 2017" |
+| If the knowledge is...          | Save it as...                    | Example                                    |
+| ------------------------------- | -------------------------------- | ------------------------------------------ |
+| A fact / definition / threshold | **Anki flashcard**               | "What are the 4 ACID properties?"          |
+| A trade-off between options     | **Decision table/diagram**       | Shared schema vs DB-per-tenant             |
+| A process / flow / structure    | **Diagram** (Excalidraw/draw.io) | Request path through LB → app → cache → DB |
+| An insight in your own words    | **Evergreen concept note**       | "Why microservices tax small teams"        |
+| A story of failure/success      | **Case-study note**              | "How GitLab lost their DB in 2017"         |
 
 ## 1.3 Flashcards done right (Anki)
 Spaced repetition is the scientifically proven fix for forgetting — but only with good cards:
