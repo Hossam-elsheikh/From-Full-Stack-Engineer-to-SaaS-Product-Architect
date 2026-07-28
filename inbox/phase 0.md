@@ -163,3 +163,129 @@ which stands for Representational State Transfer, an architectural style for des
     
 8. **Implementation Example**: A step-by-step example of creating a REST API is provided, focusing on a movie streaming service, which involves identifying entities, mapping them to URIs, selecting representations (like JSON), and determining HTTP methods for resource manipulation.
 
+# vital role of load balancers in software architecture for large-scale systems. 
+Here are the main points:
+
+1. **Purpose of Load Balancers**: They help distribute traffic evenly among multiple servers, preventing overload and maintaining system integrity, which is essential for achieving high availability and horizontal scalability.
+    
+2. **Key Quality Attributes**:
+    
+    - **High Scalability**: Load balancers allow for horizontal scaling by adding or removing servers based on current load, which is especially useful in cloud environments with auto-scaling features.
+    - **High Availability**: They monitor the health of servers, ensuring that traffic is directed only to operational servers for efficient request handling.
+    - **Performance**: Although there's a slight increase in latency, load balancers improve throughput by enabling numerous backend servers to handle requests simultaneously.
+    - **Maintainability**: They support rolling updates, allowing servers to be taken offline one at a time for maintenance without affecting overall availability.
+3. **Types of Load Balancing Solutions**:
+    
+    - **DNS Load Balancing**: A basic method that distributes requests using DNS, but lacks health monitoring and security.
+    - **Hardware and Software Load Balancers**: Actively monitor server health and distribute load intelligently, hiding server details from clients for better security.
+    - **Global Server Load Balancer (GSLB)**: Combines DNS functionality with intelligent routing based on user location and server health, optimizing performance and enabling disaster recovery.
+
+### **Open Source Software Load Balancing Solutions**
+
+#### [HAProxy](http://www.haproxy.org/)
+
+HAProxy is a free and open-source, reliable, high performance TCP/HTTP load balancer.  
+It is particularly suited for very high traffic web sites, and powers a significant portion of the world's most visited ones. It is considered the de-facto standard open-source load balancer, and is  shipped with most mainstream Linux distributions.  
+HAProxy supports most Unix style operating systems.
+
+#### [NGINX](https://www.nginx.com/)
+
+NGINX is a free, open-source, high-performance HTTP server and reverse proxy (load balancer). It is known for its high performance, stability, rich feature set and simple configuration.  
+For a full tutorial on how to install, configure and use NGINX follow this [link](https://www.nginx.com/resources/wiki/start/).
+#### **Cloud Based Load Balancing Solutions  
+**[AWS - Elastic Load Balancing (ELB)](https://aws.amazon.com/elasticloadbalancing/)
+
+Amazon ELB is a highly scalable load balancing solution.
+
+It is an ideal solution for running on AWS, and integrates seamlessly with all of AWS services.
+
+It can operate on 4 different modes:
+
+1. [Application (Layer 7) Load Balancer](https://aws.amazon.com/elasticloadbalancing/application-load-balancer/?nc=sn&loc=2&dn=2) - Ideal for advanced load balancing of HTTP and HTTPS traffic
+    
+2. [Network (Layer 4) Load Balancer](https://aws.amazon.com/elasticloadbalancing/network-load-balancer/?nc=sn&loc=2&dn=3) - Ideal for load balancing of both TCP and UDP traffic
+    
+3. [Gateway Load Balancer](https://aws.amazon.com/elasticloadbalancing/gateway-load-balancer/) - Ideal for deploying, scaling, and managing your third-party virtual appliances.
+    
+4. [Classic Load Balancer](https://aws.amazon.com/elasticloadbalancing/classic-load-balancer/?nc=sn&loc=2&dn=5) (Layer 4 and 7) - Ideal for routing traffic to EC2 instances.
+    
+
+For the full documentation on Amazon ELB and its autoscaling policies follow this [link](https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-load-balancer.html)
+
+#### [GCP - Cloud Load Balancing](https://cloud.google.com/load-balancing)
+
+Google Cloud Platform Load Balancer is Google's highly scalable and robust load-balancing solution.
+
+"Cloud Load Balancing allows you to put your resources behind a single IP address that is externally accessible or internal to your Virtual Private Cloud (VPC) network".
+
+Some of the load balancer types available as part of the [GCP Cloud Load Balancing](https://cloud.google.com/load-balancing/docs) are:
+
+1. [External HTTP(S) Load Balancer](https://cloud.google.com/load-balancing/docs/https) - Externally facing HTTP(s) (Layer 7) load balancer which enables you to run and scale your services behind an internal IP address.
+    
+2. [Internal HTTP(S) Load Balancer](https://cloud.google.com/load-balancing/docs/l7-internal) - Internal Layer 7 load balancer that enables you to run and scale your services behind an internal IP address.
+    
+3. E[xternal TCP/UDP Network Load Balancer](https://cloud.google.com/load-balancing/docs/network) - Externally facing TCP/UDP (Layer 4) load balancer
+    
+4. [Internal TCP/UDP Load Balancer](https://cloud.google.com/load-balancing/docs/internal) - Internally facing TCP/UDP (Layer 4) load balancer.
+    
+
+#### [Microsoft Azure Load Balancer](https://azure.microsoft.com/en-us/services/load-balancer/)
+
+Microsoft Azure load balancing solution provides 3 different types of load balancers:
+
+1. [Standard Load Balancer](https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-overview) - Public and internal Layer 4 load balancer
+    
+2. [Gateway Load Balancer](https://docs.microsoft.com/en-us/azure/load-balancer/gateway-overview) - High performance and high availability load balancer for third-party Network Virtual Appliances.
+    
+3. [Basic Load Balancer](https://docs.microsoft.com/en-us/azure/load-balancer/skus) - Ideal for small-scale application
+    
+
+#### **GSLB Solutions**
+
+- [Amazon Route 53](https://aws.amazon.com/route53/) - Amazon Route 53 is a highly available and scalable cloud [Domain Name System (DNS)](https://aws.amazon.com/route53/what-is-dns/) web service.
+    
+- [AWS Global Accelerator](https://aws.amazon.com/global-accelerator/) -  A networking service that helps you improve the availability, performance, and security of your public applications.
+    
+- [Google Cloud Platform Load Balancer](https://cloud.google.com/load-balancing) & [Cloud DNS](https://cloud.google.com/dns) - Reliable, resilient, low-latency DNS serving from Google's worldwide network with everything you need to register, manage, and serve your domains.
+    
+- [Azure Traffic Manager](https://azure.microsoft.com/en-us/services/traffic-manager/) - DNS-based load balancing
+
+# Message Brokers
+
+play a vital role in asynchronous architectures. Here are the main points:
+
+1. **Need for Message Brokers**: The lecture highlights the limitations of synchronous communication, where both sender and receiver must be active, which can complicate processes, especially during high traffic or long operation times.
+    
+2. **Use Case Illustration**: An example of a ticket reservation system is used to showcase issues like user frustration and potential system crashes when the front-end service has to wait for completion by the ticket service.
+    
+3. **Decoupling Sender and Receiver**: Message brokers enable asynchronous communication, allowing the sender to process messages without waiting for the receiver. This helps improve user experience by providing immediate acknowledgments.
+    
+4. **Queue Data Structure**: Messages are temporarily stored in queues, facilitating background processing and efficient operation handling.
+    
+5. **Functionalities Provided**: Message brokers offer message routing, transformation, validation, and load balancing, supporting the publish-subscribe pattern for event-driven architectures.
+    
+6. **Flexibility in Service Integration**: The design allows the addition of services (like analytics or notifications) without modifying existing architectures, making systems more adaptable to changes.
+    
+7. **Quality Attributes**: Key benefits of implementing message brokers include improved fault tolerance, high availability, scalability, and the ability to manage increased traffic loads, although it may introduce slight latency.
+# **Message Brokers Solutions & Cloud Technologies**
+
+#### **Open Source Message Brokers**
+
+- [**Apache Kafka**](https://kafka.apache.org/) - The most popular open-source message broker nowadays. Apache Kafka is a distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
+    
+- [**RabbitMQ**](https://www.rabbitmq.com/) **-** A widely deployed open-source message broker. It is used worldwide at small startups and large enterprises.
+    
+
+#### **Cloud Based Message Brokers**
+
+- [Amazon Simple Queue Service (SQS)](https://aws.amazon.com/sqs/) - Fully managed message queuing service that enables you to decouple and scale micro-services, distributed systems, and serverless applications.
+    
+- GCP [Pub/Sub](https://cloud.google.com/pubsub/docs/overview) and [Cloud Tasks](https://cloud.google.com/tasks/docs/dual-overview) - Publisher/Subscriber and message queue solutions offered by Google Cloud Platform. See [this article](https://cloud.google.com/pubsub/docs/choosing-pubsub-or-cloud-tasks) for comparison between the two offerings.
+    
+- **Microsoft Azure**:
+    
+    - [Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) - Fully managed enterprise message broker with message queues and publish-subscribe topics.
+        
+    - [Event Hubs](https://azure.microsoft.com/en-us/products/event-hubs/) - Fully managed real-time data ingestion service. Allows streaming millions of events per second from any source. Integrates seamlessly with Apache Kafka clients without any code changes. A perfect solution for Big Data.
+        
+    - [Event Grid](https://azure.microsoft.com/en-us/products/event-grid/) - Reliable, serverless event delivery system at a massive scale. It uses the publish-subscribe model. It is Dynamically scalable, Low cost with a pay-as-you-go model, and guarantees "At least once delivery of an event"
