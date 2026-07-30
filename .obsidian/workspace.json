@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "inbox/phase 0.md",
+                "file": "concepts/phase 1 - architecture & system design/quality-attributes.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "phase 0"
+              "title": "quality-attributes"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "91df1d3eda165fe7",
@@ -188,25 +187,47 @@
   },
   "active": "fc354ee4925e4d86",
   "lastOpenFiles": [
-    "phases/phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
-    "saas-architect-study-plan.md",
-    "decisions/decisions.md",
-    "inbox/inbox.md",
-    "study-system-and-retention-guide.md",
-    "case-studies/case-studies.md",
+    "concepts/phase 1 - architecture & system design/message-brokers.md",
+    "concepts/phase 1 - architecture & system design/architectural-drivers.md",
+    "concepts/phase 1 - architecture & system design/api-design.md",
+    "concepts/phase 1 - architecture & system design/api-gateway.md",
+    "concepts/phase 1 - architecture & system design/quality-attributes.md",
+    "concepts/phase 1 - architecture & system design/requirement-gathering.md",
+    "concepts/phase 1 - architecture & system design/diagrams/uml-sequence-diagram.excalidraw.md",
+    "concepts/phase 1 - architecture & system design/diagrams/rest-vs-rpc-decision.excalidraw.md",
+    "concepts/phase 1 - architecture & system design/diagrams/quality-attributes-tradeoffs.excalidraw.md",
+    "concepts/phase 1 - architecture & system design/diagrams/message-broker-pattern.excalidraw.md",
+    "concepts/phase 1 - architecture & system design/diagrams/api-gateway-pattern.excalidraw.md",
+    "concepts/cdn-flow.excalidraw.md",
+    "concepts/phase 6 - scalability/diagrams/cdn-flow.excalidraw.md",
+    "concepts/phase 6 - scalability/diagrams/load-balancer-architecture.excalidraw.md",
+    "concepts/phase 6 - scalability/content-delivery-networks.md",
+    "concepts/phase 6 - scalability/load-balancers.md",
+    "concepts/phase 1 - architecture & system design/images/Pasted image 20260720211712.png",
+    "concepts/phase 1 - architecture & system design/images/Pasted image 20260720211652.png",
+    "concepts/phase 1 - architecture & system design/images/Pasted image 20260720211523.png",
+    "concepts/phase 6 - scalability/diagrams",
+    "concepts/phase 6 - scalability",
+    "concepts/phase 1 - architecture & system design/images",
+    "concepts/phase 1 - architecture & system design/diagrams",
+    "concepts/phase 1 - architecture & system design",
+    "concepts/architectural-drivers.md",
+    "concepts/api-gateway.md",
+    "concepts/api-gateway-pattern.excalidraw.md",
+    "concepts/api-design.md",
     "concepts/concepts.md",
-    "reviews/reviews.md",
-    "patterns/patterns.md",
+    "concepts/message-broker-pattern.excalidraw.md",
+    "concepts/quality-attributes.md",
+    "concepts/quality-attributes-tradeoffs.excalidraw.md",
+    "concepts/requirement-gathering.md",
+    "concepts/rest-vs-rpc-decision.excalidraw.md",
+    "phases/phase 0/Software+Architecture+and+Design+of+Large+Scale+Systems+-+Workbook.pdf",
+    "concepts/images/Pasted image 20260720211712.png",
+    "concepts/images/Pasted image 20260720211652.png",
+    "concepts/images/Pasted image 20260720211523.png",
+    "concepts/images",
     "phases/phase 0/the-pragmatic-programmer.pdf",
-    "progress-checklist.md",
-    "phases/phase 0/the pragmatic programmer tips.md",
     "progress-checklist.md.tmp.111999.e643dea305fd",
-    "phases",
-    "reviews",
-    "case-studies",
-    "patterns",
-    "decisions",
-    "concepts",
-    "inbox"
+    "phases"
   ]
 }
