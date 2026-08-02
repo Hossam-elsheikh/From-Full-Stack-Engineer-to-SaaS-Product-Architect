@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "concepts/phase 1 - architecture & system design/quality-attributes.md",
+                "file": "inbox/phase 0.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "quality-attributes"
+              "title": "phase 0"
             }
           }
         ]
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -174,24 +176,24 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "flashcards-obsidian:Generate flashcards": false,
-      "obsidian-excalidraw-plugin:New drawing": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "flashcards-obsidian:Generate flashcards": false,
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
   "active": "fc354ee4925e4d86",
   "lastOpenFiles": [
+    "concepts/phase 1 - architecture & system design/quality-attributes.md",
     "concepts/phase 1 - architecture & system design/message-brokers.md",
     "concepts/phase 1 - architecture & system design/architectural-drivers.md",
     "concepts/phase 1 - architecture & system design/api-design.md",
     "concepts/phase 1 - architecture & system design/api-gateway.md",
-    "concepts/phase 1 - architecture & system design/quality-attributes.md",
     "concepts/phase 1 - architecture & system design/requirement-gathering.md",
     "concepts/phase 1 - architecture & system design/diagrams/uml-sequence-diagram.excalidraw.md",
     "concepts/phase 1 - architecture & system design/diagrams/rest-vs-rpc-decision.excalidraw.md",
