@@ -18,3 +18,6 @@ Reusable diagrams and cheat sheets live here.
 - [[concepts/phase 6 - scalability/load-balancers]]
 - [[concepts/phase 1 - architecture & system design/message-brokers]]
 - [[concepts/phase 1 - architecture & system design/api-gateway]]
+- [[concepts/phase 1 - architecture & system design/event-driven-architecture]]
+- [[concepts/phase 1 - architecture & system design/cqrs]]
+- [[concepts/phase 1 - architecture & system design/microservices]]

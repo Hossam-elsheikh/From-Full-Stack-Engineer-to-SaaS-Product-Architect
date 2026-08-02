@@ -11,6 +11,20 @@ tags: [moc, index]
 - [[concepts/phase 1 - architecture & system design/api-design]]
 - [[concepts/phase 1 - architecture & system design/message-brokers]]
 - [[concepts/phase 1 - architecture & system design/api-gateway]]
+- [[concepts/phase 1 - architecture & system design/multi-tier-architecture]]
+- [[concepts/phase 1 - architecture & system design/microservices]]
+- [[concepts/phase 1 - architecture & system design/event-driven-architecture]]
+- [[concepts/phase 1 - architecture & system design/cqrs]]
+
+## Phase 2 — Data
+
+- [[concepts/phase 2 - data/relational-databases]]
+- [[concepts/phase 2 - data/non-relational-databases]]
+- [[concepts/phase 2 - data/database-indexing]]
+- [[concepts/phase 2 - data/database-replication]]
+- [[concepts/phase 2 - data/database-sharding]]
+- [[concepts/phase 2 - data/cap-theorem]]
+- [[concepts/phase 2 - data/scalable-unstructured-data-storage]]
 
 ## Phase 6 — Scalability
 
