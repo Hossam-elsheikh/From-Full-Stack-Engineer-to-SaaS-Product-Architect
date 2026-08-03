@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "concepts/phase 1 - architecture & system design/cqrs.md",
+                "file": "inbox/phase 0.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "cqrs"
+              "title": "phase 0"
             }
           }
         ]
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -187,6 +189,8 @@
   },
   "active": "fc354ee4925e4d86",
   "lastOpenFiles": [
+    "AGENTS.md",
+    "concepts/phase 1 - architecture & system design/cqrs.md",
     "concepts/concepts.md",
     "concepts/phase 2 - data/scalable-unstructured-data-storage.md",
     "concepts/phase 2 - data/relational-databases.md",
@@ -196,7 +200,6 @@
     "concepts/phase 2 - data/database-indexing.md",
     "concepts/phase 2 - data/cap-theorem.md",
     "inbox/phase 0.md",
-    "AGENTS.md",
     "concepts/phase 1 - architecture & system design/images/CQRS.png",
     "concepts/phase 2 - data/diagrams/database-sharding.excalidraw.md",
     "concepts/phase 2 - data/diagrams/database-replication.excalidraw.md",
@@ -206,7 +209,6 @@
     "concepts/phase 1 - architecture & system design/diagrams/microservices-architecture.excalidraw.md",
     "concepts/phase 1 - architecture & system design/diagrams/event-driven-architecture.excalidraw.md",
     "concepts/phase 2 - data",
-    "concepts/phase 1 - architecture & system design/cqrs.md",
     "concepts/phase 1 - architecture & system design/event-driven-architecture.md",
     "concepts/phase 1 - architecture & system design/microservices.md",
     "concepts/phase 1 - architecture & system design/multi-tier-architecture.md",
