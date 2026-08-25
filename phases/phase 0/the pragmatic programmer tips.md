@@ -1,3 +1,0 @@
-
--  care about your craft.
--  

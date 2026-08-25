@@ -1,0 +1,411 @@
+{
+  "phase": "2",
+  "title": "Data at Scale",
+  "weeks": "6 weeks · ~48 hrs",
+  "lede": "Data is the heart of every SaaS, and it is where the irreversible decisions live. Pick the wrong model and you can refactor; pick the wrong tenancy partition and you spend a quarter migrating. The phase ends in a written multi-tenancy decision doc.",
+  "source": "Notes from Udemy: Software Architecture & Design of Modern Large Scale Systems — Michael Pogrebinsky",
+  "foot": "Built from concepts/phase-2-data/",
+  "links": [
+    [
+      "The Atlas",
+      "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+    ],
+    [
+      "The Build Bench",
+      "https://claude.ai/code/artifact/674ef97b-db8f-46c9-9050-06b83ba95e7b"
+    ],
+    [
+      "Year One",
+      "https://claude.ai/code/artifact/6f151972-b169-4e67-8676-ef1f3d243b5c"
+    ]
+  ],
+  "concepts": [
+    {
+      "id": "relational-databases",
+      "t": "Relational Databases",
+      "vault": "concepts/phase-2-data/relational-databases.md",
+      "lede": "Tables of rows identified by primary keys, related through columns, under a predefined schema you query with SQL.",
+      "blocks": [
+        {
+          "h": "Advantages",
+          "items": [
+            "**Complex querying** — SQL produces insight no key lookup can",
+            "**Efficient storage** — relationships between tables remove duplication",
+            "**User-friendly structure** — the tabular model is genuinely intuitive",
+            "**ACID transactions** — atomicity, consistency, isolation, durability: integrity you can rely on"
+          ]
+        },
+        {
+          "h": "Disadvantages",
+          "items": [
+            "**Rigid schema** — changes are costly and can require downtime",
+            "**Complexity and cost** — supporting SQL and ACID raises the maintenance bill",
+            "**Slower reads** than a store purpose-built for one access pattern"
+          ]
+        },
+        {
+          "h": "The worked example",
+          "p": "An online store keeps products and orders. Each product is stored once and referenced by orders through a relationship, rather than copied into every order — that is the whole argument for the model in one sentence."
+        },
+        {
+          "call": "Choose relational when you need complex queries and ACID guarantees. When relationships are minimal or read performance dominates, look elsewhere — beside it, not instead of it.",
+          "blue": true
+        }
+      ],
+      "cards": [
+        [
+          "What four properties does ACID stand for?",
+          "Atomicity, Consistency, Isolation, Durability."
+        ],
+        [
+          "Your schema changes weekly and you need high-speed reads at massive scale. What are the two main pain points of a relational DB here?",
+          "Rigid schema — changes need downtime — plus slower reads than non-relational stores."
+        ],
+        [
+          "An online store stores products and orders. Why does the relational model avoid redundancy?",
+          "Relationships via columns let each record be stored once and referenced, instead of duplicated."
+        ],
+        [
+          "You need integrity across multi-step money transfers plus complex analytical queries. Which family, and which two properties make it fit?",
+          "Relational — ACID transactions for integrity and SQL for complex querying."
+        ]
+      ],
+      "drill": "Year One · The ALTER that locked the table"
+    },
+    {
+      "id": "non-relational-databases",
+      "t": "Non-relational Databases",
+      "vault": "concepts/phase-2-data/non-relational-databases.md",
+      "lede": "NoSQL emerged in the mid-2000s to answer the limits of the relational model — mainly its rigidity and its read cost at scale.",
+      "blocks": [
+        {
+          "h": "What makes them different",
+          "items": [
+            "**Flexible schemas** — records may differ; adding a new field needs no migration or downtime",
+            "**Native data structures** — lists, arrays and maps map straight onto language constructs, reducing ORM dependence",
+            "**Faster queries** for a specific access pattern — at the cost of harder analysis, because nothing enforces relationships"
+          ]
+        },
+        {
+          "table": {
+            "cols": [
+              "Type",
+              "Strength",
+              "Typical use"
+            ],
+            "rows": [
+              [
+                "**Key/Value**",
+                "Fast lookup by a unique key",
+                "Caching, sessions, simple retrieval"
+              ],
+              [
+                "**Document**",
+                "JSON or XML documents that map to programming constructs",
+                "Nested or varying data, profiles, catalogues"
+              ],
+              [
+                "**Graph**",
+                "Relationships between records as first-class objects",
+                "Fraud detection, recommendations"
+              ]
+            ]
+          }
+        },
+        {
+          "h": "Where they fit",
+          "p": "Unstructured data, real-time big-data processing and caching. Traditional applications often still prefer relational, for reliability and simplicity."
+        }
+      ],
+      "cards": [
+        [
+          "Why do NoSQL databases reduce reliance on ORMs?",
+          "They store data in structures — lists, arrays, maps — that map directly to programming-language constructs."
+        ],
+        [
+          "You need a cache keyed by token, a store for user profiles as JSON docs, and a friend-recommendation engine. Which three NoSQL types?",
+          "Key/Value, Document, Graph."
+        ],
+        [
+          "Your NoSQL model has no enforced relationships and records can differ. What is the cost?",
+          "Complex data analysis — no guaranteed structure and no enforced relationships."
+        ]
+      ],
+      "drill": "Build Bench · Ten million rows"
+    },
+    {
+      "id": "database-indexing",
+      "t": "Database Indexing",
+      "vault": "concepts/phase-2-data/database-indexing.md",
+      "lede": "Helper structures that map column values to records, making search and sorting fast on large datasets. Rung one of the scaling ladder, and the rung that ends most scaling arguments.",
+      "blocks": [
+        {
+          "h": "Types",
+          "items": [
+            "**Single-column index** — one column",
+            "**Composite index** — several columns together, for example `user_id` plus `created_at`"
+          ]
+        },
+        {
+          "h": "Trade-offs",
+          "items": [
+            "More **storage** consumed",
+            "**Slower writes** — every write must update the index too"
+          ]
+        },
+        {
+          "svg": "scaling-ladder",
+          "cap": "Indexes, then replicas, then partitioning, then sharding — in that order"
+        }
+      ],
+      "cards": [
+        [
+          "A query filtering by user_id and created_at is slow at 10M rows. What two index options do you have?",
+          "A single-column index, or a composite index over (user_id, created_at)."
+        ],
+        [
+          "You added an index and writes got slower. Why?",
+          "Every write must also update the index — storage and write cost are the trade-off."
+        ],
+        [
+          "Besides faster lookups, what do indexes enable?",
+          "Faster searching and sorting on large datasets."
+        ]
+      ],
+      "drill": "Year One · Shard now?"
+    },
+    {
+      "id": "database-replication",
+      "t": "Database Replication",
+      "vault": "concepts/phase-2-data/database-replication.md",
+      "lede": "Multiple database instances across different servers — the second rung, and the one that removes your last obvious single point of failure.",
+      "blocks": [
+        {
+          "h": "Benefits",
+          "items": [
+            "**High availability and fault tolerance** — no single point of failure",
+            "**Better load distribution** — reads spread across replicas",
+            "**Improved performance** for read-heavy workloads"
+          ]
+        },
+        {
+          "h": "Costs",
+          "items": [
+            "**Concurrency complexity** — concurrent updates across instances must be managed",
+            "**Data consistency** — every replica has to converge on the same state"
+          ]
+        },
+        {
+          "call": "This is where the CAP trade-off stops being theory: replicas plus a network partition is exactly the situation CAP describes."
+        }
+      ],
+      "cards": [
+        [
+          "A single DB instance goes down and your app goes with it. What technique, and which two benefits?",
+          "Replication — availability and fault tolerance, by removing the single point of failure."
+        ],
+        [
+          "You replicated across three servers, reads are faster, but writers must coordinate. What is the new complexity?",
+          "Managing concurrent updates and ensuring consistency across replicas."
+        ]
+      ],
+      "drill": "Year One · Shard now?"
+    },
+    {
+      "id": "database-sharding",
+      "t": "Sharding & Partitioning",
+      "vault": "concepts/phase-2-data/database-sharding.md",
+      "lede": "Splitting data across multiple database instances. The last rung — powerful, and the hardest to walk back.",
+      "blocks": [
+        {
+          "h": "Benefits",
+          "items": [
+            "More **storage capacity** than one instance can hold",
+            "**Parallel query processing** — queries run concurrently across shards"
+          ]
+        },
+        {
+          "h": "Relational versus non-relational",
+          "p": "Straightforward in non-relational databases. Painful in relational ones, because multi-record queries and joins must span shards, and ACID properties are hard to maintain across them."
+        },
+        {
+          "call": "Climb the ladder in order and measure at every rung. Most products never need this one, and the ones that do arrive with measurements rather than a design doc."
+        }
+      ],
+      "cards": [
+        [
+          "Why does sharding improve performance beyond just adding capacity?",
+          "Queries can run in parallel across shards."
+        ],
+        [
+          "Your relational DB is out of storage, so you split users by ID range across four instances. What technique, and what is harder here than in NoSQL?",
+          "Sharding/partitioning — multi-record queries (joins) and ACID transactions across shards."
+        ]
+      ],
+      "drill": "Year One · Shard now?"
+    },
+    {
+      "id": "cap-theorem",
+      "t": "CAP Theorem",
+      "vault": "concepts/phase-2-data/cap-theorem.md",
+      "lede": "During a network partition, a distributed database cannot guarantee both consistency and availability. It must prioritise one — and that choice is yours to make deliberately.",
+      "blocks": [
+        {
+          "h": "The three properties",
+          "items": [
+            "**Consistency** — every read returns the latest write, or an error; all clients see the same value",
+            "**Availability** — every request gets a non-error response, latest or not",
+            "**Partition tolerance** — the system keeps operating despite network failures"
+          ]
+        },
+        {
+          "svg": "cap",
+          "cap": "Partitions are not optional, so the real choice is only ever CP or AP"
+        },
+        {
+          "h": "Why the trade-off exists",
+          "p": "Take a key-value store with replicas. Normally they agree. During a partition, one service updates a counter on one replica while another replica is cut off. A read can return the outdated value — availability, AP — or return an error — consistency, CP."
+        },
+        {
+          "h": "What the choices look like",
+          "items": [
+            "**CA** — consistent and available but not partition-tolerant. A centralized database; it limits scalability.",
+            "**CP** — consistent and partition-tolerant, sacrificing availability",
+            "**AP** — available and partition-tolerant, sacrificing consistency"
+          ]
+        },
+        {
+          "call": "Application needs decide it: inventory systems lean towards consistency, social feeds lean towards availability.",
+          "blue": true
+        }
+      ],
+      "cards": [
+        [
+          "Name the three CAP properties.",
+          "Consistency, Availability, Partition tolerance."
+        ],
+        [
+          "Two replicas cannot talk and a service writes to one side. A read returns a stale value. Which trade-off is being made?",
+          "Availability over consistency — AP — a stale value instead of an error."
+        ],
+        [
+          "A client demands every read be the latest write or an error, even when replicas are partitioned. Which property wins?",
+          "Consistency — CP — availability is sacrificed during the partition."
+        ],
+        [
+          "Why can't a distributed DB offer CA in practice?",
+          "Network partitions are unavoidable — you must tolerate them, and then choose between C and A."
+        ]
+      ],
+      "drill": "Year One · Whose data is whose, and the consistency it implies"
+    },
+    {
+      "id": "unstructured-storage",
+      "t": "Unstructured Data Storage",
+      "vault": "concepts/phase-2-data/scalable-unstructured-data-storage.md",
+      "lede": "Where the bytes that do not belong in a database go: uploads, backups, media and training data.",
+      "blocks": [
+        {
+          "h": "The four workloads",
+          "num": [
+            "**User uploads** — images and video for sharing or backup",
+            "**Database backup and archiving** — snapshots for disaster recovery and legal retention",
+            "**Web hosting** — media content delivery",
+            "**Analytics and machine learning** — sensor data and images at scale"
+          ]
+        },
+        {
+          "table": {
+            "cols": [
+              "",
+              "Distributed file system",
+              "Object store"
+            ],
+            "rows": [
+              [
+                "Shape",
+                "Files across a network, like a local filesystem",
+                "Binary objects at internet scale, large files"
+              ],
+              [
+                "Access",
+                "Filesystem semantics",
+                "HTTP REST APIs — trivial for web content"
+              ],
+              [
+                "Strength",
+                "Efficient modifications, high-throughput operations",
+                "Scalability and versioning"
+              ],
+              [
+                "Limits",
+                "Struggles with very large file counts; no easy web API",
+                "Objects are **immutable**; access needs its own APIs"
+              ]
+            ]
+          }
+        },
+        {
+          "h": "Solutions",
+          "items": [
+            "**Cloud** — AWS S3, GCP Cloud Storage, Azure Blob Storage, Alibaba Cloud OSS",
+            "**Open source, S3-compatible** — MinIO, Ceph, OpenIO"
+          ]
+        },
+        {
+          "call": "Rule of thumb: distributed file systems win on high-throughput modification, object stores win on web content and scale."
+        }
+      ],
+      "cards": [
+        [
+          "Name the four categories of unstructured-data workloads.",
+          "User uploads, DB backups and archives, web hosting, analytics and ML."
+        ],
+        [
+          "Users upload millions of large images you serve over the web. Which storage type, and which two features make it fit?",
+          "An object store — internet-scale binary objects plus easy HTTP REST APIs, e.g. S3."
+        ],
+        [
+          "You need high-throughput file modifications on a small set of files. Which storage type performs better?",
+          "A distributed file system — efficient modifications and high-performance operations."
+        ],
+        [
+          "Why do object stores support versioning but not in-place edits?",
+          "Objects are immutable — a new version replaces the old one through a special API."
+        ],
+        [
+          "You need S3-compatible object storage you can run on your own Kubernetes cluster. Which open-source options?",
+          "MinIO, Ceph, OpenIO."
+        ]
+      ],
+      "drill": "Build Bench · The world shows up"
+    }
+  ],
+  "resources": [
+    {
+      "k": "Book · required",
+      "t": "Designing Data-Intensive Applications, ch 1–9",
+      "w": "Kleppmann. The most important book in the plan and the one thing here you truly cannot substitute. ~35 hrs at reading-slowly pace. Chapters 10–12 are excellent but not load-bearing for a transactional SaaS — read them when you have a real analytics or event-pipeline requirement."
+    },
+    {
+      "k": "Free · required",
+      "t": "Tod Golding's AWS SaaS Factory talks",
+      "w": "Multi-tenant data partitioning, on YouTube, ~3 hrs. There is no better source on this specific decision, at any price."
+    },
+    {
+      "k": "Only if",
+      "t": "SQL and PostgreSQL: The Complete Developer's Guide",
+      "w": "Grider. Take it **only if** you cannot currently read an `EXPLAIN ANALYZE` plan and reason about index choice. If you can, skip it and save 20 hours."
+    },
+    {
+      "k": "Phase artifact",
+      "t": "The multi-tenancy decision doc",
+      "w": "Which partitioning model, why, what it costs you at 10 / 1,000 / 10,000 tenants, and what would force a migration. Capstone weeks 9–14, alongside one zero-downtime migration."
+    },
+    {
+      "k": "Still to capture",
+      "t": "Isolation levels, zero-downtime migrations, caching, tenancy models, retention",
+      "w": "The gaps in this phase. Isolation levels and expand-backfill-contract are the two with the worst consequences if you skip them."
+    }
+  ]
+}

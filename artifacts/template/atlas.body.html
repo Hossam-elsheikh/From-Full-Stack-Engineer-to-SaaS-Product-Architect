@@ -1,0 +1,185 @@
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Sheet</span><span class="v">00 · Index</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v">The Architect's Atlas</span></div>
+    <div class="tcell"><span class="lbl">Captured</span><span class="v" id="tbCap">—</span></div>
+    <div class="tcell"><span class="lbl">Solid</span><span class="v" id="tbSol">—</span></div>
+  </header>
+
+  <section class="pad hero">
+    <div>
+      <span class="lbl" id="eyebrow"></span>
+      <h1 style="margin-top:10px">Everything you are learning, on one sheet</h1>
+      <p class="lede">Blue chips are in your vault — open one to read it and test yourself on your own cards, without opening Obsidian. Dashed chips are territory you have not reached yet; open them to see what they are and where they get drilled. Phases with enough notes have a full study sheet of their own.</p>
+    </div>
+    <div class="pstat">
+      <div class="row"><span class="lbl">Captured in the vault</span><span class="num" id="sCap">0</span></div>
+      <div class="row"><span class="lbl">Marked solid</span><span class="num" id="sSol">0</span></div>
+      <div class="pbar"><i class="s" id="bS" style="width:0"></i><i class="k" id="bK" style="width:0"></i><i class="c" id="bC" style="width:0"></i></div>
+      <span class="lbl">green solid · amber shaky · blue captured, untested</span>
+    </div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="secthead"><h2>The map</h2><span class="lbl">Click any concept</span></div>
+    <div class="map" id="map"></div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="secthead"><h2>Where you read</h2><span class="lbl">One sheet per phase, built from your notes</span></div>
+    <div class="sims" id="sheets"></div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="secthead"><h2>Where you practise</h2><span class="lbl">Recognition is not the same as production</span></div>
+    <div class="sims" id="sims"></div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="secthead"><h2>Reviewer's notes on the plan</h2><span class="lbl">Rev B · the trim already happened</span></div>
+    <div class="notes">
+      <div class="note">
+        <span class="lbl">Arithmetic</span>
+        <h4>It now fits, with about eighty hours of slack</h4>
+        <div class="calc">
+          <div class="t"><span>~8 months x 7 hrs</span><b>230 h</b></div>
+          <div class="t"><span>4 required books</span><b>~110 h</b></div>
+          <div class="t"><span>4 tool courses + free sources</span><b>~40 h</b></div>
+          <div class="t"><span>the capstone, run throughout</span><b>~80 h</b></div>
+          <div class="t tot"><span>required</span><b>~230 h</b></div>
+        </div>
+        <p>Rev A was oversubscribed roughly two and a half times, which meant you would have dropped things at random rather than on purpose. The list is now four books, four pick-one pairs and four tool courses. Every nice-to-have you add back comes out of capstone time.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Sequence</span>
+        <h4>The capstone starts in week three</h4>
+        <p>It used to sit in month six, which left five months of input with no feedback — the way study plans quietly fail. It now runs the whole length and each phase lands in it: C4 and ADRs by week eight, a tenancy model by fourteen, billing by nineteen, a tested rollback by twenty-five. If you already have a real product in flight, use it; a live multi-tenant system beats a throwaway invoicing app.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Rule</span>
+        <h4>Books for judgment, video for tools</h4>
+        <p>Reversed from Rev A's start-with-a-course instinct. Architecture, data modelling, multi-tenancy and resilience are trade-off skills and they live in long-form writing. Docker, Terraform, CI/CD and cloud services are muscle memory and they live in video. The first three phases have almost no video in them on purpose.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Additions</span>
+        <h4>Four topics the first draft was missing</h4>
+        <p>Testing strategy — the largest gap, and it sits in phase 5. Cost per tenant, because an architect who cannot say what the worst tenant costs is missing half the job. Third-party integration architecture. And contract design for clients you cannot force-update, which is the phase 1 topic that bites hardest eighteen months later.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Evidence</span>
+        <h4>Your phase numbers are already fiction</h4>
+        <p>You have notes on load balancers and CDNs — phase 6 material — because one phase 0 course covered them. That is not a mistake, it is how the territory actually connects. Treat the phases as a syllabus to pull from, not a schedule to march through.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Gap</span>
+        <h4>Reading is recognition; the sims are production</h4>
+        <p>The phase sheets are for reading and self-testing — that is recognition-level work, and it is necessary. Nothing there makes you produce a design under constraints or live with a decision after you make it, which is what the Build Bench and Year One exist for. Do both or the reading will feel like progress it is not.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Cut list</span>
+        <h4>What Rev B dropped, and why</h4>
+        <p>The Pragmatic Programmer — you are past it. Clean Architecture — subsumed by Richards &amp; Ford. Pogrebinsky's second course — overlaps the first. Alex Xu Vol. 2 — interview-oriented. Working Effectively with Legacy Code — a year-three book. Kubernetes demoted to vocabulary. And a Build-a-SaaS course, if you are already building one.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="secthead"><h2>The week, rebuilt</h2><span class="lbl">Four hours, three of them fun</span></div>
+    <div class="week">
+      <div class="day"><span class="w">Mon – Thu</span><p><strong>45 minutes of course or book. Paste the raw notes into the phase's <span class="mono">_inbox.md</span>.</strong> No decisions about where things go while you are studying — that part of your system already works.</p></div>
+      <div class="day"><span class="w">When the inbox fills</span><p><strong>Ask Claude to distribute it.</strong> The notes become concept files and get merged into this phase's sheet, which is republished at the same link. You never have to open a note to review it.</p></div>
+      <div class="day"><span class="w">One evening</span><p><strong>One commission on the Build Bench</strong> for the phase you are in. Fifteen minutes. If the review comes back rejected, the requirements it flagged tell you what to read next — a far better reading list than the one you wrote in advance.</p></div>
+      <div class="day"><span class="w">Sunday · 20 min</span><p><strong>Open your phase sheet and take the blank page.</strong> Pick a concept, write it from memory, then reveal its cards and diff. Anything you could not produce gets marked shaky here on the map.</p></div>
+      <div class="day"><span class="w">Sunday · 10 min</span><p><strong>Play Year One.</strong> Ten minutes, seventeen decisions, and it ends by telling you which principles you paid for. Those go on next week's list.</p></div>
+      <div class="day"><span class="w">Per phase</span><p><strong>Come back here and re-mark the map.</strong> Anything still amber after a phase closes is the thing to over-study; anything green early can be left alone for a month.</p></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Built from the notes in your vault · rebuilt every time new notes are distributed</span>
+    <span><a href="#" id="reset">Reset my marks</a></span>
+  </footer>
+</div>
+</div>
+<div class="drawer" id="drawer" hidden></div>
+<script>
+const A=__DATA__, PH=A.phases;
+const KEY="atlas.mastery.v1";
+let mast={};try{mast=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){mast={}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(mast))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const ALL=PH.flatMap(p=>p.cs), CAPPED=ALL.filter(c=>c.cap);
+const CARDS=CAPPED.reduce((a,c)=>a+(c.c||[]).length,0);
+
+function stats(){
+  const sol=ALL.filter(c=>mast[c.i]==="s").length, shk=ALL.filter(c=>mast[c.i]==="k").length;
+  $("#sCap").textContent=CAPPED.length; $("#sSol").textContent=sol;
+  $("#tbCap").textContent=CAPPED.length+" / "+ALL.length;
+  $("#tbSol").textContent=sol+" / "+ALL.length;
+  const n=ALL.length;
+  $("#bS").style.width=(sol/n*100)+"%"; $("#bK").style.width=(shk/n*100)+"%";
+  $("#bC").style.width=(CAPPED.filter(c=>!mast[c.i]).length/n*100)+"%";
+  $("#eyebrow").textContent=PH.length+" stations · "+ALL.length+" concepts · "+CAPPED.length+" captured · "+CARDS+" recall cards";
+}
+function renderMap(){
+  const m=$("#map");m.innerHTML="";
+  PH.forEach(p=>{
+    const d=document.createElement("div");d.className="st"+(p.now?" now":"");
+    d.innerHTML='<div class="hd"><span class="no">'+p.n+'</span><div><h3>'+esc(p.t)+'</h3><span class="wk">'+esc(p.w)+'</span></div></div>';
+    const ch=document.createElement("div");ch.className="chips";
+    p.cs.forEach(c=>{
+      const b=document.createElement("button");
+      b.className="chip "+(c.cap?"cap":"ghost")+(mast[c.i]?" "+mast[c.i]:"");
+      b.innerHTML='<span class="dot"></span>'+esc(c.t);
+      b.onclick=()=>openC(c,p);ch.appendChild(b);
+    });
+    d.appendChild(ch);
+    if(p.sheet)d.insertAdjacentHTML("beforeend",'<a class="sheetlink" href="'+p.sheet+
+      '" target="_blank" rel="noopener">Read the full sheet ↗</a>');
+    m.appendChild(d);
+  });
+  stats();
+}
+function openC(c,p){
+  const dr=$("#drawer");dr.hidden=false;
+  const cards=(c.c||[]).map((qa,n)=>'<button class="rc" data-n="'+n+'"><div class="q"><span class="m">'+
+    String(n+1).padStart(2,"0")+'</span><span>'+esc(qa[0])+'</span></div><div class="a">'+esc(qa[1])+'</div></button>').join("");
+  dr.innerHTML='<div class="panel"><div class="dhd"><div><span class="lbl">Phase '+p.n+' · '+esc(p.t)+'</span>'+
+    '<h2 style="margin-top:4px">'+esc(c.t)+'</h2></div><button class="btn ghost" id="x">Close</button></div>'+
+    '<div class="dbody">'+
+    (c.cap?'<span class="tag" style="align-self:flex-start;color:var(--blue);border-color:var(--blueLine)">In your vault</span>'
+          :'<span class="tag" style="align-self:flex-start">Not captured yet</span>')+
+    '<p style="color:var(--ink2);font-size:.94rem;max-width:56ch">'+esc(c.e)+'</p>'+
+    (cards?'<div><span class="lbl">Test yourself · '+c.c.length+' cards from your own notes</span>'+
+      '<div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">'+cards+'</div></div>':"")+
+    (c.d?'<div><span class="lbl">Where you practise it</span><p style="font-size:.9rem;margin-top:4px">'+esc(c.d)+'</p></div>':"")+
+    (p.sheet?'<a class="btn ghost" style="align-self:flex-start;text-decoration:none" href="'+p.sheet+
+      '" target="_blank" rel="noopener">Open the '+esc(p.t)+' sheet ↗</a>':"")+
+    '<hr class="rule"><div><span class="lbl">How solid is this for you?</span><div class="mast" style="margin-top:8px">'+
+      ['<button data-m="" class="'+(!mast[c.i]?"on":"")+'">Not yet</button>',
+       '<button data-m="k" class="'+(mast[c.i]==="k"?"on":"")+'">Shaky</button>',
+       '<button data-m="s" class="'+(mast[c.i]==="s"?"on":"")+'">Solid</button>'].join("")+
+    '</div></div></div></div>';
+  dr.querySelectorAll(".rc").forEach(el=>el.onclick=()=>el.classList.toggle("open"));
+  dr.querySelectorAll(".mast button").forEach(b=>b.onclick=()=>{
+    const v=b.dataset.m; if(v)mast[c.i]=v; else delete mast[c.i];
+    save();renderMap();openC(c,p);
+  });
+  $("#x").onclick=close2;
+  dr.onclick=e=>{if(e.target===dr)close2()};
+}
+function close2(){$("#drawer").hidden=true}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")close2()});
+$("#reset").onclick=e=>{e.preventDefault();mast={};save();renderMap()};
+$("#sheets").innerHTML=PH.filter(p=>p.sheet).map(p=>{
+  const n=p.cs.filter(c=>c.cap).length, k=p.cs.filter(c=>c.cap).reduce((a,c)=>a+(c.c||[]).length,0);
+  return '<a class="sim" href="'+p.sheet+'" target="_blank" rel="noopener"><span class="lbl">Phase '+p.n+' · '+
+   n+' concepts · '+k+' cards</span><h3>'+esc(p.t)+'</h3><p>Every note you have taken for this phase, structured for reading straight through — with the cards folded in and the phase reading list at the end.</p>'+
+   '<span class="go">Read the sheet →</span></a>';}).join("");
+$("#sims").innerHTML=A.sims.map(s=>'<a class="sim" href="'+s.u+'" target="_blank" rel="noopener"><span class="lbl">'+
+  esc(s.k)+'</span><h3>'+esc(s.t)+'</h3><p>'+esc(s.w)+'</p><span class="go">'+esc(s.go)+' →</span></a>').join("");
+renderMap();
+</script>

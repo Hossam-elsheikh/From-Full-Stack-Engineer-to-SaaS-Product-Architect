@@ -11,14 +11,12 @@
             "id": "fc354ee4925e4d86",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "inbox/phase 0.md",
-                "mode": "source",
-                "source": false
+                "file": "resources/fundamentals_of_software_architecture_a_modern_engineering.pdf"
               },
-              "icon": "lucide-file",
-              "title": "phase 0"
+              "icon": "lucide-file-text",
+              "title": "fundamentals_of_software_architecture_a_modern_engineering"
             }
           }
         ]
@@ -80,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 352.5
   },
   "right": {
     "id": "91df1d3eda165fe7",
@@ -189,9 +187,18 @@
   },
   "active": "fc354ee4925e4d86",
   "lastOpenFiles": [
+    "resources/fundamentals_of_software_architecture_a_modern_engineering.pdf",
+    "inbox/phase 0.md",
+    "patterns/patterns.md",
+    "decisions/decisions.md",
+    "concepts/concepts.md",
+    "case-studies/case-studies.md",
+    "concepts/phase 0 - the map/_inbox.md",
+    "saas-architect-study-plan.md",
+    "progress-checklist.md",
+    "artifacts/artifacts.md",
     "AGENTS.md",
     "concepts/phase 1 - architecture & system design/cqrs.md",
-    "concepts/concepts.md",
     "concepts/phase 2 - data/scalable-unstructured-data-storage.md",
     "concepts/phase 2 - data/relational-databases.md",
     "concepts/phase 2 - data/non-relational-databases.md",
@@ -199,7 +206,6 @@
     "concepts/phase 2 - data/database-replication.md",
     "concepts/phase 2 - data/database-indexing.md",
     "concepts/phase 2 - data/cap-theorem.md",
-    "inbox/phase 0.md",
     "concepts/phase 1 - architecture & system design/images/CQRS.png",
     "concepts/phase 2 - data/diagrams/database-sharding.excalidraw.md",
     "concepts/phase 2 - data/diagrams/database-replication.excalidraw.md",
@@ -210,15 +216,7 @@
     "concepts/phase 1 - architecture & system design/diagrams/event-driven-architecture.excalidraw.md",
     "concepts/phase 2 - data",
     "concepts/phase 1 - architecture & system design/event-driven-architecture.md",
-    "concepts/phase 1 - architecture & system design/microservices.md",
-    "concepts/phase 1 - architecture & system design/multi-tier-architecture.md",
     "CQRS.png",
-    "concepts/phase 1 - architecture & system design/quality-attributes.md",
-    "concepts/phase 1 - architecture & system design/message-brokers.md",
-    "concepts/phase 1 - architecture & system design/architectural-drivers.md",
-    "concepts/phase 1 - architecture & system design/api-design.md",
-    "concepts/phase 1 - architecture & system design/api-gateway.md",
-    "concepts/phase 1 - architecture & system design/requirement-gathering.md",
     "concepts/phase 1 - architecture & system design/images/Pasted image 20260720211712.png",
     "concepts/phase 1 - architecture & system design/images/Pasted image 20260720211652.png",
     "concepts/phase 1 - architecture & system design/images/Pasted image 20260720211523.png",

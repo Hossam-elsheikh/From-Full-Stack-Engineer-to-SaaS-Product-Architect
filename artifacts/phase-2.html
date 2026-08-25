@@ -1,0 +1,267 @@
+<title>Data at Scale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+[hidden]{display:none !important}
+.two{display:grid;grid-template-columns:236px minmax(0,1fr);align-items:start}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+.rail{position:sticky;top:0;align-self:start;padding:16px 14px;border-right:1px solid var(--rule);background:var(--sunk);max-height:100vh;overflow:auto}
+@media(max-width:900px){.rail{position:static;border-right:0;border-bottom:1px solid var(--rule);max-height:none}}
+.rail ol{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:1px;counter-reset:c}
+.rail a{display:grid;grid-template-columns:22px 1fr 9px;gap:7px;align-items:baseline;padding:5px 6px;text-decoration:none;color:var(--ink2);font-size:.83rem;border:1px solid transparent}
+.rail a:hover{background:var(--sheet);color:var(--ink);border-color:var(--rule)}
+.rail a.on{background:var(--sheet);border-color:var(--blue);color:var(--ink)}
+.rail a .i{font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--ink3);font-variant-numeric:tabular-nums}
+.rail a .d{width:7px;height:7px;border-radius:50%;border:1px solid var(--rule);align-self:center}
+.rail a.done .d{background:var(--green);border-color:var(--green)}
+.body{padding:clamp(18px,3vw,34px);min-width:0;display:flex;flex-direction:column;gap:0}
+.intro{max-width:62ch;display:flex;flex-direction:column;gap:14px;padding-bottom:22px;border-bottom:1px solid var(--rule)}
+.intro .lede{font-size:1.06rem;color:var(--ink2)}
+.cpt{padding:30px 0;border-bottom:1px solid var(--rule2);display:flex;flex-direction:column;gap:14px;scroll-margin-top:12px}
+.cpt:last-of-type{border-bottom:0}
+.cpt .top{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between}
+.cpt h2{font-size:clamp(1.5rem,3.2vw,2.05rem)}
+.cpt .idx{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--ink3);letter-spacing:.1em}
+.cpt .lede{font-size:1rem;color:var(--ink2);max-width:62ch}
+.blk{display:flex;flex-direction:column;gap:8px;max-width:64ch}
+.blk h4{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1.02rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink)}
+.blk ul,.blk ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.blk li{font-size:.94rem}
+.blk p{font-size:.94rem;color:var(--ink2)}
+.tbl{overflow-x:auto;border:1px solid var(--rule);background:var(--sheet);max-width:100%}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--rule2);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);background:var(--sunk);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.call{border-left:3px solid var(--amber);background:var(--amberBg);padding:10px 14px;font-size:.92rem;max-width:64ch}
+.call.blue{border-left-color:var(--blue);background:var(--blueBg)}
+code{font-family:"IBM Plex Mono",monospace;font-size:.86em;background:var(--chip);border:1px solid var(--rule);padding:1px 4px}
+.fig{border:1px solid var(--rule);background:var(--sheet);padding:16px;max-width:64ch;display:flex;flex-direction:column;gap:8px}
+.fig svg{width:100%;height:auto;display:block}
+.fig figcaption{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--ink3);letter-spacing:.05em}
+.cards{border:1px solid var(--rule);background:var(--chip);max-width:64ch}
+.cards .ch{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 13px;border-bottom:1px solid var(--rule)}
+.cards .ch .lbl{color:var(--ink2)}
+.cards .ch button{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink2);padding:3px 8px;cursor:pointer}
+.cards .ch button:hover{border-color:var(--ink2);color:var(--ink)}
+.rc{border-bottom:1px dashed var(--rule);cursor:pointer}
+.rc:last-child{border-bottom:0}
+.rc .q{padding:10px 13px;font-size:.9rem;display:grid;grid-template-columns:20px 1fr;gap:9px}
+.rc .q .m{font-family:"IBM Plex Mono",monospace;font-size:.64rem;color:var(--ink3);padding-top:3px}
+.rc .a{display:none;padding:0 13px 11px 42px;font-size:.89rem;color:var(--ink2)}
+.rc.open .a{display:block}
+.rc:hover .q{background:var(--sheet)}
+.cfoot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;max-width:64ch}
+.mark{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.82rem;
+  background:none;border:1px solid var(--rule);color:var(--ink2);padding:6px 14px;cursor:pointer}
+.mark:hover{border-color:var(--ink2);color:var(--ink)}
+.mark.on{background:var(--greenBg);border-color:var(--green);color:var(--green)}
+.src{font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--ink3)}
+.res{padding:26px 0 8px;display:flex;flex-direction:column;gap:14px}
+.reslist{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.r{border:1px solid var(--rule);background:var(--sheet);padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.r .k{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.11em;text-transform:uppercase;color:var(--blue)}
+.r .t{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1.05rem;line-height:1.15}
+.r .w{font-size:.83rem;color:var(--ink2)}
+.foot{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:14px 18px;border-top:1px solid var(--rule);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
+.foot a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blueLine)}
+.pbar{height:7px;background:var(--sheet);border:1px solid var(--rule);overflow:hidden;margin-top:8px}
+.pbar i{display:block;height:100%;background:var(--green);transition:width .5s ease}
+</style>
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Phase</span><span class="v" id="tbPh"></span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v" id="tbT"></span></div>
+    <div class="tcell"><span class="lbl">Concepts</span><span class="v" id="tbN"></span></div>
+    <div class="tcell"><span class="lbl">Reviewed</span><span class="v" id="tbR"></span></div>
+  </header>
+  <div class="two">
+    <nav class="rail" aria-label="Concepts">
+      <span class="lbl">On this sheet</span>
+      <ol id="nav"></ol>
+      <div class="pbar"><i id="pb" style="width:0"></i></div>
+      <p class="lbl" style="margin-top:10px;line-height:1.7">Marks are saved in this browser.</p>
+    </nav>
+    <main class="body">
+      <section class="intro">
+        <span class="lbl" id="iPh"></span>
+        <h1 id="iT"></h1>
+        <p class="lede" id="iL"></p>
+        <p class="src" id="iS"></p>
+      </section>
+      <div id="cpts"></div>
+      <section class="res">
+        <h2>What to read and watch for this phase</h2>
+        <div class="reslist" id="res"></div>
+      </section>
+    </main>
+  </div>
+  <footer class="foot">
+    <span id="fnote"></span>
+    <span id="links"></span>
+  </footer>
+</div>
+</div>
+<script>
+const D={"phase": "2", "title": "Data at Scale", "weeks": "6 weeks · ~48 hrs", "lede": "Data is the heart of every SaaS, and it is where the irreversible decisions live. Pick the wrong model and you can refactor; pick the wrong tenancy partition and you spend a quarter migrating. The phase ends in a written multi-tenancy decision doc.", "source": "Notes from Udemy: Software Architecture & Design of Modern Large Scale Systems — Michael Pogrebinsky", "foot": "Built from concepts/phase-2-data/", "links": [["The Atlas", "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"], ["The Build Bench", "https://claude.ai/code/artifact/674ef97b-db8f-46c9-9050-06b83ba95e7b"], ["Year One", "https://claude.ai/code/artifact/6f151972-b169-4e67-8676-ef1f3d243b5c"]], "concepts": [{"id": "relational-databases", "t": "Relational Databases", "vault": "concepts/phase-2-data/relational-databases.md", "lede": "Tables of rows identified by primary keys, related through columns, under a predefined schema you query with SQL.", "blocks": [{"h": "Advantages", "items": ["**Complex querying** — SQL produces insight no key lookup can", "**Efficient storage** — relationships between tables remove duplication", "**User-friendly structure** — the tabular model is genuinely intuitive", "**ACID transactions** — atomicity, consistency, isolation, durability: integrity you can rely on"]}, {"h": "Disadvantages", "items": ["**Rigid schema** — changes are costly and can require downtime", "**Complexity and cost** — supporting SQL and ACID raises the maintenance bill", "**Slower reads** than a store purpose-built for one access pattern"]}, {"h": "The worked example", "p": "An online store keeps products and orders. Each product is stored once and referenced by orders through a relationship, rather than copied into every order — that is the whole argument for the model in one sentence."}, {"call": "Choose relational when you need complex queries and ACID guarantees. When relationships are minimal or read performance dominates, look elsewhere — beside it, not instead of it.", "blue": true}], "cards": [["What four properties does ACID stand for?", "Atomicity, Consistency, Isolation, Durability."], ["Your schema changes weekly and you need high-speed reads at massive scale. What are the two main pain points of a relational DB here?", "Rigid schema — changes need downtime — plus slower reads than non-relational stores."], ["An online store stores products and orders. Why does the relational model avoid redundancy?", "Relationships via columns let each record be stored once and referenced, instead of duplicated."], ["You need integrity across multi-step money transfers plus complex analytical queries. Which family, and which two properties make it fit?", "Relational — ACID transactions for integrity and SQL for complex querying."]], "drill": "Year One · The ALTER that locked the table"}, {"id": "non-relational-databases", "t": "Non-relational Databases", "vault": "concepts/phase-2-data/non-relational-databases.md", "lede": "NoSQL emerged in the mid-2000s to answer the limits of the relational model — mainly its rigidity and its read cost at scale.", "blocks": [{"h": "What makes them different", "items": ["**Flexible schemas** — records may differ; adding a new field needs no migration or downtime", "**Native data structures** — lists, arrays and maps map straight onto language constructs, reducing ORM dependence", "**Faster queries** for a specific access pattern — at the cost of harder analysis, because nothing enforces relationships"]}, {"table": {"cols": ["Type", "Strength", "Typical use"], "rows": [["**Key/Value**", "Fast lookup by a unique key", "Caching, sessions, simple retrieval"], ["**Document**", "JSON or XML documents that map to programming constructs", "Nested or varying data, profiles, catalogues"], ["**Graph**", "Relationships between records as first-class objects", "Fraud detection, recommendations"]]}}, {"h": "Where they fit", "p": "Unstructured data, real-time big-data processing and caching. Traditional applications often still prefer relational, for reliability and simplicity."}], "cards": [["Why do NoSQL databases reduce reliance on ORMs?", "They store data in structures — lists, arrays, maps — that map directly to programming-language constructs."], ["You need a cache keyed by token, a store for user profiles as JSON docs, and a friend-recommendation engine. Which three NoSQL types?", "Key/Value, Document, Graph."], ["Your NoSQL model has no enforced relationships and records can differ. What is the cost?", "Complex data analysis — no guaranteed structure and no enforced relationships."]], "drill": "Build Bench · Ten million rows"}, {"id": "database-indexing", "t": "Database Indexing", "vault": "concepts/phase-2-data/database-indexing.md", "lede": "Helper structures that map column values to records, making search and sorting fast on large datasets. Rung one of the scaling ladder, and the rung that ends most scaling arguments.", "blocks": [{"h": "Types", "items": ["**Single-column index** — one column", "**Composite index** — several columns together, for example `user_id` plus `created_at`"]}, {"h": "Trade-offs", "items": ["More **storage** consumed", "**Slower writes** — every write must update the index too"]}, {"svg": "scaling-ladder", "cap": "Indexes, then replicas, then partitioning, then sharding — in that order"}], "cards": [["A query filtering by user_id and created_at is slow at 10M rows. What two index options do you have?", "A single-column index, or a composite index over (user_id, created_at)."], ["You added an index and writes got slower. Why?", "Every write must also update the index — storage and write cost are the trade-off."], ["Besides faster lookups, what do indexes enable?", "Faster searching and sorting on large datasets."]], "drill": "Year One · Shard now?"}, {"id": "database-replication", "t": "Database Replication", "vault": "concepts/phase-2-data/database-replication.md", "lede": "Multiple database instances across different servers — the second rung, and the one that removes your last obvious single point of failure.", "blocks": [{"h": "Benefits", "items": ["**High availability and fault tolerance** — no single point of failure", "**Better load distribution** — reads spread across replicas", "**Improved performance** for read-heavy workloads"]}, {"h": "Costs", "items": ["**Concurrency complexity** — concurrent updates across instances must be managed", "**Data consistency** — every replica has to converge on the same state"]}, {"call": "This is where the CAP trade-off stops being theory: replicas plus a network partition is exactly the situation CAP describes."}], "cards": [["A single DB instance goes down and your app goes with it. What technique, and which two benefits?", "Replication — availability and fault tolerance, by removing the single point of failure."], ["You replicated across three servers, reads are faster, but writers must coordinate. What is the new complexity?", "Managing concurrent updates and ensuring consistency across replicas."]], "drill": "Year One · Shard now?"}, {"id": "database-sharding", "t": "Sharding & Partitioning", "vault": "concepts/phase-2-data/database-sharding.md", "lede": "Splitting data across multiple database instances. The last rung — powerful, and the hardest to walk back.", "blocks": [{"h": "Benefits", "items": ["More **storage capacity** than one instance can hold", "**Parallel query processing** — queries run concurrently across shards"]}, {"h": "Relational versus non-relational", "p": "Straightforward in non-relational databases. Painful in relational ones, because multi-record queries and joins must span shards, and ACID properties are hard to maintain across them."}, {"call": "Climb the ladder in order and measure at every rung. Most products never need this one, and the ones that do arrive with measurements rather than a design doc."}], "cards": [["Why does sharding improve performance beyond just adding capacity?", "Queries can run in parallel across shards."], ["Your relational DB is out of storage, so you split users by ID range across four instances. What technique, and what is harder here than in NoSQL?", "Sharding/partitioning — multi-record queries (joins) and ACID transactions across shards."]], "drill": "Year One · Shard now?"}, {"id": "cap-theorem", "t": "CAP Theorem", "vault": "concepts/phase-2-data/cap-theorem.md", "lede": "During a network partition, a distributed database cannot guarantee both consistency and availability. It must prioritise one — and that choice is yours to make deliberately.", "blocks": [{"h": "The three properties", "items": ["**Consistency** — every read returns the latest write, or an error; all clients see the same value", "**Availability** — every request gets a non-error response, latest or not", "**Partition tolerance** — the system keeps operating despite network failures"]}, {"svg": "cap", "cap": "Partitions are not optional, so the real choice is only ever CP or AP"}, {"h": "Why the trade-off exists", "p": "Take a key-value store with replicas. Normally they agree. During a partition, one service updates a counter on one replica while another replica is cut off. A read can return the outdated value — availability, AP — or return an error — consistency, CP."}, {"h": "What the choices look like", "items": ["**CA** — consistent and available but not partition-tolerant. A centralized database; it limits scalability.", "**CP** — consistent and partition-tolerant, sacrificing availability", "**AP** — available and partition-tolerant, sacrificing consistency"]}, {"call": "Application needs decide it: inventory systems lean towards consistency, social feeds lean towards availability.", "blue": true}], "cards": [["Name the three CAP properties.", "Consistency, Availability, Partition tolerance."], ["Two replicas cannot talk and a service writes to one side. A read returns a stale value. Which trade-off is being made?", "Availability over consistency — AP — a stale value instead of an error."], ["A client demands every read be the latest write or an error, even when replicas are partitioned. Which property wins?", "Consistency — CP — availability is sacrificed during the partition."], ["Why can't a distributed DB offer CA in practice?", "Network partitions are unavoidable — you must tolerate them, and then choose between C and A."]], "drill": "Year One · Whose data is whose, and the consistency it implies"}, {"id": "unstructured-storage", "t": "Unstructured Data Storage", "vault": "concepts/phase-2-data/scalable-unstructured-data-storage.md", "lede": "Where the bytes that do not belong in a database go: uploads, backups, media and training data.", "blocks": [{"h": "The four workloads", "num": ["**User uploads** — images and video for sharing or backup", "**Database backup and archiving** — snapshots for disaster recovery and legal retention", "**Web hosting** — media content delivery", "**Analytics and machine learning** — sensor data and images at scale"]}, {"table": {"cols": ["", "Distributed file system", "Object store"], "rows": [["Shape", "Files across a network, like a local filesystem", "Binary objects at internet scale, large files"], ["Access", "Filesystem semantics", "HTTP REST APIs — trivial for web content"], ["Strength", "Efficient modifications, high-throughput operations", "Scalability and versioning"], ["Limits", "Struggles with very large file counts; no easy web API", "Objects are **immutable**; access needs its own APIs"]]}}, {"h": "Solutions", "items": ["**Cloud** — AWS S3, GCP Cloud Storage, Azure Blob Storage, Alibaba Cloud OSS", "**Open source, S3-compatible** — MinIO, Ceph, OpenIO"]}, {"call": "Rule of thumb: distributed file systems win on high-throughput modification, object stores win on web content and scale."}], "cards": [["Name the four categories of unstructured-data workloads.", "User uploads, DB backups and archives, web hosting, analytics and ML."], ["Users upload millions of large images you serve over the web. Which storage type, and which two features make it fit?", "An object store — internet-scale binary objects plus easy HTTP REST APIs, e.g. S3."], ["You need high-throughput file modifications on a small set of files. Which storage type performs better?", "A distributed file system — efficient modifications and high-performance operations."], ["Why do object stores support versioning but not in-place edits?", "Objects are immutable — a new version replaces the old one through a special API."], ["You need S3-compatible object storage you can run on your own Kubernetes cluster. Which open-source options?", "MinIO, Ceph, OpenIO."]], "drill": "Build Bench · The world shows up"}], "resources": [{"k": "Book · required", "t": "Designing Data-Intensive Applications, ch 1–9", "w": "Kleppmann. The most important book in the plan and the one thing here you truly cannot substitute. ~35 hrs at reading-slowly pace. Chapters 10–12 are excellent but not load-bearing for a transactional SaaS — read them when you have a real analytics or event-pipeline requirement."}, {"k": "Free · required", "t": "Tod Golding's AWS SaaS Factory talks", "w": "Multi-tenant data partitioning, on YouTube, ~3 hrs. There is no better source on this specific decision, at any price."}, {"k": "Only if", "t": "SQL and PostgreSQL: The Complete Developer's Guide", "w": "Grider. Take it **only if** you cannot currently read an `EXPLAIN ANALYZE` plan and reason about index choice. If you can, skip it and save 20 hours."}, {"k": "Phase artifact", "t": "The multi-tenancy decision doc", "w": "Which partitioning model, why, what it costs you at 10 / 1,000 / 10,000 tenants, and what would force a migration. Capstone weeks 9–14, alongside one zero-downtime migration."}, {"k": "Still to capture", "t": "Isolation levels, zero-downtime migrations, caching, tenancy models, retention", "w": "The gaps in this phase. Isolation levels and expand-backfill-contract are the two with the worst consequences if you skip them."}]};
+const SVG={
+"three-tier":'<svg viewBox="0 0 420 210" role="img" aria-label="Three tier architecture"><g font-family="IBM Plex Mono, monospace" font-size="10"><rect x="20" y="12" width="380" height="46" fill="var(--blueBg)" stroke="var(--blue)"/><text x="34" y="32" fill="var(--ink)" font-size="12">Presentation tier</text><text x="34" y="48" fill="var(--ink3)">user interaction only — no business logic</text><rect x="20" y="82" width="380" height="46" fill="var(--redBg)" stroke="var(--red)"/><text x="34" y="102" fill="var(--ink)" font-size="12">Application tier</text><text x="34" y="118" fill="var(--ink3)">business logic — scales horizontally, tends to grow monolithic</text><rect x="20" y="152" width="380" height="46" fill="var(--greenBg)" stroke="var(--green)"/><text x="34" y="172" fill="var(--ink)" font-size="12">Data tier</text><text x="34" y="188" fill="var(--ink3)">storage and persistence</text><path d="M210 58 L210 82 M210 128 L210 152" stroke="var(--ink3)" stroke-width="1"/><path d="M206 76 l4 6 l4 -6 M206 146 l4 6 l4 -6" fill="var(--ink3)"/></g></svg>',
+"cap":'<svg viewBox="0 0 420 250" role="img" aria-label="CAP theorem triangle"><g font-family="IBM Plex Mono, monospace" font-size="10"><path d="M210 30 L370 210 L50 210 Z" fill="none" stroke="var(--rule)" stroke-dasharray="4 4"/><circle cx="210" cy="30" r="6" fill="var(--blue)"/><text x="210" y="18" fill="var(--ink)" font-size="12" text-anchor="middle">Consistency</text><circle cx="370" cy="210" r="6" fill="var(--green)"/><text x="370" y="230" fill="var(--ink)" font-size="12" text-anchor="middle">Availability</text><circle cx="50" cy="210" r="6" fill="var(--amber)"/><text x="50" y="230" fill="var(--ink)" font-size="12" text-anchor="middle">Partition tol.</text><text x="120" y="130" fill="var(--ink2)" text-anchor="middle">CP</text><text x="300" y="130" fill="var(--ink2)" text-anchor="middle">AP</text><text x="210" y="200" fill="var(--ink3)" text-anchor="middle">CA — only without a network</text><text x="210" y="120" fill="var(--ink3)" font-size="9" text-anchor="middle">during a partition</text><text x="210" y="134" fill="var(--ink3)" font-size="9" text-anchor="middle">you pick one side</text></g></svg>',
+"windows":'<svg viewBox="0 0 420 200" role="img" aria-label="Tumbling versus hopping windows"><g font-family="IBM Plex Mono, monospace" font-size="9"><text x="10" y="16" fill="var(--ink)" font-size="11">Tumbling — fixed, no overlap</text><line x1="10" y1="60" x2="410" y2="60" stroke="var(--rule)"/><rect x="10" y="30" width="130" height="24" fill="var(--blueBg)" stroke="var(--blue)"/><rect x="145" y="30" width="130" height="24" fill="var(--blueBg)" stroke="var(--blue)"/><rect x="280" y="30" width="130" height="24" fill="var(--blueBg)" stroke="var(--blue)"/><text x="75" y="46" fill="var(--ink2)" text-anchor="middle">w1</text><text x="210" y="46" fill="var(--ink2)" text-anchor="middle">w2</text><text x="345" y="46" fill="var(--ink2)" text-anchor="middle">w3</text><text x="10" y="96" fill="var(--ink)" font-size="11">Hopping — window &gt; advance, so they overlap</text><line x1="10" y1="180" x2="410" y2="180" stroke="var(--rule)"/><rect x="10" y="108" width="180" height="18" fill="var(--greenBg)" stroke="var(--green)"/><rect x="70" y="130" width="180" height="18" fill="var(--greenBg)" stroke="var(--green)"/><rect x="130" y="152" width="180" height="18" fill="var(--greenBg)" stroke="var(--green)"/><text x="330" y="122" fill="var(--ink3)">one-hour window</text><text x="330" y="144" fill="var(--ink3)">advancing every</text><text x="330" y="156" fill="var(--ink3)">minute</text><path d="M10 186 L410 186" stroke="var(--ink3)" stroke-width=".5"/><text x="10" y="196" fill="var(--ink3)">time →</text></g></svg>',
+"scaling-ladder":'<svg viewBox="0 0 420 190" role="img" aria-label="The database scaling ladder"><g font-family="IBM Plex Mono, monospace" font-size="10"><rect x="10" y="150" width="96" height="30" fill="var(--greenBg)" stroke="var(--green)"/><text x="58" y="169" fill="var(--ink)" text-anchor="middle">indexes</text><rect x="112" y="112" width="96" height="30" fill="var(--blueBg)" stroke="var(--blue)"/><text x="160" y="131" fill="var(--ink)" text-anchor="middle">replicas</text><rect x="214" y="74" width="96" height="30" fill="var(--amberBg)" stroke="var(--amber)"/><text x="262" y="93" fill="var(--ink)" text-anchor="middle">partitioning</text><rect x="316" y="36" width="96" height="30" fill="var(--redBg)" stroke="var(--red)"/><text x="364" y="55" fill="var(--ink)" text-anchor="middle">sharding</text><text x="10" y="24" fill="var(--ink3)">cost, irreversibility and operational pain increase with every rung ↗</text></g></svg>'};
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function md(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/`(.+?)`/g,"<code>$1</code>").replace(/\*(.+?)\*/g,"<em>$1</em>")}
+const KEY="phase"+D.phase+".reviewed.v1";
+let done={};try{done=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){done={}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(done))}catch(e){}};
+const $=s=>document.querySelector(s);
+
+function block(b){
+  let h=b.h?'<h4>'+md(b.h)+'</h4>':"";
+  if(b.items)h+='<ul>'+b.items.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul>';
+  if(b.num)h+='<ol>'+b.num.map(x=>'<li>'+md(x)+'</li>').join("")+'</ol>';
+  if(b.p)h+='<p>'+md(b.p)+'</p>';
+  if(b.table)return '<div class="blk">'+h+'</div><div class="tbl"><table><thead><tr>'+
+    b.table.cols.map(c=>'<th>'+md(c)+'</th>').join("")+'</tr></thead><tbody>'+
+    b.table.rows.map(r=>'<tr>'+r.map(c=>'<td>'+md(c)+'</td>').join("")+'</tr>').join("")+'</tbody></table></div>';
+  if(b.call)return '<div class="call'+(b.blue?" blue":"")+'">'+md(b.call)+'</div>';
+  if(b.svg)return '<figure class="fig">'+SVG[b.svg]+'<figcaption>'+md(b.cap||"")+'</figcaption></figure>';
+  return '<div class="blk">'+h+'</div>';
+}
+function render(){
+  $("#tbPh").textContent=D.phase==="8"?"Capstone":"Phase "+D.phase;
+  $("#tbT").textContent=D.title; $("#tbN").textContent=D.concepts.length;
+  $("#iPh").textContent=(D.phase==="8"?"Capstone":"Phase "+D.phase)+" · "+D.weeks+" · "+
+    D.concepts.reduce((a,c)=>a+(c.cards||[]).length,0)+" recall cards";
+  $("#iT").textContent=D.title; $("#iL").textContent=D.lede;
+  $("#iS").textContent=D.source||"";
+  $("#fnote").textContent=D.foot||"";
+  $("#links").innerHTML=(D.links||[]).map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener">'+l[0]+' ↗</a>').join(" · ");
+  $("#cpts").innerHTML=D.concepts.map((c,i)=>{
+    const cards=(c.cards||[]).map((qa,n)=>'<div class="rc"><div class="q"><span class="m">'+
+      String(n+1).padStart(2,"0")+'</span><span>'+md(qa[0])+'</span></div><div class="a">'+md(qa[1])+'</div></div>').join("");
+    return '<section class="cpt" id="c'+i+'"><div class="top"><h2>'+md(c.t)+'</h2><span class="idx">'+
+      String(i+1).padStart(2,"0")+' / '+String(D.concepts.length).padStart(2,"0")+'</span></div>'+
+      '<p class="lede">'+md(c.lede)+'</p>'+
+      (c.blocks||[]).map(block).join("")+
+      (cards?'<div class="cards"><div class="ch"><span class="lbl">Test yourself · '+c.cards.length+
+        ' cards</span><button data-all="'+i+'">Reveal all</button></div>'+cards+'</div>':"")+
+      '<div class="cfoot"><button class="mark'+(done[c.id]?" on":"")+'" data-m="'+c.id+'">'+
+      (done[c.id]?"Reviewed":"Mark reviewed")+'</button><span class="src">'+esc(c.vault||"")+'</span></div></section>';
+  }).join("");
+  $("#res").innerHTML=(D.resources||[]).map(r=>'<div class="r"><span class="k">'+esc(r.k)+
+    '</span><span class="t">'+md(r.t)+'</span><span class="w">'+md(r.w)+'</span></div>').join("");
+  $("#nav").innerHTML=D.concepts.map((c,i)=>'<li><a href="#c'+i+'" class="'+(done[c.id]?"done":"")+
+    '" data-i="'+i+'"><span class="i">'+String(i+1).padStart(2,"0")+'</span><span>'+esc(c.t)+
+    '</span><span class="d"></span></a></li>').join("");
+  document.querySelectorAll(".rc").forEach(el=>el.onclick=()=>el.classList.toggle("open"));
+  document.querySelectorAll("[data-all]").forEach(b=>b.onclick=()=>{
+    const sec=document.getElementById("c"+b.dataset.all);
+    const any=[...sec.querySelectorAll(".rc")].some(r=>!r.classList.contains("open"));
+    sec.querySelectorAll(".rc").forEach(r=>r.classList.toggle("open",any));
+    b.textContent=any?"Hide all":"Reveal all";
+  });
+  document.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{
+    const id=b.dataset.m; if(done[id])delete done[id]; else done[id]=1;
+    save(); render(); document.getElementById("c"+D.concepts.findIndex(c=>c.id===id)).scrollIntoView({block:"nearest"});
+  });
+  const n=D.concepts.length, r=D.concepts.filter(c=>done[c.id]).length;
+  $("#tbR").textContent=r+" / "+n; $("#pb").style.width=(r/n*100)+"%";
+  observe();
+}
+let io;
+function observe(){
+  if(io)io.disconnect();
+  const links=[...document.querySelectorAll("#nav a")];
+  io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove("on"));
+      const l=links[+e.target.id.slice(1)]; if(l)l.classList.add("on");}});
+  },{rootMargin:"-10% 0px -75% 0px"});
+  document.querySelectorAll(".cpt").forEach(s=>io.observe(s));
+}
+render();
+</script>

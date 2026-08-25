@@ -1,0 +1,343 @@
+<title>The Architect's Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+[hidden]{display:none !important}
+.pad{padding:clamp(18px,3.4vw,36px)}
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:end}
+@media(max-width:840px){.hero{grid-template-columns:1fr;align-items:start}}
+.lede{font-size:1.06rem;color:var(--ink2);max-width:54ch;margin-top:14px}
+.pstat{border:1px solid var(--rule);background:var(--chip);padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.pstat .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:.85rem}
+.pstat .num{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:1.5rem;line-height:1;font-variant-numeric:tabular-nums}
+.pbar{height:9px;background:var(--sheet);border:1px solid var(--rule);display:flex;overflow:hidden}
+.pbar i{display:block;height:100%}
+.pbar .s{background:var(--green)} .pbar .k{background:var(--amber)} .pbar .c{background:var(--blueLine)}
+.secthead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:14px;margin-top:8px}
+.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:14px;margin-top:18px}
+.st{border:1px solid var(--rule);background:var(--sheet);padding:13px 14px;display:flex;flex-direction:column;gap:9px;position:relative}
+.st.now{border-color:var(--blue);box-shadow:inset 0 3px 0 var(--blue)}
+.st .hd{display:flex;align-items:baseline;gap:9px}
+.st .no{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:1.9rem;line-height:.9;color:var(--rule);letter-spacing:-.02em}
+.st.now .no{color:var(--blue)}
+.st h3{font-size:1.08rem;letter-spacing:.02em}
+.st .wk{font-family:"IBM Plex Mono",monospace;font-size:.63rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:.75rem;border:1px solid var(--rule);background:var(--sheet);color:var(--ink2);padding:3px 8px 3px 6px;
+  display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-family:inherit;text-align:left}
+.chip:hover{border-color:var(--ink2);color:var(--ink)}
+.chip.ghost{border-style:dashed;color:var(--ink3)}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--rule);flex:none}
+.chip.cap .dot{background:var(--blueLine)} .chip.k .dot{background:var(--amber)} .chip.s .dot{background:var(--green)}
+.chip.s{border-color:var(--green);color:var(--ink)}
+.chip.k{border-color:var(--amber)}
+.drawer{position:fixed;inset:0;background:rgba(9,15,21,.6);display:flex;justify-content:flex-end;z-index:50}
+.drawer .panel{background:var(--sheet);border-left:1px solid var(--rule);width:min(560px,100%);height:100%;overflow:auto;box-shadow:var(--lift)}
+@media(max-width:600px){.drawer{align-items:flex-end}.drawer .panel{height:88%;border-left:0;border-top:1px solid var(--rule)}}
+.dhd{position:sticky;top:0;background:var(--sunk);border-bottom:1px solid var(--rule);padding:14px 18px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.dbody{padding:18px;display:flex;flex-direction:column;gap:16px}
+.rc{border:1px solid var(--rule);background:var(--chip);padding:0;cursor:pointer;text-align:left;font-family:inherit;color:var(--ink);width:100%}
+.rc .q{padding:11px 13px;font-size:.9rem;display:flex;gap:10px;align-items:flex-start}
+.rc .q .m{font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--ink3);padding-top:3px}
+.rc .a{border-top:1px dashed var(--rule);padding:11px 13px;font-size:.88rem;color:var(--ink2);background:var(--sheet);display:none}
+.rc.open .a{display:block}
+.rc:hover{border-color:var(--blue)}
+.mast{display:flex;gap:6px;flex-wrap:wrap}
+.mast button{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.07em;text-transform:uppercase;
+  border:1px solid var(--rule);background:var(--sheet);color:var(--ink2);padding:5px 10px;cursor:pointer}
+.mast button.on{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.sims{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+@media(max-width:720px){.sims{grid-template-columns:1fr}}
+.sim{border:1px solid var(--rule);background:var(--chip);padding:18px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:transform .14s ease,border-color .14s}
+.sim:hover{border-color:var(--blue);transform:translateY(-2px)}
+.sim h3{font-size:1.45rem}
+.sim p{font-size:.9rem;color:var(--ink2)}
+.sim .go{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:18px}
+.note{border:1px solid var(--rule);background:var(--sheet);padding:14px;display:flex;flex-direction:column;gap:8px}
+.note h4{font-size:1rem;letter-spacing:.02em}
+.note p{font-size:.87rem;color:var(--ink2)}
+.calc{font-family:"IBM Plex Mono",monospace;font-size:.78rem;background:var(--chip);border:1px solid var(--rule);padding:10px;display:flex;flex-direction:column;gap:4px}
+.calc .t{display:flex;justify-content:space-between;gap:10px}
+.calc .t b{font-variant-numeric:tabular-nums}
+.calc .tot{border-top:1px solid var(--rule);padding-top:4px;margin-top:2px;color:var(--red)}
+.week{display:flex;flex-direction:column;gap:0;margin-top:18px;border:1px solid var(--rule)}
+.day{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:12px 14px;border-bottom:1px solid var(--rule2);align-items:baseline}
+.day:last-child{border-bottom:0}
+@media(max-width:560px){.day{grid-template-columns:1fr;gap:2px}}
+.day .w{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.86rem}
+.day p{font-size:.88rem;color:var(--ink2)}
+.foot{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:14px 18px;border-top:1px solid var(--rule);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
+.foot a{color:var(--blue)}
+</style>
+.sheetlink{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--blue);text-decoration:none;border-top:1px solid var(--rule2);padding-top:8px;margin-top:2px}
+.sheetlink:hover{border-top-color:var(--blue)}
+</style>
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Sheet</span><span class="v">00 · Index</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v">The Architect's Atlas</span></div>
+    <div class="tcell"><span class="lbl">Captured</span><span class="v" id="tbCap">—</span></div>
+    <div class="tcell"><span class="lbl">Solid</span><span class="v" id="tbSol">—</span></div>
+  </header>
+
+  <section class="pad hero">
+    <div>
+      <span class="lbl" id="eyebrow"></span>
+      <h1 style="margin-top:10px">Everything you are learning, on one sheet</h1>
+      <p class="lede">Blue chips are in your vault — open one to read it and test yourself on your own cards, without opening Obsidian. Dashed chips are territory you have not reached yet; open them to see what they are and where they get drilled. Phases with enough notes have a full study sheet of their own.</p>
+    </div>
+    <div class="pstat">
+      <div class="row"><span class="lbl">Captured in the vault</span><span class="num" id="sCap">0</span></div>
+      <div class="row"><span class="lbl">Marked solid</span><span class="num" id="sSol">0</span></div>
+      <div class="pbar"><i class="s" id="bS" style="width:0"></i><i class="k" id="bK" style="width:0"></i><i class="c" id="bC" style="width:0"></i></div>
+      <span class="lbl">green solid · amber shaky · blue captured, untested</span>
+    </div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="secthead"><h2>The map</h2><span class="lbl">Click any concept</span></div>
+    <div class="map" id="map"></div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="secthead"><h2>Where you read</h2><span class="lbl">One sheet per phase, built from your notes</span></div>
+    <div class="sims" id="sheets"></div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="secthead"><h2>Where you practise</h2><span class="lbl">Recognition is not the same as production</span></div>
+    <div class="sims" id="sims"></div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="secthead"><h2>Reviewer's notes on the plan</h2><span class="lbl">Rev B · the trim already happened</span></div>
+    <div class="notes">
+      <div class="note">
+        <span class="lbl">Arithmetic</span>
+        <h4>It now fits, with about eighty hours of slack</h4>
+        <div class="calc">
+          <div class="t"><span>~8 months x 7 hrs</span><b>230 h</b></div>
+          <div class="t"><span>4 required books</span><b>~110 h</b></div>
+          <div class="t"><span>4 tool courses + free sources</span><b>~40 h</b></div>
+          <div class="t"><span>the capstone, run throughout</span><b>~80 h</b></div>
+          <div class="t tot"><span>required</span><b>~230 h</b></div>
+        </div>
+        <p>Rev A was oversubscribed roughly two and a half times, which meant you would have dropped things at random rather than on purpose. The list is now four books, four pick-one pairs and four tool courses. Every nice-to-have you add back comes out of capstone time.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Sequence</span>
+        <h4>The capstone starts in week three</h4>
+        <p>It used to sit in month six, which left five months of input with no feedback — the way study plans quietly fail. It now runs the whole length and each phase lands in it: C4 and ADRs by week eight, a tenancy model by fourteen, billing by nineteen, a tested rollback by twenty-five. If you already have a real product in flight, use it; a live multi-tenant system beats a throwaway invoicing app.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Rule</span>
+        <h4>Books for judgment, video for tools</h4>
+        <p>Reversed from Rev A's start-with-a-course instinct. Architecture, data modelling, multi-tenancy and resilience are trade-off skills and they live in long-form writing. Docker, Terraform, CI/CD and cloud services are muscle memory and they live in video. The first three phases have almost no video in them on purpose.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Additions</span>
+        <h4>Four topics the first draft was missing</h4>
+        <p>Testing strategy — the largest gap, and it sits in phase 5. Cost per tenant, because an architect who cannot say what the worst tenant costs is missing half the job. Third-party integration architecture. And contract design for clients you cannot force-update, which is the phase 1 topic that bites hardest eighteen months later.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Evidence</span>
+        <h4>Your phase numbers are already fiction</h4>
+        <p>You have notes on load balancers and CDNs — phase 6 material — because one phase 0 course covered them. That is not a mistake, it is how the territory actually connects. Treat the phases as a syllabus to pull from, not a schedule to march through.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Gap</span>
+        <h4>Reading is recognition; the sims are production</h4>
+        <p>The phase sheets are for reading and self-testing — that is recognition-level work, and it is necessary. Nothing there makes you produce a design under constraints or live with a decision after you make it, which is what the Build Bench and Year One exist for. Do both or the reading will feel like progress it is not.</p>
+      </div>
+      <div class="note">
+        <span class="lbl">Cut list</span>
+        <h4>What Rev B dropped, and why</h4>
+        <p>The Pragmatic Programmer — you are past it. Clean Architecture — subsumed by Richards &amp; Ford. Pogrebinsky's second course — overlaps the first. Alex Xu Vol. 2 — interview-oriented. Working Effectively with Legacy Code — a year-three book. Kubernetes demoted to vocabulary. And a Build-a-SaaS course, if you are already building one.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" style="padding-top:0">
+    <div class="secthead"><h2>The week, rebuilt</h2><span class="lbl">Four hours, three of them fun</span></div>
+    <div class="week">
+      <div class="day"><span class="w">Mon – Thu</span><p><strong>45 minutes of course or book. Paste the raw notes into the phase's <span class="mono">_inbox.md</span>.</strong> No decisions about where things go while you are studying — that part of your system already works.</p></div>
+      <div class="day"><span class="w">When the inbox fills</span><p><strong>Ask Claude to distribute it.</strong> The notes become concept files and get merged into this phase's sheet, which is republished at the same link. You never have to open a note to review it.</p></div>
+      <div class="day"><span class="w">One evening</span><p><strong>One commission on the Build Bench</strong> for the phase you are in. Fifteen minutes. If the review comes back rejected, the requirements it flagged tell you what to read next — a far better reading list than the one you wrote in advance.</p></div>
+      <div class="day"><span class="w">Sunday · 20 min</span><p><strong>Open your phase sheet and take the blank page.</strong> Pick a concept, write it from memory, then reveal its cards and diff. Anything you could not produce gets marked shaky here on the map.</p></div>
+      <div class="day"><span class="w">Sunday · 10 min</span><p><strong>Play Year One.</strong> Ten minutes, seventeen decisions, and it ends by telling you which principles you paid for. Those go on next week's list.</p></div>
+      <div class="day"><span class="w">Per phase</span><p><strong>Come back here and re-mark the map.</strong> Anything still amber after a phase closes is the thing to over-study; anything green early can be left alone for a month.</p></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Built from the notes in your vault · rebuilt every time new notes are distributed</span>
+    <span><a href="#" id="reset">Reset my marks</a></span>
+  </footer>
+</div>
+</div>
+<div class="drawer" id="drawer" hidden></div>
+<script>
+const A={"phases": [{"n": "00", "t": "Orientation", "w": "1 week · ~4 hrs", "now": 0, "sheet": null, "cs": [{"i": "lifecycle", "t": "The product lifecycle", "e": "Idea, design, build, deploy, operate, scale, maintain. Most engineers can do three of the seven; an architect is judged on the other four.", "d": "Year One walks the whole loop in one sitting"}, {"i": "tradeoff", "t": "Trade-off thinking", "e": "Every architectural decision buys something and costs something. If you cannot name what a choice costs, you have not understood it yet — you have only heard of it.", "d": "Every trade-off chapter in Year One"}, {"i": "unknowns", "t": "Things I don't know I don't know", "e": "The phase artifact: one page of named gaps, written in week one and revisited at the end. Phase 0 is now a single week — read the Fundamentals table of contents and chapters 1–4, and stop."}]}, {"n": "01", "t": "Architecture & Design", "w": "6 weeks · ~45 hrs", "now": 1, "sheet": "https://claude.ai/code/artifact/59673390-3b25-411f-ab78-508abaf0ffa8", "cs": [{"i": "architectural-drivers", "t": "Architectural Drivers", "cap": 1, "e": "The user does not always know what they need — but they know the problem. Gathering requirements early is critical because the cost of change grows over time.", "c": [["You are in a design meeting. The PM lists features, the CTO asks what determines the architecture. Which requirement type?", "Non-functional requirements — the quality attributes."], ["Your startup has a strict budget, must use AWS, and handles EU user data. Which three constraint types?", "Business (budget), technical (AWS), regulatory (GDPR)."], ["A PM wants to change a core feature after six months of development. Why is this costly?", "The cost of change grows over time — late requirement changes cost more in time, money and reputation."]], "d": "Year One · The kickoff"}, {"i": "requirement-gathering", "t": "Requirement Gathering", "cap": 1, "e": "Use cases describe a situation in which the system is used. User flows turn each one into a step-by-step sequence of events.", "c": [["You are designing a login system. Walk the three steps to capture requirements via use cases.", "Identify actors (users, admins) → capture use cases (login, reset password) → create user flows with an action and data per event."], ["During API design a colleague says they are not sure which endpoints are needed. Which earlier artifact would have mapped that out?", "User flows — each action maps to an API call."], ["Your team needs to visualize how a user and the database interact over time during checkout. Which UML diagram?", "A sequence diagram."]], "d": "Build Bench · Cold start"}, {"i": "quality-attributes", "t": "Quality Attributes", "cap": 1, "e": "Systems get redesigned not because a feature was missing, but because the system is not fast enough, does not scale, is slow to develop, is hard to maintain, or is not secure enough.", "c": [["Your API reports an average response time of 200ms but P99 is 2s. Why is the average misleading?", "Averages hide tail latency — use percentile distributions (P99, P95) to see true performance under load."], ["Your monolith is struggling under load. What is the quick cheap fix versus the scalable long-term fix?", "Vertical — a bigger machine, cheap but a finite ceiling. Horizontal — more machines, complex but near-unlimited."], ["A client demands 99.99% availability. What is the maximum yearly downtime?", "About 52.6 minutes — four nines."], ["Your system has MTBF = 720h and MTTR = 4h. Calculate availability.", "720 / 724 = 99.45%."], ["Your payment service runs on a single server and it crashes. Which fault tolerance tactic was missing?", "Failure prevention — run on multiple servers, active-passive or active-active."], ["The ops team argues about whether they met the contract. Which term is the contract, the target, and the measurement?", "SLA is the contract, SLO the target, SLI the measurement."]], "d": "Year One · The number in the contract"}, {"i": "multi-tier-architecture", "t": "Multi-Tier Architecture", "cap": 1, "e": "Organizes a system into tiers, each running on its own infrastructure. Multi-tier (separate infrastructure) is routinely confused with multi-layer (internal separation inside one application).", "c": [["Your team says they split controllers from services so they are multi-tier. Why is that actually multi-layer?", "Multi-layer is internal separation within one application; multi-tier means separate infrastructure per tier."], ["Your three-tier app's application tier has grown huge and deploys are slow. What is the known failure mode?", "The application tier becomes monolithic, hurting performance and slowing development."], ["Which tier must never expose business logic?", "The presentation tier — it only handles user interaction."]], "d": "Build Bench · Cold start"}, {"i": "microservices", "t": "Microservices", "cap": 1, "e": "Small, independently deployable services, each owning one business capability and its own database.", "c": [["Your team of 30 is stuck: merge conflicts, slow deploys, one failing service takes the whole app down. What shift, and which two problems does it fix?", "Microservices — independent teams and deployments, plus fault isolation."], ["An attacker compromises one microservice. Why does the whole app not fall?", "Fault isolation — the issue is contained within that single service."], ["Two microservices share one database and every schema change breaks the other. Which best practice was violated?", "Each service should own its separate database to avoid coupling."], ["A junior engineer proposes splitting a two-service app into twenty microservices on day one. What is the counter-argument?", "Microservices add complexity — start monolithic and split when complexity warrants it, or you build a Big Ball of Mud."]], "d": "Year One · The first cut"}, {"i": "api-design", "t": "API Design", "cap": 1, "e": "APIs are the contract between you and everyone who calls you. Once published, the contract is harder to change than the code behind it.", "c": [["Your startup builds a payment API. Banks get special terms, internal microservices use it, and any dev can try it. Which API type for each?", "Partner (banks), private (internal), public (open developers)."], ["A user clicks place order twice and gets charged twice. Which design practice was violated?", "Idempotency — repeated requests should produce the same result."], ["Your API returns 10k records and times out. What pattern fixes this?", "Pagination — return data in smaller segments."], ["Your backend service needs fast, typed, bidirectional calls to another service. REST or RPC?", "RPC — specifically gRPC, with HTTP/2 and Protocol Buffers."], ["Third-party developers need a public API to access your platform. REST or gRPC?", "REST — resource-oriented, cacheable, stateless, widely adopted for public APIs."], ["What transport protocol and IDL does gRPC use?", "HTTP/2 as transport, Protocol Buffers as the interface description language."]], "d": "Year One · The partner API, and Charged twice"}, {"i": "api-gateway", "t": "API Gateway", "cap": 1, "e": "A single entry point that manages the complexity of a system with many services.", "c": [["Your 15 microservices require every client to handle auth, rate limiting and service discovery. What solves this?", "An API gateway — one entry point centralising auth, routing, rate limiting and monitoring."], ["A junior dev adds discount calculation logic to the API gateway. What is the problem?", "Business logic in the gateway turns it into a monolith and a single point of failure."]], "d": "Build Bench · Cold start, and the trap in Black Friday"}, {"i": "message-brokers", "t": "Message Brokers", "cap": 1, "e": "Asynchronous communication that decouples the sender from the receiver — the single most useful move in this phase.", "c": [["Your order service calls payment and notification synchronously. During a flash sale, payments slow down and orders queue up. What pattern, and how does it help?", "A message broker — it decouples sender from receiver so the order service does not block on slow dependencies."], ["A new analytics team wants to consume order events without modifying the order service. How?", "Pub/Sub via a message broker — add a subscriber without changing the producer."], ["You need a high-throughput event stream for real-time analytics across 50 microservices. Kafka or RabbitMQ?", "Apache Kafka — built for distributed event streaming at scale."]], "d": "Build Bench · Black Friday"}, {"i": "event-driven-architecture", "t": "Event-Driven Architecture", "cap": 1, "e": "Services communicate through events — immutable statements of change — instead of direct API calls.", "c": [["What are the three components of event-driven architecture?", "Producers (emitters), consumers, and an event channel (message broker)."], ["A banking app needs fraud detection and push notifications without modifying the account service. Which architecture?", "Event-driven — new consumers subscribe to existing event streams."], ["Why are events called immutable statements of change?", "They represent facts that already happened — never overwritten or mutated like state."], ["You need a full audit trail and the ability to reconstruct past states. Which pattern stores events instead of current state?", "Event sourcing — replay stored events to rebuild state."]], "d": "Build Bench · Black Friday"}, {"i": "event-stream-processing", "t": "Event Stream Processing", "cap": 1, "e": "Continuous processing of an infinite stream of events in real time — for anomaly detection, fraud detection and live metrics, where a delayed answer is a useless answer.", "c": [["A fraud event happened at 12:00:00, reached your consumer at 12:00:09 and was processed at 12:00:11. Name the three timestamps.", "Event time, application/arrival time, processing time."], ["Why can't you just use processing time for stream analytics?", "Events arrive late and out of order — processing time attributes an event to the wrong period."], ["You need the hourly error rate refreshed every minute. Which windowing strategy, with what parameters?", "A hopping window — one-hour duration with a one-minute advance interval."], ["You want each event counted exactly once in simple fixed buckets. Which strategy?", "Tumbling windows — fixed, non-overlapping intervals."], ["Your hopping windows are eating memory and CPU. Why?", "Overlapping windows must all be maintained at once, and each produces results."], ["One card transaction looks fine on its own, but the account is being defrauded. What does stream processing add?", "Aggregation across a window — patterns across several events that no single event reveals."]], "d": "Build Bench · Black Friday, the analytics consumer"}, {"i": "lambda-kappa", "t": "Lambda & Kappa Architecture", "cap": 1, "e": "Two answers to one tension: complete and accurate over all history, versus an answer about three seconds ago. Lambda runs a batch and a speed pipeline and merges them at read time; Kappa argues a retained log makes the batch half unnecessary.", "c": [["Your nightly job produced a wrong number because the logic had a bug. Why is this recoverable in batch but painful in streaming?", "Batch keeps the immutable master dataset — fix the code and rerun. A stream processed each event once in flight, so there is nothing to recompute from unless the log itself is retained."], ["Lambda's speed layer uses approximations. Why is that acceptable?", "Its errors are transient — every real-time view is eventually overwritten by a correct batch view covering the same window."], ["Which Lambda layer is the source of truth, and which is the stopgap?", "The batch layer is the source of truth; the speed layer only covers the gap since the last batch run."], ["Your batch and speed layers report different conversion numbers for the same hour. What kind of bug is this?", "A divergence bug — the structural consequence of implementing the same business logic twice in two frameworks. It is Lambda's main cost, not a one-off mistake."], ["You need to recompute a metric after a logic fix and you have no batch layer. How does Kappa handle it?", "Replay the retained log from the beginning through the new version of the streaming job — the log *is* the master dataset."], ["You are designing a new analytics pipeline today. Lambda or Kappa, and what would change your mind?", "Start with Kappa — one codebase, one framework. Add a batch layer only for regulatory reconciliation, backfills older than log retention, or genuinely different historical-vs-live algorithms."]], "d": "Build Bench · Ten million rows"}, {"i": "cqrs", "t": "CQRS", "cap": 1, "e": "Command Query Responsibility Segregation: separate the operations that modify data from the operations that read it.", "c": [["Your single DB contends under mixed heavy reads and writes and transactions slow down. Which pattern, and how does it help?", "CQRS — separate read and write paths into dedicated services and databases, each optimized for its workload."], ["After splitting reads and writes, a user's new post is not visible yet on the read side. What is this, and how is it resolved?", "Eventual consistency — pair CQRS with event sourcing so consumers update the read state from events."], ["A ranking service needs votes and comments data without hammering those services. How?", "Subscribe to their events instead of making direct service calls."]], "d": "Build Bench · Ten million rows"}, {"i": "styles", "t": "Hexagonal, modular monolith, serverless", "e": "The styles the course did not cover: ports and adapters, the modular monolith as a deliberate choice, and when serverless earns its constraints.", "d": "Build Bench · Cold start"}, {"i": "ddd", "t": "Strategic DDD", "e": "Bounded contexts, ubiquitous language, aggregates. Enough to keep a growing codebase organised by business capability rather than by technical layer.", "d": "Build Bench · Cold start"}, {"i": "c4", "t": "C4 and ADRs", "e": "Four zoom levels for diagrams, and a one-page record per decision: context, options, decision, consequences. The consequences section is the one that earns its keep.", "d": "Build Bench · Cold start requires it"}, {"i": "contracts", "t": "Contracts for clients you can't force-update", "e": "Mobile apps live in the wild for months on old versions. Versioning strategy, tolerant readers, feature negotiation, and what deprecate means when 8% of users are still on v1.", "d": "Year One · The version you cannot kill"}]}, {"n": "02", "t": "Data", "w": "6 weeks · ~48 hrs", "now": 0, "sheet": "https://claude.ai/code/artifact/c28d2dd1-5735-4dc9-9307-b1b87b51dc91", "cs": [{"i": "relational-databases", "t": "Relational Databases", "cap": 1, "e": "Tables of rows identified by primary keys, related through columns, under a predefined schema you query with SQL.", "c": [["What four properties does ACID stand for?", "Atomicity, Consistency, Isolation, Durability."], ["Your schema changes weekly and you need high-speed reads at massive scale. What are the two main pain points of a relational DB here?", "Rigid schema — changes need downtime — plus slower reads than non-relational stores."], ["An online store stores products and orders. Why does the relational model avoid redundancy?", "Relationships via columns let each record be stored once and referenced, instead of duplicated."], ["You need integrity across multi-step money transfers plus complex analytical queries. Which family, and which two properties make it fit?", "Relational — ACID transactions for integrity and SQL for complex querying."]], "d": "Year One · The ALTER that locked the table"}, {"i": "non-relational-databases", "t": "Non-relational Databases", "cap": 1, "e": "NoSQL emerged in the mid-2000s to answer the limits of the relational model — mainly its rigidity and its read cost at scale.", "c": [["Why do NoSQL databases reduce reliance on ORMs?", "They store data in structures — lists, arrays, maps — that map directly to programming-language constructs."], ["You need a cache keyed by token, a store for user profiles as JSON docs, and a friend-recommendation engine. Which three NoSQL types?", "Key/Value, Document, Graph."], ["Your NoSQL model has no enforced relationships and records can differ. What is the cost?", "Complex data analysis — no guaranteed structure and no enforced relationships."]], "d": "Build Bench · Ten million rows"}, {"i": "database-indexing", "t": "Database Indexing", "cap": 1, "e": "Helper structures that map column values to records, making search and sorting fast on large datasets. Rung one of the scaling ladder, and the rung that ends most scaling arguments.", "c": [["A query filtering by user_id and created_at is slow at 10M rows. What two index options do you have?", "A single-column index, or a composite index over (user_id, created_at)."], ["You added an index and writes got slower. Why?", "Every write must also update the index — storage and write cost are the trade-off."], ["Besides faster lookups, what do indexes enable?", "Faster searching and sorting on large datasets."]], "d": "Year One · Shard now?"}, {"i": "database-replication", "t": "Database Replication", "cap": 1, "e": "Multiple database instances across different servers — the second rung, and the one that removes your last obvious single point of failure.", "c": [["A single DB instance goes down and your app goes with it. What technique, and which two benefits?", "Replication — availability and fault tolerance, by removing the single point of failure."], ["You replicated across three servers, reads are faster, but writers must coordinate. What is the new complexity?", "Managing concurrent updates and ensuring consistency across replicas."]], "d": "Year One · Shard now?"}, {"i": "database-sharding", "t": "Sharding & Partitioning", "cap": 1, "e": "Splitting data across multiple database instances. The last rung — powerful, and the hardest to walk back.", "c": [["Why does sharding improve performance beyond just adding capacity?", "Queries can run in parallel across shards."], ["Your relational DB is out of storage, so you split users by ID range across four instances. What technique, and what is harder here than in NoSQL?", "Sharding/partitioning — multi-record queries (joins) and ACID transactions across shards."]], "d": "Year One · Shard now?"}, {"i": "cap-theorem", "t": "CAP Theorem", "cap": 1, "e": "During a network partition, a distributed database cannot guarantee both consistency and availability. It must prioritise one — and that choice is yours to make deliberately.", "c": [["Name the three CAP properties.", "Consistency, Availability, Partition tolerance."], ["Two replicas cannot talk and a service writes to one side. A read returns a stale value. Which trade-off is being made?", "Availability over consistency — AP — a stale value instead of an error."], ["A client demands every read be the latest write or an error, even when replicas are partitioned. Which property wins?", "Consistency — CP — availability is sacrificed during the partition."], ["Why can't a distributed DB offer CA in practice?", "Network partitions are unavoidable — you must tolerate them, and then choose between C and A."]], "d": "Year One · Whose data is whose, and the consistency it implies"}, {"i": "unstructured-storage", "t": "Unstructured Data Storage", "cap": 1, "e": "Where the bytes that do not belong in a database go: uploads, backups, media and training data.", "c": [["Name the four categories of unstructured-data workloads.", "User uploads, DB backups and archives, web hosting, analytics and ML."], ["Users upload millions of large images you serve over the web. Which storage type, and which two features make it fit?", "An object store — internet-scale binary objects plus easy HTTP REST APIs, e.g. S3."], ["You need high-throughput file modifications on a small set of files. Which storage type performs better?", "A distributed file system — efficient modifications and high-performance operations."], ["Why do object stores support versioning but not in-place edits?", "Objects are immutable — a new version replaces the old one through a special API."], ["You need S3-compatible object storage you can run on your own Kubernetes cluster. Which open-source options?", "MinIO, Ceph, OpenIO."]], "d": "Build Bench · The world shows up"}, {"i": "isolation", "t": "Isolation levels & locking", "e": "What each isolation level does and does not protect you from, and what a lock actually blocks. The most useful hour of database study you will ever spend.", "d": "Build Bench · Ten million rows"}, {"i": "tenancy", "t": "Multi-tenancy data models", "e": "Shared schema with a tenant_id, schema per tenant, or database per tenant. Cost, isolation, noisy neighbours, compliance and migration pain all move together — and real products tier them.", "d": "Year One · Whose data is whose"}, {"i": "mig", "t": "Zero-downtime migrations", "e": "Expand, backfill, contract. Batched and resumable. The technique that makes a growing schema compatible with an availability promise.", "d": "Year One · The ALTER that locked the table"}, {"i": "cache", "t": "Caching patterns", "e": "Layers, cache-aside versus write-through, and invalidation — which is the hard half and the reason a cache is a decision rather than a default.", "d": "Build Bench · Ten million rows"}, {"i": "olap", "t": "OLTP versus OLAP", "e": "Search engines, warehouses and read replicas. Add the right tool beside the relational store rather than bending the model.", "d": "Build Bench · Ten million rows"}, {"i": "audit", "t": "Audit trails & soft deletes", "e": "Who changed what, when, and how to undo a human mistake without a restore. Cheap to add early, expensive to retrofit.", "d": "Year One · The restore"}]}, {"n": "03", "t": "SaaS Mechanics", "w": "5 weeks · ~38 hrs", "now": 0, "sheet": null, "cs": [{"i": "tid", "t": "Tenant identity & routing", "e": "Resolve the tenant at the edge of the request and carry it everywhere. Onboarding, provisioning and per-tenant configuration all hang off this one decision.", "d": "Build Bench · Now make it a SaaS"}, {"i": "oauth", "t": "OAuth2 / OIDC", "e": "Which flow for which client, what a token actually asserts, and why the answer changes for a mobile app, a SPA and a machine. Worth a dedicated week.", "d": "Build Bench · Now make it a SaaS"}, {"i": "sso", "t": "SSO & SAML", "e": "The thing enterprise buyers ask for before they ask about your product. Old, verbose, and non-negotiable in deals above a certain size.", "d": "Year One · The security questionnaire"}, {"i": "rbac", "t": "RBAC to ABAC", "e": "Roles until roles stop expressing the policy, then attributes. Know where the line is before a customer finds it for you.", "d": "Build Bench · Now make it a SaaS"}, {"i": "billing", "t": "Billing & subscriptions", "e": "Metering, plans, proration, dunning, trials. What you charge for decides what you must measure, so it is an architectural decision wearing a commercial hat.", "d": "Year One · How the money works"}, {"i": "pricing", "t": "Pricing ↔ architecture coupling", "e": "You cannot bill per seat if you never modelled seats; you cannot offer a usage tier if you never metered. Pricing decisions are schema decisions made eighteen months early.", "d": "Year One · How the money works"}, {"i": "cost", "t": "Cost per tenant", "e": "Cost per tenant, cost per active user, and which infra line items scale with tenants rather than with usage. An architect who cannot answer what does our worst tenant cost us is missing half the job.", "d": "Year One · How the money works"}, {"i": "flags", "t": "Feature flags & rollouts", "e": "Decoupling deploy from release. The foundation under gradual rollout, per-tenant enablement and any A/B work later.", "d": "Build Bench · Now make it a SaaS"}, {"i": "metrics", "t": "MRR, churn, NRR", "e": "The business language. An architecture that cannot report these cannot be steered by the people paying for it.", "d": "Year One · How the money works"}, {"i": "vendors", "t": "Third-party integration architecture", "e": "Payment gateways, notification providers, external APIs. Provider abstraction, webhook ingestion — idempotency, replay, ordering — graceful degradation when a vendor is down, and how to stop one becoming un-swappable.", "d": "Build Bench · The world shows up"}]}, {"n": "04", "t": "Delivery & Cloud", "w": "6 weeks · ~45 hrs", "now": 0, "sheet": null, "cs": [{"i": "docker", "t": "Containers", "e": "Images, layers, compose, registries. The unit of the same thing everywhere.", "d": "Build Bench · Ship it twice a day"}, {"i": "cicd", "t": "CI/CD & deploy strategies", "e": "Pipelines, environments, blue-green and canary, rollbacks, trunk-based development. Build once, promote the same artifact.", "d": "Build Bench · Ship it twice a day"}, {"i": "k8s", "t": "Kubernetes — vocabulary only", "e": "Pods, deployments, services, ingress, why autoscaling works. Enough to read an architecture doc and not be bluffed. You do not need to operate it — take the course sections only if you have a concrete plan to deploy on it within six months.", "d": "Year One · Ship it"}, {"i": "iac", "t": "Infrastructure as code", "e": "Declarative infrastructure, state, modules. The difference between losing a region and having an afternoon.", "d": "Build Bench · Ship it twice a day"}, {"i": "aws", "t": "One cloud, deeply", "e": "VPC and networking, compute options, managed databases, object storage, load balancers, IAM. Depth in one beats a tour of three.", "d": "Build Bench · The world shows up"}, {"i": "secrets", "t": "Secrets & parity", "e": "Injected credentials, versioned artifacts, environments that differ in size rather than in shape.", "d": "Build Bench · Ship it twice a day"}]}, {"n": "05", "t": "Operate & Maintain", "w": "5 weeks · ~38 hrs", "now": 0, "sheet": null, "cs": [{"i": "obs", "t": "Observability", "e": "Logs, metrics and traces answer three different questions and you need all three. Structured logs, dashboards, and alerts that do not cry wolf.", "d": "Build Bench · The pager"}, {"i": "testing", "t": "Testing strategy", "e": "What to unit versus integration versus end-to-end test and why the ratio matters, testing multi-tenant isolation specifically, seeding realistic tenant data, contract testing between services and clients, and test environments that do not rot.", "d": "Build Bench · The audit"}, {"i": "slo", "t": "SLIs, SLOs & error budgets", "e": "You have the SLA/SLO/SLI definitions from phase 1. What is missing is the error budget: the arithmetic that decides when to stop shipping features and fix reliability.", "d": "Year One · Forty alerts a day"}, {"i": "incident", "t": "Incident response", "e": "On-call rotation, runbooks written before 3am, and blameless postmortems — blameless because blame reduces the information you get, not the incidents.", "d": "Year One · The postmortem"}, {"i": "resil", "t": "Resilience patterns", "e": "Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, graceful degradation, backpressure. Retries without backoff are an amplifier, not a fix.", "d": "Year One · Black Friday"}, {"i": "dr", "t": "Backups, RPO & RTO", "e": "How much data you may lose, and how long recovery may take. Both are claims until a drill turns them into measurements.", "d": "Year One · The restore"}, {"i": "legacy", "t": "Long-term maintenance", "e": "Dependency updates, a tech-debt budget, deprecation strategy, and refactoring legacy code without a rewrite.", "d": "Year One · The first cut"}]}, {"n": "06", "t": "Scale", "w": "4 weeks · ~30 hrs", "now": 0, "sheet": "https://claude.ai/code/artifact/fb4c2c7d-6646-44ed-b7a5-1409b6038962", "cs": [{"i": "load-balancers", "t": "Load Balancers", "cap": 1, "e": "Distributes traffic across servers to prevent overload — and quietly buys you three other quality attributes at the same time.", "c": [["Traffic spikes and one server dies. Users report errors. What pattern solves both problems, and which two features?", "A load balancer — horizontal scaling for the spike, health checks to route around the dead server."], ["You need to deploy a new version without downtime. How does a load balancer help?", "Rolling updates — take servers offline one at a time while the LB routes to healthy ones."], ["Your European users experience high latency hitting US servers. What LB type fixes this?", "Global server load balancing — routes by user geography and server health."]], "d": "Year One · One box out of four"}, {"i": "cdn", "t": "Content Delivery Networks", "cap": 1, "e": "Reduces the latency caused by physical distance, by caching content on edge servers close to the user.", "c": [["Your video platform users in Asia experience 3s load times because the server is in Virginia. What fixes this?", "A CDN — cache content on edge servers geographically closer to users."], ["Your marketing site content rarely changes and you want minimal maintenance. Pull or push?", "Pull — the CDN fetches on a cache miss, managed with a TTL."], ["Your pricing page must update instantly worldwide after a product launch. Pull or push?", "Push — proactively upload so every edge has the latest version."]], "d": "Year One · The world shows up"}, {"i": "ratelimit", "t": "Rate limiting", "e": "A capacity control and a security control at once. Per consumer, not per endpoint, or your best partner starves your smallest one.", "d": "Build Bench · The audit"}, {"i": "ladder", "t": "The scaling ladder in practice", "e": "You have the four rungs from phase 2. What is missing is the discipline: measure at each rung, and be able to say what number would justify the next one.", "d": "Year One · Shard now?"}, {"i": "async", "t": "Async everything & the outbox", "e": "Job queues, the outbox pattern, eventual consistency — including how to explain eventual consistency to a customer without using the phrase.", "d": "Build Bench · Black Friday"}, {"i": "offline", "t": "Offline and sync", "e": "If you ship a mobile client: local-first reads, queued writes, conflict resolution, and why last write wins eventually loses someone's data.", "d": "Year One · The version you cannot kill"}, {"i": "capacity", "t": "Capacity planning", "e": "Back-of-envelope estimation and load testing. Ten thousand tenants at fifty requests a day, two kilobyte payloads — servers, database size, bandwidth?", "d": "Year One · The number in the contract"}, {"i": "pacelc", "t": "PACELC", "e": "CAP tells you about partitions; PACELC adds the else — the latency-versus-consistency trade you make when the network is healthy, which is almost always.", "d": "Build Bench · Ten million rows"}, {"i": "stateless", "t": "Stateless services", "e": "Why sticky sessions are a trap, and why horizontal scaling is really a statement about where state lives.", "d": "Build Bench · The world shows up"}]}, {"n": "07", "t": "Security & Compliance", "w": "3 weeks · ~22 hrs", "now": 0, "sheet": null, "cs": [{"i": "owasp", "t": "OWASP Top 10", "e": "The ten ways applications actually get broken, as attack scenarios rather than as a list to recite.", "d": "Build Bench · The audit"}, {"i": "iso", "t": "Tenant isolation", "e": "The number one vulnerability class in SaaS. Isolation must be enforced where a developer cannot forget it, and provable to an auditor.", "d": "Year One · The security questionnaire"}, {"i": "crypto", "t": "Encryption & key management", "e": "At rest, in transit, internal hops included — and a real answer to who can decrypt what, and how keys rotate.", "d": "Build Bench · The audit"}, {"i": "compliance", "t": "GDPR, SOC 2, residency", "e": "What auditors actually ask for, and why data residency is an architectural driver rather than a deployment detail.", "d": "Build Bench · The audit"}, {"i": "auditlog", "t": "Audit logging", "e": "What turns we are careful into evidence. Immutable, queryable, and covering reads as well as writes.", "d": "Build Bench · The audit"}]}, {"n": "08", "t": "The Capstone", "w": "from week 3, throughout", "now": 0, "sheet": null, "cs": [{"i": "cap1", "t": "A complete multi-tenant SaaS", "e": "Modular monolith by business capability, C4 and ADRs written first, a tenancy model you can defend, RBAC, SSO-ready auth, metered billing, containers, IaC, CI/CD with zero-downtime deploys, dashboards, SLOs, runbooks. It starts in week three, badly, and every phase feeds it."}, {"i": "cap2", "t": "Break it on purpose", "e": "Load-test it, kill something mid-request, follow your own runbook, then write the postmortem. One honest game day teaches more than a phase of reading.", "d": "Year One · The postmortem"}, {"i": "cap3", "t": "Simulate year two", "e": "Add a module, run a zero-downtime migration, deprecate an API version. Finishing this loop once is the difference between having studied architecture and having done it.", "d": "Year One, end to end"}]}], "sims": [{"k": "Sheet 01 · building", "t": "The Build Bench", "u": "https://claude.ai/code/artifact/674ef97b-db8f-46c9-9050-06b83ba95e7b", "w": "Eight commissions, one per phase. A client brief with real constraints, a bin of parts, six layers to place them in — then submit for design review and get stamped. It penalises the microservices reflex, the premature shard and the part that is not earning its keep.", "go": "Open the bench"}, {"k": "Sheet 02 · deciding", "t": "Year One at Ledgerly", "u": "https://claude.ai/code/artifact/6f151972-b169-4e67-8676-ef1f3d243b5c", "w": "Seventeen decisions across four quarters as founding architect of a multi-tenant invoicing SaaS. The tenancy model you pick in week five is the one an auditor interrogates in Q3. Ends with a board review and a list of the principles you paid for.", "go": "Take the job"}]}, PH=A.phases;
+const KEY="atlas.mastery.v1";
+let mast={};try{mast=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){mast={}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(mast))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const ALL=PH.flatMap(p=>p.cs), CAPPED=ALL.filter(c=>c.cap);
+const CARDS=CAPPED.reduce((a,c)=>a+(c.c||[]).length,0);
+
+function stats(){
+  const sol=ALL.filter(c=>mast[c.i]==="s").length, shk=ALL.filter(c=>mast[c.i]==="k").length;
+  $("#sCap").textContent=CAPPED.length; $("#sSol").textContent=sol;
+  $("#tbCap").textContent=CAPPED.length+" / "+ALL.length;
+  $("#tbSol").textContent=sol+" / "+ALL.length;
+  const n=ALL.length;
+  $("#bS").style.width=(sol/n*100)+"%"; $("#bK").style.width=(shk/n*100)+"%";
+  $("#bC").style.width=(CAPPED.filter(c=>!mast[c.i]).length/n*100)+"%";
+  $("#eyebrow").textContent=PH.length+" stations · "+ALL.length+" concepts · "+CAPPED.length+" captured · "+CARDS+" recall cards";
+}
+function renderMap(){
+  const m=$("#map");m.innerHTML="";
+  PH.forEach(p=>{
+    const d=document.createElement("div");d.className="st"+(p.now?" now":"");
+    d.innerHTML='<div class="hd"><span class="no">'+p.n+'</span><div><h3>'+esc(p.t)+'</h3><span class="wk">'+esc(p.w)+'</span></div></div>';
+    const ch=document.createElement("div");ch.className="chips";
+    p.cs.forEach(c=>{
+      const b=document.createElement("button");
+      b.className="chip "+(c.cap?"cap":"ghost")+(mast[c.i]?" "+mast[c.i]:"");
+      b.innerHTML='<span class="dot"></span>'+esc(c.t);
+      b.onclick=()=>openC(c,p);ch.appendChild(b);
+    });
+    d.appendChild(ch);
+    if(p.sheet)d.insertAdjacentHTML("beforeend",'<a class="sheetlink" href="'+p.sheet+
+      '" target="_blank" rel="noopener">Read the full sheet ↗</a>');
+    m.appendChild(d);
+  });
+  stats();
+}
+function openC(c,p){
+  const dr=$("#drawer");dr.hidden=false;
+  const cards=(c.c||[]).map((qa,n)=>'<button class="rc" data-n="'+n+'"><div class="q"><span class="m">'+
+    String(n+1).padStart(2,"0")+'</span><span>'+esc(qa[0])+'</span></div><div class="a">'+esc(qa[1])+'</div></button>').join("");
+  dr.innerHTML='<div class="panel"><div class="dhd"><div><span class="lbl">Phase '+p.n+' · '+esc(p.t)+'</span>'+
+    '<h2 style="margin-top:4px">'+esc(c.t)+'</h2></div><button class="btn ghost" id="x">Close</button></div>'+
+    '<div class="dbody">'+
+    (c.cap?'<span class="tag" style="align-self:flex-start;color:var(--blue);border-color:var(--blueLine)">In your vault</span>'
+          :'<span class="tag" style="align-self:flex-start">Not captured yet</span>')+
+    '<p style="color:var(--ink2);font-size:.94rem;max-width:56ch">'+esc(c.e)+'</p>'+
+    (cards?'<div><span class="lbl">Test yourself · '+c.c.length+' cards from your own notes</span>'+
+      '<div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">'+cards+'</div></div>':"")+
+    (c.d?'<div><span class="lbl">Where you practise it</span><p style="font-size:.9rem;margin-top:4px">'+esc(c.d)+'</p></div>':"")+
+    (p.sheet?'<a class="btn ghost" style="align-self:flex-start;text-decoration:none" href="'+p.sheet+
+      '" target="_blank" rel="noopener">Open the '+esc(p.t)+' sheet ↗</a>':"")+
+    '<hr class="rule"><div><span class="lbl">How solid is this for you?</span><div class="mast" style="margin-top:8px">'+
+      ['<button data-m="" class="'+(!mast[c.i]?"on":"")+'">Not yet</button>',
+       '<button data-m="k" class="'+(mast[c.i]==="k"?"on":"")+'">Shaky</button>',
+       '<button data-m="s" class="'+(mast[c.i]==="s"?"on":"")+'">Solid</button>'].join("")+
+    '</div></div></div></div>';
+  dr.querySelectorAll(".rc").forEach(el=>el.onclick=()=>el.classList.toggle("open"));
+  dr.querySelectorAll(".mast button").forEach(b=>b.onclick=()=>{
+    const v=b.dataset.m; if(v)mast[c.i]=v; else delete mast[c.i];
+    save();renderMap();openC(c,p);
+  });
+  $("#x").onclick=close2;
+  dr.onclick=e=>{if(e.target===dr)close2()};
+}
+function close2(){$("#drawer").hidden=true}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")close2()});
+$("#reset").onclick=e=>{e.preventDefault();mast={};save();renderMap()};
+$("#sheets").innerHTML=PH.filter(p=>p.sheet).map(p=>{
+  const n=p.cs.filter(c=>c.cap).length, k=p.cs.filter(c=>c.cap).reduce((a,c)=>a+(c.c||[]).length,0);
+  return '<a class="sim" href="'+p.sheet+'" target="_blank" rel="noopener"><span class="lbl">Phase '+p.n+' · '+
+   n+' concepts · '+k+' cards</span><h3>'+esc(p.t)+'</h3><p>Every note you have taken for this phase, structured for reading straight through — with the cards folded in and the phase reading list at the end.</p>'+
+   '<span class="go">Read the sheet →</span></a>';}).join("");
+$("#sims").innerHTML=A.sims.map(s=>'<a class="sim" href="'+s.u+'" target="_blank" rel="noopener"><span class="lbl">'+
+  esc(s.k)+'</span><h3>'+esc(s.t)+'</h3><p>'+esc(s.w)+'</p><span class="go">'+esc(s.go)+' →</span></a>').join("");
+renderMap();
+</script>

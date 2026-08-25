@@ -1,0 +1,82 @@
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+[hidden]{display:none !important}

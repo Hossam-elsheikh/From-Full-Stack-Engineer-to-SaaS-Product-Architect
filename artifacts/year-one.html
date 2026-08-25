@@ -1,0 +1,540 @@
+<title>Year One at Ledgerly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+.two{display:grid;grid-template-columns:250px minmax(0,1fr);align-items:stretch}
+.two.solo{grid-template-columns:minmax(0,1fr)}
+@media(max-width:880px){.two{grid-template-columns:1fr}}
+.side{padding:16px;border-right:1px solid var(--rule);background:var(--sunk);display:flex;flex-direction:column;gap:16px}
+@media(max-width:880px){.side{border-right:0;border-bottom:1px solid var(--rule)}}
+.meter{display:flex;flex-direction:column;gap:4px}
+.meter .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.meter .val{font-family:"IBM Plex Mono",monospace;font-size:.8rem;font-variant-numeric:tabular-nums;color:var(--ink2)}
+.meter .bar{height:7px;background:var(--sheet);border:1px solid var(--rule);position:relative;overflow:hidden}
+.meter .bar i{display:block;height:100%;background:var(--blue);transition:width .7s cubic-bezier(.2,.8,.3,1)}
+.meter.warn .bar i{background:var(--amber)} .meter.bad .bar i{background:var(--red)}
+.delta{font-family:"IBM Plex Mono",monospace;font-size:.72rem;font-weight:600;opacity:0}
+.delta.up{color:var(--green)} .delta.dn{color:var(--red)}
+@keyframes flash{0%{opacity:0;transform:translateY(4px)}20%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0}}
+.delta.go{animation:flash 2.2s ease both}
+.stage{padding:clamp(16px,3vw,30px);min-width:0;display:flex;flex-direction:column;gap:18px}
+.scene{display:flex;flex-direction:column;gap:12px;max-width:62ch}
+.said{display:grid;grid-template-columns:118px minmax(0,1fr);gap:12px;align-items:start}
+@media(max-width:560px){.said{grid-template-columns:1fr;gap:2px}}
+.said .who{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);padding-top:5px}
+.said .txt{border-left:2px solid var(--rule);padding-left:12px}
+.narr{color:var(--ink2);font-style:italic;max-width:62ch}
+.ask{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1.35rem;letter-spacing:.01em;max-width:34ch}
+.opts{display:flex;flex-direction:column;gap:9px;max-width:62ch}
+.opt{text-align:left;font-family:inherit;font-size:.95rem;color:var(--ink);background:var(--sheet);border:1px solid var(--rule);
+  padding:12px 14px;cursor:pointer;display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;transition:border-color .12s,transform .12s,background .12s}
+.opt:hover{border-color:var(--blue);background:var(--blueBg);transform:translateX(2px)}
+.opt .k{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--ink3);padding-top:2px}
+.opt:hover .k{color:var(--blue)}
+.out{border:1px solid var(--rule);background:var(--chip);padding:16px;max-width:62ch;display:flex;flex-direction:column;gap:12px}
+.out .chose{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.prin{border-left:3px solid var(--blue);padding:2px 0 2px 12px;font-size:.9rem;color:var(--ink2)}
+.prin b{color:var(--ink);font-family:"Saira Condensed",sans-serif;letter-spacing:.05em;text-transform:uppercase;font-size:.74rem;display:block;margin-bottom:2px}
+.deltarow{display:flex;gap:14px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:.74rem}
+.hero{display:flex;flex-direction:column;gap:18px;max-width:64ch;padding:clamp(6px,1.6vw,22px) 0}
+.hero .lede{font-size:1.05rem;color:var(--ink2);max-width:56ch}
+.card2{border:1px solid var(--rule);background:var(--chip);padding:14px 16px;font-size:.9rem;color:var(--ink2)}
+.end .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px}
+.end .box{border:1px solid var(--rule);background:var(--chip);padding:12px}
+.end .box .big{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:1.9rem;line-height:1;font-variant-numeric:tabular-nums}
+.miss{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.miss li{display:grid;grid-template-columns:auto 1fr;gap:10px;font-size:.88rem;border-bottom:1px dashed var(--rule2);padding-bottom:10px}
+.miss li:last-child{border-bottom:0}
+.foot{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:12px 18px;border-top:1px solid var(--rule);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
+.foot a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blueLine)}
+.progress{display:flex;gap:3px;flex-wrap:wrap}
+.progress i{width:9px;height:9px;border:1px solid var(--rule);display:block}
+.progress i.done{background:var(--blue);border-color:var(--blue)}
+.progress i.now{background:var(--amber);border-color:var(--amber)}
+[hidden]{display:none !important}
+</style>
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Sheet</span><span class="v">02 / 03</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v">Year One at Ledgerly</span></div>
+    <div class="tcell"><span class="lbl">Quarter</span><span class="v" id="tbQ">—</span></div>
+    <div class="tcell"><span class="lbl">Tenants</span><span class="v" id="tbT">40</span></div>
+  </header>
+  <div class="two solo" id="two">
+    <aside class="side" id="side" hidden>
+      <div><span class="lbl">Standing</span></div>
+      <div id="meters"></div>
+      <hr class="rule">
+      <div class="meter"><div class="top"><span class="lbl">Runway</span><span class="val" id="ruVal"></span></div></div>
+      <div><span class="lbl" style="display:block;margin-bottom:6px">Year</span><div class="progress" id="prog"></div></div>
+      <p class="lbl" style="line-height:1.7">Every decision moves something. Nothing resets.</p>
+    </aside>
+    <main class="stage" id="stage"></main>
+  </div>
+  <footer class="foot">
+    <span id="footnote">A year of decisions at a multi-tenant invoicing SaaS · phases 1 through 7</span>
+    <span class="acts"><a href="https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd" target="_blank" rel="noopener">The Atlas ↗</a> <a href="https://claude.ai/code/artifact/674ef97b-db8f-46c9-9050-06b83ba95e7b" target="_blank" rel="noopener">The Build Bench ↗</a></span>
+  </footer>
+</div>
+</div>
+<script>
+const M=[["tr","Customer trust"],["ve","Team velocity"],["re","Resilience"]];
+const CH=[
+{q:"Q1 · Week 1",t:"The kickoff",
+ scene:[["Dalia · product","Here is the feature list. Invoices, recurring plans, dunning emails, a customer portal. Can I have a first cut of the architecture by Friday?"],
+        ["Sam · founder","Before you answer her — what are you going to design from?"]],
+ ask:"What do you build the design on?",
+ ch:[
+  {t:"The feature list. Model the entities, and the structure falls out of them.",miss:1,d:{ve:5,re:-8,tr:-3},
+   r:"You have a schema by Friday and an architecture by accident. In March, finance says the system must stay responsive through month-end close for every tenant at once — and the shape you chose has no answer to that.",
+   p:["Functional requirements do not determine architecture","They describe what the system does. Systems get rebuilt because they are not fast enough, do not scale, or cannot be changed — never because a feature was missing from the first draft."]},
+  {t:"The quality attributes and the constraints. What must never break, how fast, for how many, under whose law.",d:{tr:8,re:10,ve:-4},f:["drove","qa"],
+   r:"You spend two days asking uncomfortable questions. Dalia is irritated on Tuesday and grateful in March, when 'month-end close' turns out to be the load profile the whole system lives or dies by.",
+   p:["Quality attributes and constraints are the architectural drivers","Constraints come in three kinds: technical, business, and regulatory. Some are negotiable, some are not — you have to know which before you draw anything."]},
+  {t:"The stack. We know Node and Postgres, so shape the product around what we can ship fastest.",miss:1,d:{ve:8,re:-6,tr:-2},f:["drove","stack"],
+   r:"Fast out of the gate. But you decided the tools before you knew the drivers, so from here on the drivers get whatever the tools happen to allow.",
+   p:["A stack you like is not a requirement","A mandated technology is a genuine technical constraint. A preferred one is a decision you should be able to defend against the drivers — and revisit."]}]},
+
+{q:"Q1 · Week 3",t:"The first cut",
+ scene:[["Sam · founder","Every company we admire runs microservices. Should we start there so we never have to migrate?"],
+        ["narr","You have three engineers, forty design partners, and ten weeks."]],
+ ask:"How do you cut the system?",
+ ch:[
+  {t:"Fifteen services, split by noun, deployed independently from day one.",miss:1,d:{ve:-18,re:-6,ru:-2},f:["arch","micro"],
+   r:"By week six you have fifteen pipelines, a distributed transaction across three of them, and a bug that takes two days to trace because it lives between services rather than in one.",
+   p:["Microservices solve a coordination problem you do not have yet","Team scalability is the real driver: you split when the team's coordination overhead exceeds the cost of the network between them. Three engineers are not that team."]},
+  {t:"One deployable, but modules split by business capability, with boundaries you could cut along later.",d:{ve:8,re:6,tr:4},f:["arch","mono"],
+   r:"You ship on time. The invoicing module does not import from billing except through one interface, and that discipline is the only thing that makes the Q4 conversation about extracting a service a conversation rather than a rewrite.",
+   p:["The modular monolith is the honest default","One process, one deploy, one database — organised by business capability. It keeps the option to split without paying for the split now."]},
+  {t:"One app, no internal boundaries. Refactoring is a Q3 problem.",miss:1,d:{ve:10,re:-6,tr:-2},f:["arch","ball"],
+   r:"The fastest first eight weeks of the year, and a codebase where the billing logic reaches into the invoice tables directly. Every later change costs a little more than the last one.",
+   p:["Maintainability is a quality attribute too","'We'll refactor later' is a loan. Modularity is what you buy with the interest you are choosing not to pay."]}]},
+
+{q:"Q1 · Week 5",t:"Whose data is whose",
+ scene:[["narr","Forty tenants today. The pitch deck says four thousand by year three. Someone has to decide how their data sits together."]],
+ ask:"Which tenancy model do you commit to?",
+ ch:[
+  {t:"Shared schema. One database, a tenant_id on every row.",d:{ve:6,re:-4,tr:2},f:["ten","pooled"],
+   r:"Cheapest per tenant and the fastest to build. You have also just made tenant isolation a security property of your code rather than of your infrastructure — and one noisy tenant now shares a buffer cache with everyone else.",
+   p:["Pooled tenancy trades isolation for density","It is the right default for most SaaS. But from this moment, a missing WHERE clause is a data breach, not a bug."]},
+  {t:"A schema per tenant in one database.",d:{ve:-4,re:4,tr:4},f:["ten","schema"],
+   r:"A reasonable middle. Isolation is visible in the structure, and it costs you a migration runner that has to walk every schema and not give up halfway.",
+   p:["Schema-per-tenant buys visible isolation, and charges you at migration time","Every schema change is now an N-times operation that must be resumable."]},
+  {t:"A database per tenant.",d:{ve:-8,tr:6,ru:-2,re:6},f:["ten","silo"],
+   r:"Enterprise buyers will love this. At forty tenants it is forty backup schedules, forty connection pools and forty sets of metrics, and your infrastructure bill grows in a straight line with your logo count.",
+   p:["Siloed tenancy is the strongest isolation and the worst unit economics","Real products tier it: pooled for self-serve, siloed for the customers who pay for the privilege."]}]},
+
+{q:"Q1 · Week 9",t:"The partner API",
+ scene:[["Dalia · product","Three fintechs want to integrate. They asked for our API docs and I had to invent a sentence."],
+        ["narr","Your own mobile client also talks to the same backend, over a slow connection, on a phone."]],
+ ask:"What do you publish to the partners?",
+ ch:[
+  {t:"REST over HTTP, versioned, paginated, with idempotent writes.",d:{tr:8,ve:2},f:["api","rest"],
+   r:"Two partners integrate in a week without talking to you. The third one gets it working from the docs alone, which is the only review of an API that counts.",
+   p:["REST is resource-oriented, stateless and cacheable","Which is exactly why it is the default for a public API. Encapsulation matters here: partners must not need to understand your internals."]},
+  {t:"gRPC. It is faster and strongly typed, and the schema is the contract.",miss:1,d:{tr:-6,ve:-4},f:["api","grpc"],
+   r:"Two of the three partners cannot get a protobuf toolchain past their own platform team. You spend six weeks building a REST facade anyway — you just built it late, and twice.",
+   p:["gRPC is the right answer to the wrong question here","HTTP/2 plus Protocol Buffers is superb for internal service-to-service calls: fast, typed, streaming. It is a poor front door for third parties."]},
+  {t:"GraphQL for everyone, so nobody ever asks for another endpoint.",d:{tr:2,ve:-5},f:["api","gql"],
+   r:"The mobile team is delighted. You now own query cost, caching, and the partner who wrote a query that reads every invoice in your database on a five-second poll.",
+   p:["GraphQL moves the flexibility to the client, and the cost with it","Caching and rate limiting stop being an edge concern and become your problem, per query shape."]}]},
+
+{q:"Q2 · Week 2",t:"Charged twice",
+ scene:[["narr","Support has forty-seven tickets in twenty minutes. Customers were billed twice."],
+        ["Rina · engineer","They are all mobile. Flaky connection, the client retried, and we happily created a second invoice and a second charge."]],
+ ask:"What ships tonight?",
+ ch:[
+  {t:"Disable the button after the first tap and ship a client update.",miss:1,d:{tr:-8,re:-6},
+   r:"It reduces the ticket rate, which is not the same as fixing it. The next duplicate comes from a partner's server-side retry, where there is no button at all.",
+   p:["A retry is a fact of networks, not a user error","Any client, any proxy, any queue may deliver your request twice. The fix belongs on the server."]},
+  {t:"Accept a client-supplied idempotency key; on replay, return the original result rather than doing the work again.",d:{tr:10,re:8},f:["idem",1],
+   r:"Duplicates stop that night. Two quarters later, when you move payments onto a queue with at-least-once delivery, this is the single decision that makes that migration safe.",
+   p:["Idempotency: repeated requests must not cause unintended outcomes","It is not an edge case, it is a property of the endpoint — and the precondition for every retry policy you will add later."]},
+  {t:"Add a unique constraint and let the second request fail with a 500.",d:{tr:-2,re:4},
+   r:"The money is safe, which matters most. But your partners now see random 500s on successful operations, and they respond the way anyone would: by retrying harder.",
+   p:["Correct data, wrong contract","An idempotent endpoint returns the original success. A failure teaches the caller to hammer you."]}]},
+
+{q:"Q2 · Week 7",t:"Black Friday, three weeks out",
+ scene:[["narr","Last sale, order p95 went from 400ms to fourteen seconds and thread pools filled."],
+        ["Rina · engineer","Order creation calls the payment provider and the notification service inline and waits for both. The notification vendor was degraded, so we were degraded."]],
+ ask:"What do you change before the next sale?",
+ ch:[
+  {t:"Raise the HTTP timeouts to sixty seconds and retry more aggressively.",miss:1,d:{re:-12,tr:-4},
+   r:"You have made each stuck request occupy a thread for a full minute, and added retries to a dependency that was slow because it was overloaded. The sale takes the whole site down for nine minutes.",
+   p:["Retries without backoff are an amplifier","Under saturation, more attempts make it worse. Timeouts must be bounded, retries jittered, and a circuit breaker should stop you hammering something already down."]},
+  {t:"Publish an order event; workers handle payment and notification behind a broker.",d:{re:14,tr:8,ve:-4},f:["broker",1],
+   r:"Orders are accepted in 180ms during the sale while the queue absorbs the vendor's bad afternoon. Customers get their confirmation email four minutes late and nobody notices.",
+   p:["Synchronous communication requires both parties healthy at the same moment","A broker decouples sender from receiver, buys fault tolerance and load balancing across consumers, and costs you a little latency and eventual consistency."]},
+  {t:"Scale the notification service ten times over for the weekend.",miss:1,d:{ru:-1,re:-4},
+   r:"The notification service was never the constraint — the vendor behind it was. You spent money to keep the same coupling.",
+   p:["Scaling a component does not remove a dependency","The order path's availability is still the product of everything it waits for."]}]},
+
+{q:"Q2 · Week 11",t:"The dashboard says we are fine",
+ scene:[["Dalia · product","Our biggest tenant says the app freezes constantly. Ops says average response time is 210 milliseconds, well inside the SLO."],
+        ["narr","Their session recordings show two to three second stalls, several times a minute."]],
+ ask:"Who is right?",
+ ch:[
+  {t:"The dashboard. Ask them to check their network.",miss:1,d:{tr:-10},
+   r:"They escalate to their CIO, who escalates to Sam. The stalls were real the whole time; the average was hiding them behind two million fast requests.",
+   p:["Averages lie under load","Response time is processing plus waiting. Measure with percentile distributions and tail latency — P95, P99 — because the tail is what a heavy user experiences constantly."]},
+  {t:"They are. Instrument P95 and P99, and alert on those instead.",d:{tr:8,re:8},f:["p99",1],
+   r:"P99 is 2.1 seconds, driven by one unindexed query on their data volume. The dashboard was accurate and useless at the same time.",
+   p:["Percentiles are the unit of performance","Your heaviest customer lives in your tail. So does every complaint you cannot reproduce."]},
+  {t:"Raise the SLO to three seconds so the graph goes green.",miss:1,d:{tr:-6,re:-4},
+   r:"The graph goes green. The customer does not.",
+   p:["An SLI is measured, an SLO is your target, an SLA is the contract","Moving the target to match reality is a decision — but only after you know what reality is, and only if the customer agrees."]}]},
+
+{q:"Q3 · Week 1",t:"One box out of four",
+ scene:[["narr","At 09:40 one of four application servers fills its disk and starts refusing connections."],
+        ["Rina · engineer","Roughly a quarter of requests are failing. We are distributing traffic with round-robin DNS."]],
+ ask:"How do you stop losing a quarter of your traffic?",
+ ch:[
+  {t:"Drop the DNS TTL to thirty seconds and pull the bad record when this happens.",d:{re:2,tr:-2},
+   r:"Faster, but still manual and still minutes long — and resolvers ignore short TTLs more often than you would like.",
+   p:["DNS load balancing has no health monitoring","It is the cheapest form and it cannot route around a failure it does not know about."]},
+  {t:"Put a health-checking load balancer in front, and deploy through it one server at a time.",d:{re:12,tr:6,ve:4},f:["lb",1],
+   r:"Failed instances leave the pool in seconds. The unplanned benefit arrives two weeks later: releases stop needing a maintenance window, because you can drain and update one node at a time.",
+   p:["A balancer buys availability and maintainability in one purchase","Health checks route around dead servers; rolling updates remove the downtime window. It also hides your backend topology from the world."]},
+  {t:"Restart it and add a script that pings the box and emails you.",miss:1,d:{re:-6,tr:-4},
+   r:"You have automated the detection of a failure you still have to fix by hand, at whatever hour it happens.",
+   p:["Detection is one tactic of four","Prevention through redundancy, time redundancy through retries, detection through monitoring, and recovery through automated failover. Detection alone still costs you the outage."]}]},
+
+{q:"Q3 · Week 4",t:"The world shows up",
+ scene:[["Dalia · product","APAC signups are down thirty-one percent. The recordings show three second page loads."],
+        ["narr","Your origin is in us-east-1. Ninety-two percent of the bytes you send are images, JavaScript and PDF invoices."]],
+ ask:"What do you do about a problem made of distance?",
+ ch:[
+  {t:"Serve static assets from a CDN, pulled from origin on first request with a sensible TTL.",d:{tr:10,re:6,ve:2},f:["cdn",1],
+   r:"Singapore drops to 700ms. As a bonus, the volumetric flood that hits you in November lands on the edge instead of on your origin.",
+   p:["A CDN attacks the latency that distance causes","Pull is low maintenance: the edge fetches on a miss and honours a TTL. Push means you upload proactively and users always have the newest bytes — at the cost of managing it."]},
+  {t:"Move the origin to Singapore, where the growth is.",miss:1,d:{tr:-6,ve:-6},
+   r:"You have moved the three second load from your APAC users to your American ones, who are still the majority of revenue.",
+   p:["Moving the origin moves the problem","Geography is not solved by relocating a single point. It is solved by having content close to everyone."]},
+  {t:"Stand up a full second region in Singapore this quarter, database and all.",d:{ru:-3,ve:-10,re:4},
+   r:"Ambitious, expensive, and now you own cross-region data consistency and a residency question you had not planned to answer yet — for a problem that was ninety-two percent static assets.",
+   p:["Match the tactic to the cause","Multi-region is an availability and residency tool. This was a content-delivery problem wearing its coat."]}]},
+
+{q:"Q3 · Week 6",t:"The number in the contract",
+ scene:[["Sam · founder","The enterprise deal has an availability clause with penalties. They want four nines. I said yes."],
+        ["narr","You have thirty seconds before he sends the countersignature."]],
+ ask:"What did Sam just commit you to, per year?",
+ ch:[
+  {t:"About eight hours and forty-five minutes of downtime.",miss:1,d:{tr:-6,re:-4},
+   r:"That is three nines — 99.9%. You have just planned your year against a budget ten times larger than the one you signed, and you will discover the difference during an incident.",
+   p:["Availability = uptime / (uptime + downtime) = MTBF / (MTBF + MTTR)","99% is 3.65 days a year. 99.9% is 8.77 hours. 99.99% is 52.6 minutes. 99.999% is 5.26 minutes."]},
+  {t:"About fifty-three minutes of downtime.",d:{tr:8,re:6},f:["nines",1],
+   r:"Fifty-two point six, to be exact. You tell Sam what that means before he signs: no single-instance dependencies, automated failover, and a deploy process that cannot take the fleet down. He signs anyway, but now you both know the price.",
+   p:["Four nines is 52.6 minutes a year — including your deploys","And availability multiplies down a synchronous chain: two 99.9% services called in sequence give you about 99.8%."]},
+  {t:"About five minutes of downtime.",miss:1,d:{tr:-4,ve:-8},
+   r:"That is five nines, and you have just talked yourself into an architecture the company cannot afford to build or to operate.",
+   p:["Every nine costs roughly an order of magnitude more","Which is why the number belongs in a negotiation, not in a reflex."]}]},
+
+{q:"Q3 · Week 9",t:"The security questionnaire",
+ pre:s=>s.ten==="silo"
+   ?"Their security team opens with tenancy. You have a database per tenant, and that page of the questionnaire takes four minutes."
+   :s.ten==="schema"
+   ?"Their security team opens with tenancy. A schema per tenant reads well on paper, and they immediately ask what enforces it at query time."
+   :"Their security team opens with tenancy. You have one database and a tenant_id column, and the question is the obvious one: what stops tenant A reading tenant B?",
+ scene:[["narr","Two hundred and forty questions. Question nine is the one that decides the deal."],
+        ["Auditor","Demonstrate that a user of one tenant cannot retrieve another tenant's invoice."]],
+ ask:"How do you answer question nine?",
+ ch:[
+  {t:"Enforce tenant scoping in the data access path itself, prove it with tests, and hand them the audit log.",d:{tr:12,re:10,ve:-4},f:["iso",1],
+   r:"You show a test that fails the build when a query is issued without a tenant scope, plus an immutable audit trail of who read what. They ask three follow-ups and move on. The deal closes in November.",
+   p:["Tenant isolation is a security boundary, not a WHERE clause you remember","Pooled tenancy is fine — provided isolation is enforced somewhere a developer cannot forget it, and provided you can produce evidence."]},
+  {t:"Explain that invoice ids are UUIDs, so they are not guessable.",miss:1,d:{tr:-14,re:-8},
+   r:"Their pentester changes an id he already has, from an invoice shared with him in a support thread, and reads another tenant's data. The finding goes in the report. The deal slips two quarters.",
+   p:["Unguessable identifiers are obscurity, not authorization","The missing control is the check itself. This is the number one vulnerability class in multi-tenant SaaS."]},
+  {t:s=>s.ten==="silo"?"Point at the dedicated database they already have, and show the credential boundary.":"Promise them a dedicated database by Q1, and sign.",
+   d:s=>s.ten==="silo"?{tr:10,re:4}:{tr:4,ve:-12,ru:-1},
+   r:s=>s.ten==="silo"
+     ?"This is what you paid for in week five. Siloed tenants are expensive right up until the moment they close an enterprise deal in a single meeting."
+     :"You have just sold a migration you have not built, on a deadline you did not choose, for one customer. Somebody has to spend Q1 building tenant provisioning and a data move — and that somebody is the team that was going to build the roadmap.",
+   p:["Tiering is a legitimate strategy — if you designed for it","Pooled for self-serve, siloed for enterprise, chosen deliberately. Promised under pressure, it becomes an unplanned quarter."]}]},
+
+{q:"Q3 · Week 12",t:"How the money works",
+ scene:[["Sam · founder","Investors want to know why revenue does not track usage. Our biggest tenant pays the same as a five-person shop."],
+        ["Dalia · product","Finance is issuing credits by hand when someone downgrades mid-month."]],
+ ask:"What do you build into the billing model?",
+ ch:[
+  {t:"Per-seat pricing. It is simple, and it is what the spreadsheet already assumes.",d:{ve:4,tr:-2},
+   r:"Simple to build and easy to explain. It also decouples your revenue from the cost you actually incur, and your heaviest tenant stays your least profitable one.",
+   p:["Pricing is an architectural decision","What you charge for determines what you must measure, and metering added later is a data-model change, not a feature."]},
+  {t:"Metered usage with plans, proration and dunning, backed by a usage counter you can audit.",d:{tr:10,ve:-6},f:["billing",1],
+   r:"Two hard weeks. Afterwards mid-month upgrades, downgrades and failed cards are all handled by the system, and finance stops issuing manual credits — which is where most of the errors were coming from anyway.",
+   p:["Metering, proration, dunning and trials are the mechanics of SaaS","They are also the vocabulary you need to speak to the business: MRR, churn, NRR — architecture that cannot report those cannot be run."]},
+  {t:"Keep invoicing manually. It is forty tenants.",miss:1,d:{ve:6,tr:-6,ru:-1},
+   r:"Fine at forty. At two hundred it consumes a person full time, and the mistakes are the ones customers notice most.",
+   p:["Manual is a decision with a maturity date","The question is not whether it works today, but which number it stops working at — and whether you will see that number coming."]}]},
+
+{q:"Q4 · Week 1",t:"Ship it",
+ scene:[["narr","Releases happen at 02:00 inside a twelve minute maintenance window, from whichever laptop has the right Node version."],
+        ["Rina · engineer","And production was clicked together in the console eighteen months ago. I do not think we could rebuild it."],
+        ["narr","The enterprise contract you just signed forbids scheduled downtime."]],
+ ask:"What does delivery look like from here?",
+ ch:[
+  {t:"Keep the window, but write down the steps so anyone can run them.",miss:1,d:{ve:-2,re:-6,tr:-4},
+   r:"A documented manual process is still a manual process. You breach the downtime clause in February, over a release that had nothing wrong with it.",
+   p:["A runbook is not a pipeline","Environment parity, versioned artifacts and repeatability are what make a deploy boring — and boring is the goal."]},
+  {t:"A pipeline that builds one artifact, infrastructure in code, secrets injected, released as a canary.",d:{re:12,ve:8,tr:6,ru:-1},f:["cicd",1],
+   r:"Three weeks of unglamorous work. Then deploys move from twice a month at 2am to four times a day at 2pm, and the rollback that used to be a rebuild becomes a decision someone makes in ninety seconds.",
+   p:["The artifact you test must be the artifact you ship","Build once, promote the same image, keep the environment in a file. Canary widens exposure gradually; blue-green flips whole environments. Both make rollback cheap."]},
+  {t:"Migrate to Kubernetes with a service mesh this quarter, and fix everything at once.",d:{ve:-14,ru:-3,re:4},
+   r:"You will get there eventually, and some of it will be right. But you spent the quarter your enterprise customer was onboarding on infrastructure they will never see.",
+   p:["Orchestration is a tool, not a destination","Know Kubernetes. Reach for it when the operational load justifies it, not because the deploy problem needed solving today."]}]},
+
+{q:"Q4 · Week 3",t:"Forty alerts a day",
+ scene:[["Rina · engineer","Nobody reads the alerts channel. It fires about forty times a day and it is right maybe twice a week."],
+        ["narr","You found out about the last outage from a customer, on the internet, nineteen minutes in."]],
+ ask:"What changes about being on call?",
+ ch:[
+  {t:"Page on every error. If it is in the logs, someone should look at it.",miss:1,d:{re:-10,ve:-6},
+   r:"The volume goes up, attention goes down, and the outage that matters arrives wearing the same clothes as the four hundred that did not.",
+   p:["Alerting that cries wolf is worse than no alerting","It trains the only people who can help you to stop looking."]},
+  {t:"Define SLOs, alert on the error budget, write runbooks for what is left.",d:{re:14,tr:8,ve:-4},f:["slo",1],
+   r:"Alert volume drops to two or three a week, all real. The first 3am page after that is handled by an engineer who had never seen that failure, from a runbook, in eleven minutes.",
+   p:["Alert on the promise, not on the twitch","Logs, metrics and traces answer different questions and you need all three. The SLO decides which of their answers is worth waking a human for."]},
+  {t:"Mute the channel and check the dashboard each morning.",miss:1,d:{re:-14,tr:-8},
+   r:"You are now finding out about your own outages the same way your customers do, only later.",
+   p:["Detection is the difference between an incident and a story a customer tells","Mean time to recovery starts when someone notices."]}]},
+
+{q:"Q4 · Week 6",t:"The ALTER that locked the table",
+ scene:[["narr","A single migration adds a column to a two hundred million row table. Writes lock for nine minutes in the middle of the working day."],
+        ["Rina · engineer","Product wants a new field roughly every week now. We cannot keep doing this."]],
+ ask:"How do schema changes work from now on?",
+ ch:[
+  {t:"Only in the 2am window, forever.",d:{ve:-6,re:2,tr:-2},
+   r:"Safe and slow. It also means every product change waits for a window, and the windows get more crowded as the company grows.",
+   p:["Rigid schema is the price relational pays for ACID and complex querying","It is usually worth it. But the cost is real, and it shows up as delivery friction rather than as an outage."]},
+  {t:"Expand, backfill, contract — every change ships in phases that are safe to run live.",d:{re:12,ve:8,tr:4},f:["migration",1],
+   r:"Add the nullable column, deploy code that writes both, backfill in batches, switch reads, then drop the old one. Slower to write, invisible to customers, and it works at two hundred million rows and at two billion.",
+   p:["Zero-downtime migration is a technique, not a tool","Expand, backfill, contract. Batched and resumable. It is what makes a growing schema compatible with an availability promise."]},
+  {t:"Move this data to a document store so the schema stops being in the way.",miss:1,d:{re:-10,ve:-8,ru:-1},
+   r:"You traded ACID guarantees and every complex query finance depends on to avoid learning a migration pattern. The reporting rewrite alone eats six weeks.",
+   p:["Choose the model for the data, not to escape an operational habit","Non-relational buys flexible per-record shape and speed for specific access patterns. It does not buy you out of planning schema change."]}]},
+
+{q:"Q4 · Week 8",t:"The restore",
+ scene:[["Dalia · product","A tenant's admin deleted their whole Q3 invoice set this morning. They want it back."],
+        ["Rina · engineer","We have nightly snapshots. We have never actually restored one."]],
+ ask:"What is your answer to them, and to yourself?",
+ ch:[
+  {t:"Restore the snapshot into a scratch instance now, and put a quarterly restore drill on the calendar with RPO and RTO written down.",d:{re:14,tr:8,ve:-2},f:["dr",1],
+   r:"The restore takes ninety minutes, most of it spent discovering that the runbook did not mention the extension the database needs. Better to learn that today than during a real disaster.",
+   p:["A backup you have never restored does not exist","RPO is how much data you may lose; RTO is how long recovery may take. Both are claims until a drill turns them into measurements."]},
+  {t:"Tell them the nightly backup covers it and start the restore blind.",miss:1,d:{re:-8,tr:-6},
+   r:"Six hours later you learn the snapshot excluded a volume. You get most of it back, and the customer remembers the six hours rather than the eventual recovery.",
+   p:["Untested recovery is a hope with a schedule","The moment to find the gap is not the moment you need the data."]},
+  {t:"Restore what you can, and make deletes soft from now on with a full audit trail.",d:{re:8,tr:6},
+   r:"A genuinely good pattern, and it will prevent the next one of these. It is still not a disaster recovery story — it protects against a user, not against losing the database.",
+   p:["Soft deletes and audit trails solve the human accident","Backups and drills solve the infrastructure one. They are different problems and both need an answer."]}]},
+
+{q:"Q4 · Week 9",t:"The postmortem",
+ scene:[["Sam · founder","Nine minutes of write downtime in the middle of the day. Who ran that migration?"],
+        ["narr","Rina ran it. She followed the process that existed. There was no process."]],
+ ask:"How do you run the review?",
+ ch:[
+  {t:"Name who ran it, so people are careful next time.",miss:1,d:{ve:-12,re:-6,tr:-2},
+   r:"People are careful next time in the way that matters least: they stop reporting near-misses. Your incident count drops and your incident severity does not.",
+   p:["Blame reduces information, not incidents","The engineer is the last line of a system that permitted the failure. Punish the person and you lose the only view you have into that system."]},
+  {t:"Blameless review: timeline, contributing factors, three action items with owners, published internally.",d:{re:12,ve:6,tr:6},f:["pm",1],
+   r:"The action items are a migration checklist, a lock-duration guard in CI, and a staging dataset large enough for locks to show up. None of them are 'be more careful'.",
+   p:["A postmortem is a design review of the system that allowed it","Blameless is not politeness. It is the condition under which people tell you what actually happened."]},
+  {t:"Skip it. Everyone knows what went wrong and the quarter is nearly over.",miss:1,d:{re:-8},
+   r:"Everyone knows what went wrong and nobody knows why it was possible. It happens again in March with a different engineer and a different table.",
+   p:["An incident you do not write up, you have agreed to repeat","The write-up is where an outage stops being a cost and becomes an asset."]}]},
+
+{q:"Q4 · Week 11",t:"Shard now?",
+ scene:[["Rina · engineer","There is a design doc in review titled 'Shard now'. Reports are slow again, and one tenant holds sixty percent of the rows."],
+        ["narr","Nobody in the thread has mentioned an index."]],
+ ask:"Where do you start?",
+ ch:[
+  {t:"Approve the sharding project. Get ahead of it before it becomes urgent.",miss:1,d:{ve:-16,re:-4,ru:-2},
+   r:"Two quarters of work, cross-shard queries that finance's reports need, and a rebalancing operation nobody wants to run. The original slow query was missing a composite index.",
+   p:["Sharding is the last rung of the ladder","Indexes, then read replicas, then partitioning, then sharding. Most products never reach the last one — and the ones that do arrive with measurements, not with a design doc."]},
+  {t:"Measure first, then climb: index the slow queries, move reporting to a replica, partition the largest table by tenant.",d:{re:12,ve:8,tr:6},f:["ladder",1],
+   r:"The index takes an afternoon and removes ninety percent of the pain. The replica gets the BI contractor off production. Partitioning buys you the next eighteen months, and the sharding doc is closed with a note about when to reopen it.",
+   p:["The database scaling ladder is in that order for a reason","Each rung is cheaper and less irreversible than the next. Climb only as far as the measurement justifies."]},
+  {t:"Bring in consultants to shard it properly.",miss:1,d:{ru:-4,ve:-6},
+   r:"You have outsourced a decision rather than made one, and you will operate the result.",
+   p:["You cannot delegate the trade-off, only the typing","Whoever builds it, you own its consequences at 3am."]}]}
+];
+
+const START={tr:60,ve:65,re:40,ru:18};
+let S,i,missed,flags,tenants;
+const $=s=>document.querySelector(s);
+const clamp=v=>Math.max(0,Math.min(100,v));
+const val=(x,st)=>typeof x==="function"?x(st):x;
+
+function reset(){S=Object.assign({},START);i=-1;missed=[];flags={};tenants=40;$("#side").hidden=true;$("#two").classList.add("solo");intro()}
+function renderSide(d){
+  $("#side").hidden=false;$("#two").classList.remove("solo");
+  const mm=$("#meters");mm.innerHTML="";
+  M.forEach(([k,nm])=>{
+    const v=S[k],cls=v<30?"bad":v<55?"warn":"";
+    const dv=d&&d[k]?d[k]:0;
+    const el=document.createElement("div");el.className="meter "+cls;el.style.marginBottom="12px";
+    el.innerHTML='<div class="top"><span class="lbl">'+nm+'</span><span class="val">'+Math.round(v)+
+      ' <span class="delta '+(dv>0?"up go":dv<0?"dn go":"")+'">'+(dv>0?"+"+dv:dv<0?dv:"")+'</span></span></div>'+
+      '<div class="bar"><i style="width:'+v+'%"></i></div>';
+    mm.appendChild(el);
+  });
+  $("#ruVal").textContent=S.ru+" months";
+  $("#tbQ").textContent=i>=0&&i<CH.length?CH[i].q.split(" · ")[0]:"—";
+  $("#tbT").textContent=tenants.toLocaleString();
+  const p=$("#prog");p.innerHTML="";
+  CH.forEach((c,n)=>{const el=document.createElement("i");el.className=n<i?"done":n===i?"now":"";p.appendChild(el)});
+}
+function intro(){
+  $("#stage").innerHTML='<div class="hero"><span class="lbl">A simulation in seventeen decisions</span>'+
+   '<h1>Year One at Ledgerly</h1>'+
+   '<p class="lede">You are the founding architect of a multi-tenant invoicing SaaS. Three engineers, forty design partners, eighteen months of runway. Over the next year you will be asked seventeen questions, mostly by people who do not know they are architecture questions.</p>'+
+   '<div class="card2">Nothing resets between chapters. The tenancy model you pick in week five is the one an auditor interrogates in Q3; the retry policy you write in Q2 is the one that meets Black Friday. Some choices are simply wrong and the year will tell you so. Most are trade-offs, and the year will charge you for whichever side you did not take.</div>'+
+   '<div class="acts"><button class="btn blue" id="go">Take the job</button></div></div>';
+  $("#go").onclick=()=>{i=0;show()};
+}
+function show(){
+  const c=CH[i];renderSide();
+  const pre=c.pre?'<p class="narr">'+c.pre(flags)+'</p>':"";
+  const scene=c.scene.map(([w,t])=>w==="narr"?'<p class="narr">'+t+'</p>'
+    :'<div class="said"><span class="who">'+w+'</span><p class="txt">&ldquo;'+t+'&rdquo;</p></div>').join("");
+  $("#stage").innerHTML='<div><span class="lbl">'+c.q+'</span><h2 style="margin-top:4px">'+c.t+'</h2></div>'+
+    '<div class="scene">'+scene+pre+'</div><p class="ask">'+c.ask+'</p><div class="opts" id="opts"></div>';
+  const box=$("#opts");
+  c.ch.forEach((o,n)=>{
+    const b=document.createElement("button");b.className="opt";
+    b.innerHTML='<span class="k">'+String.fromCharCode(65+n)+'</span><span>'+val(o.t,flags)+'</span>';
+    b.onclick=()=>pick(o);box.appendChild(b);
+  });
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function pick(o){
+  const d=val(o.d,flags)||{};
+  Object.keys(d).forEach(k=>{S[k]=k==="ru"?S[k]+d[k]:clamp(S[k]+d[k])});
+  if(o.f)flags[o.f[0]]=o.f[1];
+  if(o.miss)missed.push({t:CH[i].t,p:o.p});
+  tenants=Math.max(20,Math.round(tenants*(1.14+(S.tr-55)/420)));
+  renderSide(d);
+  const names={tr:"trust",ve:"velocity",re:"resilience",ru:"runway"};
+  const drow=Object.keys(d).map(k=>'<span class="'+(d[k]>0?"delta up":"delta dn")+'" style="opacity:1">'+
+    (d[k]>0?"+":"")+d[k]+" "+names[k]+'</span>').join("");
+  $("#stage").innerHTML='<div><span class="lbl">'+CH[i].q+'</span><h2 style="margin-top:4px">'+CH[i].t+'</h2></div>'+
+   '<div class="out"><span class="chose">You chose</span><p style="font-weight:600">'+val(o.t,flags)+'</p>'+
+   '<hr class="rule"><p>'+val(o.r,flags)+'</p><div class="deltarow">'+drow+'</div>'+
+   '<div class="prin"><b>'+o.p[0]+'</b>'+o.p[1]+'</div></div>'+
+   '<div class="acts"><button class="btn blue" id="next">'+(i<CH.length-1?"Next decision":"Face the board")+'</button></div>';
+  $("#next").onclick=()=>{i++;i<CH.length?show():end()};
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function end(){
+  const score=Math.round(S.tr*.4+S.re*.4+S.ve*.2);
+  let title,body;
+  if(S.ru<=2||S.tr<35){title="Acquihired";body="The product does not survive the year as a product. The team does — someone always wants engineers who have run something real — but the thing you built gets switched off in the spring."}
+  else if(S.re<40){title="Still standing, barely";body="Revenue grew and so did the pager. You end the year with customers you cannot comfortably keep up and a system whose failures you find out about from the people paying for it. The Q1 roadmap is a stability quarter, whether or not anyone calls it one."}
+  else if(score>=78&&S.re>=65){title="Series B, oversubscribed";body="The diligence call goes to your architecture and it holds: the enterprise deal closed on the isolation story, four nines survived contact with a real year, and the incident write-ups impress the investors more than the growth curve does. You built something that can be handed to people who were not in the room."}
+  else if(score>=60){title="Series A on the strength of the platform";body="Not everything went well, and the year's scar tissue is visible in the roadmap. But the system is understood, the failures are written down, and nothing that broke this year broke twice."}
+  else {title="You survived the year";body="You shipped, you grew, and you paid for several lessons at full price. The architecture is a set of decisions you made under pressure rather than a set you would defend — which is the normal outcome, and the reason the second year is where architects are actually made."}
+  renderSide();
+  $("#stage").innerHTML='<div class="end" style="display:flex;flex-direction:column;gap:18px">'+
+   '<div><span class="lbl">Board review · end of year one</span><h1 style="margin-top:6px">'+title+'</h1></div>'+
+   '<p class="lede" style="max-width:58ch;color:var(--ink2)">'+body+'</p>'+
+   '<div class="grid4">'+
+     '<div class="box"><span class="lbl">Composite</span><div class="big">'+score+'</div></div>'+
+     '<div class="box"><span class="lbl">Trust</span><div class="big">'+Math.round(S.tr)+'</div></div>'+
+     '<div class="box"><span class="lbl">Resilience</span><div class="big">'+Math.round(S.re)+'</div></div>'+
+     '<div class="box"><span class="lbl">Velocity</span><div class="big">'+Math.round(S.ve)+'</div></div>'+
+     '<div class="box"><span class="lbl">Tenants</span><div class="big">'+tenants.toLocaleString()+'</div></div>'+
+     '<div class="box"><span class="lbl">Runway</span><div class="big">'+S.ru+'<span style="font-size:.9rem"> mo</span></div></div>'+
+   '</div>'+
+   (missed.length?'<div><span class="lbl">The lessons you paid for</span><ul class="miss" style="margin-top:10px">'+
+     missed.map(m=>'<li><span class="tag">'+m.t+'</span><div><strong>'+m.p[0]+'</strong><div class="why" style="color:var(--ink2);font-size:.85rem">'+m.p[1]+'</div></div></li>').join("")+
+     '</ul></div>':'<div class="card2">You did not walk into a single one of the wrong answers. Play it again and take the other side of the trade-offs — the interesting choices in this year are the ones with no correct option.</div>')+
+   '<div class="acts"><button class="btn blue" id="again">Run the year again</button></div></div>';
+  $("#again").onclick=reset;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+reset();
+</script>

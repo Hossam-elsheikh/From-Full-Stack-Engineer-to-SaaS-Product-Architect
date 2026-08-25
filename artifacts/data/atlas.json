@@ -1,0 +1,394 @@
+{
+  "sims": [
+    {
+      "k": "Sheet 01 · building",
+      "t": "The Build Bench",
+      "u": "https://claude.ai/code/artifact/674ef97b-db8f-46c9-9050-06b83ba95e7b",
+      "w": "Eight commissions, one per phase. A client brief with real constraints, a bin of parts, six layers to place them in — then submit for design review and get stamped. It penalises the microservices reflex, the premature shard and the part that is not earning its keep.",
+      "go": "Open the bench"
+    },
+    {
+      "k": "Sheet 02 · deciding",
+      "t": "Year One at Ledgerly",
+      "u": "https://claude.ai/code/artifact/6f151972-b169-4e67-8676-ef1f3d243b5c",
+      "w": "Seventeen decisions across four quarters as founding architect of a multi-tenant invoicing SaaS. The tenancy model you pick in week five is the one an auditor interrogates in Q3. Ends with a board review and a list of the principles you paid for.",
+      "go": "Take the job"
+    }
+  ],
+  "phases": [
+    {
+      "n": "00",
+      "t": "Orientation",
+      "w": "1 week · ~4 hrs",
+      "ghosts": [
+        {
+          "i": "lifecycle",
+          "t": "The product lifecycle",
+          "e": "Idea, design, build, deploy, operate, scale, maintain. Most engineers can do three of the seven; an architect is judged on the other four.",
+          "d": "Year One walks the whole loop in one sitting"
+        },
+        {
+          "i": "tradeoff",
+          "t": "Trade-off thinking",
+          "e": "Every architectural decision buys something and costs something. If you cannot name what a choice costs, you have not understood it yet — you have only heard of it.",
+          "d": "Every trade-off chapter in Year One"
+        },
+        {
+          "i": "unknowns",
+          "t": "Things I don't know I don't know",
+          "e": "The phase artifact: one page of named gaps, written in week one and revisited at the end. Phase 0 is now a single week — read the Fundamentals table of contents and chapters 1–4, and stop."
+        }
+      ]
+    },
+    {
+      "n": "01",
+      "t": "Architecture & Design",
+      "w": "6 weeks · ~45 hrs",
+      "now": 1,
+      "sheet": "phase-1",
+      "url": "https://claude.ai/code/artifact/59673390-3b25-411f-ab78-508abaf0ffa8",
+      "ghosts": [
+        {
+          "i": "styles",
+          "t": "Hexagonal, modular monolith, serverless",
+          "e": "The styles the course did not cover: ports and adapters, the modular monolith as a deliberate choice, and when serverless earns its constraints.",
+          "d": "Build Bench · Cold start"
+        },
+        {
+          "i": "ddd",
+          "t": "Strategic DDD",
+          "e": "Bounded contexts, ubiquitous language, aggregates. Enough to keep a growing codebase organised by business capability rather than by technical layer.",
+          "d": "Build Bench · Cold start"
+        },
+        {
+          "i": "c4",
+          "t": "C4 and ADRs",
+          "e": "Four zoom levels for diagrams, and a one-page record per decision: context, options, decision, consequences. The consequences section is the one that earns its keep.",
+          "d": "Build Bench · Cold start requires it"
+        },
+        {
+          "i": "contracts",
+          "t": "Contracts for clients you can't force-update",
+          "e": "Mobile apps live in the wild for months on old versions. Versioning strategy, tolerant readers, feature negotiation, and what deprecate means when 8% of users are still on v1.",
+          "d": "Year One · The version you cannot kill"
+        }
+      ]
+    },
+    {
+      "n": "02",
+      "t": "Data",
+      "w": "6 weeks · ~48 hrs",
+      "sheet": "phase-2",
+      "url": "https://claude.ai/code/artifact/c28d2dd1-5735-4dc9-9307-b1b87b51dc91",
+      "ghosts": [
+        {
+          "i": "isolation",
+          "t": "Isolation levels & locking",
+          "e": "What each isolation level does and does not protect you from, and what a lock actually blocks. The most useful hour of database study you will ever spend.",
+          "d": "Build Bench · Ten million rows"
+        },
+        {
+          "i": "tenancy",
+          "t": "Multi-tenancy data models",
+          "e": "Shared schema with a tenant_id, schema per tenant, or database per tenant. Cost, isolation, noisy neighbours, compliance and migration pain all move together — and real products tier them.",
+          "d": "Year One · Whose data is whose"
+        },
+        {
+          "i": "mig",
+          "t": "Zero-downtime migrations",
+          "e": "Expand, backfill, contract. Batched and resumable. The technique that makes a growing schema compatible with an availability promise.",
+          "d": "Year One · The ALTER that locked the table"
+        },
+        {
+          "i": "cache",
+          "t": "Caching patterns",
+          "e": "Layers, cache-aside versus write-through, and invalidation — which is the hard half and the reason a cache is a decision rather than a default.",
+          "d": "Build Bench · Ten million rows"
+        },
+        {
+          "i": "olap",
+          "t": "OLTP versus OLAP",
+          "e": "Search engines, warehouses and read replicas. Add the right tool beside the relational store rather than bending the model.",
+          "d": "Build Bench · Ten million rows"
+        },
+        {
+          "i": "audit",
+          "t": "Audit trails & soft deletes",
+          "e": "Who changed what, when, and how to undo a human mistake without a restore. Cheap to add early, expensive to retrofit.",
+          "d": "Year One · The restore"
+        }
+      ]
+    },
+    {
+      "n": "03",
+      "t": "SaaS Mechanics",
+      "w": "5 weeks · ~38 hrs",
+      "ghosts": [
+        {
+          "i": "tid",
+          "t": "Tenant identity & routing",
+          "e": "Resolve the tenant at the edge of the request and carry it everywhere. Onboarding, provisioning and per-tenant configuration all hang off this one decision.",
+          "d": "Build Bench · Now make it a SaaS"
+        },
+        {
+          "i": "oauth",
+          "t": "OAuth2 / OIDC",
+          "e": "Which flow for which client, what a token actually asserts, and why the answer changes for a mobile app, a SPA and a machine. Worth a dedicated week.",
+          "d": "Build Bench · Now make it a SaaS"
+        },
+        {
+          "i": "sso",
+          "t": "SSO & SAML",
+          "e": "The thing enterprise buyers ask for before they ask about your product. Old, verbose, and non-negotiable in deals above a certain size.",
+          "d": "Year One · The security questionnaire"
+        },
+        {
+          "i": "rbac",
+          "t": "RBAC to ABAC",
+          "e": "Roles until roles stop expressing the policy, then attributes. Know where the line is before a customer finds it for you.",
+          "d": "Build Bench · Now make it a SaaS"
+        },
+        {
+          "i": "billing",
+          "t": "Billing & subscriptions",
+          "e": "Metering, plans, proration, dunning, trials. What you charge for decides what you must measure, so it is an architectural decision wearing a commercial hat.",
+          "d": "Year One · How the money works"
+        },
+        {
+          "i": "pricing",
+          "t": "Pricing ↔ architecture coupling",
+          "e": "You cannot bill per seat if you never modelled seats; you cannot offer a usage tier if you never metered. Pricing decisions are schema decisions made eighteen months early.",
+          "d": "Year One · How the money works"
+        },
+        {
+          "i": "cost",
+          "t": "Cost per tenant",
+          "e": "Cost per tenant, cost per active user, and which infra line items scale with tenants rather than with usage. An architect who cannot answer what does our worst tenant cost us is missing half the job.",
+          "d": "Year One · How the money works"
+        },
+        {
+          "i": "flags",
+          "t": "Feature flags & rollouts",
+          "e": "Decoupling deploy from release. The foundation under gradual rollout, per-tenant enablement and any A/B work later.",
+          "d": "Build Bench · Now make it a SaaS"
+        },
+        {
+          "i": "metrics",
+          "t": "MRR, churn, NRR",
+          "e": "The business language. An architecture that cannot report these cannot be steered by the people paying for it.",
+          "d": "Year One · How the money works"
+        },
+        {
+          "i": "vendors",
+          "t": "Third-party integration architecture",
+          "e": "Payment gateways, notification providers, external APIs. Provider abstraction, webhook ingestion — idempotency, replay, ordering — graceful degradation when a vendor is down, and how to stop one becoming un-swappable.",
+          "d": "Build Bench · The world shows up"
+        }
+      ]
+    },
+    {
+      "n": "04",
+      "t": "Delivery & Cloud",
+      "w": "6 weeks · ~45 hrs",
+      "ghosts": [
+        {
+          "i": "docker",
+          "t": "Containers",
+          "e": "Images, layers, compose, registries. The unit of the same thing everywhere.",
+          "d": "Build Bench · Ship it twice a day"
+        },
+        {
+          "i": "cicd",
+          "t": "CI/CD & deploy strategies",
+          "e": "Pipelines, environments, blue-green and canary, rollbacks, trunk-based development. Build once, promote the same artifact.",
+          "d": "Build Bench · Ship it twice a day"
+        },
+        {
+          "i": "k8s",
+          "t": "Kubernetes — vocabulary only",
+          "e": "Pods, deployments, services, ingress, why autoscaling works. Enough to read an architecture doc and not be bluffed. You do not need to operate it — take the course sections only if you have a concrete plan to deploy on it within six months.",
+          "d": "Year One · Ship it"
+        },
+        {
+          "i": "iac",
+          "t": "Infrastructure as code",
+          "e": "Declarative infrastructure, state, modules. The difference between losing a region and having an afternoon.",
+          "d": "Build Bench · Ship it twice a day"
+        },
+        {
+          "i": "aws",
+          "t": "One cloud, deeply",
+          "e": "VPC and networking, compute options, managed databases, object storage, load balancers, IAM. Depth in one beats a tour of three.",
+          "d": "Build Bench · The world shows up"
+        },
+        {
+          "i": "secrets",
+          "t": "Secrets & parity",
+          "e": "Injected credentials, versioned artifacts, environments that differ in size rather than in shape.",
+          "d": "Build Bench · Ship it twice a day"
+        }
+      ]
+    },
+    {
+      "n": "05",
+      "t": "Operate & Maintain",
+      "w": "5 weeks · ~38 hrs",
+      "ghosts": [
+        {
+          "i": "obs",
+          "t": "Observability",
+          "e": "Logs, metrics and traces answer three different questions and you need all three. Structured logs, dashboards, and alerts that do not cry wolf.",
+          "d": "Build Bench · The pager"
+        },
+        {
+          "i": "testing",
+          "t": "Testing strategy",
+          "e": "What to unit versus integration versus end-to-end test and why the ratio matters, testing multi-tenant isolation specifically, seeding realistic tenant data, contract testing between services and clients, and test environments that do not rot.",
+          "d": "Build Bench · The audit"
+        },
+        {
+          "i": "slo",
+          "t": "SLIs, SLOs & error budgets",
+          "e": "You have the SLA/SLO/SLI definitions from phase 1. What is missing is the error budget: the arithmetic that decides when to stop shipping features and fix reliability.",
+          "d": "Year One · Forty alerts a day"
+        },
+        {
+          "i": "incident",
+          "t": "Incident response",
+          "e": "On-call rotation, runbooks written before 3am, and blameless postmortems — blameless because blame reduces the information you get, not the incidents.",
+          "d": "Year One · The postmortem"
+        },
+        {
+          "i": "resil",
+          "t": "Resilience patterns",
+          "e": "Timeouts, retries with backoff and jitter, circuit breakers, bulkheads, graceful degradation, backpressure. Retries without backoff are an amplifier, not a fix.",
+          "d": "Year One · Black Friday"
+        },
+        {
+          "i": "dr",
+          "t": "Backups, RPO & RTO",
+          "e": "How much data you may lose, and how long recovery may take. Both are claims until a drill turns them into measurements.",
+          "d": "Year One · The restore"
+        },
+        {
+          "i": "legacy",
+          "t": "Long-term maintenance",
+          "e": "Dependency updates, a tech-debt budget, deprecation strategy, and refactoring legacy code without a rewrite.",
+          "d": "Year One · The first cut"
+        }
+      ]
+    },
+    {
+      "n": "06",
+      "t": "Scale",
+      "w": "4 weeks · ~30 hrs",
+      "sheet": "phase-6",
+      "url": "https://claude.ai/code/artifact/fb4c2c7d-6646-44ed-b7a5-1409b6038962",
+      "ghosts": [
+        {
+          "i": "ratelimit",
+          "t": "Rate limiting",
+          "e": "A capacity control and a security control at once. Per consumer, not per endpoint, or your best partner starves your smallest one.",
+          "d": "Build Bench · The audit"
+        },
+        {
+          "i": "ladder",
+          "t": "The scaling ladder in practice",
+          "e": "You have the four rungs from phase 2. What is missing is the discipline: measure at each rung, and be able to say what number would justify the next one.",
+          "d": "Year One · Shard now?"
+        },
+        {
+          "i": "async",
+          "t": "Async everything & the outbox",
+          "e": "Job queues, the outbox pattern, eventual consistency — including how to explain eventual consistency to a customer without using the phrase.",
+          "d": "Build Bench · Black Friday"
+        },
+        {
+          "i": "offline",
+          "t": "Offline and sync",
+          "e": "If you ship a mobile client: local-first reads, queued writes, conflict resolution, and why last write wins eventually loses someone's data.",
+          "d": "Year One · The version you cannot kill"
+        },
+        {
+          "i": "capacity",
+          "t": "Capacity planning",
+          "e": "Back-of-envelope estimation and load testing. Ten thousand tenants at fifty requests a day, two kilobyte payloads — servers, database size, bandwidth?",
+          "d": "Year One · The number in the contract"
+        },
+        {
+          "i": "pacelc",
+          "t": "PACELC",
+          "e": "CAP tells you about partitions; PACELC adds the else — the latency-versus-consistency trade you make when the network is healthy, which is almost always.",
+          "d": "Build Bench · Ten million rows"
+        },
+        {
+          "i": "stateless",
+          "t": "Stateless services",
+          "e": "Why sticky sessions are a trap, and why horizontal scaling is really a statement about where state lives.",
+          "d": "Build Bench · The world shows up"
+        }
+      ]
+    },
+    {
+      "n": "07",
+      "t": "Security & Compliance",
+      "w": "3 weeks · ~22 hrs",
+      "ghosts": [
+        {
+          "i": "owasp",
+          "t": "OWASP Top 10",
+          "e": "The ten ways applications actually get broken, as attack scenarios rather than as a list to recite.",
+          "d": "Build Bench · The audit"
+        },
+        {
+          "i": "iso",
+          "t": "Tenant isolation",
+          "e": "The number one vulnerability class in SaaS. Isolation must be enforced where a developer cannot forget it, and provable to an auditor.",
+          "d": "Year One · The security questionnaire"
+        },
+        {
+          "i": "crypto",
+          "t": "Encryption & key management",
+          "e": "At rest, in transit, internal hops included — and a real answer to who can decrypt what, and how keys rotate.",
+          "d": "Build Bench · The audit"
+        },
+        {
+          "i": "compliance",
+          "t": "GDPR, SOC 2, residency",
+          "e": "What auditors actually ask for, and why data residency is an architectural driver rather than a deployment detail.",
+          "d": "Build Bench · The audit"
+        },
+        {
+          "i": "auditlog",
+          "t": "Audit logging",
+          "e": "What turns we are careful into evidence. Immutable, queryable, and covering reads as well as writes.",
+          "d": "Build Bench · The audit"
+        }
+      ]
+    },
+    {
+      "n": "08",
+      "t": "The Capstone",
+      "w": "from week 3, throughout",
+      "ghosts": [
+        {
+          "i": "cap1",
+          "t": "A complete multi-tenant SaaS",
+          "e": "Modular monolith by business capability, C4 and ADRs written first, a tenancy model you can defend, RBAC, SSO-ready auth, metered billing, containers, IaC, CI/CD with zero-downtime deploys, dashboards, SLOs, runbooks. It starts in week three, badly, and every phase feeds it."
+        },
+        {
+          "i": "cap2",
+          "t": "Break it on purpose",
+          "e": "Load-test it, kill something mid-request, follow your own runbook, then write the postmortem. One honest game day teaches more than a phase of reading.",
+          "d": "Year One · The postmortem"
+        },
+        {
+          "i": "cap3",
+          "t": "Simulate year two",
+          "e": "Add a module, run a zero-downtime migration, deprecate an API version. Finishing this loop once is the difference between having studied architecture and having done it.",
+          "d": "Year One, end to end"
+        }
+      ]
+    }
+  ]
+}

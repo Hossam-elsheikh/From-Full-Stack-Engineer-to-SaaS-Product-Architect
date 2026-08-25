@@ -1,0 +1,478 @@
+<title>The Build Bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+.grid{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr) minmax(0,290px);gap:0;align-items:stretch}
+.col{padding:16px 18px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.col.mid{border-left:1px solid var(--rule);border-right:1px solid var(--rule);background:
+  linear-gradient(var(--hair) 1px,transparent 1px) 0 0/100% 27px}
+@media(max-width:960px){.grid{grid-template-columns:1fr}.col.mid{border-left:0;border-right:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}}
+.brief{background:var(--chip);border:1px solid var(--rule);padding:14px}
+.brief h2{margin-bottom:6px}
+.brief .sit{font-size:.9rem;color:var(--ink2);margin-top:8px}
+.reqs{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:7px}
+.reqs li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:.86rem;line-height:1.4}
+.reqs .n{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--ink3);padding-top:3px}
+.reqs li.met .n{color:var(--green)}
+.band{border:1px solid var(--rule);background:var(--sheet);margin-bottom:10px;transition:border-color .12s,background .12s}
+.band .bh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:6px 10px;border-bottom:1px dashed var(--rule2)}
+.band .bh .nm{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.09em;text-transform:uppercase;font-size:.86rem}
+.band .bh .hint{font-size:.7rem;color:var(--ink3);font-style:italic}
+.band .slot{min-height:54px;padding:8px;display:flex;flex-wrap:wrap;gap:7px;align-content:flex-start}
+.band .slot:empty::after{content:"— empty —";font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--ink3);opacity:.7}
+.band.armed{border-color:var(--blue);background:var(--blueBg);cursor:copy}
+.band.armed .bh{border-bottom-color:var(--blueLine)}
+.piece{border:1px solid var(--rule);background:var(--chip);padding:5px 9px;font-size:.79rem;display:flex;align-items:center;gap:7px;cursor:pointer;text-align:left;font-family:inherit;color:var(--ink)}
+.piece:hover{border-color:var(--ink2)}
+.piece .x{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--ink3)}
+.piece.trap-hit{border-color:var(--red);background:var(--redBg)}
+.piece.wrongband{border-color:var(--amber);background:var(--amberBg)}
+.piece.good{border-color:var(--green);background:var(--greenBg)}
+.pal{display:flex;flex-direction:column;gap:6px}
+.pal button{width:100%;border:1px solid var(--rule);background:var(--sheet);padding:7px 9px;text-align:left;cursor:pointer;font-family:inherit;color:var(--ink);display:flex;flex-direction:column;gap:2px}
+.pal button:hover:not(:disabled){border-color:var(--ink2);background:var(--chip)}
+.pal button:disabled{opacity:.35;cursor:default}
+.pal button.armed{border-color:var(--blue);background:var(--blueBg);box-shadow:inset 3px 0 0 var(--blue)}
+.pal .pn{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:.95rem;letter-spacing:.02em}
+.pal .pd{font-size:.72rem;color:var(--ink3);line-height:1.35}
+.review{position:fixed;inset:0;background:rgba(10,16,22,.62);display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow:auto;z-index:40}
+.review .card{background:var(--sheet);border:1px solid var(--rule);max-width:720px;width:100%;box-shadow:var(--lift)}
+.review .rhead{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.rbody{padding:16px 18px;display:flex;flex-direction:column;gap:14px}
+.line{display:grid;grid-template-columns:76px 1fr;gap:10px;font-size:.87rem;align-items:start;padding-bottom:10px;border-bottom:1px dashed var(--rule2)}
+.line:last-child{border-bottom:0;padding-bottom:0}
+.verd{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.09em;padding:2px 6px;border:1px solid currentColor;text-align:center}
+.v-met{color:var(--green)} .v-unmet{color:var(--red)} .v-flag{color:var(--red)} .v-band{color:var(--amber)} .v-extra{color:var(--ink3)} .v-bonus{color:var(--blue)}
+.why{color:var(--ink2);font-size:.82rem;margin-top:3px}
+.scorebar{height:8px;background:var(--sunk);border:1px solid var(--rule);position:relative;overflow:hidden}
+.scorebar i{display:block;height:100%;background:var(--blue);transition:width .6s cubic-bezier(.2,.8,.3,1)}
+.picker{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.picker button{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.06em;padding:4px 9px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink2);cursor:pointer}
+.picker button:hover{border-color:var(--ink2);color:var(--ink)}
+.picker button.on{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.picker button .sc{color:var(--green);font-weight:600}
+.picker button.on .sc{color:inherit}
+.foot{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:12px 18px;border-top:1px solid var(--rule);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
+.foot a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blueLine)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+[hidden]{display:none !important}
+</style>
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Sheet</span><span class="v">01 / 03</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v">The Build Bench</span></div>
+    <div class="tcell"><span class="lbl">Board score</span><span class="v" id="tbScore">—</span></div>
+    <div class="tcell"><span class="lbl">Approved</span><span class="v" id="tbAppr">0 / 8</span></div>
+  </header>
+  <nav class="picker" id="picker" aria-label="Choose a commission"></nav>
+  <div class="grid">
+    <section class="col" aria-label="Brief">
+      <div class="brief">
+        <span class="lbl" id="bPhase"></span>
+        <h2 id="bTitle"></h2>
+        <p class="sit" id="bSit"></p>
+        <span class="lbl" style="margin-top:14px;display:block">The client must be able to</span>
+        <ul class="reqs" id="bReqs"></ul>
+      </div>
+      <div class="acts">
+        <button class="btn blue" id="submit">Submit for review</button>
+        <button class="btn ghost" id="clear">Clear board</button>
+      </div>
+      <p class="lbl" style="line-height:1.7">Pick a part, then click the layer it belongs in. Parts in the wrong layer still count — but the reviewer notices. Anything that isn't earning its keep costs you.</p>
+    </section>
+    <section class="col mid" aria-label="The rack" id="rack"></section>
+    <aside class="col" aria-label="Parts bin">
+      <div><span class="lbl">Parts bin</span></div>
+      <div class="pal" id="pal"></div>
+    </aside>
+  </div>
+  <footer class="foot">
+    <span>Drawn from your vault · concepts tagged to the phase they live in</span>
+    <span class="acts"><a href="https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd" target="_blank" rel="noopener">The Atlas ↗</a> <a href="https://claude.ai/code/artifact/6f151972-b169-4e67-8676-ef1f3d243b5c" target="_blank" rel="noopener">Year One ↗</a></span>
+  </footer>
+</div>
+</div>
+<div class="review" id="review" hidden></div>
+<script>
+const BANDS=[
+ ["EDGE","before your infrastructure"],
+ ["ENTRY","the front door"],
+ ["SERVICES","where your code runs"],
+ ["ASYNC","work that happens later"],
+ ["DATA","where state lives"],
+ ["PLATFORM","how it is built, run and proven"]];
+const C={
+ cdn:["CDN","EDGE","Caches assets on edge servers near users"],
+ gslb:["Global server LB","EDGE","DNS + routing by user geography and health"],
+ waf:["WAF / edge rate limiting","EDGE","Absorbs floods and bad traffic before origin"],
+ dnsrr:["DNS round-robin","EDGE","Hands out server IPs in rotation. No health checks.",1],
+ lb:["Load balancer","ENTRY","Health-checked distribution across servers"],
+ gateway:["API gateway","ENTRY","One entry point: routing, auth, rate limits, composition"],
+ ratelimit:["Per-consumer rate limits","ENTRY","Quotas per client so one partner can't starve the rest"],
+ gwlogic:["Discount logic in the gateway","ENTRY","Business rules living in the front door",1],
+ modmono:["Modular monolith","SERVICES","One deployable, modules split by business capability"],
+ micro:["15 microservices","SERVICES","Independent services, independent deploys, network in between"],
+ app1:["A single app server","SERVICES","One instance runs everything",1],
+ app3:["App servers x3","SERVICES","Stateless instances behind the balancer"],
+ idp:["OIDC / SAML identity provider","SERVICES","Enterprise SSO, tokens, federated login"],
+ rbac:["RBAC roles + permissions","SERVICES","Who may do what, per tenant"],
+ tenantrouter:["Tenant resolution","SERVICES","Every request carries and is scoped to a tenant"],
+ flags:["Feature flags","SERVICES","Per-tenant switches and gradual rollout"],
+ metering:["Metering + subscriptions","SERVICES","Usage counters, plans, proration, dunning"],
+ pagination:["Paginated endpoints","SERVICES","Bounded pages with cursor and limit"],
+ breaker:["Circuit breaker","SERVICES","Stops hammering a dependency that is already down"],
+ timeouts:["Timeouts + retry with backoff","SERVICES","Bounded waits, jittered retries"],
+ broker:["Event broker (Kafka)","ASYNC","Durable, replayable event stream, many subscribers"],
+ queue:["Task queue (RabbitMQ)","ASYNC","Routed work messages to a pool of workers"],
+ workers:["Worker pool","ASYNC","Consumes messages, does the slow work"],
+ outbox:["Transactional outbox","ASYNC","Event is committed with the row, then published"],
+ scheduler:["Scheduled jobs","ASYNC","Recurring work: invoices, digests, cleanups"],
+ synccall:["Synchronous call to the provider","ASYNC","Request thread waits for the third party",1],
+ sqldb:["Relational database","DATA","ACID, complex queries, no duplication"],
+ replica:["Read replica","DATA","Reporting and analytics read here, not from prod"],
+ cache:["Cache (key/value)","DATA","Sub-millisecond reads for hot keys"],
+ search:["Search index","DATA","Real full-text search instead of LIKE '%...%'"],
+ objstore:["Object storage","DATA","Files, images, video, backups"],
+ olap:["Analytics store (OLAP)","DATA","Columnar, built for aggregation"],
+ docstore:["Document store","DATA","Flexible per-record shape, nested documents"],
+ index:["Index strategy","DATA","The first rung of the scaling ladder"],
+ partition:["Partitioning","DATA","One table split by range or key, same database"],
+ shard:["Sharding","DATA","Data split across separate databases"],
+ rls:["Tenant-scoped data access","DATA","Every query provably filtered by tenant"],
+ kms:["Encryption at rest + KMS","DATA","Managed keys, rotation, envelope encryption"],
+ backups:["Automated backups","DATA","Snapshots on a schedule with retention"],
+ restoredrill:["Restore drill","DATA","You have actually restored one, on the clock"],
+ adr:["C4 diagrams + ADRs","PLATFORM","The decision and its consequences, written down"],
+ ci:["CI pipeline","PLATFORM","Build, test, scan on every push to trunk"],
+ registry:["Artifact registry","PLATFORM","Versioned images, the same one promoted upward"],
+ iac:["Infrastructure as code","PLATFORM","The environment is a file, not a memory"],
+ secrets:["Secrets manager","PLATFORM","Credentials injected, never committed"],
+ canary:["Canary release","PLATFORM","Small slice first, watch, then widen"],
+ bluegreen:["Blue-green deploy","PLATFORM","Two environments, flip traffic, flip back"],
+ staging:["Staging with prod parity","PLATFORM","Same shapes, smaller numbers"],
+ metrics:["Metrics + dashboards","PLATFORM","Rates, errors, durations over time"],
+ logs:["Structured logs","PLATFORM","Queryable fields, correlation ids"],
+ traces:["Distributed tracing","PLATFORM","One request, end to end, across hops"],
+ slo:["SLOs + error-budget alerts","PLATFORM","Alert on the promise, not on every twitch"],
+ runbook:["Runbooks + on-call rota","PLATFORM","What to do at 3am, written before 3am"],
+ depscan:["Dependency scanning","PLATFORM","Known-vulnerable packages fail the build"],
+ auditlog:["Audit log","PLATFORM","Who did what to whose data, immutable"],
+ eu:["EU region deployment","PLATFORM","Data stays where the contract says"],
+ tls:["TLS everywhere","PLATFORM","Encrypted in transit, internal hops included"],
+ alertall:["Alert on every error","PLATFORM","Every exception pages a human",1],
+ laptop:["Deploy from a laptop","PLATFORM","The build that ships is the one on your disk",1],
+ envrepo:[".env committed to the repo","PLATFORM","Secrets in git history, forever",1],
+ sharedcreds:["One shared DB superuser","DATA","Every service connects with full access",1],
+ uuidonly:["UUIDs instead of sequential ids","DATA","Hard-to-guess identifiers as the defence",1],
+ mongorewrite:["Rewrite it all in a document store","DATA","Escape the schema by leaving the model",1]};
+
+const BRIEFS=[
+{id:"b1",ph:"Phase 1 · Architecture",t:"Cold start",
+ sit:"Ledgerly, seed stage. Three engineers, forty design-partner tenants, ten weeks to a paid launch. Your co-founder has read a lot about Netflix and wants to split the product into fifteen services on day one.",
+ reqs:[
+  {t:"ship and reason about the whole product with three engineers",need:["modmono"],c:"Team scalability: split the codebase by business capability first. Microservices are a tax you pay before you have earned the coordination problem they solve."},
+  {t:"survive one server dying, and deploy without a maintenance window",need:["lb","app3"],c:"A health-checked balancer buys availability and rolling updates — the maintainability half of the deal people forget."},
+  {t:"keep invoices correct under concurrent edits and answer finance's queries",need:["sqldb"],c:"Relational buys ACID, complex querying and no duplication; it costs you schema rigidity."},
+  {t:"explain in six months why it was built this way",need:["adr"],c:"Quality attributes and constraints drive architecture — features do not. An ADR is that reasoning, preserved."}],
+ bonus:["cache"],
+ traps:[["micro","Three engineers cannot staff fifteen services. You bought network calls, distributed transactions and fifteen deploy pipelines to solve a coordination problem you do not have yet."],
+        ["gwlogic","Business logic in the gateway turns your front door into a second monolith — and a single point of failure in front of everything."],
+        ["app1","One instance means your availability is exactly that machine's uptime. No prevention, no failover."],
+        ["shard","Sharding at forty tenants. The ladder is indexes, then replicas, then partitioning, then sharding — most products never reach the last rung."]],
+ pal:["modmono","micro","lb","app1","app3","gateway","gwlogic","sqldb","replica","cache","shard","adr","cdn"]},
+
+{id:"b2",ph:"Phase 6 · Scalability",t:"The world shows up",
+ sit:"You launched in APAC. Signups there are down 31% and session recordings show three-second page loads; the origin is in us-east-1 and 92% of transferred bytes are images, video and JS. Last month a volumetric flood took the origin down for eleven minutes. Sales has now promised European failover.",
+ reqs:[
+  {t:"serve heavy static bytes without crossing an ocean",need:["cdn"],c:"CDNs cut the latency that distance causes, by caching on edge servers near the user."},
+  {t:"route Europeans and Americans to their nearest healthy region",need:["gslb"],c:"Global server load balancing = DNS plus routing by geography and health — and it is what makes disaster recovery real."},
+  {t:"stop sending traffic to servers that are already dead",need:["lb"],c:"DNS load balancing has no health monitoring. A real balancer checks health and hides your backend topology."},
+  {t:"absorb the next flood before it reaches the origin",need:["waf"],c:"Distributing traffic at the edge is also DDoS protection: the attack lands on the CDN, not on you."},
+  {t:"keep the media itself out of the application servers",need:["objstore"],c:"Origin the bytes from storage, cache them at the edge; app servers stay stateless and horizontally scalable."},
+  {t:"add capacity for the next region without a rewrite",need:["app3"],c:"Horizontal scaling is near-unlimited but demands stateless services — this is why sticky sessions are a trap."}],
+ bonus:["metrics"], ok:["sqldb"],
+ traps:[["dnsrr","Round-robin DNS keeps handing out the IP of the box that is refusing connections, and TTLs keep it there for minutes."],
+        ["app1","One server behind a global audience. Vertical scaling has a ceiling and no fault tolerance."]],
+ pal:["cdn","gslb","waf","dnsrr","lb","app1","app3","objstore","sqldb","cache","metrics","shard"]},
+
+{id:"b3",ph:"Phase 1 · Communication",t:"Black Friday in three weeks",
+ sit:"Order creation calls the payment provider and the notification service inline and waits for both. Last sale, p95 went from 400ms to 14s and thread pools filled. Meanwhile the analytics team wants every order event, and the fraud team will want the same feed next quarter — and the orders team refuses to take another code change for a new consumer.",
+ reqs:[
+  {t:"accept an order without waiting on a slow third party",need:["broker"],c:"Synchronous communication needs both parties healthy at the same moment. A broker lets the sender finish without the receiver."},
+  {t:"add the fraud team next quarter without touching the order service",need:["broker"],c:"Pub/sub inverts the dependency: publish once, subscribers attach themselves. Adding a consumer costs the producer nothing."},
+  {t:"actually do the payment and notification work, just later",need:["workers"],c:"Queues buy background processing, load balancing across consumers and retry — at the cost of a little latency."},
+  {t:"guarantee the event exists if and only if the order does",need:["outbox"],c:"The outbox pattern writes the event in the same transaction as the row, then publishes it — no lost or phantom events."},
+  {t:"keep the order path itself horizontally scalable",need:["lb","app3"],c:"Async removes the coupling; the balancer plus stateless instances absorbs the burst."}],
+ bonus:["olap","breaker"], ok:["sqldb"],
+ traps:[["synccall","This is the failure you are here to remove: your request thread's fate is tied to a provider you do not operate."],
+        ["gwlogic","Order rules in the gateway means the sale-day change freeze applies to your front door too."]],
+ pal:["broker","queue","workers","outbox","synccall","scheduler","lb","app3","gwlogic","sqldb","cache","olap","breaker"]},
+
+{id:"b4",ph:"Phase 2 · Data",t:"Ten million rows",
+ sit:"Reports time out for your three largest tenants. One tenant holds 60% of the rows. Search is a LIKE '%term%' across two tables. The BI contractor has been running analytics queries straight against production, and an engineer has opened a proposal titled 'Shard now'.",
+ reqs:[
+  {t:"make the slow queries fast before buying anything",need:["index"],c:"Rung one of the ladder. Most 'we need to shard' conversations end here, at a missing composite index."},
+  {t:"stop analytics from competing with customer traffic",need:["replica"],c:"Rung two: read replicas move reporting off the write path. OLTP and OLAP want different shapes."},
+  {t:"return large collections without falling over",need:["pagination"],c:"An unbounded endpoint is a latent outage that grows with your best customer."},
+  {t:"serve repeated hot reads without touching the database",need:["cache"],c:"Cache-aside for hot keys. The hard half is invalidation, which is why the cache is a decision, not a default."},
+  {t:"give users real search",need:["search"],c:"When SQL is the wrong tool, add the right one beside it rather than bending the relational model."}],
+ bonus:["partition","olap"], ok:["sqldb"],
+ traps:[["shard","Sharding is the last rung, not the first. You pay in cross-shard joins, rebalancing and operational pain — after indexes, replicas and partitioning are exhausted."],
+        ["mongorewrite","Swapping the engine to escape a schema throws away ACID and complex querying to solve a problem an index would have solved."],
+        ["sharedcreds","One superuser across every service means a bug anywhere is a breach everywhere."]],
+ pal:["index","replica","cache","search","pagination","partition","shard","mongorewrite","olap","docstore","sqldb","sharedcreds"]},
+
+{id:"b5",ph:"Phase 3 · SaaS mechanics",t:"Now make it a SaaS",
+ sit:"A 900-seat enterprise will sign if they can log in with Okta, get their own roles, be billed on usage rather than seats, and receive new features on their own schedule rather than yours. Today every customer shares one login form and one release train.",
+ reqs:[
+  {t:"let the enterprise bring its own identity provider",need:["idp"],c:"OIDC for modern federation, SAML because enterprise buyers still ask for it. Auth is a week of study, not an afternoon."},
+  {t:"scope every request to exactly one tenant",need:["tenantrouter"],c:"Tenant identity is the spine of a SaaS: resolve it at the edge of the request and carry it everywhere."},
+  {t:"give their admins control over who can do what",need:["rbac"],c:"Roles first; attribute-based rules when roles stop expressing the policy."},
+  {t:"bill on measured usage, with plans, proration and failed-payment handling",need:["metering"],c:"Metering is a product decision with an architecture: counters, plans, proration, dunning, trials."},
+  {t:"receive a feature before the rest of the customer base does",need:["flags"],c:"Flags decouple deploy from release — the foundation under gradual rollout and A/B."},
+  {t:"prove one tenant cannot read another's data",need:["rls"],c:"Shared schema is fine — but then tenant isolation is a security boundary, not a WHERE clause you remember to write."}],
+ bonus:["auditlog"], ok:["sqldb","gateway","cache"],
+ traps:[["sharedcreds","Pooled tenants plus one all-powerful credential is the number one SaaS vulnerability class."],
+        ["uuidonly","Unguessable ids are not an authorization control. They are obscurity in front of a missing check."]],
+ pal:["idp","tenantrouter","rbac","metering","flags","rls","auditlog","sqldb","sharedcreds","uuidonly","cache","gateway"]},
+
+{id:"b6",ph:"Phase 4 · Delivery",t:"Ship it twice a day",
+ sit:"Releases happen at 2am inside a twelve-minute maintenance window, from whichever engineer's laptop has the right node version. Production was clicked together in the console eighteen months ago and nobody is sure it can be rebuilt. Database credentials live in a committed .env. The new enterprise contract forbids scheduled downtime.",
+ reqs:[
+  {t:"know that what ships was built and tested the same way every time",need:["ci"],c:"Trunk-based development with a pipeline: build, test and scan on every push."},
+  {t:"promote one identical artifact from staging to production",need:["registry"],c:"Version the artifact, not the branch. Environment parity starts with shipping the same bytes."},
+  {t:"rebuild the entire environment after losing it",need:["iac"],c:"Declarative infrastructure with state in a file — the difference between a disaster and an afternoon."},
+  {t:"rotate a credential without a commit",need:["secrets"],c:"Secrets are injected at runtime. Anything in git history is public to everyone who ever clones."},
+  {t:"release without downtime and undo it in minutes",any:["canary","bluegreen"],c:"Canary widens exposure gradually; blue-green flips whole environments. Both give you a rollback that is a decision, not a rebuild."},
+  {t:"catch the failure before customers do",need:["staging"],c:"Same shapes, smaller numbers. Parity is what makes a staging pass mean anything."}],
+ bonus:["depscan","metrics"],
+ traps:[["laptop","The artifact that reaches customers must not depend on one person's machine, shell history or node version."],
+        ["envrepo","Committed secrets are not deleted by deleting them. They are in the history, in every clone and in every fork."],
+        ["alertall","A pipeline that pages on every flaky test trains the team to ignore it — the same failure mode as alerting on every error."]],
+ pal:["ci","registry","iac","secrets","canary","bluegreen","staging","laptop","envrepo","alertall","depscan","metrics"]},
+
+{id:"b7",ph:"Phase 5 · Operations",t:"The pager",
+ sit:"You learned about the last outage from a customer's tweet, nineteen minutes in. The on-call channel gets forty alerts a day and everyone mutes it. Backups run nightly and have never been restored. When the payment provider went slow last week, every thread in the fleet ended up waiting on it.",
+ reqs:[
+  {t:"see rates, errors and durations before a customer does",need:["metrics"],c:"Metrics are the aggregate view; they tell you something is wrong."},
+  {t:"answer 'what happened to this one request'",need:["logs","traces"],c:"Structured logs give you the queryable detail, traces give you the path across hops. Logs, metrics and traces answer different questions — you need all three."},
+  {t:"be paged only when the promise is actually at risk",need:["slo"],c:"An SLI is measured, an SLO is your target, an SLA is the contract with penalties. Alert on the budget, not on every twitch."},
+  {t:"hand the 3am page to whoever is awake",need:["runbook"],c:"Incident response is a written process: runbooks, rotation, and blameless postmortems afterwards."},
+  {t:"put a number on how much data a disaster may cost",need:["backups"],c:"RPO is how much data you can lose, RTO is how long recovery may take. Both are promises, not hopes."},
+  {t:"claim the backups work",need:["restoredrill"],c:"A backup you have never restored does not exist. Drill it, on the clock, and record the RTO you actually got."},
+  {t:"stop one slow dependency from consuming the whole fleet",need:["timeouts","breaker"],c:"Bounded waits and jittered retries first; a breaker so you stop hammering something already down. Then graceful degradation."}],
+ bonus:["staging"], ok:["cache"],
+ traps:[["alertall","Forty alerts a day is not observability, it is noise that guarantees the real one is missed."]],
+ pal:["metrics","logs","traces","slo","runbook","backups","restoredrill","timeouts","breaker","alertall","staging","cache"]},
+
+{id:"b8",ph:"Phase 7 · Security",t:"The audit",
+ sit:"SOC 2 Type II is underway and a German enterprise is in security review. The pentest report's first finding: an authenticated user of tenant A can fetch tenant B's invoice by changing the id in the URL. Legal has also asked, in writing, where EU customer data physically sits.",
+ reqs:[
+  {t:"make cross-tenant reads impossible rather than unlikely",need:["rls"],c:"Tenant isolation is the number one SaaS vulnerability class. It belongs in the data path, enforced, not in a code review habit."},
+  {t:"protect data on the wire, internal hops included",need:["tls"],c:"Encryption in transit is not just the browser edge — the service mesh counts."},
+  {t:"protect data at rest with keys somebody manages",need:["kms"],c:"At-rest encryption plus real key management: rotation, scoping, and an answer to 'who can decrypt this'."},
+  {t:"show an auditor who touched which record, and when",need:["auditlog"],c:"Audit logging is what turns 'we are careful' into evidence an auditor accepts."},
+  {t:"answer where EU data lives",need:["eu"],c:"Data residency is a regulatory constraint — an architectural driver, not a deployment detail."},
+  {t:"fail the build on a known-vulnerable dependency",need:["depscan"],c:"Secure SDLC: the supply chain is part of your attack surface."},
+  {t:"survive credential stuffing and scraping at the edge",need:["waf"],c:"Rate limiting is a security control as much as a capacity one."}],
+ bonus:["secrets","runbook"], ok:["ratelimit"],
+ traps:[["uuidonly","This was the pentest finding. Unguessable identifiers are obscurity; the missing thing is an authorization check."],
+        ["sharedcreds","One credential with access to every tenant's rows is precisely what the auditor is looking for."]],
+ pal:["rls","tls","kms","auditlog","eu","depscan","waf","uuidonly","sharedcreds","secrets","runbook","ratelimit"]}];
+
+const KEY="bb.best.v2";
+let best={};try{best=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){best={}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(best))}catch(e){}};
+let cur=BRIEFS[0], placed={}, armed=null, marks={};
+const $=s=>document.querySelector(s);
+
+function renderPicker(){
+  const p=$("#picker");p.innerHTML="";
+  BRIEFS.forEach((b,i)=>{
+    const btn=document.createElement("button");
+    btn.className=b.id===cur.id?"on":"";
+    const s=best[b.id];
+    btn.innerHTML=(i+1)+" · "+b.t+(s!=null?' <span class="sc">'+s+'</span>':"");
+    btn.onclick=()=>{cur=b;placed={};marks={};armed=null;renderAll()};
+    p.appendChild(btn);
+  });
+  const scores=BRIEFS.map(b=>best[b.id]).filter(x=>x!=null);
+  $("#tbScore").textContent=scores.length?Math.round(scores.reduce((a,c)=>a+c,0)/BRIEFS.length)+"%":"—";
+  $("#tbAppr").textContent=BRIEFS.filter(b=>(best[b.id]||0)>=90).length+" / "+BRIEFS.length;
+}
+function reqMet(r){return r.any?r.any.some(id=>placed[id]):r.need.every(id=>placed[id])}
+function renderBrief(){
+  $("#bPhase").textContent=cur.ph;$("#bTitle").textContent=cur.t;$("#bSit").textContent=cur.sit;
+  const ul=$("#bReqs");ul.innerHTML="";
+  cur.reqs.forEach((r,i)=>{
+    const li=document.createElement("li");
+    li.innerHTML='<span class="n">'+String(i+1).padStart(2,"0")+'</span><span>'+r.t+'</span>';
+    ul.appendChild(li);
+  });
+}
+function renderRack(){
+  const rack=$("#rack");rack.innerHTML="";
+  BANDS.forEach(([nm,hint])=>{
+    const d=document.createElement("div");
+    d.className="band"+(armed?" armed":"");
+    d.innerHTML='<div class="bh"><span class="nm">'+nm+'</span><span class="hint">'+hint+'</span></div>';
+    const slot=document.createElement("div");slot.className="slot";
+    Object.keys(placed).filter(id=>placed[id]===nm).forEach(id=>{
+      const b=document.createElement("button");
+      b.className="piece "+(marks[id]||"");
+      b.innerHTML='<span>'+C[id][0]+'</span><span class="x">remove</span>';
+      b.title="Remove "+C[id][0];
+      b.onclick=e=>{e.stopPropagation();delete placed[id];marks={};renderAll()};
+      slot.appendChild(b);
+    });
+    d.appendChild(slot);
+    if(armed) d.onclick=()=>{placed[armed]=nm;armed=null;marks={};renderAll()};
+    rack.appendChild(d);
+  });
+}
+function renderPal(){
+  const pal=$("#pal");pal.innerHTML="";
+  cur.pal.forEach(id=>{
+    const b=document.createElement("button");
+    b.className=armed===id?"armed":"";
+    b.disabled=!!placed[id];
+    b.innerHTML='<span class="pn">'+C[id][0]+'</span><span class="pd">'+C[id][2]+'</span>';
+    b.onclick=()=>{armed=armed===id?null:id;renderAll()};
+    pal.appendChild(b);
+  });
+}
+function renderAll(){renderPicker();renderBrief();renderRack();renderPal()}
+
+function grade(){
+  const lines=[];let met=0;
+  cur.reqs.forEach((r,i)=>{
+    const ok=reqMet(r);if(ok)met++;
+    lines.push({k:ok?"met":"unmet",h:ok?"MET "+String(i+1).padStart(2,"0"):"UNMET "+String(i+1).padStart(2,"0"),
+      t:"The client can "+r.t+".",w:r.c});
+  });
+  const trapIds=cur.traps.map(t=>t[0]).filter(id=>placed[id]);
+  cur.traps.forEach(([id,why])=>{if(placed[id])lines.push({k:"flag",h:"FLAGGED",t:C[id][0],w:why})});
+  const wrong=Object.keys(placed).filter(id=>!C[id][3]&&placed[id]!==C[id][1]);
+  wrong.forEach(id=>lines.push({k:"band",h:"LAYER",t:C[id][0]+" is filed under "+placed[id],w:"It belongs in "+C[id][1]+". Layers are not decoration — they are where the part does its work."}));
+  const needed=new Set();cur.reqs.forEach(r=>(r.need||r.any||[]).forEach(x=>needed.add(x)));
+  (cur.bonus||[]).forEach(x=>needed.add(x));
+  const okset=new Set(cur.ok||[]);
+  const extra=Object.keys(placed).filter(id=>!needed.has(id)&&!okset.has(id)&&!C[id][3]);
+  extra.forEach(id=>lines.push({k:"extra",h:"IDLE",t:C[id][0],w:"Nothing in this brief asks for it. Every part is a thing to operate, pay for and debug at 3am."}));
+  const bonus=(cur.bonus||[]).filter(id=>placed[id]);
+  bonus.forEach(id=>lines.push({k:"bonus",h:"NICE",t:C[id][0],w:"Not required, but a reviewer would nod."}));
+  let sc=Math.round(met/cur.reqs.length*100)-trapIds.length*18-wrong.length*4-extra.length*3+bonus.length*4;
+  sc=Math.max(0,Math.min(100,sc));
+  marks={};trapIds.forEach(id=>marks[id]="trap-hit");wrong.forEach(id=>marks[id]=marks[id]||"wrongband");
+  Object.keys(placed).forEach(id=>{if((needed.has(id)||okset.has(id))&&!marks[id])marks[id]="good"});
+  return {sc,met,lines,verdict:sc>=90?["APPROVED FOR BUILD","v-met"]:sc>=70?["REVISE AND RESUBMIT","v-band"]:["REJECTED","v-flag"]};
+}
+function showReview(){
+  const g=grade();
+  if(!(cur.id in best)||g.sc>best[cur.id]){best[cur.id]=g.sc;save()}
+  const r=$("#review");r.hidden=false;
+  r.innerHTML='<div class="card"><div class="rhead"><div><span class="lbl">Design review · '+cur.t+
+    '</span><div style="font-family:Saira Condensed;font-weight:700;font-size:1.6rem;line-height:1.1">'+g.sc+
+    '<span style="font-size:.9rem;color:var(--ink3)">/100 · '+g.met+' of '+cur.reqs.length+' requirements</span></div></div>'+
+    '<span class="stamp hit '+g.verdict[1]+'">'+g.verdict[0]+'</span></div>'+
+    '<div class="rbody"><div class="scorebar"><i style="width:0"></i></div>'+
+    g.lines.map(l=>'<div class="line"><span class="verd v-'+l.k+'">'+l.h+'</span><div><strong>'+l.t+
+      '</strong><div class="why">'+l.w+'</div></div></div>').join("")+
+    '<div class="acts" style="margin-top:6px"><button class="btn" id="close">Back to the bench</button>'+
+    (BRIEFS.indexOf(cur)<BRIEFS.length-1?'<button class="btn ghost" id="next">Next commission →</button>':"")+
+    '</div></div></div>';
+  requestAnimationFrame(()=>{const i=r.querySelector(".scorebar i");if(i)i.style.width=g.sc+"%"});
+  $("#close").onclick=close;
+  const n=document.getElementById("next");if(n)n.onclick=()=>{close();cur=BRIEFS[BRIEFS.indexOf(cur)+1];placed={};marks={};renderAll()};
+  renderAll();
+}
+function close(){$("#review").hidden=true}
+$("#submit").onclick=showReview;
+$("#clear").onclick=()=>{placed={};marks={};armed=null;renderAll()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(!$("#review").hidden)close();else{armed=null;renderAll()}}});
+renderAll();
+</script>

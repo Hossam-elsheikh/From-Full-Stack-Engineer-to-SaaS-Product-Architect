@@ -1,0 +1,267 @@
+<title>The Traffic Layer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+[hidden]{display:none !important}
+.two{display:grid;grid-template-columns:236px minmax(0,1fr);align-items:start}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+.rail{position:sticky;top:0;align-self:start;padding:16px 14px;border-right:1px solid var(--rule);background:var(--sunk);max-height:100vh;overflow:auto}
+@media(max-width:900px){.rail{position:static;border-right:0;border-bottom:1px solid var(--rule);max-height:none}}
+.rail ol{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:1px;counter-reset:c}
+.rail a{display:grid;grid-template-columns:22px 1fr 9px;gap:7px;align-items:baseline;padding:5px 6px;text-decoration:none;color:var(--ink2);font-size:.83rem;border:1px solid transparent}
+.rail a:hover{background:var(--sheet);color:var(--ink);border-color:var(--rule)}
+.rail a.on{background:var(--sheet);border-color:var(--blue);color:var(--ink)}
+.rail a .i{font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--ink3);font-variant-numeric:tabular-nums}
+.rail a .d{width:7px;height:7px;border-radius:50%;border:1px solid var(--rule);align-self:center}
+.rail a.done .d{background:var(--green);border-color:var(--green)}
+.body{padding:clamp(18px,3vw,34px);min-width:0;display:flex;flex-direction:column;gap:0}
+.intro{max-width:62ch;display:flex;flex-direction:column;gap:14px;padding-bottom:22px;border-bottom:1px solid var(--rule)}
+.intro .lede{font-size:1.06rem;color:var(--ink2)}
+.cpt{padding:30px 0;border-bottom:1px solid var(--rule2);display:flex;flex-direction:column;gap:14px;scroll-margin-top:12px}
+.cpt:last-of-type{border-bottom:0}
+.cpt .top{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between}
+.cpt h2{font-size:clamp(1.5rem,3.2vw,2.05rem)}
+.cpt .idx{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--ink3);letter-spacing:.1em}
+.cpt .lede{font-size:1rem;color:var(--ink2);max-width:62ch}
+.blk{display:flex;flex-direction:column;gap:8px;max-width:64ch}
+.blk h4{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1.02rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink)}
+.blk ul,.blk ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.blk li{font-size:.94rem}
+.blk p{font-size:.94rem;color:var(--ink2)}
+.tbl{overflow-x:auto;border:1px solid var(--rule);background:var(--sheet);max-width:100%}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--rule2);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);background:var(--sunk);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.call{border-left:3px solid var(--amber);background:var(--amberBg);padding:10px 14px;font-size:.92rem;max-width:64ch}
+.call.blue{border-left-color:var(--blue);background:var(--blueBg)}
+code{font-family:"IBM Plex Mono",monospace;font-size:.86em;background:var(--chip);border:1px solid var(--rule);padding:1px 4px}
+.fig{border:1px solid var(--rule);background:var(--sheet);padding:16px;max-width:64ch;display:flex;flex-direction:column;gap:8px}
+.fig svg{width:100%;height:auto;display:block}
+.fig figcaption{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--ink3);letter-spacing:.05em}
+.cards{border:1px solid var(--rule);background:var(--chip);max-width:64ch}
+.cards .ch{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 13px;border-bottom:1px solid var(--rule)}
+.cards .ch .lbl{color:var(--ink2)}
+.cards .ch button{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink2);padding:3px 8px;cursor:pointer}
+.cards .ch button:hover{border-color:var(--ink2);color:var(--ink)}
+.rc{border-bottom:1px dashed var(--rule);cursor:pointer}
+.rc:last-child{border-bottom:0}
+.rc .q{padding:10px 13px;font-size:.9rem;display:grid;grid-template-columns:20px 1fr;gap:9px}
+.rc .q .m{font-family:"IBM Plex Mono",monospace;font-size:.64rem;color:var(--ink3);padding-top:3px}
+.rc .a{display:none;padding:0 13px 11px 42px;font-size:.89rem;color:var(--ink2)}
+.rc.open .a{display:block}
+.rc:hover .q{background:var(--sheet)}
+.cfoot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;max-width:64ch}
+.mark{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.82rem;
+  background:none;border:1px solid var(--rule);color:var(--ink2);padding:6px 14px;cursor:pointer}
+.mark:hover{border-color:var(--ink2);color:var(--ink)}
+.mark.on{background:var(--greenBg);border-color:var(--green);color:var(--green)}
+.src{font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--ink3)}
+.res{padding:26px 0 8px;display:flex;flex-direction:column;gap:14px}
+.reslist{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.r{border:1px solid var(--rule);background:var(--sheet);padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.r .k{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.11em;text-transform:uppercase;color:var(--blue)}
+.r .t{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1.05rem;line-height:1.15}
+.r .w{font-size:.83rem;color:var(--ink2)}
+.foot{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:14px 18px;border-top:1px solid var(--rule);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
+.foot a{color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blueLine)}
+.pbar{height:7px;background:var(--sheet);border:1px solid var(--rule);overflow:hidden;margin-top:8px}
+.pbar i{display:block;height:100%;background:var(--green);transition:width .5s ease}
+</style>
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Phase</span><span class="v" id="tbPh"></span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v" id="tbT"></span></div>
+    <div class="tcell"><span class="lbl">Concepts</span><span class="v" id="tbN"></span></div>
+    <div class="tcell"><span class="lbl">Reviewed</span><span class="v" id="tbR"></span></div>
+  </header>
+  <div class="two">
+    <nav class="rail" aria-label="Concepts">
+      <span class="lbl">On this sheet</span>
+      <ol id="nav"></ol>
+      <div class="pbar"><i id="pb" style="width:0"></i></div>
+      <p class="lbl" style="margin-top:10px;line-height:1.7">Marks are saved in this browser.</p>
+    </nav>
+    <main class="body">
+      <section class="intro">
+        <span class="lbl" id="iPh"></span>
+        <h1 id="iT"></h1>
+        <p class="lede" id="iL"></p>
+        <p class="src" id="iS"></p>
+      </section>
+      <div id="cpts"></div>
+      <section class="res">
+        <h2>What to read and watch for this phase</h2>
+        <div class="reslist" id="res"></div>
+      </section>
+    </main>
+  </div>
+  <footer class="foot">
+    <span id="fnote"></span>
+    <span id="links"></span>
+  </footer>
+</div>
+</div>
+<script>
+const D={"phase": "6", "title": "The Traffic Layer", "weeks": "4 weeks · ~30 hrs", "lede": "Everything between your users and your servers. These two concepts arrived early, from the phase 0 course — which is the territory telling you that scalability is not a later chapter. The phase itself is a revisit with production scars, and you buy nothing for it.", "source": "Notes from Udemy: Software Architecture & Design of Modern Large Scale Systems — Michael Pogrebinsky", "foot": "Built from concepts/phase-6-scale/", "links": [["The Atlas", "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"], ["The Build Bench", "https://claude.ai/code/artifact/674ef97b-db8f-46c9-9050-06b83ba95e7b"], ["Year One", "https://claude.ai/code/artifact/6f151972-b169-4e67-8676-ef1f3d243b5c"]], "concepts": [{"id": "load-balancers", "t": "Load Balancers", "vault": "concepts/phase-6-scale/load-balancers.md", "lede": "Distributes traffic across servers to prevent overload — and quietly buys you three other quality attributes at the same time.", "blocks": [{"h": "What it buys", "items": ["**Scalability** — add or remove servers with load", "**Availability** — health monitoring, so traffic only reaches operational servers", "**Performance** — slightly more latency, massively more throughput", "**Maintainability** — rolling updates: take servers offline one at a time"]}, {"h": "Types", "items": ["**DNS load balancing** — basic. No health monitoring, no security.", "**Hardware / software LB** — active health checks, intelligent routing, hides backend topology", "**Global server LB (GSLB)** — DNS plus routing by user location and health; this is what makes disaster recovery real"]}, {"h": "Solutions", "items": ["**Open source** — HAProxy, NGINX", "**Cloud** — AWS ELB (Application, Network, Gateway, Classic), GCP Cloud Load Balancing, Azure Load Balancer", "**GSLB** — AWS Route 53, AWS Global Accelerator, GCP Cloud DNS, Azure Traffic Manager"]}, {"call": "The maintainability benefit is the one people forget: a balancer is what turns a release from a maintenance window into a rolling update.", "blue": true}], "cards": [["Traffic spikes and one server dies. Users report errors. What pattern solves both problems, and which two features?", "A load balancer — horizontal scaling for the spike, health checks to route around the dead server."], ["You need to deploy a new version without downtime. How does a load balancer help?", "Rolling updates — take servers offline one at a time while the LB routes to healthy ones."], ["Your European users experience high latency hitting US servers. What LB type fixes this?", "Global server load balancing — routes by user geography and server health."]], "drill": "Year One · One box out of four"}, {"id": "cdn", "t": "Content Delivery Networks", "vault": "concepts/phase-6-scale/content-delivery-networks.md", "lede": "Reduces the latency caused by physical distance, by caching content on edge servers close to the user.", "blocks": [{"h": "Benefits", "items": ["Lower latency and faster load times", "Improved availability — traffic is distributed", "DDoS protection — the attack is absorbed at the edge, not at your origin"]}, {"table": {"cols": ["Strategy", "How it works", "Pros", "Cons"], "rows": [["**Pull**", "The CDN fetches from origin on a cache miss; you configure a TTL", "Easy maintenance", "The first request for uncached content is slow, and TTL bounds staleness"], ["**Push**", "You upload content to the CDN proactively", "Users always get the latest version", "More active management"]]}}, {"h": "Providers", "items": ["Cloudflare, Fastly, Akamai, Amazon CloudFront, GCP CDN, Azure CDN"]}], "cards": [["Your video platform users in Asia experience 3s load times because the server is in Virginia. What fixes this?", "A CDN — cache content on edge servers geographically closer to users."], ["Your marketing site content rarely changes and you want minimal maintenance. Pull or push?", "Pull — the CDN fetches on a cache miss, managed with a TTL."], ["Your pricing page must update instantly worldwide after a product launch. Pull or push?", "Push — proactively upload so every edge has the latest version."]], "drill": "Year One · The world shows up"}], "resources": [{"k": "Re-read · required", "t": "DDIA chapters 5–9", "w": "Replication, partitioning, transactions, distributed troubles, consistency. They read completely differently after phases 4–5 — the highest-return re-read in the plan. ~10 hrs."}, {"k": "Free · required", "t": "Engineering blogs — Stripe, Shopify, Figma, Discord", "w": "Real scaling war stories beat any course, and they cost nothing. ~6 hrs, ongoing. One post a fortnight, written up as a case study."}, {"k": "Cut", "t": "Revisiting the course's scaling sections", "w": "Redundant — you have this from phase 1 plus DDIA. Buy nothing in this phase."}, {"k": "Phase artifact", "t": "A load test of your own system", "w": "Where it broke *first*, and the one scaling decision you would make next — not all of them. Capstone weeks 31–34."}, {"k": "Still to capture", "t": "Rate limiting, the scaling ladder, the outbox, capacity planning, PACELC, offline sync", "w": "Capacity estimation is the highest-value habit here: ten thousand tenants at fifty requests a day, two-kilobyte payloads — servers, database size, bandwidth?"}]};
+const SVG={
+"three-tier":'<svg viewBox="0 0 420 210" role="img" aria-label="Three tier architecture"><g font-family="IBM Plex Mono, monospace" font-size="10"><rect x="20" y="12" width="380" height="46" fill="var(--blueBg)" stroke="var(--blue)"/><text x="34" y="32" fill="var(--ink)" font-size="12">Presentation tier</text><text x="34" y="48" fill="var(--ink3)">user interaction only — no business logic</text><rect x="20" y="82" width="380" height="46" fill="var(--redBg)" stroke="var(--red)"/><text x="34" y="102" fill="var(--ink)" font-size="12">Application tier</text><text x="34" y="118" fill="var(--ink3)">business logic — scales horizontally, tends to grow monolithic</text><rect x="20" y="152" width="380" height="46" fill="var(--greenBg)" stroke="var(--green)"/><text x="34" y="172" fill="var(--ink)" font-size="12">Data tier</text><text x="34" y="188" fill="var(--ink3)">storage and persistence</text><path d="M210 58 L210 82 M210 128 L210 152" stroke="var(--ink3)" stroke-width="1"/><path d="M206 76 l4 6 l4 -6 M206 146 l4 6 l4 -6" fill="var(--ink3)"/></g></svg>',
+"cap":'<svg viewBox="0 0 420 250" role="img" aria-label="CAP theorem triangle"><g font-family="IBM Plex Mono, monospace" font-size="10"><path d="M210 30 L370 210 L50 210 Z" fill="none" stroke="var(--rule)" stroke-dasharray="4 4"/><circle cx="210" cy="30" r="6" fill="var(--blue)"/><text x="210" y="18" fill="var(--ink)" font-size="12" text-anchor="middle">Consistency</text><circle cx="370" cy="210" r="6" fill="var(--green)"/><text x="370" y="230" fill="var(--ink)" font-size="12" text-anchor="middle">Availability</text><circle cx="50" cy="210" r="6" fill="var(--amber)"/><text x="50" y="230" fill="var(--ink)" font-size="12" text-anchor="middle">Partition tol.</text><text x="120" y="130" fill="var(--ink2)" text-anchor="middle">CP</text><text x="300" y="130" fill="var(--ink2)" text-anchor="middle">AP</text><text x="210" y="200" fill="var(--ink3)" text-anchor="middle">CA — only without a network</text><text x="210" y="120" fill="var(--ink3)" font-size="9" text-anchor="middle">during a partition</text><text x="210" y="134" fill="var(--ink3)" font-size="9" text-anchor="middle">you pick one side</text></g></svg>',
+"windows":'<svg viewBox="0 0 420 200" role="img" aria-label="Tumbling versus hopping windows"><g font-family="IBM Plex Mono, monospace" font-size="9"><text x="10" y="16" fill="var(--ink)" font-size="11">Tumbling — fixed, no overlap</text><line x1="10" y1="60" x2="410" y2="60" stroke="var(--rule)"/><rect x="10" y="30" width="130" height="24" fill="var(--blueBg)" stroke="var(--blue)"/><rect x="145" y="30" width="130" height="24" fill="var(--blueBg)" stroke="var(--blue)"/><rect x="280" y="30" width="130" height="24" fill="var(--blueBg)" stroke="var(--blue)"/><text x="75" y="46" fill="var(--ink2)" text-anchor="middle">w1</text><text x="210" y="46" fill="var(--ink2)" text-anchor="middle">w2</text><text x="345" y="46" fill="var(--ink2)" text-anchor="middle">w3</text><text x="10" y="96" fill="var(--ink)" font-size="11">Hopping — window &gt; advance, so they overlap</text><line x1="10" y1="180" x2="410" y2="180" stroke="var(--rule)"/><rect x="10" y="108" width="180" height="18" fill="var(--greenBg)" stroke="var(--green)"/><rect x="70" y="130" width="180" height="18" fill="var(--greenBg)" stroke="var(--green)"/><rect x="130" y="152" width="180" height="18" fill="var(--greenBg)" stroke="var(--green)"/><text x="330" y="122" fill="var(--ink3)">one-hour window</text><text x="330" y="144" fill="var(--ink3)">advancing every</text><text x="330" y="156" fill="var(--ink3)">minute</text><path d="M10 186 L410 186" stroke="var(--ink3)" stroke-width=".5"/><text x="10" y="196" fill="var(--ink3)">time →</text></g></svg>',
+"scaling-ladder":'<svg viewBox="0 0 420 190" role="img" aria-label="The database scaling ladder"><g font-family="IBM Plex Mono, monospace" font-size="10"><rect x="10" y="150" width="96" height="30" fill="var(--greenBg)" stroke="var(--green)"/><text x="58" y="169" fill="var(--ink)" text-anchor="middle">indexes</text><rect x="112" y="112" width="96" height="30" fill="var(--blueBg)" stroke="var(--blue)"/><text x="160" y="131" fill="var(--ink)" text-anchor="middle">replicas</text><rect x="214" y="74" width="96" height="30" fill="var(--amberBg)" stroke="var(--amber)"/><text x="262" y="93" fill="var(--ink)" text-anchor="middle">partitioning</text><rect x="316" y="36" width="96" height="30" fill="var(--redBg)" stroke="var(--red)"/><text x="364" y="55" fill="var(--ink)" text-anchor="middle">sharding</text><text x="10" y="24" fill="var(--ink3)">cost, irreversibility and operational pain increase with every rung ↗</text></g></svg>'};
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function md(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/`(.+?)`/g,"<code>$1</code>").replace(/\*(.+?)\*/g,"<em>$1</em>")}
+const KEY="phase"+D.phase+".reviewed.v1";
+let done={};try{done=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){done={}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(done))}catch(e){}};
+const $=s=>document.querySelector(s);
+
+function block(b){
+  let h=b.h?'<h4>'+md(b.h)+'</h4>':"";
+  if(b.items)h+='<ul>'+b.items.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul>';
+  if(b.num)h+='<ol>'+b.num.map(x=>'<li>'+md(x)+'</li>').join("")+'</ol>';
+  if(b.p)h+='<p>'+md(b.p)+'</p>';
+  if(b.table)return '<div class="blk">'+h+'</div><div class="tbl"><table><thead><tr>'+
+    b.table.cols.map(c=>'<th>'+md(c)+'</th>').join("")+'</tr></thead><tbody>'+
+    b.table.rows.map(r=>'<tr>'+r.map(c=>'<td>'+md(c)+'</td>').join("")+'</tr>').join("")+'</tbody></table></div>';
+  if(b.call)return '<div class="call'+(b.blue?" blue":"")+'">'+md(b.call)+'</div>';
+  if(b.svg)return '<figure class="fig">'+SVG[b.svg]+'<figcaption>'+md(b.cap||"")+'</figcaption></figure>';
+  return '<div class="blk">'+h+'</div>';
+}
+function render(){
+  $("#tbPh").textContent=D.phase==="8"?"Capstone":"Phase "+D.phase;
+  $("#tbT").textContent=D.title; $("#tbN").textContent=D.concepts.length;
+  $("#iPh").textContent=(D.phase==="8"?"Capstone":"Phase "+D.phase)+" · "+D.weeks+" · "+
+    D.concepts.reduce((a,c)=>a+(c.cards||[]).length,0)+" recall cards";
+  $("#iT").textContent=D.title; $("#iL").textContent=D.lede;
+  $("#iS").textContent=D.source||"";
+  $("#fnote").textContent=D.foot||"";
+  $("#links").innerHTML=(D.links||[]).map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener">'+l[0]+' ↗</a>').join(" · ");
+  $("#cpts").innerHTML=D.concepts.map((c,i)=>{
+    const cards=(c.cards||[]).map((qa,n)=>'<div class="rc"><div class="q"><span class="m">'+
+      String(n+1).padStart(2,"0")+'</span><span>'+md(qa[0])+'</span></div><div class="a">'+md(qa[1])+'</div></div>').join("");
+    return '<section class="cpt" id="c'+i+'"><div class="top"><h2>'+md(c.t)+'</h2><span class="idx">'+
+      String(i+1).padStart(2,"0")+' / '+String(D.concepts.length).padStart(2,"0")+'</span></div>'+
+      '<p class="lede">'+md(c.lede)+'</p>'+
+      (c.blocks||[]).map(block).join("")+
+      (cards?'<div class="cards"><div class="ch"><span class="lbl">Test yourself · '+c.cards.length+
+        ' cards</span><button data-all="'+i+'">Reveal all</button></div>'+cards+'</div>':"")+
+      '<div class="cfoot"><button class="mark'+(done[c.id]?" on":"")+'" data-m="'+c.id+'">'+
+      (done[c.id]?"Reviewed":"Mark reviewed")+'</button><span class="src">'+esc(c.vault||"")+'</span></div></section>';
+  }).join("");
+  $("#res").innerHTML=(D.resources||[]).map(r=>'<div class="r"><span class="k">'+esc(r.k)+
+    '</span><span class="t">'+md(r.t)+'</span><span class="w">'+md(r.w)+'</span></div>').join("");
+  $("#nav").innerHTML=D.concepts.map((c,i)=>'<li><a href="#c'+i+'" class="'+(done[c.id]?"done":"")+
+    '" data-i="'+i+'"><span class="i">'+String(i+1).padStart(2,"0")+'</span><span>'+esc(c.t)+
+    '</span><span class="d"></span></a></li>').join("");
+  document.querySelectorAll(".rc").forEach(el=>el.onclick=()=>el.classList.toggle("open"));
+  document.querySelectorAll("[data-all]").forEach(b=>b.onclick=()=>{
+    const sec=document.getElementById("c"+b.dataset.all);
+    const any=[...sec.querySelectorAll(".rc")].some(r=>!r.classList.contains("open"));
+    sec.querySelectorAll(".rc").forEach(r=>r.classList.toggle("open",any));
+    b.textContent=any?"Hide all":"Reveal all";
+  });
+  document.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{
+    const id=b.dataset.m; if(done[id])delete done[id]; else done[id]=1;
+    save(); render(); document.getElementById("c"+D.concepts.findIndex(c=>c.id===id)).scrollIntoView({block:"nearest"});
+  });
+  const n=D.concepts.length, r=D.concepts.filter(c=>done[c.id]).length;
+  $("#tbR").textContent=r+" / "+n; $("#pb").style.width=(r/n*100)+"%";
+  observe();
+}
+let io;
+function observe(){
+  if(io)io.disconnect();
+  const links=[...document.querySelectorAll("#nav a")];
+  io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove("on"));
+      const l=links[+e.target.id.slice(1)]; if(l)l.classList.add("on");}});
+  },{rootMargin:"-10% 0px -75% 0px"});
+  document.querySelectorAll(".cpt").forEach(s=>io.observe(s));
+}
+render();
+</script>

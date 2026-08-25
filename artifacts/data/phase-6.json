@@ -1,0 +1,164 @@
+{
+  "phase": "6",
+  "title": "The Traffic Layer",
+  "weeks": "4 weeks · ~30 hrs",
+  "lede": "Everything between your users and your servers. These two concepts arrived early, from the phase 0 course — which is the territory telling you that scalability is not a later chapter. The phase itself is a revisit with production scars, and you buy nothing for it.",
+  "source": "Notes from Udemy: Software Architecture & Design of Modern Large Scale Systems — Michael Pogrebinsky",
+  "foot": "Built from concepts/phase-6-scale/",
+  "links": [
+    [
+      "The Atlas",
+      "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+    ],
+    [
+      "The Build Bench",
+      "https://claude.ai/code/artifact/674ef97b-db8f-46c9-9050-06b83ba95e7b"
+    ],
+    [
+      "Year One",
+      "https://claude.ai/code/artifact/6f151972-b169-4e67-8676-ef1f3d243b5c"
+    ]
+  ],
+  "concepts": [
+    {
+      "id": "load-balancers",
+      "t": "Load Balancers",
+      "vault": "concepts/phase-6-scale/load-balancers.md",
+      "lede": "Distributes traffic across servers to prevent overload — and quietly buys you three other quality attributes at the same time.",
+      "blocks": [
+        {
+          "h": "What it buys",
+          "items": [
+            "**Scalability** — add or remove servers with load",
+            "**Availability** — health monitoring, so traffic only reaches operational servers",
+            "**Performance** — slightly more latency, massively more throughput",
+            "**Maintainability** — rolling updates: take servers offline one at a time"
+          ]
+        },
+        {
+          "h": "Types",
+          "items": [
+            "**DNS load balancing** — basic. No health monitoring, no security.",
+            "**Hardware / software LB** — active health checks, intelligent routing, hides backend topology",
+            "**Global server LB (GSLB)** — DNS plus routing by user location and health; this is what makes disaster recovery real"
+          ]
+        },
+        {
+          "h": "Solutions",
+          "items": [
+            "**Open source** — HAProxy, NGINX",
+            "**Cloud** — AWS ELB (Application, Network, Gateway, Classic), GCP Cloud Load Balancing, Azure Load Balancer",
+            "**GSLB** — AWS Route 53, AWS Global Accelerator, GCP Cloud DNS, Azure Traffic Manager"
+          ]
+        },
+        {
+          "call": "The maintainability benefit is the one people forget: a balancer is what turns a release from a maintenance window into a rolling update.",
+          "blue": true
+        }
+      ],
+      "cards": [
+        [
+          "Traffic spikes and one server dies. Users report errors. What pattern solves both problems, and which two features?",
+          "A load balancer — horizontal scaling for the spike, health checks to route around the dead server."
+        ],
+        [
+          "You need to deploy a new version without downtime. How does a load balancer help?",
+          "Rolling updates — take servers offline one at a time while the LB routes to healthy ones."
+        ],
+        [
+          "Your European users experience high latency hitting US servers. What LB type fixes this?",
+          "Global server load balancing — routes by user geography and server health."
+        ]
+      ],
+      "drill": "Year One · One box out of four"
+    },
+    {
+      "id": "cdn",
+      "t": "Content Delivery Networks",
+      "vault": "concepts/phase-6-scale/content-delivery-networks.md",
+      "lede": "Reduces the latency caused by physical distance, by caching content on edge servers close to the user.",
+      "blocks": [
+        {
+          "h": "Benefits",
+          "items": [
+            "Lower latency and faster load times",
+            "Improved availability — traffic is distributed",
+            "DDoS protection — the attack is absorbed at the edge, not at your origin"
+          ]
+        },
+        {
+          "table": {
+            "cols": [
+              "Strategy",
+              "How it works",
+              "Pros",
+              "Cons"
+            ],
+            "rows": [
+              [
+                "**Pull**",
+                "The CDN fetches from origin on a cache miss; you configure a TTL",
+                "Easy maintenance",
+                "The first request for uncached content is slow, and TTL bounds staleness"
+              ],
+              [
+                "**Push**",
+                "You upload content to the CDN proactively",
+                "Users always get the latest version",
+                "More active management"
+              ]
+            ]
+          }
+        },
+        {
+          "h": "Providers",
+          "items": [
+            "Cloudflare, Fastly, Akamai, Amazon CloudFront, GCP CDN, Azure CDN"
+          ]
+        }
+      ],
+      "cards": [
+        [
+          "Your video platform users in Asia experience 3s load times because the server is in Virginia. What fixes this?",
+          "A CDN — cache content on edge servers geographically closer to users."
+        ],
+        [
+          "Your marketing site content rarely changes and you want minimal maintenance. Pull or push?",
+          "Pull — the CDN fetches on a cache miss, managed with a TTL."
+        ],
+        [
+          "Your pricing page must update instantly worldwide after a product launch. Pull or push?",
+          "Push — proactively upload so every edge has the latest version."
+        ]
+      ],
+      "drill": "Year One · The world shows up"
+    }
+  ],
+  "resources": [
+    {
+      "k": "Re-read · required",
+      "t": "DDIA chapters 5–9",
+      "w": "Replication, partitioning, transactions, distributed troubles, consistency. They read completely differently after phases 4–5 — the highest-return re-read in the plan. ~10 hrs."
+    },
+    {
+      "k": "Free · required",
+      "t": "Engineering blogs — Stripe, Shopify, Figma, Discord",
+      "w": "Real scaling war stories beat any course, and they cost nothing. ~6 hrs, ongoing. One post a fortnight, written up as a case study."
+    },
+    {
+      "k": "Cut",
+      "t": "Revisiting the course's scaling sections",
+      "w": "Redundant — you have this from phase 1 plus DDIA. Buy nothing in this phase."
+    },
+    {
+      "k": "Phase artifact",
+      "t": "A load test of your own system",
+      "w": "Where it broke *first*, and the one scaling decision you would make next — not all of them. Capstone weeks 31–34."
+    },
+    {
+      "k": "Still to capture",
+      "t": "Rate limiting, the scaling ladder, the outbox, capacity planning, PACELC, offline sync",
+      "w": "Capacity estimation is the highest-value habit here: ten thousand tenants at fifty requests a day, two-kilobyte payloads — servers, database size, bandwidth?"
+    }
+  ]
+}
