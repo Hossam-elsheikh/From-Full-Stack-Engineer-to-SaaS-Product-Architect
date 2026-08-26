@@ -1,0 +1,86 @@
+{
+ "ch": "23",
+ "book": "Chapter 23 · Diagramming Architecture",
+ "pages": "pp. 423–431",
+ "title": "Drawing It So People Understand",
+ "gist": "However good the idea, nobody funds or builds what they can't picture. Representational consistency, semantic layers, three standards worth knowing, and the antipattern that makes architects defend bad diagrams.",
+ "read": "3 min · 30 sec to re-scan",
+ "acc": {
+  "l": "#3D6570",
+  "d": "#92BCC7"
+ },
+ "minute": [
+  "**Representational consistency**: always show the relationship between parts before changing the view. Whole topology → where the part sits → the part in detail.",
+  "Use drawing **layers semantically**. Base layer = topology, and it says *synchronous*, not *gRPC*. Next layer = implementation. Further layers = DDD boundaries, transaction scope, whatever you want to contrast.",
+  "Three standards: **UML** (class and sequence diagrams survived; the rest didn't), **C4** (Context, Container, Component, Class — the modern default), **ArchiMate** (enterprise scope, deliberately minimal).",
+  "The one near-universal convention: **solid lines are synchronous, dotted lines are asynchronous**. Almost nothing else about shapes is standard, so build your own set and publish a key.",
+  "**Irrational Artifact Attachment**: your attachment to an artifact is proportional to how long it took to make. Stay low-fidelity early, so you can throw things away."
+ ],
+ "sections": [
+  {
+   "t": "Representational consistency",
+   "art": "rep-consistency",
+   "wide": true,
+   "alt": "A whole topology, then the same topology with one part highlighted, then that part in detail",
+   "cap": "Fig. 23-1 · three frames, and the middle one is the one people skip.",
+   "p": "To explain how the Silicon Sandwiches plug-ins relate to each other, you start with the whole topology, then show the relationship between it and the plug-in structure, and only then the plug-in structure itself. **Showing a portion without its place in the whole confuses viewers** — and it is a source of confusion you can eliminate for free."
+  },
+  {
+   "k": "decision",
+   "t": "You spent four hours making the diagram beautiful",
+   "art": "attachment",
+   "alt": "Attachment plotted against hours spent producing an artifact, rising steeply",
+   "sit": "You built a careful architecture diagram in a proper tool. In review, someone proposes a change that would invalidate the structure you drew. You find yourself explaining why the current design is fine.",
+   "opts": [
+    [
+     "Defend the design.",
+     "This is **Irrational Artifact Attachment** — attachment proportional to production time. Four hours in Visio makes you twice as attached as two hours would have. The design isn't being defended on its merits."
+    ],
+    [
+     "Work in low-fidelity artifacts until the team has iterated enough.",
+     "A whiteboard photo, index cards, sticky notes. Cheap enough to throw away, which is what frees people to experiment and lets the real shape emerge through revision and argument.",
+     1
+    ]
+   ],
+   "verdict": "Eventually you *do* need the nice diagram in the fancy tool — just not before the team has iterated on the design. Many architects have replaced the whiteboard with a **tablet on a projector**: unlimited canvas, copy-paste for “what if” variants that would obscure the original, already digitised without the photograph glare, and it works with people who aren't in the room."
+  },
+  {
+   "t": "Layers, stencils, magnets",
+   "art": "layers",
+   "alt": "Three stacked planes: topology at the base, implementation above it, context overlays on top",
+   "cap": "What to look for in a diagramming tool — and how to use the most important feature properly.",
+   "items": [
+    "**Layers** — group items logically and show or hide them. Build a comprehensive diagram and hide the detail until you're discussing it, or reveal a picture incrementally through a presentation.",
+    "**Stencils and templates** — a library of common visual components, including composites. Building a stencil set for the patterns your organisation uses gives consistency across every diagram and makes new ones faster.",
+    "**Magnets** — the points on a shape where connecting lines snap. Small feature, large effect on whether diagrams look considered."
+   ],
+   "p": "The layer discipline is the part worth internalising: **the base layer is architecture, not implementation**. It should say *synchronous communication*, not name a protocol. Implementation details — which database, which protocol — go on the next layer up. Done this way, diagrams become extensible: you can add a layer for domain-driven design boundaries, or transactional scope, or any other meta-information you want to contrast against the topology."
+  },
+  {
+   "t": "Standards, and when to break them",
+   "art": "standards",
+   "wide": true,
+   "alt": "UML, C4 and ArchiMate compared",
+   "cap": "C4's four Cs: Context (users and external dependencies), Container (deployment boundaries — a good meeting point with operations), Component (the architect's view), Class.",
+   "items": [
+    "**Titles** on every element, unless it's genuinely well known to the audience. Rotate them to stick to the right thing and use space efficiently.",
+    "**Lines** thick enough to see. Arrows for direction where flow matters. Different arrowheads may carry different meaning — just be consistent about it.",
+    "**Shapes**: no pervasive standard exists. The authors use three-dimensional boxes for deployable artifacts, rectangles for containers, cylinders for databases — and admit there is no key beyond that.",
+    "**Colour** is under-used, largely because books were printed in black and white for years. Use it to distinguish artifacts — but **never as the only distinction**, because colourblind viewers lose the meaning entirely. Pair it with distinct iconography, the way crossing lights pair red and green with different figures.",
+    "**Keys** whenever shapes could be ambiguous. **An easily misinterpreted diagram is worse than no diagram at all.**"
+   ],
+   "p": "Establish a standard for the organisation, and allow reasonable exceptions. Architects break the rules whenever the standard has no good way to express the design — and the alternative is what heavyweight CASE tools produced: elaborate models of simple things, full of details that were noise in that context."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 23: Diagramming Architecture, pp. 423–431. C4 is Simon Brown's; ArchiMate is The Open Group's.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

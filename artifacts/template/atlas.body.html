@@ -32,6 +32,11 @@
     <div class="sims" id="sheets"></div>
   </section>
 
+  <section class="pad" style="padding-top:0" id="serialSec" hidden>
+    <div class="secthead"><h2>Where the book gets told</h2><span class="lbl">The whole of Richards &amp; Ford, drawn</span></div>
+    <div class="sims" id="serial"></div>
+  </section>
+
   <section class="pad" style="padding-top:0">
     <div class="secthead"><h2>Where you practise</h2><span class="lbl">Recognition is not the same as production</span></div>
     <div class="sims" id="sims"></div>
@@ -179,6 +184,12 @@ $("#sheets").innerHTML=PH.filter(p=>p.sheet).map(p=>{
   return '<a class="sim" href="'+p.sheet+'" target="_blank" rel="noopener"><span class="lbl">Phase '+p.n+' · '+
    n+' concepts · '+k+' cards</span><h3>'+esc(p.t)+'</h3><p>Every note you have taken for this phase, structured for reading straight through — with the cards folded in and the phase reading list at the end.</p>'+
    '<span class="go">Read the sheet →</span></a>';}).join("");
+if(A.serial){
+  document.getElementById("serialSec").hidden=false;
+  $("#serial").innerHTML='<a class="sim" href="'+A.serial.u+'" target="_blank" rel="noopener"><span class="lbl">'+
+    esc(A.serial.k)+'</span><h3>'+esc(A.serial.t)+'</h3><p>'+esc(A.serial.w)+'</p><span class="go">'+
+    esc(A.serial.go)+' &rarr;</span></a>';
+}
 $("#sims").innerHTML=A.sims.map(s=>'<a class="sim" href="'+s.u+'" target="_blank" rel="noopener"><span class="lbl">'+
   esc(s.k)+'</span><h3>'+esc(s.t)+'</h3><p>'+esc(s.w)+'</p><span class="go">'+esc(s.go)+' →</span></a>').join("");
 renderMap();

@@ -1,0 +1,123 @@
+{
+ "ch": "04",
+ "book": "Chapter 4 · Architectural Characteristics Defined",
+ "pages": "pp. 55–65",
+ "title": "The Capabilities, Not the Behaviour",
+ "gist": "What actually qualifies as an architecture characteristic, the four families they fall into, and why supporting more of them makes the design worse rather than better.",
+ "read": "4 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#2F6A6E",
+  "d": "#86C3C7"
+ },
+ "minute": [
+  "A requirement is an **architecture characteristic** only if it passes all three tests: it is **non-domain**, it **influences structure**, and it is **critical to success**. Fail one and it is a design concern, not an architectural one.",
+  "The domain is what the system **does**. Characteristics are what it must be **good at**. Both are structural design; only one of them arrives written down.",
+  "**Implicit** characteristics — availability, reliability, security — almost never appear in a requirements document, and you are expected to surface them from domain knowledge anyway.",
+  "Four families: **operational** (availability, performance, scalability), **structural** (maintainability, extensibility, portability), **cloud** (on-demand scaling, zone availability, region privacy — new in the 2nd edition) and **cross-cutting** (security, legal, accessibility, privacy).",
+  "Each characteristic you support costs design effort and drags the others around with it. **Never strive for the best architecture; aim for the least worst.**"
+ ],
+ "sections": [
+  {
+   "t": "Behaviour and capability are different jobs",
+   "art": "domain-vs-ac",
+   "alt": "Two panels — the domain on the left and architecture characteristics on the right — resting on one bar",
+   "cap": "Fig. 4-1 · both halves are structural design. Only the left half is in the requirements document.",
+   "p": "Defining characteristics is a large part of what separates architecture from coding and design. Requirements say what the application should do; characteristics say how it is implemented and why those choices were made.",
+   "quotes": [
+    [
+     "Never strive for the best architecture; aim for the least worst architecture.",
+     "Richards & Ford",
+     "The chapter's own summary, and a working test: if your design maximises everything, you have not chosen anything."
+    ]
+   ]
+  },
+  {
+   "t": "Three tests, all of which must pass",
+   "art": "ac-triangle",
+   "alt": "A triangle whose three corners are non-domain, structural and critical",
+   "cap": "Fig. 4-2 · the triangle is deliberate — each corner supports the others, and they pull against each other.",
+   "items": [
+    "**Non-domain design consideration** — it isn't about what the system does. No requirements document says “prevent technical debt”, but it is a real design consideration.",
+    "**Influences structure** — it needs special shape, not just careful coding. Ask directly: can I implement this by design, or does it change the architecture?",
+    "**Critical or important to success** — every characteristic you support adds complexity, so the aim is the fewest you can get away with, not the most you can name."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "Is security an architecture characteristic on this project?",
+   "art": "design-or-structure",
+   "alt": "Security achievable by design or by structure, above scalability which only structure can achieve",
+   "sit": "Security matters on every project — every system needs baseline precautions. Does that make it an architecture characteristic *here*, or a coding standard?",
+   "opts": [
+    [
+     "It's always architectural. It matters everywhere.",
+     "Then so is everything, and the word stops distinguishing anything. Baseline hygiene — encryption, hashing, salting — is design, and a monolith can hold it that way."
+    ],
+    [
+     "It becomes architectural when the architecture must change shape for it.",
+     "In a distributed system you build a hardened service with stricter access protocols. That is structure, not hygiene, and it belongs in the characteristics list.",
+     1
+    ]
+   ],
+   "verdict": "Security can be met by design *or* by structure, so the answer depends on the system. **Scalability cannot** — no amount of clever design gets a monolith past a certain point; beyond it you change to a distributed style. That's why operational characteristics get the closest attention: they are the ones that most often force structure."
+  },
+  {
+   "t": "Four families of characteristic",
+   "art": "categories",
+   "wide": true,
+   "alt": "Four columns listing operational, structural, cloud and cross-cutting characteristics",
+   "cap": "Tables 4-1 to 4-4. Not a standard — a starting vocabulary you are expected to localise.",
+   "p": "There is no universal list and no authoritative definitions. ISO publishes categories that partly overlap these, and even there the authors disagree with one entry: *functional suitability* describes why you're building the software, not a characteristic of the architecture.",
+   "items": [
+    "Many terms are ambiguous and some overlap. **Interoperability** implies easy integration with other systems, so it implies published, documented APIs; **compatibility** is about industry and domain standards. Different things.",
+    "**Availability** and **reliability** look identical until you consider IP, which is available but not reliable — packets arrive out of order and the receiver has to ask again.",
+    "**Learnability** has two definitions in current use: how easily users learn the software, and whether the system learns its own environment to self-configure. Pick one and write it down.",
+    "The practical answer to all of this is domain-driven design's **ubiquitous language**: your organisation defines its own terms, objectively, and everyone uses those."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "The requirements never mention availability",
+   "art": "ac-triangle",
+   "alt": "A triangle whose three corners are non-domain, structural and critical",
+   "sit": "You have a full requirements document for a trading system. It specifies the domain in detail. It says nothing about latency, nothing about availability, nothing about recovery. The business considers the document complete.",
+   "opts": [
+    [
+     "Build to the document. Anything missing is out of scope.",
+     "You will ship a system that does the right things and cannot be relied on to do them. Availability, reliability and security underpin virtually every application and are almost never written down."
+    ],
+    [
+     "Use domain knowledge to surface the implicit characteristics, then confirm them.",
+     "A high-frequency trading firm doesn't specify low latency in every document because everyone in that domain already knows. Your job is to know it too, name it, and get it agreed.",
+     1
+    ]
+   ],
+   "verdict": "**Explicit** characteristics appear in the requirements. **Implicit** ones are the ones you are expected to find during analysis, using knowledge of the problem domain. The second group is where architects earn their keep — and where a missing one is discovered in production rather than in review."
+  },
+  {
+   "t": "They are synergistic, which is the whole problem",
+   "art": "synergy",
+   "alt": "A beam on a fulcrum: raising security lowers performance",
+   "cap": "Raise one and the others move. Security buys itself with encryption, indirection and hidden secrets — all of which cost time.",
+   "p": "Pilots learning helicopters find that every control interacts with every other one: changing any input requires adjusting all the rest. Choosing characteristics is that, permanently. This is also why the number of *categories* keeps growing — operations used to be a black box architects ignored, and microservices ended that."
+  },
+  {
+   "t": "Least worst, and iterate",
+   "art": "least-worst",
+   "alt": "A cost curve rising steeply with the number of characteristics supported",
+   "cap": "Support for a characteristic is never free: design effort, implementation, maintenance, sometimes structure.",
+   "p": "Trying to support too many produces a generic solution aimed at every business problem, which becomes unwieldy and rarely works. The mitigation is not to guess better on the first attempt — it is to make the architecture **as iterative as possible**, so that being wrong early costs less. That is the Agile lesson applied one level up."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 4: Architectural Characteristics Defined, pp. 55–65.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

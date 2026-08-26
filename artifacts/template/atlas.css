@@ -64,7 +64,6 @@
 .day p{font-size:.88rem;color:var(--ink2)}
 .foot{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:14px 18px;border-top:1px solid var(--rule);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
 .foot a{color:var(--blue)}
-</style>
 .sheetlink{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--blue);text-decoration:none;border-top:1px solid var(--rule2);padding-top:8px;margin-top:2px}
 .sheetlink:hover{border-top-color:var(--blue)}

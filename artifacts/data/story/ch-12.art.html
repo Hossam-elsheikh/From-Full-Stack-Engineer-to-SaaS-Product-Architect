@@ -1,0 +1,82 @@
+<!-- Drawings for chapter 12 · Pipeline Architecture Style -->
+
+<!--@ pipes-filters -->
+<svg viewBox="0 0 620 196" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="8" y="52" width="120" height="46" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="172" y="52" width="120" height="46"/>
+    <rect x="336" y="52" width="120" height="46"/>
+    <rect x="492" y="52" width="120" height="46" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <g stroke="var(--ink3)" stroke-width="1.4">
+      <path d="M128 75 H172 M292 75 H336 M456 75 H492"/>
+      <path d="M164 71 l8 4 l-8 4 M328 71 l8 4 l-8 4 M484 71 l8 4 l-8 4"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <g font-size="10">
+      <text x="68" y="72" fill="var(--acc)">PRODUCER</text>
+      <text x="232" y="72" fill="var(--ink)">TRANSFORMER</text>
+      <text x="396" y="72" fill="var(--ink)">TESTER</text>
+      <text x="552" y="72" fill="var(--acc)">CONSUMER</text>
+    </g>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="68" y="88">outbound only</text><text x="232" y="88">like map</text>
+      <text x="396" y="88">like reduce</text><text x="552" y="88">termination point</text>
+      <text x="68" y="118">the source: a UI,</text><text x="68" y="129">an external request</text>
+      <text x="232" y="118">enhance, convert,</text><text x="232" y="129">calculate</text>
+      <text x="396" y="118">test and optionally</text><text x="396" y="129">forward — or stop</text>
+      <text x="552" y="118">persist, or draw it</text><text x="552" y="129">on a screen</text>
+    </g>
+    <text x="310" y="42" font-size="8.6" fill="var(--ink3)">pipes are one-way and point-to-point. filters are stateless and do one thing.</text>
+    <text x="310" y="158" font-size="9" fill="var(--ink)">A composite task is a sequence of filters, never one clever filter.</text>
+    <text x="310" y="178" font-size="8.6" fill="var(--acc)">A filter is a component — it may be several classes, and it is still one filter.</text>
+  </g>
+</svg>
+
+<!--@ pipeline-example -->
+<svg viewBox="0 0 620 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="8" y="40" width="128" height="40"/><rect x="172" y="40" width="128" height="40"/>
+    <rect x="336" y="40" width="128" height="40"/><rect x="500" y="40" width="112" height="40" fill="var(--accBg)" stroke="var(--acc)"/>
+    <g stroke="var(--ink3)" stroke-width="1.3">
+      <path d="M136 60 H172 M300 60 H336 M464 60 H500"/>
+      <path d="M164 56 l8 4 l-8 4 M328 56 l8 4 l-8 4 M492 56 l8 4 l-8 4"/>
+      <path d="M72 80 V112 M236 80 V112 M400 80 V112"/>
+    </g>
+    <g stroke="var(--acc)" stroke-width="1.3">
+      <ellipse cx="72" cy="122" rx="34" ry="8"/><path d="M38 122 v14 a34 8 0 0 0 68 0 v-14"/>
+      <ellipse cx="236" cy="122" rx="34" ry="8"/><path d="M202 122 v14 a34 8 0 0 0 68 0 v-14"/>
+      <ellipse cx="400" cy="122" rx="34" ry="8"/><path d="M366 122 v14 a34 8 0 0 0 68 0 v-14"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.4">
+    <text x="8" y="26" text-anchor="start" font-size="8.6" letter-spacing="1.4" fill="var(--ink3)">A CONTINUOUS FITNESS FUNCTION, AS A PIPELINE</text>
+    <text x="72" y="58" fill="var(--ink)">Capture Raw Data</text><text x="72" y="70" font-size="7.6" fill="var(--ink2)">producer</text>
+    <text x="236" y="58" fill="var(--ink)">Time Series Selector</text><text x="236" y="70" font-size="7.6" fill="var(--ink2)">transformer</text>
+    <text x="400" y="58" fill="var(--ink)">Trend Analyzer</text><text x="400" y="70" font-size="7.6" fill="var(--ink2)">transformer</text>
+    <text x="556" y="58" fill="var(--acc)">Graphing Tool</text><text x="556" y="70" font-size="7.6" fill="var(--ink2)">consumer</text>
+    <g font-size="7.6" fill="var(--ink2)">
+      <text x="72" y="156">raw data</text><text x="236" y="156">configuration</text><text x="400" y="156">analytics</text>
+    </g>
+    <text x="310" y="186" font-size="8.6" fill="var(--ink)">Fig. 12-2 · one database, or one per filter — the style does not decide for you.</text>
+    <text x="310" y="206" font-size="8.6" fill="var(--acc)">Deployed on AWS this is a Step Function with one lambda per filter.</text>
+    <text x="310" y="220" font-size="8.2" fill="var(--ink2)">Standard workflows run each step exactly once; Express may run a step more than once. Both work.</text>
+  </g>
+</svg>
+
+<!--@ bidirectional -->
+<svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="20" y="40" width="94" height="40"/><rect x="186" y="40" width="94" height="40"/>
+    <path d="M114 54 H186" stroke="var(--ink3)"/><path d="M178 50 l8 4 l-8 4" stroke="var(--ink3)"/>
+    <path d="M186 68 H114" stroke="var(--acc)" stroke-width="1.8"/><path d="M122 64 l-8 4 l8 4" stroke="var(--acc)" stroke-width="1.8"/>
+    <path d="M138 96 l24 24 M162 96 l-24 24" stroke="var(--acc)" stroke-width="2.4"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.4">
+    <text x="67" y="64" font-size="9" fill="var(--ink)">filter</text>
+    <text x="233" y="64" font-size="9" fill="var(--ink)">filter</text>
+    <text x="150" y="146" fill="var(--acc)">a pipe that answers back is not a pipe.</text>
+    <text x="150" y="164" fill="var(--ink2)">either the filters are too complex, or the functionality</text>
+    <text x="150" y="176" fill="var(--ink2)">is demarcated wrongly — or this is the wrong style.</text>
+  </g>
+</svg>

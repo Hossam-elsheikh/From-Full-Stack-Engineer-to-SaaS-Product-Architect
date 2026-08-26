@@ -1,0 +1,129 @@
+{
+ "ch": "07",
+ "book": "Chapter 7 · The Scope of Architectural Characteristics",
+ "pages": "pp. 95–106",
+ "title": "Where One Set Ends and the Next Begins",
+ "gist": "The old frameworks assumed one set of characteristics for a whole system. Modern architectures don't work that way. The architecture quantum is the unit that fixes this — and it turns out to be the thing that chooses your style for you.",
+ "read": "5 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#3B5F7D",
+  "d": "#8FB6D2"
+ },
+ "minute": [
+  "The fatal flaw in older approaches: **one set of characteristics for the entire system**. A microservices architecture has different characteristics at service level and at system level.",
+  "An **architecture quantum** is the smallest part of the system that runs independently: independently deployable, high functional cohesion, low external implementation static coupling, and defined at its edges by synchronous calls. Its database is inside it.",
+  "Four couplings, and they are not interchangeable. **Semantic** is the problem's own. **Implementation** is what you chose. **Static** is who must exist for whom. **Dynamic** is who calls whom while running.",
+  "**Higher coupling is allowed at narrow scope; the broader the scope, the looser it must be.** Tight coupling inside a service is cohesion. The same coupling across a shared contract is brittleness.",
+  "Scope decides style, in this order: how many sets of characteristics → monolith or distributed → quantum boundaries → persistence → synchronous or asynchronous."
+ ],
+ "sections": [
+  {
+   "t": "The architecture quantum",
+   "art": "quantum",
+   "alt": "A dashed boundary containing two services and their own database, with the four defining properties listed",
+   "cap": "Latin *quantum* — “how much”. Informally: the smallest part of the system that runs independently.",
+   "items": [
+    "**Independently deployable** — everything needed to function is inside. If the application uses a database, that database is *in* the quantum, because the system doesn't work without it. Which means virtually every legacy system on a single shared database is, by definition, **a quantum of one**.",
+    "**High functional cohesion** — the quantum does something purposeful. In a monolith the cohesion is basically the whole system; in a distributed architecture you aim each service at a single workflow.",
+    "**Low external implementation static coupling** — the DDD preference for loose coupling between bounded contexts, one level of abstraction above components.",
+    "**Synchronous communication** — the calls between quanta are where operational characteristics collide."
+   ],
+   "p": "Code-level metrics can't measure scope. They tell you about the code and say nothing about the dependent things outside it — and no amount of designing a codebase to be elastic helps if its database isn't."
+  },
+  {
+   "t": "Four kinds of coupling",
+   "art": "coupling-4",
+   "wide": true,
+   "alt": "Four columns defining semantic, implementation, static and dynamic coupling",
+   "cap": "Static defines scope. Dynamic defines what happens when the scopes have to talk.",
+   "p": "**Semantic coupling** is inherent in the problem: an order-processing system couples carts to inventory to customers because the business does. No architecture pattern prevents a change in the domain from rippling — a change to the semantics *is* a change to the requirements. **Implementation coupling** is everything you decided: one database or several, monolith or distributed. It barely touches the semantics and it determines the architecture.",
+   "quotes": [
+    [
+     "Higher coupling is allowed for narrower scopes; the broader the scope, the looser the coupling should be.",
+     "Richards & Ford",
+     "An architecture is *brittle* when one implementation change ripples out and breaks apparently unrelated things. Renaming `State` to `StateCode` should affect one caller — the moment it affects nine, the scope was too broad for that much coupling."
+    ]
+   ]
+  },
+  {
+   "t": "Bounded context, and why shared entities failed",
+   "art": "scope-rule",
+   "alt": "Tight coupling inside one boundary beside loose coupling between two boundaries",
+   "cap": "Each domain gets its own Customer, and the differences get reconciled at the points where they talk.",
+   "p": "Before domain-driven design, architects chased holistic reuse: one `Customer` class for the whole organisation. It produced tight coupling, harder coordination and more complexity. Eric Evans's **bounded context** says the opposite — everything about a portion of the domain is visible inside it and opaque outside it. Entities work best in a local context, and you pay a small reconciliation cost at the seams instead of a permanent coupling cost everywhere."
+  },
+  {
+   "k": "decision",
+   "t": "Auction ends. Payment handles one every 500 ms.",
+   "art": "sync-async",
+   "alt": "A synchronous call from Auction to Payment failing, above the same call buffered by a queue",
+   "sit": "Two services in a microservices architecture. When an auction closes, **Auction** sends payment information to **Payment**. Payment can process one payment every 500 ms. A thousand auctions are scheduled to end at the same moment.",
+   "opts": [
+    [
+     "Call Payment synchronously — it's a simple request.",
+     "The first call works. Then Payment cannot absorb the rate, and the rest fail. The two services have genuinely different operational characteristics and a synchronous call forces them to share one."
+    ],
+    [
+     "Put a queue between them.",
+     "The queue is a buffer, and the two services get to operate at their own scale. Bursts are held until the receiver is ready.",
+     1
+    ]
+   ],
+   "verdict": "**Synchronous communication is unforgiving in distributed architectures**, especially where quanta have different characteristics — because a sync call makes the caller inherit the callee's limits. Async is not a free pass: sustained overproduction eventually overflows the queue too. It converts a *burst* problem into a *capacity* problem, which is a much better problem."
+  },
+  {
+   "t": "Scope chooses the style",
+   "art": "decision-tree",
+   "wide": true,
+   "alt": "A decision tree from how many sets of characteristics through to synchronous or asynchronous communication",
+   "cap": "Fig. 7-1 · run this before picking a style, not after.",
+   "items": [
+    "**One set of characteristics will do** → monolithic, and the number of subsequent decisions collapses. One database, developed and deployed in lockstep with the architecture. Done.",
+    "**More than one set** → distributed, and now you owe answers on quantum boundaries and on data: a single shared database (common in event-driven) or partitioned along service lines (microservices).",
+    "**Then the communication question.** Choosing synchronous can *move* the quantum boundaries you established through static coupling — the two kinds of coupling interact constantly."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "Going Green: one system, or three?",
+   "art": "going-green",
+   "wide": true,
+   "alt": "Three dashed quantum boundaries around the public-facing, back-office and assessment parts of Going Green",
+   "sit": "A business that buys, recycles and resells old electronics through public kiosks and a website. Characteristics analysis produces three distinct clusters: public-facing needs **scalability, availability, agility**; back-office needs **security, data integrity, auditability**; assessment needs **maintainability, deployability, testability**.",
+   "opts": [
+    [
+     "Build one system that satisfies all eight.",
+     "Possible, and difficult. These characteristics counteract each other — fast deployability is much harder when you are also holding auditability, and the kiosk UI needs a completely different scalability profile from the back office."
+    ],
+    [
+     "Use the clusters as the quantum boundaries.",
+     "Three quanta, each with one coherent set of characteristics. Using characteristic scope as a first guide to service granularity is how you find a good set of trade-offs rather than an average of bad ones.",
+     1
+    ]
+   ],
+   "verdict": "Note *why* assessment gets its own boundary: the business resells the highest-value devices, and new models arrive constantly, so the faster they can update assessments the more valuable the stock they can buy. That is a **business driver producing an architectural characteristic** — exactly the translation from Chapter 5, now deciding a boundary."
+  },
+  {
+   "t": "Scoping when the operations aren't yours",
+   "art": "quantum",
+   "alt": "A dashed boundary containing two services and their own database, with the four defining properties listed",
+   "cap": "Cloud resources encapsulate operational characteristics, which is convenient right up until you need to reason about them.",
+   "items": [
+    "**Cloud as an alternate operations centre** — you run and orchestrate containers. Then you must consider the characteristics of the containers *and* the constraints the orchestrator imposes.",
+    "**Cloud resources as system components** — triggered functions, managed databases, provider building blocks. Then you are reasoning about the capabilities the provider advertises and hopefully maintains."
+   ],
+   "p": "Elasticity used to be won by hand, on physical hardware, by the previous generation of architects; now it is a configuration setting. The specific difficulties moved — provider availability, a wider security surface — but the shape of the job didn't. Analysing trade-offs is the constant."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 7: The Scope of Architectural Characteristics, pp. 95–106. The architecture quantum was developed for Building Evolutionary Architectures; bounded context is Eric Evans's.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

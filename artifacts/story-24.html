@@ -1,0 +1,281 @@
+<title>The Room You Build For Them</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+[hidden]{display:none !important}
+:root{--acc:#63528A;--accBg:rgba(99,82,138,.12);--accLine:rgba(99,82,138,.42);--dot:rgba(99,82,138,.22)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--acc:#B4A4D9;--accBg:rgba(180,164,217,.12);--accLine:rgba(180,164,217,.42);--dot:rgba(180,164,217,.22)}}
+:root[data-theme="dark"]{--acc:#B4A4D9;--accBg:rgba(180,164,217,.12);--accLine:rgba(180,164,217,.42);--dot:rgba(180,164,217,.22)}
+/* ---------- chapter sheet: notes you re-scan, not prose you re-read ----------
+   The figure is the unit of memory. Text is caption-length. Decisions are the
+   only place a scene appears, and they are boxed so they read as a different
+   kind of thing. --acc/--accBg/--accLine/--dot come from build.py per chapter. */
+
+.scroll{position:sticky;top:0;z-index:6;height:3px;background:var(--sunk);border-bottom:1px solid var(--rule)}
+.scroll i{display:block;height:100%;width:0;background:var(--acc);transition:width .18s linear}
+
+/* ---------- cover ---------- */
+.cover{padding:clamp(22px,3.8vw,44px) clamp(18px,3vw,38px) clamp(20px,3vw,34px);
+  border-bottom:1px solid var(--rule);background:var(--sheet);
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(16px,2.6vw,32px);align-items:start}
+@media(max-width:640px){.cover{grid-template-columns:1fr}}
+.cover .num{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:clamp(3rem,9vw,5.4rem);
+  line-height:.78;color:var(--acc);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.cover .bk{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--ink3)}
+.cover h1{font-size:clamp(1.9rem,4.8vw,3rem);margin-top:7px}
+.cover .gist{font-size:1.04rem;line-height:1.55;color:var(--ink2);max-width:62ch;margin-top:11px}
+
+/* ---------- the card you actually come back for ---------- */
+.minute{margin:clamp(15px,2.6vw,30px);border:2px solid var(--acc);background:var(--accBg);
+  padding:clamp(16px,2.6vw,26px)}
+.minute .h{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between;
+  padding-bottom:11px;margin-bottom:13px;border-bottom:1px solid var(--accLine)}
+.minute h2{font-size:clamp(1.15rem,2.4vw,1.45rem);letter-spacing:.02em}
+.minute .h .lbl{color:var(--acc)}
+.minute ol{margin:0;padding:0;list-style:none;counter-reset:m;display:flex;flex-direction:column;gap:10px}
+.minute li{counter-increment:m;display:grid;grid-template-columns:26px minmax(0,1fr);gap:11px;
+  font-size:.97rem;line-height:1.52;max-width:88ch}
+.minute li::before{content:counter(m,decimal-leading-zero);font-family:"IBM Plex Mono",monospace;
+  font-size:.7rem;color:var(--acc);padding-top:4px;font-variant-numeric:tabular-nums}
+
+/* ---------- topics ---------- */
+.sec{padding:clamp(20px,3vw,34px) clamp(16px,3vw,32px);border-top:1px solid var(--rule2)}
+.sechead{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin-bottom:14px}
+.sechead .k{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--acc)}
+.sechead h2{font-size:clamp(1.25rem,2.7vw,1.7rem);flex-basis:100%}
+.split{display:grid;grid-template-columns:minmax(0,46%) minmax(0,1fr);gap:clamp(16px,2.6vw,30px);align-items:start}
+@media(max-width:780px){.split{grid-template-columns:1fr}}
+.sec.wide .split{grid-template-columns:1fr}
+figure{margin:0;border:1px solid var(--rule);background:var(--sunk);
+  background-image:radial-gradient(var(--dot) 1.1px,transparent 1.2px);background-size:7px 7px}
+figure svg{width:100%;height:auto;display:block;padding:clamp(12px,2vw,20px);max-width:560px;margin:0 auto}
+.sec.wide figure svg{max-width:900px}
+figcaption{font-family:"IBM Plex Mono",monospace;font-size:.68rem;line-height:1.6;color:var(--ink2);
+  padding:9px 13px;border-top:1px solid var(--rule);background:var(--sheet)}
+.body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.body p{font-size:.96rem;line-height:1.6;max-width:70ch;color:var(--ink2)}
+.body ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.body li{font-size:.95rem;line-height:1.5;padding-left:15px;position:relative;max-width:70ch}
+.body li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:1px;background:var(--acc)}
+
+/* ---------- the book's own words ---------- */
+.qs{display:flex;flex-direction:column;gap:10px}
+.q{border-left:4px solid var(--acc);background:var(--chip);padding:13px 16px;
+  display:flex;flex-direction:column;gap:7px}
+.q .t{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:clamp(1.12rem,2.3vw,1.4rem);
+  line-height:1.18;letter-spacing:.01em;text-wrap:balance}
+.q .a{font-family:"IBM Plex Mono",monospace;font-size:.63rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--acc)}
+.q .n{font-size:.9rem;line-height:1.55;color:var(--ink2);max-width:70ch}
+
+/* ---------- decisions ---------- */
+.dec{border:2px solid var(--ink);background:var(--sheet);margin:clamp(16px,2.6vw,30px);
+  display:flex;flex-direction:column}
+.dec .top{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:10px 16px;
+  background:var(--ink);color:var(--sheet)}
+.dec .top .tag{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  border:1px solid currentColor;padding:2px 8px}
+.dec .top h2{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1.12rem;letter-spacing:.03em;color:inherit}
+.dec .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,38%);gap:0}
+@media(max-width:820px){.dec .in{grid-template-columns:1fr}}
+.dec .main{padding:clamp(15px,2.2vw,24px);display:flex;flex-direction:column;gap:14px;min-width:0}
+.dec .art{border-left:1px solid var(--rule);background:var(--sunk);
+  background-image:radial-gradient(var(--dot) 1.1px,transparent 1.2px);background-size:7px 7px;
+  display:flex;align-items:center;justify-content:center;padding:clamp(12px,2vw,18px)}
+@media(max-width:820px){.dec .art{border-left:0;border-top:1px solid var(--rule);order:-1}}
+.dec .art svg{width:100%;height:auto;max-width:330px;display:block}
+.sit{font-size:.98rem;line-height:1.58;max-width:74ch}
+.opts{display:flex;flex-direction:column;gap:1px;background:var(--rule2);border:1px solid var(--rule)}
+.opt{background:var(--sheet);padding:11px 14px;display:flex;flex-direction:column;gap:4px}
+.opt .o{font-size:.95rem;font-weight:600;line-height:1.4}
+.opt .c{font-size:.88rem;line-height:1.52;color:var(--ink2)}
+.opt.pick{background:var(--accBg)}
+.opt.pick .o::after{content:"the book's answer";font-family:"IBM Plex Mono",monospace;font-size:.58rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-left:9px;white-space:nowrap;font-weight:400}
+.verdict{border-left:4px solid var(--acc);padding:2px 0 2px 13px;font-size:.94rem;line-height:1.58;max-width:74ch}
+
+.foot{display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:space-between;align-items:center;
+  padding:14px 18px;border-top:1px solid var(--rule);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
+.foot a{color:var(--acc);text-decoration:none;border-bottom:1px solid var(--accLine)}
+.foot .cite{font-family:"IBM Plex Mono",monospace;font-size:.68rem;max-width:78ch}
+</style>
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Chapter</span><span class="v" id="tbC">—</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v" id="tbT">—</span></div>
+    <div class="tcell"><span class="lbl">Figures</span><span class="v" id="tbF">—</span></div>
+    <div class="tcell"><span class="lbl">Read</span><span class="v" id="tbR">—</span></div>
+  </header>
+  <div class="scroll"><i id="sc"></i></div>
+
+  <section class="cover">
+    <span class="num" id="cN"></span>
+    <div>
+      <p class="bk" id="cB"></p>
+      <h1 id="cT"></h1>
+      <p class="gist" id="cG"></p>
+    </div>
+  </section>
+
+  <section class="minute">
+    <div class="h"><h2>The one-minute version</h2><span class="lbl" id="mL"></span></div>
+    <ol id="minute"></ol>
+  </section>
+
+  <div id="secs"></div>
+
+  <footer class="foot">
+    <span class="cite" id="cite"></span>
+    <span id="links"></span>
+  </footer>
+</div>
+</div>
+<script>
+const D={"ch": "24", "book": "Chapter 24 · Making Teams Effective", "pages": "pp. 433–452", "title": "The Room You Build For Them", "gist": "An architect who designs alone and hands the result over gets an architecture nobody implements correctly. This is the other half of the job: how much to be involved, when the team has grown too big, and how to give guidance that isn't control.", "read": "5 min · 40 sec to re-scan", "acc": {"l": "#63528A", "d": "#B4A4D9"}, "minute": ["Constraints are a **room**. Too tight and developers can't reach the tools they need and leave. Too loose and they end up doing the architect's job. The right size is the deliverable.", "Three personalities: **control freak** (tight boundaries, writes your pseudocode), **armchair** (loose boundaries, hasn't coded in years, never around), **effective** (appropriate boundaries, present, unblocking).", "**Five factors** decide involvement: team familiarity, team size, overall experience, project complexity, project duration. Re-run them as the project moves.", "Three signs a team has grown too large: **process loss** (Brooks's Law — merge conflicts mean people are in each other's way), **pluralistic ignorance**, **diffusion of responsibility**.", "Ask for a **business justification** alongside the technical one. It is the single most effective tool in this chapter, and it changes the person asking as much as the decision."], "sections": [{"t": "Boundaries are the deliverable", "art": "boundaries", "wide": true, "alt": "Three rooms with a team inside: one too small, one far too large, one right-sized", "cap": "Fig. 24-3 · the room the team works in, and the two ways to get it wrong.", "p": "The traditional split — architect defines characteristics, picks a style, creates logical components; developers build classes, screens and code — fails on the **unidirectional arrow** between them. Architects' decisions don't reach the team, and the team's changes never come back. Both sides have to be on one virtual team, with bidirectional collaboration, because modern architectures change with nearly every iteration.", "items": ["**Too tight**: no open-source libraries, prescribed naming conventions, method lengths, pseudocode handed down. It steals the art of programming from developers, and they lose respect for the architect — and then leave.", "**Too loose**: too many choices, so the team takes on the architect's role by default. Endless proofs of concept, agonised design decisions, unproductive and confused.", "The temptation to the first is strongest in **new architects**, who are used to picking the design patterns themselves. Identifying the `ReferenceManager` component and its operations is the architect's job. Deciding it should use a parallel loader with an internal cache is the **developer's**."]}, {"t": "The armchair architect", "art": "warnings", "wide": true, "alt": "Process loss, pluralistic ignorance and diffusion of responsibility", "cap": "Three warning signs that a team has grown past its effective size.", "p": "The armchair architect hasn't coded in a long time, ignores implementation detail, and moves to the next project once the first diagrams are done. The chapter's sharpest observation: **developers can't fake it — either you can write source code or you can't. What does an architect do? Draw lines and boxes. It's very easy to fake.** A two-box diagram of a trading system and its compliance engine isn't wrong; it's just too high-level to be of use to anyone.", "items": ["**Process loss** — Brooks's Law. Actual productivity is always below group potential, and the gap widens with size. Frequent merge conflicts are the visible symptom: people working on the same code, getting in each other's way. Before agreeing to a new team member, **look for a parallel work stream**; if there isn't one, tell the project manager the addition will hurt.", "**Pluralistic ignorance** — everyone privately rejects a norm and agrees to it anyway, afraid they're missing something obvious. The larger the group, the less willing anyone is to confront it. The architect's job here is to watch faces and body language, then **ask the skeptic directly and support them when they speak up — even if they turn out to be wrong**.", "**Diffusion of responsibility** — a stranded motorist on a country road gets help from everyone; on a city highway, nobody stops, because someone else must have called. On a team it looks like confusion about who owns what, and things quietly getting dropped."]}, {"k": "decision", "t": "How involved should you be with this team?", "art": "involvement", "wide": true, "alt": "A scale from armchair architect to control freak with five contributing factors", "sit": "You are assigned to a team. You could sit with them daily, or check in fortnightly. Roy Osherove's **Elastic Leadership** says the answer varies — and here it varies on five factors, each worth ±20 points.", "opts": [["Scenario 1: new members, four people, all experienced, simple project, two months. Score −60.", "Stay largely hands-off. Facilitate, answer questions, confirm they're on track — and otherwise let an experienced team ship quickly.", 1], ["Scenario 2: they know each other well, twelve people, mostly junior, complex, six months. Score +20.", "Mentor and coach, involved in day-to-day work, but not so involved that you disrupt them.", 1]], "verdict": "**Project duration is the counter-intuitive factor.** A two-month project already has its own urgency; a control-freak architect just delays it. A two-year project has people planning holidays and taking long lunches — that is where the architect keeps the schedule moving and ensures the hardest work happens first. Re-run all five factors **throughout the project**, not just at the start; the right answer moves."}, {"t": "Checklists, and getting them used", "art": "stack", "wide": true, "alt": "Three categories of third-party library with who decides for each", "cap": "Airline pilots and surgeons use them. Gawande's surgical checklists took infection rates to near zero.", "items": ["**When not to use one.** Procedural flows with dependent tasks are not checklists — you can't verify the table before submitting the form. Nor are simple, familiar processes executed frequently without error.", "**When to use one.** Processes without a set order or dependencies, and processes where people frequently skip steps or make mistakes.", "**Three that earn their place**: developer **code completion** (which doubles as a definition of done), **unit and functional testing** (add every case QA finds; usually the longest), and **software release** (the most volatile — after every failed build or deployment, add the root cause).", "**Automate items off the list.** Anything a code-crawling tool can check should leave the checklist. That shortens it and improves its signal-to-noise, and short checklists are the ones people actually use.", "**Don't worry about stating the obvious** — the obvious steps are the ones that get missed. Gawande found exactly the same in surgery."], "p": "The hard part is getting them used rather than ticked. Talk about why they matter, have the team decide collaboratively what belongs on them so there's ownership — and failing that, the **Hawthorne effect**: tell the team checklists will be verified, then spot-check occasionally. People behave differently when they believe someone is looking."}, {"k": "decision", "t": "A developer wants to introduce Scala", "art": "stack", "wide": true, "alt": "Three categories of third-party library with who decides for each", "sit": "A complex Java project, a large team. One member is obsessed with Scala and wants to use it. The advocacy has become disruptive enough that two key developers have said they will leave for a *less toxic* environment.", "opts": [["Refuse. It's the wrong tool for this project.", "You are correct, you have won nothing, and the enthusiasm goes underground while the two departures still happen."], ["Agree — on condition that they produce a business justification for the training and rewriting costs.", "They came back the next day and said *thank you*. They had every technical argument in the world and **none of them carried business value against the cost, budget and timeline**. They also realised they had been disrupting the team.", 1]], "verdict": "The developer became one of the team's best members, and the two who were leaving stayed. **Being asked for a business justification is what made them a better developer** — it is a teaching mechanism disguised as a governance step. Generalise it: for every proposed library, ask whether it overlaps with something you already have, and ask for the justification, technically *and* commercially. Then set who decides: **special-purpose libraries the developer chooses, general-purpose ones need architect approval, framework libraries are the architect's alone.**"}], "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 24: Making Teams Effective, pp. 433–452. Elastic Leadership is Roy Osherove's; process loss is Fred Brooks; the checklist argument is Atul Gawande's.", "links": [["All 27 chapters", "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"], ["The Architect's Atlas", "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"]], "art": {"boundaries": "<svg viewBox=\"0 0 620 200\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.5\" stroke-linejoin=\"round\">\n    <rect x=\"14\" y=\"40\" width=\"176\" height=\"96\"/>\n    <rect x=\"74\" y=\"72\" width=\"56\" height=\"34\" stroke=\"var(--acc)\" stroke-width=\"1.8\" fill=\"var(--accBg)\"/>\n    <rect x=\"222\" y=\"40\" width=\"176\" height=\"96\"/>\n    <rect x=\"234\" y=\"50\" width=\"152\" height=\"76\" stroke=\"var(--acc)\" stroke-width=\"1.8\" fill=\"var(--accBg)\"/>\n    <rect x=\"430\" y=\"40\" width=\"176\" height=\"96\"/>\n    <rect x=\"454\" y=\"60\" width=\"128\" height=\"56\" stroke=\"var(--acc)\" stroke-width=\"1.8\" fill=\"var(--accBg)\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\" font-size=\"8.2\">\n    <text x=\"102\" y=\"30\" font-size=\"9.4\" fill=\"var(--ink)\">TOO TIGHT</text>\n    <text x=\"310\" y=\"30\" font-size=\"9.4\" fill=\"var(--ink)\">TOO LOOSE</text>\n    <text x=\"518\" y=\"30\" font-size=\"9.4\" fill=\"var(--acc)\">RIGHT-SIZED</text>\n    <text x=\"102\" y=\"93\" fill=\"var(--acc)\">the team</text>\n    <text x=\"310\" y=\"93\" fill=\"var(--acc)\">the team</text>\n    <text x=\"518\" y=\"93\" fill=\"var(--acc)\">the team</text>\n    <text x=\"102\" y=\"158\" fill=\"var(--ink2)\">no libraries, no naming freedom,</text>\n    <text x=\"102\" y=\"169\" fill=\"var(--ink2)\">pseudocode handed down. people leave.</text>\n    <text x=\"310\" y=\"158\" fill=\"var(--ink2)\">too many choices. the team ends up</text>\n    <text x=\"310\" y=\"169\" fill=\"var(--ink2)\">doing the architect's job, badly.</text>\n    <text x=\"518\" y=\"158\" fill=\"var(--ink2)\">enough guidance to move,</text>\n    <text x=\"518\" y=\"169\" fill=\"var(--ink2)\">enough room to design.</text>\n    <text x=\"310\" y=\"192\" font-size=\"8.6\" fill=\"var(--ink)\">The constraints an architect sets are the room the team works in.</text>\n  </g>\n</svg>", "warnings": "<svg viewBox=\"0 0 620 210\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\">\n    <rect x=\"8\" y=\"34\" width=\"192\" height=\"106\"/>\n    <rect x=\"214\" y=\"34\" width=\"192\" height=\"106\"/>\n    <rect x=\"420\" y=\"34\" width=\"192\" height=\"106\"/>\n    <path d=\"M28 122 H180 M28 122 V54\" stroke=\"var(--ink3)\" stroke-width=\"1.2\"/>\n    <path d=\"M32 118 L176 62\" stroke=\"var(--ink3)\" stroke-width=\"1.4\" stroke-dasharray=\"4 3\"/>\n    <path d=\"M32 118 C86 106 130 96 176 92\" stroke=\"var(--acc)\" stroke-width=\"2\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.2\">\n      <circle cx=\"252\" cy=\"70\" r=\"8\"/><circle cx=\"284\" cy=\"70\" r=\"8\"/><circle cx=\"316\" cy=\"70\" r=\"8\"/>\n      <circle cx=\"348\" cy=\"70\" r=\"8\"/><circle cx=\"380\" cy=\"70\" r=\"8\"/>\n    </g>\n    <circle cx=\"316\" cy=\"70\" r=\"8\" stroke=\"var(--acc)\" stroke-width=\"2\" fill=\"var(--accBg)\"/>\n    <path d=\"M446 108 h60 M452 96 h48\" stroke=\"var(--ink3)\" stroke-width=\"1.2\"/>\n    <circle cx=\"470\" cy=\"86\" r=\"6\" stroke=\"var(--acc)\" stroke-width=\"1.8\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1\"><path d=\"M528 96 h58 M528 108 h58 M528 84 h58 M528 72 h44\"/></g>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\" font-size=\"8\">\n    <g font-size=\"9.4\" fill=\"var(--ink)\">\n      <text x=\"104\" y=\"26\">PROCESS LOSS</text><text x=\"310\" y=\"26\">PLURALISTIC IGNORANCE</text><text x=\"516\" y=\"26\">DIFFUSION OF RESPONSIBILITY</text>\n    </g>\n    <text x=\"150\" y=\"58\" font-size=\"7.4\" fill=\"var(--ink3)\">potential</text>\n    <text x=\"160\" y=\"106\" font-size=\"7.4\" fill=\"var(--acc)\">actual</text>\n    <text x=\"316\" y=\"94\" font-size=\"7.4\" fill=\"var(--acc)\">privately disagrees</text>\n    <text x=\"470\" y=\"72\" font-size=\"7.4\" fill=\"var(--acc)\">stranded</text>\n    <g font-size=\"8\" fill=\"var(--ink2)\">\n      <text x=\"104\" y=\"158\">Brooks's Law: add people, the</text><text x=\"104\" y=\"169\">project takes longer. merge conflicts</text>\n      <text x=\"104\" y=\"180\">mean people are in each other's way.</text>\n      <text x=\"310\" y=\"158\">everyone privately rejects the norm</text><text x=\"310\" y=\"169\">and agrees anyway, in case they're</text>\n      <text x=\"310\" y=\"180\">missing something obvious.</text>\n      <text x=\"516\" y=\"158\">a country road: everyone stops.</text><text x=\"516\" y=\"169\">a city highway: nobody does —</text>\n      <text x=\"516\" y=\"180\">someone else must have called.</text>\n    </g>\n    <text x=\"310\" y=\"204\" font-size=\"8.6\" fill=\"var(--acc)\">Watch faces in meetings. When you see the doubt, ask that person directly — and back them even when they're wrong.</text>\n  </g>\n</svg>", "involvement": "<svg viewBox=\"0 0 620 236\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.5\">\n    <path d=\"M60 76 H560\"/>\n    <path d=\"M310 68 v16 M160 70 v12 M460 70 v12 M60 66 v20 M560 66 v20\"/>\n    <path d=\"M160 76 l-9 -14 h18 z\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-width=\"1.8\"/>\n    <path d=\"M410 76 l-9 -14 h18 z\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-width=\"1.8\"/>\n    <path d=\"M6 148 H614\" stroke=\"var(--rule)\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" font-size=\"8.2\">\n    <text x=\"60\" y=\"102\" text-anchor=\"middle\" fill=\"var(--ink)\">ARMCHAIR</text>\n    <text x=\"60\" y=\"114\" text-anchor=\"middle\" fill=\"var(--ink2)\">−100</text>\n    <text x=\"560\" y=\"102\" text-anchor=\"middle\" fill=\"var(--ink)\">CONTROL FREAK</text>\n    <text x=\"560\" y=\"114\" text-anchor=\"middle\" fill=\"var(--ink2)\">+100</text>\n    <text x=\"310\" y=\"102\" text-anchor=\"middle\" fill=\"var(--acc)\">EFFECTIVE</text>\n    <text x=\"160\" y=\"48\" text-anchor=\"middle\" fill=\"var(--acc)\">scenario 1: −60</text>\n    <text x=\"410\" y=\"48\" text-anchor=\"middle\" fill=\"var(--acc)\">scenario 2: +20</text>\n    <text x=\"6\" y=\"138\" font-size=\"8.6\" letter-spacing=\"1.4\" fill=\"var(--ink3)\">FIVE FACTORS, ±20 EACH</text>\n    <g font-size=\"8.6\" fill=\"var(--ink)\">\n      <text x=\"6\" y=\"166\">team familiarity</text><text x=\"128\" y=\"166\">team size</text>\n      <text x=\"232\" y=\"166\">overall experience</text><text x=\"382\" y=\"166\">project complexity</text>\n      <text x=\"524\" y=\"166\">project duration</text>\n    </g>\n    <g font-size=\"8\" fill=\"var(--ink2)\">\n      <text x=\"6\" y=\"182\">new to each other</text><text x=\"128\" y=\"182\">12+ is large,</text>\n      <text x=\"232\" y=\"182\">mostly junior means</text><text x=\"382\" y=\"182\">complex means</text>\n      <text x=\"524\" y=\"182\">longer means</text>\n      <text x=\"6\" y=\"192\">= more involvement</text><text x=\"128\" y=\"192\">5 or fewer is small</text>\n      <text x=\"232\" y=\"192\">mentor, not facilitator</text><text x=\"382\" y=\"192\">be available</text>\n      <text x=\"524\" y=\"192\">more involvement</text>\n    </g>\n    <text x=\"310\" y=\"218\" font-size=\"8.6\" text-anchor=\"middle\" fill=\"var(--acc)\">Duration is the counter-intuitive one: two months has its own urgency, so stay out of the way.</text>\n    <text x=\"310\" y=\"230\" font-size=\"8.4\" text-anchor=\"middle\" fill=\"var(--ink2)\">Two years and people take long lunches — that is when the architect keeps the hard work first.</text>\n  </g>\n</svg>", "stack": "<svg viewBox=\"0 0 620 216\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\">\n    <rect x=\"8\" y=\"40\" width=\"196\" height=\"94\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-width=\"1.8\"/>\n    <rect x=\"214\" y=\"40\" width=\"196\" height=\"94\"/>\n    <rect x=\"420\" y=\"40\" width=\"192\" height=\"94\" stroke=\"var(--ink3)\" stroke-dasharray=\"6 4\"/>\n    <path d=\"M8 68 H204 M214 68 H410 M420 68 H612\" stroke=\"var(--rule)\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\">\n    <text x=\"8\" y=\"30\" text-anchor=\"start\" font-size=\"8.6\" letter-spacing=\"1.4\" fill=\"var(--ink3)\">WHO DECIDES, FOR EACH KIND OF THIRD-PARTY LIBRARY</text>\n    <g font-size=\"10\">\n      <text x=\"106\" y=\"60\" fill=\"var(--acc)\">SPECIAL PURPOSE</text>\n      <text x=\"312\" y=\"60\" fill=\"var(--ink)\">GENERAL PURPOSE</text>\n      <text x=\"516\" y=\"60\" fill=\"var(--ink2)\">FRAMEWORK</text>\n    </g>\n    <g font-size=\"8.2\" fill=\"var(--ink2)\">\n      <text x=\"106\" y=\"86\">PDF rendering, barcodes —</text><text x=\"106\" y=\"97\">not worth writing yourself</text>\n      <text x=\"312\" y=\"86\">wrappers on the language API:</text><text x=\"312\" y=\"97\">Apache Commons, Guava</text>\n      <text x=\"516\" y=\"86\">persistence, inversion of control:</text><text x=\"516\" y=\"97\">Hibernate, Spring. highly invasive.</text>\n    </g>\n    <g font-size=\"9\" fill=\"var(--ink)\">\n      <text x=\"106\" y=\"122\" fill=\"var(--acc)\">developer decides</text>\n      <text x=\"312\" y=\"122\">developer analyses, architect approves</text>\n      <text x=\"516\" y=\"122\">architect decides</text>\n    </g>\n    <text x=\"310\" y=\"168\" font-size=\"9\" fill=\"var(--ink)\">Two questions before any new library: does it overlap with what we already have, and what is the justification?</text>\n    <text x=\"310\" y=\"190\" font-size=\"9\" fill=\"var(--acc)\">Ask for a business justification, not only a technical one.</text>\n    <text x=\"310\" y=\"208\" font-size=\"8.4\" fill=\"var(--ink2)\">That single request is what turns a disruptive enthusiast into someone who understands the budget.</text>\n  </g>\n</svg>"}};
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function md(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
+  .replace(/`(.+?)`/g,"<code>$1</code>").replace(/\*(.+?)\*/g,"<em>$1</em>")}
+const $=s=>document.querySelector(s);
+
+function fig(s){
+  if(!s.art)return"";
+  return '<figure role="img" aria-label="'+esc(s.alt||"")+'">'+(D.art[s.art]||"")+
+    (s.cap?'<figcaption>'+md(s.cap)+'</figcaption>':"")+'</figure>';
+}
+function quotes(list){
+  return '<div class="qs">'+list.map(q=>'<div class="q"><span class="t">'+md(q[0])+
+    '</span><span class="a">'+esc(q[1])+'</span>'+
+    (q[2]?'<span class="n">'+md(q[2])+'</span>':"")+'</div>').join("")+'</div>';
+}
+function topic(s,i){
+  const body='<div class="body">'+
+    (s.quotes?quotes(s.quotes):"")+
+    (s.items?'<ul>'+s.items.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul>':"")+
+    (s.p?'<p>'+md(s.p)+'</p>':"")+'</div>';
+  return '<section class="sec'+(s.wide?" wide":"")+'" id="s'+i+'">'+
+    '<div class="sechead"><span class="k">'+esc(s.k==="quote"?"The book\u2019s words":"Topic "+s.n)+
+    '</span><h2>'+md(s.t)+'</h2></div>'+
+    '<div class="split">'+fig(s)+body+'</div></section>';
+}
+function decision(s,i){
+  return '<section class="dec" id="s'+i+'">'+
+    '<div class="top"><span class="tag">Decision</span><h2>'+md(s.t)+'</h2></div>'+
+    '<div class="in"><div class="main">'+
+      '<p class="sit">'+md(s.sit)+'</p>'+
+      '<div class="opts">'+s.opts.map(o=>'<div class="opt'+(o[2]?" pick":"")+'">'+
+        '<span class="o">'+md(o[0])+'</span><span class="c">'+md(o[1])+'</span></div>').join("")+'</div>'+
+      '<p class="verdict">'+md(s.verdict)+'</p>'+
+    '</div>'+(s.art?'<div class="art" role="img" aria-label="'+esc(s.alt||"")+'">'+
+      (D.art[s.art]||"")+'</div>':"")+'</div></section>';
+}
+
+let n=0;
+$("#secs").innerHTML=D.sections.map((s,i)=>{
+  if(s.k==="decision")return decision(s,i);
+  if(s.k!=="quote")s.n=String(++n).padStart(2,"0");
+  return topic(s,i);
+}).join("");
+
+const figs=D.sections.filter(s=>s.art).length;
+$("#tbC").textContent="Ch. "+D.ch; $("#tbT").textContent=D.title;
+$("#tbF").textContent=figs; $("#tbR").textContent=D.read;
+$("#cN").textContent=D.ch; $("#cB").textContent=D.book+" · "+D.pages;
+$("#cT").textContent=D.title; $("#cG").textContent=D.gist;
+$("#mL").textContent=D.minute.length+" things to keep";
+$("#minute").innerHTML=D.minute.map(x=>'<li><span>'+md(x)+'</span></li>').join("");
+$("#cite").textContent=D.source||"";
+$("#links").innerHTML=(D.links||[]).map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener">'+
+  esc(l[0])+' &#8599;</a>').join(" &middot; ");
+
+const bar=$("#sc"),onScroll=()=>{
+  const h=document.documentElement.scrollHeight-innerHeight;
+  bar.style.width=(h>0?Math.min(100,Math.max(0,scrollY/h*100)):0)+"%";
+};
+addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);onScroll();
+</script>

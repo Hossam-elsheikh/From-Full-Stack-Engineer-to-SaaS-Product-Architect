@@ -1,0 +1,281 @@
+<title>The Building Blocks You Actually Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+[hidden]{display:none !important}
+:root{--acc:#8C4438;--accBg:rgba(140,68,56,.12);--accLine:rgba(140,68,56,.42);--dot:rgba(140,68,56,.22)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--acc:#DE9186;--accBg:rgba(222,145,134,.12);--accLine:rgba(222,145,134,.42);--dot:rgba(222,145,134,.22)}}
+:root[data-theme="dark"]{--acc:#DE9186;--accBg:rgba(222,145,134,.12);--accLine:rgba(222,145,134,.42);--dot:rgba(222,145,134,.22)}
+/* ---------- chapter sheet: notes you re-scan, not prose you re-read ----------
+   The figure is the unit of memory. Text is caption-length. Decisions are the
+   only place a scene appears, and they are boxed so they read as a different
+   kind of thing. --acc/--accBg/--accLine/--dot come from build.py per chapter. */
+
+.scroll{position:sticky;top:0;z-index:6;height:3px;background:var(--sunk);border-bottom:1px solid var(--rule)}
+.scroll i{display:block;height:100%;width:0;background:var(--acc);transition:width .18s linear}
+
+/* ---------- cover ---------- */
+.cover{padding:clamp(22px,3.8vw,44px) clamp(18px,3vw,38px) clamp(20px,3vw,34px);
+  border-bottom:1px solid var(--rule);background:var(--sheet);
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(16px,2.6vw,32px);align-items:start}
+@media(max-width:640px){.cover{grid-template-columns:1fr}}
+.cover .num{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:clamp(3rem,9vw,5.4rem);
+  line-height:.78;color:var(--acc);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.cover .bk{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--ink3)}
+.cover h1{font-size:clamp(1.9rem,4.8vw,3rem);margin-top:7px}
+.cover .gist{font-size:1.04rem;line-height:1.55;color:var(--ink2);max-width:62ch;margin-top:11px}
+
+/* ---------- the card you actually come back for ---------- */
+.minute{margin:clamp(15px,2.6vw,30px);border:2px solid var(--acc);background:var(--accBg);
+  padding:clamp(16px,2.6vw,26px)}
+.minute .h{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between;
+  padding-bottom:11px;margin-bottom:13px;border-bottom:1px solid var(--accLine)}
+.minute h2{font-size:clamp(1.15rem,2.4vw,1.45rem);letter-spacing:.02em}
+.minute .h .lbl{color:var(--acc)}
+.minute ol{margin:0;padding:0;list-style:none;counter-reset:m;display:flex;flex-direction:column;gap:10px}
+.minute li{counter-increment:m;display:grid;grid-template-columns:26px minmax(0,1fr);gap:11px;
+  font-size:.97rem;line-height:1.52;max-width:88ch}
+.minute li::before{content:counter(m,decimal-leading-zero);font-family:"IBM Plex Mono",monospace;
+  font-size:.7rem;color:var(--acc);padding-top:4px;font-variant-numeric:tabular-nums}
+
+/* ---------- topics ---------- */
+.sec{padding:clamp(20px,3vw,34px) clamp(16px,3vw,32px);border-top:1px solid var(--rule2)}
+.sechead{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin-bottom:14px}
+.sechead .k{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--acc)}
+.sechead h2{font-size:clamp(1.25rem,2.7vw,1.7rem);flex-basis:100%}
+.split{display:grid;grid-template-columns:minmax(0,46%) minmax(0,1fr);gap:clamp(16px,2.6vw,30px);align-items:start}
+@media(max-width:780px){.split{grid-template-columns:1fr}}
+.sec.wide .split{grid-template-columns:1fr}
+figure{margin:0;border:1px solid var(--rule);background:var(--sunk);
+  background-image:radial-gradient(var(--dot) 1.1px,transparent 1.2px);background-size:7px 7px}
+figure svg{width:100%;height:auto;display:block;padding:clamp(12px,2vw,20px);max-width:560px;margin:0 auto}
+.sec.wide figure svg{max-width:900px}
+figcaption{font-family:"IBM Plex Mono",monospace;font-size:.68rem;line-height:1.6;color:var(--ink2);
+  padding:9px 13px;border-top:1px solid var(--rule);background:var(--sheet)}
+.body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.body p{font-size:.96rem;line-height:1.6;max-width:70ch;color:var(--ink2)}
+.body ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.body li{font-size:.95rem;line-height:1.5;padding-left:15px;position:relative;max-width:70ch}
+.body li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:1px;background:var(--acc)}
+
+/* ---------- the book's own words ---------- */
+.qs{display:flex;flex-direction:column;gap:10px}
+.q{border-left:4px solid var(--acc);background:var(--chip);padding:13px 16px;
+  display:flex;flex-direction:column;gap:7px}
+.q .t{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:clamp(1.12rem,2.3vw,1.4rem);
+  line-height:1.18;letter-spacing:.01em;text-wrap:balance}
+.q .a{font-family:"IBM Plex Mono",monospace;font-size:.63rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--acc)}
+.q .n{font-size:.9rem;line-height:1.55;color:var(--ink2);max-width:70ch}
+
+/* ---------- decisions ---------- */
+.dec{border:2px solid var(--ink);background:var(--sheet);margin:clamp(16px,2.6vw,30px);
+  display:flex;flex-direction:column}
+.dec .top{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:10px 16px;
+  background:var(--ink);color:var(--sheet)}
+.dec .top .tag{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  border:1px solid currentColor;padding:2px 8px}
+.dec .top h2{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1.12rem;letter-spacing:.03em;color:inherit}
+.dec .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,38%);gap:0}
+@media(max-width:820px){.dec .in{grid-template-columns:1fr}}
+.dec .main{padding:clamp(15px,2.2vw,24px);display:flex;flex-direction:column;gap:14px;min-width:0}
+.dec .art{border-left:1px solid var(--rule);background:var(--sunk);
+  background-image:radial-gradient(var(--dot) 1.1px,transparent 1.2px);background-size:7px 7px;
+  display:flex;align-items:center;justify-content:center;padding:clamp(12px,2vw,18px)}
+@media(max-width:820px){.dec .art{border-left:0;border-top:1px solid var(--rule);order:-1}}
+.dec .art svg{width:100%;height:auto;max-width:330px;display:block}
+.sit{font-size:.98rem;line-height:1.58;max-width:74ch}
+.opts{display:flex;flex-direction:column;gap:1px;background:var(--rule2);border:1px solid var(--rule)}
+.opt{background:var(--sheet);padding:11px 14px;display:flex;flex-direction:column;gap:4px}
+.opt .o{font-size:.95rem;font-weight:600;line-height:1.4}
+.opt .c{font-size:.88rem;line-height:1.52;color:var(--ink2)}
+.opt.pick{background:var(--accBg)}
+.opt.pick .o::after{content:"the book's answer";font-family:"IBM Plex Mono",monospace;font-size:.58rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-left:9px;white-space:nowrap;font-weight:400}
+.verdict{border-left:4px solid var(--acc);padding:2px 0 2px 13px;font-size:.94rem;line-height:1.58;max-width:74ch}
+
+.foot{display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:space-between;align-items:center;
+  padding:14px 18px;border-top:1px solid var(--rule);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
+.foot a{color:var(--acc);text-decoration:none;border-bottom:1px solid var(--accLine)}
+.foot .cite{font-family:"IBM Plex Mono",monospace;font-size:.68rem;max-width:78ch}
+</style>
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Chapter</span><span class="v" id="tbC">—</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v" id="tbT">—</span></div>
+    <div class="tcell"><span class="lbl">Figures</span><span class="v" id="tbF">—</span></div>
+    <div class="tcell"><span class="lbl">Read</span><span class="v" id="tbR">—</span></div>
+  </header>
+  <div class="scroll"><i id="sc"></i></div>
+
+  <section class="cover">
+    <span class="num" id="cN"></span>
+    <div>
+      <p class="bk" id="cB"></p>
+      <h1 id="cT"></h1>
+      <p class="gist" id="cG"></p>
+    </div>
+  </section>
+
+  <section class="minute">
+    <div class="h"><h2>The one-minute version</h2><span class="lbl" id="mL"></span></div>
+    <ol id="minute"></ol>
+  </section>
+
+  <div id="secs"></div>
+
+  <footer class="foot">
+    <span class="cite" id="cite"></span>
+    <span id="links"></span>
+  </footer>
+</div>
+</div>
+<script>
+const D={"ch": "08", "book": "Chapter 8 · Component-Based Thinking", "pages": "pp. 107–128", "title": "The Building Blocks You Actually Design", "gist": "Components are where an architect sees the system — not classes, not services. How to find the first set, how to tell when one is doing too much, and the two coupling metrics that decide how painful the next change will be.", "read": "6 min · 45 sec to re-scan", "acc": {"l": "#8C4438", "d": "#DE9186"}, "minute": ["A **logical component** is a major function of the system, and it lives in a namespace or directory. The **leaf nodes** of the tree are the components; the nodes above them are domains and subdomains.", "Build the **logical** architecture before the physical one. Logical shows what the system does and how the parts meet; physical shows services, UIs and databases. Skip the logical and teams get no guidance on where code goes.", "Find the initial components by **workflow** (a component per step of the happy path) or by **actor/action** (the actions each actor takes — the system is an actor too). Avoid the **Entity Trap**: one component per entity, all named *Manager*.", "Test a component by writing its responsibility out loud. Count the **ands**, *also*, *in addition*, *as well as* and the commas. Too many conjunctions means too many responsibilities.", "**Afferent coupling (Ca)** is who depends on you; **efferent (Ce)** is who you depend on. The **Law of Demeter** — limit what a component *knows* — reduces one component's coupling by moving it elsewhere, not by removing it."], "sections": [{"t": "A component is a directory", "art": "namespace", "alt": "A directory tree whose leaf node maps to one logical component", "cap": "Fig. 8-3 · `order_entry/ordering/payment` is the Payment Processing component.", "p": "Think of the rooms in a house: kitchen, bedrooms, bathroom, office. Each serves a purpose, and together they are the building. The major functions of a system work the same way — and they are usually manifested as a namespace or a directory holding the source that implements them. Which means you can read an unfamiliar system's logical architecture straight off its directory tree."}, {"t": "Logical before physical", "art": "log-vs-phys", "wide": true, "alt": "A logical architecture of components and actors beside a physical architecture of UI, services and a database", "cap": "Figs. 8-4 and 8-5 · one shows where the functionality is; the other shows what gets deployed.", "p": "A logical architecture shows components, their interactions, the actors who use them, and sometimes a repository to show where data moves. It shows no user interface, no database, no services. It is also generally **independent of** the physical architecture: you can draw it before deciding between a monolith and a distributed system.", "items": ["Many architects skip straight to physical. The cost: in a physical diagram, payment-processing logic may be smeared across three services, so you cannot see how it relates to anything.", "The other cost is that development teams get no guidance on how to organise code — which produces unstructured architectures that are hard to maintain, test and deploy.", "The physical architecture should end up closely resembling one of the styles in Part II. The logical one is what tells you which."]}, {"t": "The loop that never closes", "art": "cycle", "alt": "A four-step cycle from identifying components through to analysing characteristics, feeding back to the start", "cap": "Fig. 8-6 · works for greenfield systems and for every feature added to an existing one.", "p": "The common mistake is spending too much effort making the first set of components perfect — at exactly the moment you know least about the system. Make a **best guess** from the core functionality and refine. Initial components are empty buckets: the name states the intended role, and it stays a placeholder until user stories start filling it."}, {"t": "Two good approaches and one trap", "art": "approaches", "wide": true, "alt": "Workflow and actor/action approaches beside the entity trap antipattern", "cap": "Both good approaches let you identify components *before* you have detailed requirements.", "items": ["**Workflow** — walk the major happy-path journeys and assign a component to each step. Browse → Item Browser, place → Order Placement, pay → Order Payment. Not every step earns its own: emailing at step 4 and step 7 is the same Customer Notification component.", "**Actor/Action** — list the actors and the major actions each performs. Customer, order packer, and the **system** itself, which does the automated work like billing and restocking. Generally produces more components than workflow.", "**The Entity Trap** — one component per entity: Customer Manager, Item Manager, Order Manager. A suffix like *Manager*, *Supervisor*, *Controller*, *Handler*, *Engine* or *Processor* is the tell."]}, {"k": "decision", "t": "“Order Manager” — what does it do?", "art": "approaches", "wide": true, "alt": "Workflow and actor/action approaches beside the entity trap antipattern", "sit": "You have identified Customer, Item and Order as the primary entities of an order-entry system. The obvious next move is a Customer Manager, an Item Manager and an Order Manager component.", "opts": [["Go with the entity components. They map to the domain.", "Three problems. The names describe nothing — *what does Order Manager do?* *It manages orders.* They become dumping grounds: validation, placement, history, fulfilment, shipping and tracking all land in one place. And coarse-grained components are hard to maintain, test and deploy."], ["Derive them from workflow or actor/action instead.", "You get **Validate Order** rather than **Order Manager** — a name that states a role, a component with one job, and a natural size.", 1]], "verdict": "There is one honest exception. If the system genuinely is CRUD over entities and nothing more, then it **doesn't need an architecture** — it needs a CRUD framework or a low-code environment that generates most of the code. Recognising that is also an architectural decision."}, {"k": "decision", "t": "Which component sends the emails?", "art": "responsibility", "alt": "One overloaded component splitting into four with clearer responsibilities", "sit": "A user story: *as a customer, I would like an email each time my order status changes.* Status changes when the order is placed, when it is ready for shipment, and when it ships. Your existing components are Order Placement, Order Fulfillment, Order Shipment and Inventory Management.", "opts": [["Put the emailing code in all three.", "The story is implemented as source code that has to live in a directory. Replicating it across three components replicates the maintenance three ways."], ["Create a Customer Notification component and have the three call it.", "One home for the code, three coupling points into it. The components evolved because a user story arrived — which is what the loop is for.", 1]], "verdict": "This is also the moment to run the **responsibility statement** test on a component that's grown. Write out what Order Placement does — validate, display the cart, determine the address, collect payment information, generate an order ID, *and also* apply payment, *in addition* adjust inventory, *as well as* email the customer. Count the conjunctions. Payment, inventory and notification each leave and become their own component."}, {"t": "Coupling between components", "art": "demeter", "alt": "One component depending on four others, then the same component depending on one", "cap": "Figs. 8-14 and 8-15 · applying the Law of Demeter to Order Placement.", "items": ["**Afferent (Ca)** — incoming, fan-in. Customer Notification is called by Order Placement and Order Shipment, so Ca = 2.", "**Efferent (Ce)** — outgoing, fan-out. Order Placement depends on Order Fulfillment, so Ce = 1.", "**Temporal coupling** — a non-static dependency based on timing or transactions: Order Placement must run before Order Shipment. Current tooling can barely detect it, so it surfaces in design documents or in error conditions."], "p": "The **Law of Demeter** — the Principle of Least Knowledge — says a component should have limited knowledge of other components. Demeter produced the world's grain and had no idea what anyone did with it. Order Placement knowing that inventory must be decremented, that stock may need reordering, that prices may need adjusting and that an email must go out is a lot of knowledge, and knowledge is coupling. Defer the last three to Inventory Management and Order Placement's Ce drops from four to one — **but Inventory Management's rises**. Demeter redistributes coupling; it does not delete it."}, {"k": "decision", "t": "One Bid Capture component, or two?", "art": "ggg", "wide": true, "alt": "The Going, Going, Gone components with Bid Capture split into bidder and auctioneer capture", "sit": "In the Going, Going, Gone auction system, bids arrive from two places: thousands of online **bidders**, and one **auctioneer** in the room. Functionally the capture is identical — a bid is a bid.", "opts": [["One Bid Capture component. Same function, same code.", "Functionally correct, and it forces one set of characteristics on two very different loads. The auctioneer does not need the scalability or elasticity of thousands of bidders."], ["Split it: Bid Capture and Auctioneer Capture.", "Now each gets the characteristics it actually needs. A bidder losing their connection is bad for business. The **auctioneer** losing theirs stops the auction.", 1]], "verdict": "This is the fourth step of the loop doing its job: functional analysis says one component, **characteristics analysis says two**. Bid Tracker then becomes the component that unifies two very different streams — one from the auctioneer, thousands from bidders. And this is not the final design either; registration and payment administration are still missing. Don't hunt for the one true design. Assess trade-offs and take the least worst set."}], "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 8: Component-Based Thinking, pp. 107–128. Going, Going, Gone runs as a case study through several later chapters.", "links": [["All 27 chapters", "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"], ["The Architect's Atlas", "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"]], "art": {"namespace": "<svg viewBox=\"0 0 300 216\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.3\" stroke-linejoin=\"round\">\n    <path d=\"M20 34 h22 l5 6 h30 v18 H20 z\"/>\n    <path d=\"M46 76 h22 l5 6 h30 v18 H46 z\"/>\n    <path d=\"M46 118 h22 l5 6 h30 v18 H46 z\"/>\n    <path d=\"M72 160 h22 l5 6 h30 v18 H72 z\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-width=\"1.7\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1\">\n      <path d=\"M30 58 V88 h16 M30 88 V130 h16 M56 100 V172 h16\"/>\n    </g>\n    <path d=\"M136 178 h30\" stroke=\"var(--acc)\" stroke-width=\"1.4\"/>\n    <path d=\"M158 174 l8 4 l-8 4\" stroke=\"var(--acc)\" stroke-width=\"1.4\"/>\n    <rect x=\"172\" y=\"162\" width=\"112\" height=\"32\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-width=\"1.7\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" font-size=\"8.6\">\n    <text x=\"20\" y=\"26\" fill=\"var(--ink3)\" letter-spacing=\"1.4\">DIRECTORY / NAMESPACE</text>\n    <text x=\"52\" y=\"52\" fill=\"var(--ink2)\">order_entry</text>\n    <text x=\"78\" y=\"94\" fill=\"var(--ink2)\">ordering</text>\n    <text x=\"78\" y=\"136\" fill=\"var(--ink2)\">processing</text>\n    <text x=\"104\" y=\"178\" fill=\"var(--acc)\">payment</text>\n    <text x=\"228\" y=\"176\" font-size=\"9.4\" text-anchor=\"middle\" fill=\"var(--acc)\">Payment Processing</text>\n    <text x=\"228\" y=\"188\" font-size=\"8\" text-anchor=\"middle\" fill=\"var(--ink2)\">a logical component</text>\n    <text x=\"172\" y=\"60\" fill=\"var(--ink)\">Leaf nodes are the</text>\n    <text x=\"172\" y=\"72\" fill=\"var(--ink)\">components.</text>\n    <text x=\"172\" y=\"92\" fill=\"var(--ink2)\">Higher nodes are</text>\n    <text x=\"172\" y=\"104\" fill=\"var(--ink2)\">domains and</text>\n    <text x=\"172\" y=\"116\" fill=\"var(--ink2)\">subdomains.</text>\n    <text x=\"172\" y=\"136\" fill=\"var(--ink2)\">Read the tree and</text>\n    <text x=\"172\" y=\"148\" fill=\"var(--ink2)\">you have read the</text>\n    <text x=\"172\" y=\"160\" fill=\"var(--ink2)\">logical architecture.</text>\n  </g>\n</svg>", "log-vs-phys": "<svg viewBox=\"0 0 620 230\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\" stroke-linejoin=\"round\">\n    <rect x=\"8\" y=\"34\" width=\"290\" height=\"150\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <rect x=\"322\" y=\"34\" width=\"290\" height=\"150\"/>\n    <g stroke=\"var(--acc)\" stroke-width=\"1.4\">\n      <rect x=\"30\" y=\"66\" width=\"78\" height=\"28\"/><rect x=\"130\" y=\"66\" width=\"78\" height=\"28\"/>\n      <rect x=\"80\" y=\"120\" width=\"78\" height=\"28\"/><rect x=\"198\" y=\"120\" width=\"78\" height=\"28\"/>\n      <path d=\"M108 80 H130 M108 88 L96 120 M186 94 L208 120\"/>\n    </g>\n    <circle cx=\"252\" cy=\"80\" r=\"9\"/><path d=\"M240 106 q0-14 12-14 q12 0 12 14\"/>\n    <g stroke-width=\"1.3\">\n      <rect x=\"344\" y=\"52\" width=\"246\" height=\"24\"/>\n      <rect x=\"344\" y=\"92\" width=\"72\" height=\"28\"/><rect x=\"428\" y=\"92\" width=\"72\" height=\"28\"/>\n      <rect x=\"512\" y=\"92\" width=\"78\" height=\"28\"/>\n      <ellipse cx=\"466\" cy=\"148\" rx=\"52\" ry=\"9\"/><path d=\"M414 148 v16 a52 9 0 0 0 104 0 v-16\"/>\n      <path d=\"M380 76 V92 M466 76 V92 M550 76 V92 M466 120 V139\"/>\n    </g>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\">\n    <text x=\"8\" y=\"24\" font-size=\"9.6\" text-anchor=\"start\" fill=\"var(--acc)\">LOGICAL — what it does, and how the parts meet</text>\n    <text x=\"322\" y=\"24\" font-size=\"9.6\" text-anchor=\"start\" fill=\"var(--ink)\">PHYSICAL — what actually gets deployed</text>\n    <g font-size=\"8\" fill=\"var(--ink2)\">\n      <text x=\"69\" y=\"83\">Order Placement</text><text x=\"169\" y=\"83\">Order Payment</text>\n      <text x=\"119\" y=\"137\">Fulfillment</text><text x=\"237\" y=\"137\">Notification</text>\n      <text x=\"252\" y=\"120\">actor</text>\n      <text x=\"467\" y=\"68\">user interface</text>\n      <text x=\"380\" y=\"109\">service</text><text x=\"464\" y=\"109\">service</text><text x=\"551\" y=\"109\">service</text>\n      <text x=\"466\" y=\"152\">database</text>\n    </g>\n    <text x=\"153\" y=\"202\" font-size=\"8.4\" fill=\"var(--ink2)\">no UI, no database, no services</text>\n    <text x=\"467\" y=\"202\" font-size=\"8.4\" fill=\"var(--ink2)\">payment logic may be spread across three of these</text>\n    <text x=\"310\" y=\"222\" font-size=\"8.6\" fill=\"var(--ink)\">skip the left one and teams get no guidance on where code goes</text>\n  </g>\n</svg>", "cycle": "<svg viewBox=\"0 0 300 250\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.5\" stroke-linejoin=\"round\">\n    <rect x=\"82\" y=\"14\" width=\"136\" height=\"34\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <rect x=\"82\" y=\"72\" width=\"136\" height=\"34\"/>\n    <rect x=\"82\" y=\"130\" width=\"136\" height=\"34\"/>\n    <rect x=\"82\" y=\"188\" width=\"136\" height=\"34\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.3\">\n      <path d=\"M150 48 V72 M150 106 V130 M150 164 V188\"/>\n      <path d=\"M144 66 l6 6 l6 -6 M144 124 l6 6 l6 -6 M144 182 l6 6 l6 -6\"/>\n    </g>\n    <path d=\"M82 205 C24 205 24 31 82 31\" stroke=\"var(--acc)\" stroke-width=\"1.6\"/>\n    <path d=\"M76 25 l8 6 l-8 6\" stroke=\"var(--acc)\" stroke-width=\"1.6\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\" font-size=\"9\">\n    <text x=\"150\" y=\"30\" fill=\"var(--acc)\">identify core components</text>\n    <text x=\"150\" y=\"42\" font-size=\"7.8\" fill=\"var(--ink2)\">a best guess, not a masterpiece</text>\n    <text x=\"150\" y=\"88\" fill=\"var(--ink)\">assign user stories</text>\n    <text x=\"150\" y=\"100\" font-size=\"7.8\" fill=\"var(--ink2)\">fill the empty buckets</text>\n    <text x=\"150\" y=\"146\" fill=\"var(--ink)\">analyse roles and responsibilities</text>\n    <text x=\"150\" y=\"158\" font-size=\"7.8\" fill=\"var(--ink2)\">is it doing too much?</text>\n    <text x=\"150\" y=\"204\" fill=\"var(--ink)\">analyse characteristics</text>\n    <text x=\"150\" y=\"216\" font-size=\"7.8\" fill=\"var(--ink2)\">does scale force a split?</text>\n    <text x=\"150\" y=\"240\" font-size=\"8.4\" fill=\"var(--acc)\">Fig. 8-6 · this loop does not have an end</text>\n  </g>\n</svg>", "approaches": "<svg viewBox=\"0 0 620 244\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\" stroke-linejoin=\"round\">\n    <rect x=\"6\" y=\"34\" width=\"196\" height=\"176\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <rect x=\"212\" y=\"34\" width=\"196\" height=\"176\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <rect x=\"418\" y=\"34\" width=\"196\" height=\"176\" stroke=\"var(--ink3)\" stroke-dasharray=\"6 4\"/>\n    <g stroke=\"var(--acc)\" stroke-width=\"1.3\">\n      <rect x=\"24\" y=\"70\" width=\"52\" height=\"20\"/><rect x=\"88\" y=\"70\" width=\"52\" height=\"20\"/><rect x=\"152\" y=\"70\" width=\"34\" height=\"20\"/>\n      <path d=\"M76 80 h12 M140 80 h12\"/>\n    </g>\n    <g stroke=\"var(--acc)\" stroke-width=\"1.3\">\n      <circle cx=\"248\" cy=\"78\" r=\"9\"/><circle cx=\"310\" cy=\"78\" r=\"9\"/><circle cx=\"372\" cy=\"78\" r=\"9\"/>\n      <rect x=\"228\" y=\"104\" width=\"40\" height=\"18\"/><rect x=\"290\" y=\"104\" width=\"40\" height=\"18\"/><rect x=\"352\" y=\"104\" width=\"40\" height=\"18\"/>\n      <path d=\"M248 87 V104 M310 87 V104 M372 87 V104\"/>\n    </g>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.3\">\n      <rect x=\"470\" y=\"66\" width=\"92\" height=\"60\"/>\n      <path d=\"M482 84 h68 M482 96 h68 M482 108 h68\"/>\n    </g>\n    <path d=\"M492 140 l30 30 M522 140 l-30 30\" stroke=\"var(--ink)\" stroke-width=\"2\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\">\n    <g font-size=\"10\">\n      <text x=\"104\" y=\"54\" fill=\"var(--acc)\">WORKFLOW</text>\n      <text x=\"310\" y=\"54\" fill=\"var(--acc)\">ACTOR / ACTION</text>\n      <text x=\"516\" y=\"54\" fill=\"var(--ink2)\">ENTITY TRAP</text>\n    </g>\n    <g font-size=\"8\" fill=\"var(--ink2)\">\n      <text x=\"50\" y=\"83\">browse</text><text x=\"114\" y=\"83\">place</text><text x=\"169\" y=\"83\">pay</text>\n      <text x=\"248\" y=\"118\">search</text><text x=\"310\" y=\"118\">pack</text><text x=\"372\" y=\"118\">bill</text>\n      <text x=\"516\" y=\"99\">Order Manager</text>\n    </g>\n    <g font-size=\"8.6\" fill=\"var(--ink)\">\n      <text x=\"104\" y=\"150\">one component per step</text>\n      <text x=\"104\" y=\"164\">in the happy path</text>\n      <text x=\"310\" y=\"150\">actors, then their actions</text>\n      <text x=\"310\" y=\"164\">— the system is an actor too</text>\n      <text x=\"516\" y=\"150\">one component per entity</text>\n      <text x=\"516\" y=\"164\">and everything lands in it</text>\n    </g>\n    <g font-size=\"8\" fill=\"var(--ink2)\">\n      <text x=\"104\" y=\"186\">not every step earns one:</text><text x=\"104\" y=\"197\">two send emails, one component</text>\n      <text x=\"310\" y=\"186\">produces more components</text><text x=\"310\" y=\"197\">than workflow does</text>\n      <text x=\"516\" y=\"186\">Manager · Supervisor · Controller</text><text x=\"516\" y=\"197\">Handler · Engine · Processor</text>\n    </g>\n    <text x=\"310\" y=\"232\" font-size=\"8.6\" fill=\"var(--ink)\">If the system really is CRUD over entities, it doesn't need an architecture — it needs a low-code tool.</text>\n  </g>\n</svg>", "responsibility": "<svg viewBox=\"0 0 300 236\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.5\" stroke-linejoin=\"round\">\n    <rect x=\"30\" y=\"26\" width=\"240\" height=\"66\" stroke=\"var(--ink3)\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1\"><path d=\"M42 46 h216 M42 60 h216 M42 74 h150\"/></g>\n    <path d=\"M150 100 V118\" stroke=\"var(--acc)\"/>\n    <path d=\"M144 112 l6 6 l6 -6\" stroke=\"var(--acc)\"/>\n    <rect x=\"14\" y=\"126\" width=\"126\" height=\"34\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <rect x=\"160\" y=\"126\" width=\"126\" height=\"34\"/>\n    <rect x=\"14\" y=\"170\" width=\"126\" height=\"34\"/>\n    <rect x=\"160\" y=\"170\" width=\"126\" height=\"34\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" font-size=\"8.6\">\n    <text x=\"30\" y=\"18\" fill=\"var(--ink3)\" letter-spacing=\"1.4\">ONE COMPONENT, EIGHT RESPONSIBILITIES</text>\n    <text x=\"150\" y=\"40\" text-anchor=\"middle\" font-size=\"9.4\" fill=\"var(--ink2)\">“…and also… in addition… as well as…”</text>\n    <g text-anchor=\"middle\" font-size=\"9\">\n      <text x=\"77\" y=\"147\" fill=\"var(--acc)\">Order Placement</text>\n      <text x=\"223\" y=\"147\" fill=\"var(--ink)\">Payment Processing</text>\n      <text x=\"77\" y=\"191\" fill=\"var(--ink)\">Inventory Management</text>\n      <text x=\"223\" y=\"191\" fill=\"var(--ink)\">Customer Notification</text>\n    </g>\n    <text x=\"150\" y=\"222\" text-anchor=\"middle\" fill=\"var(--acc)\">the conjunction test: count the ands, also, in addition,</text>\n    <text x=\"150\" y=\"233\" text-anchor=\"middle\" fill=\"var(--acc)\">as well as — and the commas</text>\n  </g>\n</svg>", "demeter": "<svg viewBox=\"0 0 300 264\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\" stroke-linejoin=\"round\">\n    <rect x=\"8\" y=\"30\" width=\"76\" height=\"26\"/>\n    <rect x=\"188\" y=\"14\" width=\"98\" height=\"22\"/><rect x=\"188\" y=\"44\" width=\"98\" height=\"22\"/>\n    <rect x=\"188\" y=\"74\" width=\"98\" height=\"22\"/><rect x=\"188\" y=\"104\" width=\"98\" height=\"22\"/>\n    <g stroke=\"var(--ink)\" stroke-width=\"1.5\">\n      <path d=\"M84 43 L188 25 M84 43 H188 M84 43 L188 85 M84 43 L188 115\"/>\n    </g>\n    <path d=\"M8 152 H292\" stroke=\"var(--rule)\" stroke-dasharray=\"4 5\"/>\n    <rect x=\"8\" y=\"186\" width=\"76\" height=\"26\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <rect x=\"112\" y=\"186\" width=\"80\" height=\"26\"/>\n    <rect x=\"212\" y=\"164\" width=\"74\" height=\"22\"/><rect x=\"212\" y=\"196\" width=\"74\" height=\"22\"/>\n    <rect x=\"212\" y=\"228\" width=\"74\" height=\"22\"/>\n    <path d=\"M84 199 H112\" stroke=\"var(--acc)\" stroke-width=\"1.6\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.3\">\n      <path d=\"M192 199 L212 175 M192 199 H212 M192 199 L212 233\"/>\n    </g>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" font-size=\"7.6\">\n    <text x=\"8\" y=\"22\" letter-spacing=\"1.4\" fill=\"var(--ink3)\">BEFORE — CE = 4</text>\n    <text x=\"46\" y=\"47\" text-anchor=\"middle\" font-size=\"8.4\" fill=\"var(--ink)\">Order</text>\n    <text x=\"46\" y=\"72\" text-anchor=\"middle\" fill=\"var(--ink2)\">knows everything</text>\n    <text x=\"237\" y=\"28\" text-anchor=\"middle\" fill=\"var(--ink2)\">Inventory Management</text>\n    <text x=\"237\" y=\"58\" text-anchor=\"middle\" fill=\"var(--ink2)\">Supplier Ordering</text>\n    <text x=\"237\" y=\"88\" text-anchor=\"middle\" fill=\"var(--ink2)\">Item Pricing</text>\n    <text x=\"237\" y=\"118\" text-anchor=\"middle\" fill=\"var(--ink2)\">Email Notification</text>\n    <text x=\"8\" y=\"176\" letter-spacing=\"1.4\" fill=\"var(--acc)\">AFTER — CE = 1</text>\n    <text x=\"46\" y=\"203\" text-anchor=\"middle\" font-size=\"8.4\" fill=\"var(--acc)\">Order</text>\n    <text x=\"152\" y=\"203\" text-anchor=\"middle\" font-size=\"8.4\" fill=\"var(--ink)\">Inventory Mgmt</text>\n    <text x=\"249\" y=\"178\" text-anchor=\"middle\" fill=\"var(--ink2)\">Supplier Ordering</text>\n    <text x=\"249\" y=\"210\" text-anchor=\"middle\" fill=\"var(--ink2)\">Item Pricing</text>\n    <text x=\"249\" y=\"242\" text-anchor=\"middle\" fill=\"var(--ink2)\">Email Notification</text>\n    <text x=\"150\" y=\"258\" text-anchor=\"middle\" font-size=\"8.4\" fill=\"var(--ink2)\">the coupling didn't leave the system — it moved</text>\n  </g>\n</svg>", "ggg": "<svg viewBox=\"0 0 620 232\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\" stroke-linejoin=\"round\">\n    <rect x=\"14\" y=\"52\" width=\"96\" height=\"30\"/>\n    <rect x=\"14\" y=\"102\" width=\"96\" height=\"30\"/>\n    <rect x=\"160\" y=\"52\" width=\"106\" height=\"30\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-width=\"1.7\"/>\n    <rect x=\"160\" y=\"102\" width=\"106\" height=\"30\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-width=\"1.7\"/>\n    <rect x=\"318\" y=\"76\" width=\"106\" height=\"30\"/>\n    <rect x=\"470\" y=\"40\" width=\"132\" height=\"30\"/>\n    <rect x=\"470\" y=\"110\" width=\"132\" height=\"30\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.2\">\n      <path d=\"M266 67 H318 M266 117 L318 100 M110 67 H160 M110 117 H160\"/>\n      <path d=\"M424 91 L470 60 M424 91 L470 122\"/>\n      <path d=\"M266 63 L318 84\"/>\n    </g>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\" font-size=\"8.4\">\n    <text x=\"14\" y=\"34\" text-anchor=\"start\" font-size=\"8.6\" letter-spacing=\"1.4\" fill=\"var(--ink3)\">GOING, GOING, GONE — AFTER THE SPLIT</text>\n    <text x=\"62\" y=\"71\" fill=\"var(--ink2)\">Video Streamer</text>\n    <text x=\"62\" y=\"121\" fill=\"var(--ink2)\">Bid Streamer</text>\n    <text x=\"213\" y=\"71\" fill=\"var(--acc)\">Bid Capture</text>\n    <text x=\"213\" y=\"121\" fill=\"var(--acc)\">Auctioneer Capture</text>\n    <text x=\"371\" y=\"95\" fill=\"var(--ink2)\">Bid Tracker</text>\n    <text x=\"536\" y=\"59\" fill=\"var(--ink2)\">Auction Session</text>\n    <text x=\"536\" y=\"129\" fill=\"var(--ink2)\">Payment</text>\n    <text x=\"213\" y=\"150\" font-size=\"7.8\" fill=\"var(--acc)\">thousands of bidders</text>\n    <text x=\"213\" y=\"160\" font-size=\"7.8\" fill=\"var(--acc)\">— scalability, elasticity</text>\n    <text x=\"213\" y=\"176\" font-size=\"7.8\" fill=\"var(--acc)\">one auctioneer</text>\n    <text x=\"213\" y=\"186\" font-size=\"7.8\" fill=\"var(--acc)\">— reliability, availability</text>\n    <text x=\"310\" y=\"212\" font-size=\"8.6\" fill=\"var(--ink)\">functionally these are the same component. Their characteristics are not.</text>\n    <text x=\"310\" y=\"226\" font-size=\"8.2\" fill=\"var(--ink2)\">a bidder's dropped connection is bad. the auctioneer's is a disaster.</text>\n  </g>\n</svg>"}};
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function md(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
+  .replace(/`(.+?)`/g,"<code>$1</code>").replace(/\*(.+?)\*/g,"<em>$1</em>")}
+const $=s=>document.querySelector(s);
+
+function fig(s){
+  if(!s.art)return"";
+  return '<figure role="img" aria-label="'+esc(s.alt||"")+'">'+(D.art[s.art]||"")+
+    (s.cap?'<figcaption>'+md(s.cap)+'</figcaption>':"")+'</figure>';
+}
+function quotes(list){
+  return '<div class="qs">'+list.map(q=>'<div class="q"><span class="t">'+md(q[0])+
+    '</span><span class="a">'+esc(q[1])+'</span>'+
+    (q[2]?'<span class="n">'+md(q[2])+'</span>':"")+'</div>').join("")+'</div>';
+}
+function topic(s,i){
+  const body='<div class="body">'+
+    (s.quotes?quotes(s.quotes):"")+
+    (s.items?'<ul>'+s.items.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul>':"")+
+    (s.p?'<p>'+md(s.p)+'</p>':"")+'</div>';
+  return '<section class="sec'+(s.wide?" wide":"")+'" id="s'+i+'">'+
+    '<div class="sechead"><span class="k">'+esc(s.k==="quote"?"The book\u2019s words":"Topic "+s.n)+
+    '</span><h2>'+md(s.t)+'</h2></div>'+
+    '<div class="split">'+fig(s)+body+'</div></section>';
+}
+function decision(s,i){
+  return '<section class="dec" id="s'+i+'">'+
+    '<div class="top"><span class="tag">Decision</span><h2>'+md(s.t)+'</h2></div>'+
+    '<div class="in"><div class="main">'+
+      '<p class="sit">'+md(s.sit)+'</p>'+
+      '<div class="opts">'+s.opts.map(o=>'<div class="opt'+(o[2]?" pick":"")+'">'+
+        '<span class="o">'+md(o[0])+'</span><span class="c">'+md(o[1])+'</span></div>').join("")+'</div>'+
+      '<p class="verdict">'+md(s.verdict)+'</p>'+
+    '</div>'+(s.art?'<div class="art" role="img" aria-label="'+esc(s.alt||"")+'">'+
+      (D.art[s.art]||"")+'</div>':"")+'</div></section>';
+}
+
+let n=0;
+$("#secs").innerHTML=D.sections.map((s,i)=>{
+  if(s.k==="decision")return decision(s,i);
+  if(s.k!=="quote")s.n=String(++n).padStart(2,"0");
+  return topic(s,i);
+}).join("");
+
+const figs=D.sections.filter(s=>s.art).length;
+$("#tbC").textContent="Ch. "+D.ch; $("#tbT").textContent=D.title;
+$("#tbF").textContent=figs; $("#tbR").textContent=D.read;
+$("#cN").textContent=D.ch; $("#cB").textContent=D.book+" · "+D.pages;
+$("#cT").textContent=D.title; $("#cG").textContent=D.gist;
+$("#mL").textContent=D.minute.length+" things to keep";
+$("#minute").innerHTML=D.minute.map(x=>'<li><span>'+md(x)+'</span></li>').join("");
+$("#cite").textContent=D.source||"";
+$("#links").innerHTML=(D.links||[]).map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener">'+
+  esc(l[0])+' &#8599;</a>').join(" &middot; ");
+
+const bar=$("#sc"),onScroll=()=>{
+  const h=document.documentElement.scrollHeight-innerHeight;
+  bar.style.width=(h>0?Math.min(100,Math.max(0,scrollY/h*100)):0)+"%";
+};
+addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);onScroll();
+</script>

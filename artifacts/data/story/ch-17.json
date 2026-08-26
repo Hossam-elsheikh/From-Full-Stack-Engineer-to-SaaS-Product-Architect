@@ -1,0 +1,154 @@
+{
+ "ch": "17",
+ "book": "Chapter 17 · Orchestration-Driven Service-Oriented Architecture",
+ "pages": "pp. 315–328",
+ "title": "The Lesson Reuse Taught",
+ "gist": "An architecture that made complete sense in its era and failed anyway. Worth knowing not to build, but to understand what the industry learned — because microservices, DDD and team topologies are all reactions to it.",
+ "read": "4 min · 35 sec to re-scan",
+ "acc": {
+  "l": "#7A4A63",
+  "d": "#CE9CB6"
+ },
+ "minute": [
+  "Born in the late 1990s under real constraints: per-machine OS licences, Byzantine database licensing, expensive everything. **Reuse was the rational response** to scarce, commercial computing resources.",
+  "A strict **taxonomy of services**: business (signatures only, defined by analysts), enterprise (fine-grained shared implementations), application (one-off), infrastructure (operational). All stitched by an **orchestration engine**.",
+  "**Reuse is implemented via coupling.** Consolidating six divisions' Customer into one canonical service means every change ripples to six divisions, and every division carries fields it doesn't use.",
+  "The killer was **technical partitioning taken to its limit**: a change like “add an address line to CatalogCheckout” could touch dozens of services across several tiers plus a schema.",
+  "Single quantum despite being distributed — one shared database, and an orchestration engine that couples everything to itself. **It found the disadvantages of both monolithic and distributed architectures.**"
+ ],
+ "sections": [
+  {
+   "t": "The taxonomy",
+   "art": "soa-taxonomy",
+   "wide": true,
+   "alt": "Business services above an orchestration engine above enterprise, application and infrastructure services",
+   "cap": "Fig. 17-1 · every layer has a well-defined responsibility, and a different team.",
+   "items": [
+    "**Business services** — the entry point for business processes: `ExecuteTrade`, `PlaceOrder`. They contain **no code**, only input, output and sometimes schema, and business analysts define them.",
+    "**Enterprise services** — fine-grained shared implementations: `CreateCustomer`, `CalculateQuote`, plus transactional entities. The intended reusable building blocks, composed into business services by the engine.",
+    "**Application services** — one-off, single-implementation, owned by one application team. Geolocation that nobody wants to generalise.",
+    "**Infrastructure services** — monitoring, logging, authentication, authorisation. Concrete, owned by a shared team near operations."
+   ],
+   "p": "The goal behind enterprise services was to build up a permanent collection of reusable business assets so the company would never rewrite that workflow again. It defeats itself: **business components are not construction materials**. Markets, technology and engineering practice all move, and no amount of taxonomy imposes stability on them."
+  },
+  {
+   "k": "decision",
+   "t": "Six divisions each have a Customer",
+   "art": "reuse-coupling",
+   "wide": true,
+   "alt": "Six divisional services each containing a customer notion, consolidated into one canonical Customer service",
+   "sit": "An insurance company: auto, disability, home, life, marine, travel. Each division's services contain their own notion of **Customer**. The duplication is obvious and the reuse opportunity is obvious with it.",
+   "opts": [
+    [
+     "Extract one canonical Customer service.",
+     "Every division now references one definition. Which means a change to Customer **ripples to all six**, requiring coordinated deployment and holistic testing — and it means the single Customer must carry every attribute any division needs. Auto insurance needs a driver's licence; disability insurance now carries driver's-licence complexity it does not care about."
+    ],
+    [
+     "Let each bounded context keep its own Customer and reconcile at the seams.",
+     "This is what the industry eventually concluded. **Domain-driven design's insistence on avoiding holistic reuse comes directly from experience with these architectures.**",
+     1
+    ]
+   ],
+   "verdict": "The trap is that the first option is *obviously right* by every principle taught at the time. **Reuse is implemented via coupling** — there is no other mechanism — and that means every reuse decision is also a coupling decision, whether or not anyone frames it that way. This is the First Law arriving uninvited: an architecture built to optimise one thing, with the trade-off unexamined."
+  },
+  {
+   "t": "Everything goes through the bus",
+   "art": "soa-flow",
+   "alt": "A business service calling a service bus which calls two enterprise services which call application services",
+   "cap": "Fig. 17-2 · the engine is an integration hub and an orchestration engine at once. Even internal calls route through it.",
+   "p": "That combination is exactly what an **enterprise service bus** provides, which is why ESBs remain genuinely useful in integration-heavy environments even though building a whole architecture around one is a bad idea. Conway's Law then does its work: the team of integration architects who own the engine become a political force, and then a bureaucratic bottleneck.",
+   "items": [
+    "**Declarative transactions** were an era feature — configuring an entity's transactional scope in XML, per workflow. It failed twice over: developers who can't know the runtime transactional behaviour end up building near-identical entities that differ only in scope, and no message bus ever covered the failure-mode edge cases. **Some features cannot be cleanly abstracted away.**",
+    "**Teams**: this style's strict taxonomy is the communication antipattern that team topologies were later formulated against. It was rare for someone building business services to speak to someone building enterprise services — they communicated through contracts and enterprise ticketing tools."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "The ESB keeps growing",
+   "art": "soa-flow",
+   "alt": "A business service calling a service bus which calls two enterprise services which call application services",
+   "sit": "You use an ESB as an integration facility between an ERP package, an online sales tool and modern accounting microservices. It works. Each quarter, a little more workflow logic finds its way into it, because that is where the routing already lives.",
+   "opts": [
+    [
+     "Let it keep absorbing. It's already the hub.",
+     "**Accidental SOA**: gradually and unintentionally building a fully orchestration-driven SOA without deciding to. Nobody chooses this architecture any more; people arrive at it."
+    ],
+    [
+     "Set encapsulation boundaries and enforce them.",
+     "Decide what the ESB is allowed to orchestrate, watch the transactional boundaries, and write **fitness functions over the integration logs** — for example, alert when any update from the ERP or sales logs targets anything other than accounting.",
+     1
+    ]
+   ],
+   "verdict": "The modern use of this style is as an **integration architecture**, and there it earns its place: legacy systems that must interact with modern ones, combining results and aggregating behaviour, is precisely what an ESB is for. The skill being tested is the one the chapter names directly — telling a tool's real uses apart from the hype around it, in both directions."
+  },
+  {
+   "t": "Characteristics, and what it left behind",
+   "wide": true,
+   "gen": {
+    "kind": "ratings",
+    "head": "ORCHESTRATION-DRIVEN SOA — TECHNICALLY PARTITIONED · QUANTUM 1",
+    "rows": [
+     [
+      "elasticity",
+      3,
+      "vendors worked hard for this"
+     ],
+     [
+      "scalability",
+      3,
+      "session replication etc."
+     ],
+     [
+      "evolvability",
+      1,
+      "a change can cross five layers"
+     ],
+     [
+      "deployability",
+      1,
+      "not an aspiration at the time"
+     ],
+     [
+      "testability",
+      1,
+      "holistic testing was uncommon then"
+     ],
+     [
+      "performance",
+      1,
+      "one request, split everywhere"
+     ],
+     [
+      "simplicity",
+      1,
+      ""
+     ],
+     [
+      "overall cost",
+      1,
+      "multi-year, board-level projects"
+     ]
+    ]
+   },
+   "alt": "Architecture characteristics ratings for orchestration-driven SOA",
+   "cap": "Fig. 17-5 · the most technically partitioned general-purpose architecture ever attempted.",
+   "p": "Most of these criteria weren't priorities when the style was popular — Agile had barely started and had not reached the enterprises building these systems. The projects were rarely called failures; they were quietly converted into integration architectures with better boundaries, aligned closer to DDD.",
+   "items": [
+    "The **single quantum** has two causes: one shared database, and an orchestration engine that couples everything to itself — no part of the architecture can hold different characteristics from the mediator running all of it.",
+    "The word architects in this style dreaded was **change**: a lucky day meant touching only enterprise services; a bad day meant highly coupled edits across four or five layers, and the scope was unknowable in advance.",
+    "**What it taught the field**: the practical limits of technical partitioning, how hard distributed transactions really are, and why holistic reuse across an organisation is a coupling strategy in disguise. Microservices is in large part the backlash."
+   ]
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 17: Orchestration-Driven Service-Oriented Architecture, pp. 315–328.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

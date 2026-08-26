@@ -1,0 +1,243 @@
+<!-- Drawings for chapter 08 · Component-Based Thinking -->
+
+<!--@ namespace -->
+<svg viewBox="0 0 300 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.3" stroke-linejoin="round">
+    <path d="M20 34 h22 l5 6 h30 v18 H20 z"/>
+    <path d="M46 76 h22 l5 6 h30 v18 H46 z"/>
+    <path d="M46 118 h22 l5 6 h30 v18 H46 z"/>
+    <path d="M72 160 h22 l5 6 h30 v18 H72 z" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <g stroke="var(--ink3)" stroke-width="1">
+      <path d="M30 58 V88 h16 M30 88 V130 h16 M56 100 V172 h16"/>
+    </g>
+    <path d="M136 178 h30" stroke="var(--acc)" stroke-width="1.4"/>
+    <path d="M158 174 l8 4 l-8 4" stroke="var(--acc)" stroke-width="1.4"/>
+    <rect x="172" y="162" width="112" height="32" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6">
+    <text x="20" y="26" fill="var(--ink3)" letter-spacing="1.4">DIRECTORY / NAMESPACE</text>
+    <text x="52" y="52" fill="var(--ink2)">order_entry</text>
+    <text x="78" y="94" fill="var(--ink2)">ordering</text>
+    <text x="78" y="136" fill="var(--ink2)">processing</text>
+    <text x="104" y="178" fill="var(--acc)">payment</text>
+    <text x="228" y="176" font-size="9.4" text-anchor="middle" fill="var(--acc)">Payment Processing</text>
+    <text x="228" y="188" font-size="8" text-anchor="middle" fill="var(--ink2)">a logical component</text>
+    <text x="172" y="60" fill="var(--ink)">Leaf nodes are the</text>
+    <text x="172" y="72" fill="var(--ink)">components.</text>
+    <text x="172" y="92" fill="var(--ink2)">Higher nodes are</text>
+    <text x="172" y="104" fill="var(--ink2)">domains and</text>
+    <text x="172" y="116" fill="var(--ink2)">subdomains.</text>
+    <text x="172" y="136" fill="var(--ink2)">Read the tree and</text>
+    <text x="172" y="148" fill="var(--ink2)">you have read the</text>
+    <text x="172" y="160" fill="var(--ink2)">logical architecture.</text>
+  </g>
+</svg>
+
+<!--@ log-vs-phys -->
+<svg viewBox="0 0 620 230" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="8" y="34" width="290" height="150" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="322" y="34" width="290" height="150"/>
+    <g stroke="var(--acc)" stroke-width="1.4">
+      <rect x="30" y="66" width="78" height="28"/><rect x="130" y="66" width="78" height="28"/>
+      <rect x="80" y="120" width="78" height="28"/><rect x="198" y="120" width="78" height="28"/>
+      <path d="M108 80 H130 M108 88 L96 120 M186 94 L208 120"/>
+    </g>
+    <circle cx="252" cy="80" r="9"/><path d="M240 106 q0-14 12-14 q12 0 12 14"/>
+    <g stroke-width="1.3">
+      <rect x="344" y="52" width="246" height="24"/>
+      <rect x="344" y="92" width="72" height="28"/><rect x="428" y="92" width="72" height="28"/>
+      <rect x="512" y="92" width="78" height="28"/>
+      <ellipse cx="466" cy="148" rx="52" ry="9"/><path d="M414 148 v16 a52 9 0 0 0 104 0 v-16"/>
+      <path d="M380 76 V92 M466 76 V92 M550 76 V92 M466 120 V139"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="8" y="24" font-size="9.6" text-anchor="start" fill="var(--acc)">LOGICAL — what it does, and how the parts meet</text>
+    <text x="322" y="24" font-size="9.6" text-anchor="start" fill="var(--ink)">PHYSICAL — what actually gets deployed</text>
+    <g font-size="8" fill="var(--ink2)">
+      <text x="69" y="83">Order Placement</text><text x="169" y="83">Order Payment</text>
+      <text x="119" y="137">Fulfillment</text><text x="237" y="137">Notification</text>
+      <text x="252" y="120">actor</text>
+      <text x="467" y="68">user interface</text>
+      <text x="380" y="109">service</text><text x="464" y="109">service</text><text x="551" y="109">service</text>
+      <text x="466" y="152">database</text>
+    </g>
+    <text x="153" y="202" font-size="8.4" fill="var(--ink2)">no UI, no database, no services</text>
+    <text x="467" y="202" font-size="8.4" fill="var(--ink2)">payment logic may be spread across three of these</text>
+    <text x="310" y="222" font-size="8.6" fill="var(--ink)">skip the left one and teams get no guidance on where code goes</text>
+  </g>
+</svg>
+
+<!--@ cycle -->
+<svg viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="82" y="14" width="136" height="34" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="82" y="72" width="136" height="34"/>
+    <rect x="82" y="130" width="136" height="34"/>
+    <rect x="82" y="188" width="136" height="34"/>
+    <g stroke="var(--ink3)" stroke-width="1.3">
+      <path d="M150 48 V72 M150 106 V130 M150 164 V188"/>
+      <path d="M144 66 l6 6 l6 -6 M144 124 l6 6 l6 -6 M144 182 l6 6 l6 -6"/>
+    </g>
+    <path d="M82 205 C24 205 24 31 82 31" stroke="var(--acc)" stroke-width="1.6"/>
+    <path d="M76 25 l8 6 l-8 6" stroke="var(--acc)" stroke-width="1.6"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="9">
+    <text x="150" y="30" fill="var(--acc)">identify core components</text>
+    <text x="150" y="42" font-size="7.8" fill="var(--ink2)">a best guess, not a masterpiece</text>
+    <text x="150" y="88" fill="var(--ink)">assign user stories</text>
+    <text x="150" y="100" font-size="7.8" fill="var(--ink2)">fill the empty buckets</text>
+    <text x="150" y="146" fill="var(--ink)">analyse roles and responsibilities</text>
+    <text x="150" y="158" font-size="7.8" fill="var(--ink2)">is it doing too much?</text>
+    <text x="150" y="204" fill="var(--ink)">analyse characteristics</text>
+    <text x="150" y="216" font-size="7.8" fill="var(--ink2)">does scale force a split?</text>
+    <text x="150" y="240" font-size="8.4" fill="var(--acc)">Fig. 8-6 · this loop does not have an end</text>
+  </g>
+</svg>
+
+<!--@ approaches -->
+<svg viewBox="0 0 620 244" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="6" y="34" width="196" height="176" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="212" y="34" width="196" height="176" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="418" y="34" width="196" height="176" stroke="var(--ink3)" stroke-dasharray="6 4"/>
+    <g stroke="var(--acc)" stroke-width="1.3">
+      <rect x="24" y="70" width="52" height="20"/><rect x="88" y="70" width="52" height="20"/><rect x="152" y="70" width="34" height="20"/>
+      <path d="M76 80 h12 M140 80 h12"/>
+    </g>
+    <g stroke="var(--acc)" stroke-width="1.3">
+      <circle cx="248" cy="78" r="9"/><circle cx="310" cy="78" r="9"/><circle cx="372" cy="78" r="9"/>
+      <rect x="228" y="104" width="40" height="18"/><rect x="290" y="104" width="40" height="18"/><rect x="352" y="104" width="40" height="18"/>
+      <path d="M248 87 V104 M310 87 V104 M372 87 V104"/>
+    </g>
+    <g stroke="var(--ink3)" stroke-width="1.3">
+      <rect x="470" y="66" width="92" height="60"/>
+      <path d="M482 84 h68 M482 96 h68 M482 108 h68"/>
+    </g>
+    <path d="M492 140 l30 30 M522 140 l-30 30" stroke="var(--ink)" stroke-width="2"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <g font-size="10">
+      <text x="104" y="54" fill="var(--acc)">WORKFLOW</text>
+      <text x="310" y="54" fill="var(--acc)">ACTOR / ACTION</text>
+      <text x="516" y="54" fill="var(--ink2)">ENTITY TRAP</text>
+    </g>
+    <g font-size="8" fill="var(--ink2)">
+      <text x="50" y="83">browse</text><text x="114" y="83">place</text><text x="169" y="83">pay</text>
+      <text x="248" y="118">search</text><text x="310" y="118">pack</text><text x="372" y="118">bill</text>
+      <text x="516" y="99">Order Manager</text>
+    </g>
+    <g font-size="8.6" fill="var(--ink)">
+      <text x="104" y="150">one component per step</text>
+      <text x="104" y="164">in the happy path</text>
+      <text x="310" y="150">actors, then their actions</text>
+      <text x="310" y="164">— the system is an actor too</text>
+      <text x="516" y="150">one component per entity</text>
+      <text x="516" y="164">and everything lands in it</text>
+    </g>
+    <g font-size="8" fill="var(--ink2)">
+      <text x="104" y="186">not every step earns one:</text><text x="104" y="197">two send emails, one component</text>
+      <text x="310" y="186">produces more components</text><text x="310" y="197">than workflow does</text>
+      <text x="516" y="186">Manager · Supervisor · Controller</text><text x="516" y="197">Handler · Engine · Processor</text>
+    </g>
+    <text x="310" y="232" font-size="8.6" fill="var(--ink)">If the system really is CRUD over entities, it doesn't need an architecture — it needs a low-code tool.</text>
+  </g>
+</svg>
+
+<!--@ responsibility -->
+<svg viewBox="0 0 300 236" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="30" y="26" width="240" height="66" stroke="var(--ink3)"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M42 46 h216 M42 60 h216 M42 74 h150"/></g>
+    <path d="M150 100 V118" stroke="var(--acc)"/>
+    <path d="M144 112 l6 6 l6 -6" stroke="var(--acc)"/>
+    <rect x="14" y="126" width="126" height="34" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="160" y="126" width="126" height="34"/>
+    <rect x="14" y="170" width="126" height="34"/>
+    <rect x="160" y="170" width="126" height="34"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6">
+    <text x="30" y="18" fill="var(--ink3)" letter-spacing="1.4">ONE COMPONENT, EIGHT RESPONSIBILITIES</text>
+    <text x="150" y="40" text-anchor="middle" font-size="9.4" fill="var(--ink2)">“…and also… in addition… as well as…”</text>
+    <g text-anchor="middle" font-size="9">
+      <text x="77" y="147" fill="var(--acc)">Order Placement</text>
+      <text x="223" y="147" fill="var(--ink)">Payment Processing</text>
+      <text x="77" y="191" fill="var(--ink)">Inventory Management</text>
+      <text x="223" y="191" fill="var(--ink)">Customer Notification</text>
+    </g>
+    <text x="150" y="222" text-anchor="middle" fill="var(--acc)">the conjunction test: count the ands, also, in addition,</text>
+    <text x="150" y="233" text-anchor="middle" fill="var(--acc)">as well as — and the commas</text>
+  </g>
+</svg>
+
+<!--@ demeter -->
+<svg viewBox="0 0 300 264" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="8" y="30" width="76" height="26"/>
+    <rect x="188" y="14" width="98" height="22"/><rect x="188" y="44" width="98" height="22"/>
+    <rect x="188" y="74" width="98" height="22"/><rect x="188" y="104" width="98" height="22"/>
+    <g stroke="var(--ink)" stroke-width="1.5">
+      <path d="M84 43 L188 25 M84 43 H188 M84 43 L188 85 M84 43 L188 115"/>
+    </g>
+    <path d="M8 152 H292" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <rect x="8" y="186" width="76" height="26" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="112" y="186" width="80" height="26"/>
+    <rect x="212" y="164" width="74" height="22"/><rect x="212" y="196" width="74" height="22"/>
+    <rect x="212" y="228" width="74" height="22"/>
+    <path d="M84 199 H112" stroke="var(--acc)" stroke-width="1.6"/>
+    <g stroke="var(--ink3)" stroke-width="1.3">
+      <path d="M192 199 L212 175 M192 199 H212 M192 199 L212 233"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="7.6">
+    <text x="8" y="22" letter-spacing="1.4" fill="var(--ink3)">BEFORE — CE = 4</text>
+    <text x="46" y="47" text-anchor="middle" font-size="8.4" fill="var(--ink)">Order</text>
+    <text x="46" y="72" text-anchor="middle" fill="var(--ink2)">knows everything</text>
+    <text x="237" y="28" text-anchor="middle" fill="var(--ink2)">Inventory Management</text>
+    <text x="237" y="58" text-anchor="middle" fill="var(--ink2)">Supplier Ordering</text>
+    <text x="237" y="88" text-anchor="middle" fill="var(--ink2)">Item Pricing</text>
+    <text x="237" y="118" text-anchor="middle" fill="var(--ink2)">Email Notification</text>
+    <text x="8" y="176" letter-spacing="1.4" fill="var(--acc)">AFTER — CE = 1</text>
+    <text x="46" y="203" text-anchor="middle" font-size="8.4" fill="var(--acc)">Order</text>
+    <text x="152" y="203" text-anchor="middle" font-size="8.4" fill="var(--ink)">Inventory Mgmt</text>
+    <text x="249" y="178" text-anchor="middle" fill="var(--ink2)">Supplier Ordering</text>
+    <text x="249" y="210" text-anchor="middle" fill="var(--ink2)">Item Pricing</text>
+    <text x="249" y="242" text-anchor="middle" fill="var(--ink2)">Email Notification</text>
+    <text x="150" y="258" text-anchor="middle" font-size="8.4" fill="var(--ink2)">the coupling didn't leave the system — it moved</text>
+  </g>
+</svg>
+
+<!--@ ggg -->
+<svg viewBox="0 0 620 232" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="14" y="52" width="96" height="30"/>
+    <rect x="14" y="102" width="96" height="30"/>
+    <rect x="160" y="52" width="106" height="30" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <rect x="160" y="102" width="106" height="30" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <rect x="318" y="76" width="106" height="30"/>
+    <rect x="470" y="40" width="132" height="30"/>
+    <rect x="470" y="110" width="132" height="30"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <path d="M266 67 H318 M266 117 L318 100 M110 67 H160 M110 117 H160"/>
+      <path d="M424 91 L470 60 M424 91 L470 122"/>
+      <path d="M266 63 L318 84"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.4">
+    <text x="14" y="34" text-anchor="start" font-size="8.6" letter-spacing="1.4" fill="var(--ink3)">GOING, GOING, GONE — AFTER THE SPLIT</text>
+    <text x="62" y="71" fill="var(--ink2)">Video Streamer</text>
+    <text x="62" y="121" fill="var(--ink2)">Bid Streamer</text>
+    <text x="213" y="71" fill="var(--acc)">Bid Capture</text>
+    <text x="213" y="121" fill="var(--acc)">Auctioneer Capture</text>
+    <text x="371" y="95" fill="var(--ink2)">Bid Tracker</text>
+    <text x="536" y="59" fill="var(--ink2)">Auction Session</text>
+    <text x="536" y="129" fill="var(--ink2)">Payment</text>
+    <text x="213" y="150" font-size="7.8" fill="var(--acc)">thousands of bidders</text>
+    <text x="213" y="160" font-size="7.8" fill="var(--acc)">— scalability, elasticity</text>
+    <text x="213" y="176" font-size="7.8" fill="var(--acc)">one auctioneer</text>
+    <text x="213" y="186" font-size="7.8" fill="var(--acc)">— reliability, availability</text>
+    <text x="310" y="212" font-size="8.6" fill="var(--ink)">functionally these are the same component. Their characteristics are not.</text>
+    <text x="310" y="226" font-size="8.2" fill="var(--ink2)">a bidder's dropped connection is bad. the auctioneer's is a disaster.</text>
+  </g>
+</svg>

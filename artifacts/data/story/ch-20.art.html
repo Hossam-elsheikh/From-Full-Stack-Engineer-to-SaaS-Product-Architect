@@ -1,0 +1,85 @@
+<!-- Drawings for chapter 20 · Architectural Patterns -->
+
+<!--@ hexagonal -->
+<svg viewBox="0 0 300 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M150 34 L226 76 V160 L150 202 L74 160 V76 Z" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.9"/>
+    <rect x="106" y="98" width="88" height="42"/>
+    <g stroke-width="1.4">
+      <rect x="14" y="60" width="42" height="24"/><rect x="14" y="152" width="42" height="24"/>
+      <rect x="244" y="60" width="42" height="24"/><rect x="244" y="152" width="42" height="24"/>
+    </g>
+    <g stroke="var(--ink3)" stroke-width="1.2"><path d="M56 72 L100 92 M56 164 L100 146 M244 72 L200 92 M244 164 L200 146"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="150" y="124" font-size="9" fill="var(--ink)">domain logic</text>
+    <text x="35" y="52" fill="var(--ink2)">adapter</text><text x="35" y="192" fill="var(--ink2)">adapter</text>
+    <text x="265" y="52" fill="var(--ink2)">adapter</text><text x="265" y="192" fill="var(--ink2)">adapter</text>
+    <text x="150" y="216" font-size="8.4" fill="var(--acc)">Cockburn wanted to call it Ports and Adapters. “Hexagonal” sounded cooler and stuck.</text>
+  </g>
+</svg>
+
+<!--@ cqrs -->
+<svg viewBox="0 0 620 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="52" y="40" width="106" height="32"/>
+    <ellipse cx="105" cy="122" rx="46" ry="9"/><path d="M59 122 v16 a46 9 0 0 0 92 0 v-16"/>
+    <g stroke="var(--ink3)" stroke-width="1.2"><path d="M92 72 V113 M118 113 V72"/></g>
+    <path d="M310 24 V180" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <rect x="408" y="40" width="106" height="32"/>
+    <g stroke="var(--acc)" stroke-width="1.6">
+      <ellipse cx="378" cy="122" rx="44" ry="9"/><path d="M334 122 v16 a44 9 0 0 0 88 0 v-16"/>
+      <ellipse cx="546" cy="122" rx="44" ry="9"/><path d="M502 122 v16 a44 9 0 0 0 88 0 v-16"/>
+      <path d="M430 72 L520 113"/><path d="M492 72 L400 113"/>
+      <path d="M422 132 H502" stroke-dasharray="5 4"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="105" y="60" fill="var(--ink2)">application</text>
+    <text x="105" y="126" fill="var(--ink2)">one database</text>
+    <text x="105" y="26" font-size="9" fill="var(--ink)">CLIENT / SERVER</text>
+    <text x="461" y="60" fill="var(--ink2)">application</text>
+    <text x="461" y="26" font-size="9" fill="var(--acc)">CQRS</text>
+    <text x="378" y="126" fill="var(--acc)">writes</text><text x="546" y="126" fill="var(--acc)">reads</text>
+    <text x="462" y="147" font-size="7.6" fill="var(--acc)">synchronised, usually async</text>
+    <text x="310" y="176" font-size="8.6" fill="var(--ink)">For systems where read and write volumes differ starkly, or where reads must be isolated for security.</text>
+    <text x="310" y="192" font-size="8.4" fill="var(--acc)">Two stores means two data models, and two sets of architecture characteristics.</text>
+  </g>
+</svg>
+
+<!--@ broker -->
+<svg viewBox="0 0 620 230" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="24" y="34" width="52" height="24"/><rect x="96" y="34" width="52" height="24"/>
+    <rect x="168" y="34" width="52" height="24"/><rect x="240" y="34" width="46" height="24"/>
+    <rect x="24" y="130" width="52" height="24"/><rect x="96" y="130" width="52" height="24"/>
+    <rect x="168" y="130" width="52" height="24"/><rect x="240" y="130" width="46" height="24"/>
+    <rect x="90" y="82" width="132" height="24" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.9"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M50 58 L110 82 M122 58 V82 M194 58 L180 82 M263 58 L212 82
+      M110 106 L50 130 M122 106 V130 M180 106 L194 130 M212 106 L263 130"/></g>
+
+    <g stroke="var(--acc)" stroke-width="1.8">
+      <rect x="378" y="80" width="90" height="22" fill="var(--accBg)"/>
+      <rect x="500" y="80" width="90" height="22" fill="var(--accBg)"/>
+    </g>
+    <rect x="366" y="34" width="52" height="24"/><rect x="428" y="34" width="52" height="24"/>
+    <rect x="488" y="34" width="52" height="24"/><rect x="550" y="34" width="52" height="24"/>
+    <rect x="366" y="130" width="52" height="24"/><rect x="428" y="130" width="52" height="24"/>
+    <rect x="488" y="130" width="52" height="24"/><rect x="550" y="130" width="52" height="24"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M392 58 L406 80 M454 58 L440 80 M406 102 L392 130 M440 102 L454 130
+      M514 58 L528 80 M576 58 L562 80 M528 102 L514 130 M562 102 L576 130"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="24" y="24" text-anchor="start" font-size="9" fill="var(--ink)">SINGLE BROKER</text>
+    <text x="366" y="24" text-anchor="start" font-size="9" fill="var(--acc)">DOMAIN BROKER</text>
+    <text x="156" y="97" font-size="8.4" fill="var(--acc)">one broker</text>
+    <text x="423" y="95" font-size="7.6" fill="var(--acc)">broker</text><text x="545" y="95" font-size="7.6" fill="var(--acc)">broker</text>
+    <text x="155" y="180" font-size="8.2" fill="var(--ink2)">centralised discovery · least infrastructure</text>
+    <text x="155" y="194" font-size="8.2" fill="var(--ink2)">it goes down, the whole workflow stops</text>
+    <text x="155" y="208" font-size="8.2" fill="var(--ink2)">and it is a throughput ceiling</text>
+    <text x="484" y="180" font-size="8.2" fill="var(--acc)">isolation, scale, matches domain boundaries</text>
+    <text x="484" y="194" font-size="8.2" fill="var(--acc)">discovery gets harder, infrastructure costs more,</text>
+    <text x="484" y="208" font-size="8.2" fill="var(--acc)">more moving parts to keep alive</text>
+    <text x="310" y="226" font-size="8.6" fill="var(--ink)">Neither is a best practice. In EDA the topic is owned by the sender — so brokers are part of a service's infrastructure.</text>
+  </g>
+</svg>

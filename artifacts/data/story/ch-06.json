@@ -1,0 +1,140 @@
+{
+ "ch": "06",
+ "book": "Chapter 6 · Measuring and Governing Architecture Characteristics",
+ "pages": "pp. 81–93",
+ "title": "From Adjective to Build Failure",
+ "gist": "How to turn vague words into numbers you can measure, and then into automated checks that hold the design together when the schedule doesn't.",
+ "read": "5 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#6A6329",
+  "d": "#C6BC72"
+ },
+ "minute": [
+  "Characteristics resist definition for three reasons: they **aren't physics**, definitions **vary even inside one company**, and many are **composites**. Objective definitions, agreed org-wide, fix all three.",
+  "Measure operationally with care — the **average hides the outliers**. Good teams alarm against a statistical model rather than a fixed number, so a breach means either the model is wrong or something is.",
+  "**Cyclomatic Complexity** is the main structural measure: `CC = E − N + 2P`. Industry tolerates under 10; the authors want under 5. It cannot tell essential complexity from accidental — that judgement is yours.",
+  "A **fitness function** is any mechanism giving an objective integrity assessment of a characteristic. Not a framework — a new use for unit tests, metrics tools, monitors and chaos engineering.",
+  "**Governance** comes from *kubernan*, to steer. Fitness functions steer the **important but not urgent** things — modularity, layering, security — that always lose to a deadline otherwise."
+ ],
+ "sections": [
+  {
+   "t": "Why the words resist measurement",
+   "art": "avg-vs-max",
+   "alt": "A response-time distribution with the average marked and a long tail of slow outliers highlighted",
+   "cap": "Measure the mean alone and a boundary condition making 1% of requests ten times slower never appears.",
+   "items": [
+    "**They aren't physics.** *Wicked fast performance* has no unit. Neither does agility, deployability or “good modularity”.",
+    "**Definitions vary.** Two departments in one company can hold different meanings for *performance*, and no useful conversation happens until they don't.",
+    "**They're composite.** Agility is really modularity plus deployability plus testability, each of which can actually be measured."
+   ],
+   "p": "The fix for all three is the same: decompose composites, give the parts objective definitions, and get the organisation to agree on them — a **ubiquitous language** for architecture. Measurement targets also move: performance budgets now cover *first contentful paint* and *first CPU idle*, and some teams set **K-weight budgets** capping the bytes of libraries a page may load, because only so many bytes cross a mobile network at once."
+  },
+  {
+   "t": "Cyclomatic Complexity, and what it can't tell you",
+   "art": "cc",
+   "alt": "A scale of cyclomatic complexity thresholds from under five through to eight hundred",
+   "cap": "Thomas McCabe, 1976. Graph theory applied to decision points in code.",
+   "p": "Overly complex code harms modularity, testability and deployability at once, and if nobody watches it grow, it wins. But CC is a blunt instrument: it measures complexity without knowing whether the problem is hard or the code is bad. Useful questions when a number is high: is the domain genuinely complex, is this poor coding, or is a large method simply badly partitioned into smaller cohesive ones?",
+   "items": [
+    "Test-driven development lowers average CC as a **side effect** — writing the smallest code that passes a small test tends to produce well-factored methods.",
+    "Generative AI tends to raise it, because brute force is a valid way to pass a test and an invalid way to design. That makes CC a useful check on generated code specifically."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "The team keeps auto-importing across components",
+   "art": "cycles",
+   "alt": "Three components each referencing the others in a cycle",
+   "sit": "Every Java and .NET IDE offers to auto-import a class the moment you reference it, and everyone accepts reflexively. Three components now reference each other in a cycle. You cannot reuse any one of them without dragging the other two along.",
+   "opts": [
+    [
+     "Catch it in code review.",
+     "Reviews help, but they arrive too late in the cycle. A week of enthusiastic importing does real damage before anyone looks."
+    ],
+    [
+     "Look over their shoulders.",
+     "Not a mechanism. It doesn't scale past one team and it makes you the bottleneck from Chapter 2."
+    ],
+    [
+     "Write a cycle fitness function and wire it into the build.",
+     "A JDepend test that fails when any package cycle exists. Now the rule is enforced continuously, by the build, and you stop thinking about it.",
+     1
+    ]
+   ],
+   "verdict": "This is the archetype of what fitness functions are for: **important but not urgent**. Modularity has almost no impact on today's coding and total impact on next year's. Automation is the only governance that survives contact with a deadline."
+  },
+  {
+   "t": "Fitness functions",
+   "art": "ff-mechanisms",
+   "wide": true,
+   "alt": "A central fitness function node connected to unit tests, metrics tools, coverage, monitors, chaos engineering and architecture tests",
+   "cap": "Fig. 6-2 · borrowed from evolutionary computing, where a fitness function scores how close an output is to its aim.",
+   "p": "The definition is deliberately wide: **any mechanism that provides an objective integrity assessment of some architecture characteristic**. That phrase — *any mechanism* — is the point. Verification techniques are as varied as the characteristics themselves, so a fitness function might be a unit test, a metric threshold, a production monitor, or a monkey killing servers.",
+   "items": [
+    "**JDepend** for cycles and for Distance from the Main Sequence against a project-chosen tolerance.",
+    "**ArchUnit** (Java) codifies layering rules as unit tests, and can require that every unit test contains at least one assertion.",
+    "**NetArchTest** does the same job in .NET: *classes in Presentation should not directly reference Data*."
+   ]
+  },
+  {
+   "t": "Layers that enforce themselves",
+   "art": "layers-rule",
+   "alt": "Three layers with permitted downward access and a forbidden shortcut crossed out",
+   "cap": "Fig. 6-4 and Example 6-4 · the architect's intent, written as something that fails a build.",
+   "p": "You define layers for reasons (Ch. 10 covers them). Some developers won't know those reasons; others will decide it is better to ask forgiveness than permission when performance is on the line. Either way the architecture erodes. ArchUnit lets you state the relationship — controller accessed by nobody, service only by controller, persistence only by service — and have it checked on every commit.",
+   "quotes": [
+    [
+     "Architects must ensure that developers understand the purpose of a fitness function before imposing it on them.",
+     "Richards & Ford",
+     "The point is not for architects to ascend to an ivory tower and write esoteric rules nobody can read. A governance rule whose reason is invisible is just an obstacle."
+    ]
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "100% coverage, and the tests have no assertions",
+   "art": "ff-mechanisms",
+   "alt": "A central fitness function node connected to unit tests, metrics tools, coverage, monitors, chaos engineering and architecture tests",
+   "sit": "You set a code-coverage target as a testability measure. The team hits it. Reading the tests, many of them execute code and assert nothing — the coverage tool counts a line as covered if it was *touched*.",
+   "opts": [
+    [
+     "Raise the coverage target.",
+     "You have asked for more of exactly the thing being gamed. The number goes up, confidence does not."
+    ],
+    [
+     "Add a governance rule that every test must contain at least one assertion.",
+     "ArchUnit can check this. It won't stop a determined rule-breaker, but it stops the accidental lapses, which are the overwhelming majority.",
+     1
+    ],
+    [
+     "Drop the metric and trust the team.",
+     "Every check can be gamed, so no check is worth having — which is also the argument against ever measuring anything."
+    ]
+   ],
+   "verdict": "Any metric invites coding to the metric rather than to the goal. Code coverage in particular **cannot replace thinking and intent**: a codebase can have 100% coverage and poor assertions and give no confidence whatsoever. The mitigation is to measure the thing you actually want as directly as you can, and to explain why."
+  },
+  {
+   "t": "Governance you run in production",
+   "art": "simian",
+   "wide": true,
+   "alt": "Five members of Netflix's Simian Army and what each one checks",
+   "cap": "When Netflix moved to AWS, the architects lost control of operations. Chaos engineering was the answer.",
+   "p": "The Chaos Monkey is a fitness function that runs against production. Latency was such a problem on some AWS instances that it earned its own Latency Monkey; Chaos Kong simulates an entire datacenter failure, and has kept Netflix up through real ones. Conformity checks the architects' own rules on live services, Security looks for open ports and configuration errors, and Janitor deletes services nothing routes to any more — because an evolutionary architecture leaves orphans, and orphans cost money.",
+   "items": [
+    "The perspective this gives is worth as much as the tooling: it is **not a question of whether something will break, but when**. Anticipating breakages and testing for them is what makes a system robust.",
+    "Atul Gawande's *The Checklist Manifesto* is the right analogy. Pilots and surgeons use checklists not because they don't know their jobs, but because doing a detailed job repeatedly makes details slip. Fitness functions are that, for architecture."
+   ]
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 6: Measuring and Governing Architecture Characteristics, pp. 81–93. Fitness functions come from Building Evolutionary Architectures (Ford, Parsons, Kua, Sadalage).",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

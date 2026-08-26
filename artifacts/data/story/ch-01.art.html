@@ -1,0 +1,293 @@
+<!-- Drawings for chapter 01. One inline SVG per key line at column 0.
+     House style: fill:none, stroke var(--ink) at 1.5-1.6; secondary ink var(--ink3) at 1;
+     mono labels in var(--ink2); exactly one element per drawing carries var(--acc).
+     build.py ships only the drawings the sheet actually places. -->
+
+<!--@ four-dim -->
+<svg viewBox="0 0 620 268" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <rect x="20" y="24" width="132" height="146"/>
+    <rect x="168" y="24" width="132" height="146"/>
+    <rect x="316" y="24" width="132" height="146"/>
+    <rect x="464" y="24" width="132" height="146"/>
+
+    <g stroke-width="1.3">
+      <rect x="46" y="86" width="80" height="16"/><rect x="46" y="108" width="80" height="16"/>
+      <rect x="58" y="130" width="80" height="16" stroke="var(--ink)"/>
+    </g>
+    <g stroke-width="1.3">
+      <rect x="184" y="86" width="52" height="16" rx="8"/><rect x="244" y="86" width="44" height="16" rx="8"/>
+      <rect x="196" y="110" width="60" height="16" rx="8"/><rect x="264" y="110" width="24" height="16" rx="8"/>
+      <rect x="184" y="134" width="40" height="16" rx="8"/>
+    </g>
+    <g stroke-width="1.3">
+      <rect x="330" y="84" width="46" height="26"/><rect x="388" y="84" width="46" height="26"/>
+      <rect x="358" y="128" width="46" height="26"/>
+      <path d="M376 97 h12" stroke="var(--ink3)"/><path d="M353 110 l14 18" stroke="var(--ink3)"/>
+      <path d="M411 110 l-14 18" stroke="var(--ink3)"/>
+    </g>
+    <g stroke-width="1.3">
+      <rect x="486" y="80" width="76" height="56"/>
+      <path d="M498 94 h52 M498 106 h52 M498 118 h34" stroke="var(--ink3)" stroke-width="1"/>
+      <path d="M492 148 h60" stroke="var(--ink)"/>
+      <path d="M546 142 l8 6 l-8 6"/>
+      <path d="M512 136 l28 24" stroke="var(--ink)" stroke-width="1.6"/>
+    </g>
+
+    <rect x="12" y="192" width="596" height="26" stroke="var(--acc)" stroke-width="2.4" fill="var(--accBg)"/>
+    <path d="M86 170 v22 M234 170 v22 M382 170 v22 M530 170 v22" stroke="var(--ink3)" stroke-width="1"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <g font-size="10.5" fill="var(--ink)" letter-spacing="1">
+      <text x="86" y="52">STYLE</text><text x="234" y="52">CHARACTERISTICS</text>
+      <text x="382" y="52">COMPONENTS</text><text x="530" y="52">DECISIONS</text>
+    </g>
+    <g font-size="8.5" fill="var(--ink2)">
+      <text x="86" y="68">where you start</text>
+      <text x="234" y="68">what it must be good at</text>
+      <text x="382" y="68">what it actually does</text>
+      <text x="530" y="68">the rules that hold it</text>
+    </g>
+    <text x="310" y="209" font-size="11" letter-spacing="3.4" fill="var(--acc)">S T R U C T U R E</text>
+    <text x="310" y="240" font-size="9" fill="var(--ink2)">four dimensions, standing on one thing</text>
+  </g>
+</svg>
+
+<!--@ spectrum -->
+<svg viewBox="0 0 300 178" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <rect x="112" y="24" width="76" height="34" rx="17" stroke="var(--ink3)"/>
+    <circle cx="129" cy="41" r="11" stroke="var(--ink3)"/>
+    <path d="M100 66 L200 16" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M30 122 H270"/>
+    <path d="M30 116 v12 M90 118 v8 M150 118 v8 M210 118 v8 M270 116 v12"/>
+    <path d="M186 122 l-9 -15 h18 z" stroke="var(--acc)" fill="var(--accBg)" stroke-width="1.8"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6" fill="var(--ink2)">
+    <text x="150" y="82" text-anchor="middle" fill="var(--ink2)">not a switch</text>
+    <text x="30" y="142">always</text>
+    <text x="270" y="142" text-anchor="end">never</text>
+    <text x="186" y="163" text-anchor="middle" fill="var(--acc)">here — and here is why</text>
+  </g>
+</svg>
+
+<!--@ expectations -->
+<svg viewBox="0 0 620 224" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="8" y="26" width="142" height="70"/><rect x="162" y="26" width="142" height="70"/>
+    <rect x="316" y="26" width="142" height="70"/><rect x="470" y="26" width="142" height="70"/>
+    <g stroke="var(--acc)" fill="var(--accBg)">
+      <rect x="8" y="136" width="142" height="70"/><rect x="162" y="136" width="142" height="70"/>
+      <rect x="316" y="136" width="142" height="70"/><rect x="470" y="136" width="142" height="70"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <g font-size="8.6" fill="var(--ink3)">
+      <text x="79" y="45">01</text><text x="233" y="45">02</text>
+      <text x="387" y="45">03</text><text x="541" y="45">04</text>
+    </g>
+    <g font-size="8.6" fill="var(--acc)">
+      <text x="79" y="155">05</text><text x="233" y="155">06</text>
+      <text x="387" y="155">07</text><text x="541" y="155">08</text>
+    </g>
+    <g font-size="10" fill="var(--ink)">
+      <text x="79" y="66">make architecture</text><text x="79" y="80">decisions</text>
+      <text x="233" y="66">continually analyse</text><text x="233" y="80">the architecture</text>
+      <text x="387" y="66">ensure compliance</text><text x="387" y="80">with decisions</text>
+      <text x="541" y="66">understand diverse</text><text x="541" y="80">technologies</text>
+      <text x="79" y="176">keep current</text><text x="79" y="190">with trends</text>
+      <text x="233" y="176">know the business</text><text x="233" y="190">domain</text>
+      <text x="387" y="176">lead the team,</text><text x="387" y="190">coach, mentor</text>
+      <text x="541" y="176">understand and</text><text x="541" y="190">navigate politics</text>
+    </g>
+    <g font-size="8.6" letter-spacing="1.8" text-anchor="start">
+      <text x="8" y="17" fill="var(--ink3)">ON THE SYSTEM</text>
+      <text x="8" y="127" fill="var(--acc)">ON EVERYTHING ELSE</text>
+    </g>
+    <text x="612" y="127" font-size="8.6" text-anchor="end" fill="var(--ink2)">half the job, and the half nobody trains for</text>
+  </g>
+</svg>
+
+<!--@ frameworks -->
+<svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <rect x="16" y="52" width="106" height="52"/>
+    <path d="M56 52 v-12 a12 12 0 0 1 24 0 v12"/>
+    <path d="M139 24 v142" stroke="var(--ink3)" stroke-width="1" stroke-dasharray="4 5"/>
+    <rect x="158" y="40" width="128" height="98" stroke="var(--acc)" stroke-dasharray="6 4" fill="var(--accBg)"/>
+    <g stroke-width="1.3">
+      <rect x="170" y="58" width="48" height="26"/><rect x="226" y="58" width="48" height="26"/>
+      <rect x="170" y="94" width="48" height="26"/><rect x="226" y="94" width="48" height="26"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6" text-anchor="middle" fill="var(--ink2)">
+    <text x="69" y="82" font-size="11" fill="var(--ink)">React</text>
+    <text x="69" y="122" fill="var(--ink2)">the choice</text><text x="69" y="133" fill="var(--ink2)">is made for you</text>
+    <text x="194" y="74">React</text><text x="250" y="74">Vue</text>
+    <text x="194" y="110">Angular</text><text x="250" y="110">Elm</text>
+    <text x="222" y="34" fill="var(--acc)">REACTIVE</text>
+    <text x="222" y="156" fill="var(--ink2)">the choice stays yours,</text>
+    <text x="222" y="167" fill="var(--ink2)">the argument does not</text>
+  </g>
+</svg>
+
+<!--@ breadth -->
+<svg viewBox="0 0 300 182" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <rect x="24" y="34" width="252" height="30" stroke="var(--acc)" fill="var(--accBg)"/>
+    <g stroke="var(--acc)" stroke-width="1" opacity=".8">
+      <path d="M49 34 v30 M74 34 v30 M99 34 v30 M124 34 v30 M150 34 v30 M175 34 v30 M200 34 v30 M226 34 v30 M251 34 v30"/>
+    </g>
+    <rect x="126" y="64" width="48" height="86"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M126 90 h48 M126 116 h48"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6" fill="var(--ink2)">
+    <text x="150" y="24" text-anchor="middle" fill="var(--acc)">TEN CACHES, ROUGHLY — ENOUGH TO CHOOSE</text>
+    <text x="182" y="112">one cache,</text>
+    <text x="182" y="124">at 3am</text>
+    <text x="150" y="172" text-anchor="middle" fill="var(--ink2)">depth makes it work. breadth makes it choosable.</text>
+  </g>
+</svg>
+
+<!--@ then-now -->
+<svg viewBox="0 0 300 176" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <path d="M150 18 v134" stroke="var(--ink3)" stroke-width="1" stroke-dasharray="4 5"/>
+    <rect x="46" y="46" width="56" height="86"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M54 62 h40 M54 78 h40 M54 94 h40 M54 110 h40"/></g>
+    <g stroke="var(--acc)" stroke-width="1.6" fill="var(--accBg)">
+      <rect x="182" y="56" width="26" height="26"/><rect x="216" y="56" width="26" height="26"/>
+      <rect x="250" y="56" width="26" height="26"/><rect x="182" y="90" width="26" height="26"/>
+      <rect x="216" y="90" width="26" height="26"/><rect x="250" y="90" width="26" height="26"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6" text-anchor="middle" fill="var(--ink2)">
+    <text x="74" y="32" font-size="10" fill="var(--ink)">2002</text>
+    <text x="229" y="32" font-size="10" fill="var(--acc)">NOW</text>
+    <text x="74" y="150" fill="var(--ink2)">a purchase order</text>
+    <text x="229" y="150" fill="var(--ink2)">a line in a bill</text>
+    <text x="150" y="170" fill="var(--ink2)">same decision, different price</text>
+  </g>
+</svg>
+
+<!--@ drift -->
+<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <rect x="16" y="26" width="66" height="30"/>
+    <rect x="218" y="26" width="66" height="30"/>
+    <rect x="16" y="142" width="66" height="30"/>
+    <rect x="218" y="142" width="66" height="30"/>
+    <rect x="117" y="84" width="66" height="30"/>
+    <path d="M82 48 L117 88"/><path d="M183 88 L218 48"/><path d="M183 110 L218 148"/>
+    <g stroke="var(--acc)" stroke-width="1.3" stroke-dasharray="5 4">
+      <path d="M82 34 H218"/>
+      <path d="M56 56 V142"/>
+      <path d="M82 158 H218"/>
+      <path d="M82 150 L117 112"/>
+      <path d="M244 142 V56"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6" text-anchor="middle" fill="var(--ink2)">
+    <text x="49" y="45">claims</text><text x="251" y="45">crm</text>
+    <text x="49" y="161">billing</text><text x="251" y="161">reporting</text>
+    <text x="150" y="103">gateway</text>
+    <text x="150" y="192" fill="var(--acc)">solid: the document. dashed: the system.</text>
+  </g>
+</svg>
+
+<!--@ train -->
+<svg viewBox="0 0 300 158" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <path d="M62 26 V132"/>
+    <rect x="62" y="34" width="18" height="18" stroke="var(--acc)" fill="var(--accBg)"/>
+    <rect x="62" y="66" width="86" height="18"/>
+    <rect x="62" y="98" width="168" height="18"/>
+    <path d="M62 132 H278" stroke="var(--ink3)" stroke-width="1"/>
+    <path d="M270 128 l8 4 l-8 4" stroke="var(--ink3)" stroke-width="1"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6" fill="var(--ink2)">
+    <text x="56" y="47" text-anchor="end">code</text>
+    <text x="56" y="79" text-anchor="end">test</text>
+    <text x="56" y="111" text-anchor="end">release</text>
+    <text x="86" y="47" fill="var(--acc)">1 day</text>
+    <text x="154" y="79" fill="var(--ink2)">3 weeks</text>
+    <text x="236" y="111" fill="var(--ink2)">6 weeks</text>
+    <text x="278" y="146" text-anchor="end" fill="var(--ink2)">time to a customer</text>
+  </g>
+</svg>
+
+<!--@ bypass -->
+<svg viewBox="0 0 300 208" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <rect x="82" y="18" width="164" height="32"/>
+    <rect x="82" y="66" width="164" height="32"/>
+    <rect x="82" y="114" width="164" height="32"/>
+    <rect x="82" y="162" width="164" height="32"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <path d="M164 50 v10 M158 56 l6 6 l6 -6"/>
+      <path d="M164 98 v10 M158 104 l6 6 l6 -6"/>
+      <path d="M164 146 v10 M158 152 l6 6 l6 -6"/>
+    </g>
+    <path d="M82 34 C30 34 30 178 82 178" stroke="var(--acc)" stroke-width="1.6" stroke-dasharray="6 4"/>
+    <path d="M74 172 l10 6 l-10 6" stroke="var(--acc)" stroke-width="1.6"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.5" text-anchor="middle" fill="var(--ink2)">
+    <text x="164" y="38">presentation</text><text x="164" y="86">business</text>
+    <text x="164" y="134">services</text><text x="164" y="182">database</text>
+    <text x="34" y="106" fill="var(--acc)" transform="rotate(-90 34 106)">9 ms faster</text>
+    <text x="150" y="204" fill="var(--ink2)">the rule existed. nobody was checking.</text>
+  </g>
+</svg>
+
+<!--@ query-log -->
+<svg viewBox="0 0 300 212" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <rect x="8" y="22" width="30" height="18"/>
+    <rect x="50" y="22" width="30" height="18"/>
+    <rect x="92" y="22" width="30" height="18"/>
+    <rect x="135" y="22" width="30" height="18" stroke="var(--acc)" fill="var(--accBg)"/>
+    <rect x="178" y="22" width="30" height="18"/>
+    <rect x="220" y="22" width="30" height="18"/>
+    <rect x="262" y="22" width="30" height="18"/>
+    <g stroke="var(--ink3)" stroke-width="1">
+      <path d="M23 40 L138 132"/><path d="M65 40 L144 132"/><path d="M107 40 L149 132"/>
+      <path d="M193 40 L159 132"/><path d="M235 40 L165 132"/><path d="M277 40 L171 132"/>
+    </g>
+    <path d="M150 40 L150 132" stroke="var(--acc)" stroke-width="1.5"/>
+    <ellipse cx="150" cy="147" rx="52" ry="13"/>
+    <path d="M98 147 v26 a52 13 0 0 0 104 0 v-26"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6" text-anchor="middle" fill="var(--ink2)">
+    <text x="23" y="35">CLM</text><text x="65" y="35">BIL</text><text x="107" y="35">RPT</text>
+    <text x="150" y="35" fill="var(--acc)">CRM</text>
+    <text x="193" y="35">MKT</text><text x="235" y="35">AUD</text><text x="277" y="35">PRT</text>
+    <text x="150" y="152" font-size="10.5" fill="var(--ink)">CRM DB</text>
+    <text x="150" y="203" fill="var(--ink2)">seven readers, one owner</text>
+  </g>
+</svg>
+
+<!--@ why-how -->
+<svg viewBox="0 0 300 178" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <rect x="14" y="28" width="126" height="108"/>
+    <g stroke-width="1.3">
+      <rect x="30" y="62" width="38" height="22"/><rect x="86" y="62" width="38" height="22"/>
+      <rect x="58" y="100" width="38" height="22"/>
+      <path d="M68 73 h18" stroke="var(--ink3)"/><path d="M54 84 l12 16" stroke="var(--ink3)"/>
+      <path d="M100 84 l-12 16" stroke="var(--ink3)"/>
+    </g>
+    <rect x="160" y="28" width="126" height="108" stroke="var(--acc)" fill="var(--accBg)"/>
+    <path d="M160 28 v108" stroke="var(--acc)" stroke-width="4"/>
+    <g stroke="var(--acc)" stroke-width="1.2" opacity=".85">
+      <path d="M176 62 h94 M176 76 h94 M176 90 h70 M176 104 h86 M176 118 h48"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="9.5" text-anchor="middle" fill="var(--ink2)">
+    <text x="77" y="48" font-size="11" fill="var(--ink)" letter-spacing="1.6">HOW</text>
+    <text x="223" y="48" font-size="11" fill="var(--acc)" letter-spacing="1.6">WHY</text>
+    <text x="77" y="156" font-size="8.6" fill="var(--ink2)">recoverable from the</text>
+    <text x="77" y="167" font-size="8.6" fill="var(--ink2)">running system</text>
+    <text x="223" y="156" font-size="8.6" fill="var(--ink2)">recoverable only</text>
+    <text x="223" y="167" font-size="8.6" fill="var(--ink2)">from you</text>
+  </g>
+</svg>

@@ -1,0 +1,217 @@
+<!-- Drawings for chapter 09 · Foundations -->
+
+<!--@ style-vs-pattern -->
+<svg viewBox="0 0 620 176" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="6" y="34" width="116" height="56" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="132" y="34" width="116" height="56" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="258" y="34" width="116" height="56" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="384" y="34" width="116" height="56" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="504" y="34" width="110" height="56" fill="var(--accBg)" stroke="var(--acc)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="6" y="20" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--ink3)">NAMING A STYLE COMMITS YOU TO FIVE THINGS AT ONCE</text>
+    <g font-size="9.6" fill="var(--acc)">
+      <text x="64" y="55">component</text><text x="64" y="67">topology</text>
+      <text x="190" y="55">physical</text><text x="190" y="67">architecture</text>
+      <text x="316" y="61">deployment</text>
+      <text x="442" y="55">communication</text><text x="442" y="67">style</text>
+      <text x="559" y="55">data</text><text x="559" y="67">topology</text>
+    </g>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="64" y="110">technical layers,</text><text x="64" y="121">or domains?</text>
+      <text x="190" y="110">monolithic or</text><text x="190" y="121">distributed?</text>
+      <text x="316" y="110">one unit at a time,</text><text x="316" y="121">or pieces, fast?</text>
+      <text x="442" y="110">method calls, or</text><text x="442" y="121">REST and queues?</text>
+      <text x="559" y="110">one database,</text><text x="559" y="121">or many?</text>
+    </g>
+    <text x="310" y="150" font-size="9" fill="var(--ink)">A pattern is a contextualised solution. A style is all five of these, plus the characteristics that come with them.</text>
+    <text x="310" y="168" font-size="8.6" fill="var(--ink2)">Nobody decrees styles. They emerge, get copied, and eventually earn a name — “microservices” is a label, not an instruction to build small services.</text>
+  </g>
+</svg>
+
+<!--@ tiers -->
+<svg viewBox="0 0 620 210" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="20" y="60" width="96" height="66"/>
+    <rect x="182" y="46" width="96" height="34"/><rect x="182" y="104" width="96" height="34"/>
+    <path d="M230 80 V104" stroke="var(--ink3)"/>
+    <rect x="344" y="34" width="96" height="30" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="344" y="80" width="96" height="30" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="344" y="126" width="96" height="30" fill="var(--accBg)" stroke="var(--acc)"/>
+    <path d="M392 64 V80 M392 110 V126" stroke="var(--acc)"/>
+    <rect x="506" y="34" width="108" height="30"/><rect x="506" y="80" width="108" height="30"/>
+    <rect x="506" y="126" width="50" height="30"/><rect x="564" y="126" width="50" height="30"/>
+    <g stroke="var(--ink3)"><path d="M560 64 V80 M540 110 V126 M580 110 V126"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.2">
+    <text x="68" y="26" font-size="9.6" fill="var(--ink)">UNITARY</text>
+    <text x="230" y="26" font-size="9.6" fill="var(--ink)">CLIENT / SERVER</text>
+    <text x="392" y="22" font-size="9.6" fill="var(--acc)">THREE-TIER</text>
+    <text x="560" y="22" font-size="9.6" fill="var(--ink)">AND ONWARD</text>
+    <text x="68" y="96" fill="var(--ink2)">one machine,</text><text x="68" y="107" fill="var(--ink2)">one program</text>
+    <text x="230" y="66" fill="var(--ink2)">desktop / browser</text>
+    <text x="230" y="124" fill="var(--ink2)">database server</text>
+    <text x="392" y="53" fill="var(--ink2)">presentation</text>
+    <text x="392" y="99" fill="var(--ink2)">application server</text>
+    <text x="392" y="145" fill="var(--ink2)">database</text>
+    <text x="560" y="53" fill="var(--ink2)">many clients</text>
+    <text x="560" y="99" fill="var(--ink2)">many services</text>
+    <text x="531" y="145" fill="var(--ink2)">data</text><text x="589" y="145" fill="var(--ink2)">data</text>
+    <text x="310" y="182" font-size="8.6" fill="var(--ink)">Every era draws a new line through the same problem: what runs where, and who owns the data.</text>
+    <text x="310" y="200" font-size="8.4" fill="var(--ink2)">Java baked object serialization into the language because three-tier was assumed permanent. It wasn't. The feature still is.</text>
+  </g>
+</svg>
+
+<!--@ partitioning -->
+<svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="8" y="40" width="290" height="150"/>
+    <rect x="322" y="40" width="290" height="150" fill="var(--accBg)" stroke="var(--acc)"/>
+    <g stroke-width="1.3">
+      <rect x="26" y="56" width="254" height="28"/><rect x="26" y="90" width="254" height="28"/>
+      <rect x="26" y="124" width="254" height="28"/><rect x="26" y="158" width="254" height="28"/>
+    </g>
+    <g stroke="var(--acc)" stroke-width="2.2">
+      <rect x="120" y="56" width="42" height="28"/><rect x="120" y="90" width="42" height="28"/>
+      <rect x="120" y="124" width="42" height="28"/><rect x="120" y="158" width="42" height="28"/>
+    </g>
+    <g stroke-width="1.3">
+      <rect x="340" y="56" width="80" height="130" stroke="var(--acc)" stroke-width="2.2"/>
+      <rect x="428" y="56" width="80" height="130"/><rect x="516" y="56" width="80" height="130"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="8" y="26" font-size="9.6" text-anchor="start" fill="var(--ink)">TECHNICAL TOP-LEVEL PARTITIONING</text>
+    <text x="322" y="26" font-size="9.6" text-anchor="start" fill="var(--acc)">DOMAIN TOP-LEVEL PARTITIONING</text>
+    <g font-size="8.4" fill="var(--ink2)" text-anchor="start">
+      <text x="34" y="74">presentation</text><text x="34" y="108">business rules</text>
+      <text x="34" y="142">services</text><text x="34" y="176">persistence</text>
+    </g>
+    <g font-size="8.4" fill="var(--acc)">
+      <text x="380" y="120">Catalog</text><text x="380" y="132">Checkout</text>
+      <text x="468" y="120" fill="var(--ink2)">Ship</text><text x="468" y="132" fill="var(--ink2)">Order</text>
+      <text x="556" y="120" fill="var(--ink2)">Manage</text><text x="556" y="132" fill="var(--ink2)">Inventory</text>
+    </g>
+    <text x="141" y="212" font-size="8.4" fill="var(--acc)">CatalogCheckout is smeared</text>
+    <text x="141" y="223" font-size="8.4" fill="var(--acc)">across all four layers</text>
+    <text x="467" y="212" font-size="8.4" fill="var(--acc)">CatalogCheckout is one thing</text>
+    <text x="467" y="223" font-size="8.4" fill="var(--acc)">with layers inside it</text>
+    <text x="310" y="244" font-size="8.6" fill="var(--ink)">Neither is more correct. The industry has drifted toward domain for a decade.</text>
+  </g>
+</svg>
+
+<!--@ stamp -->
+<svg viewBox="0 0 300 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="14" y="52" width="82" height="34"/>
+    <rect x="204" y="52" width="82" height="34"/>
+    <path d="M96 62 H204" stroke="var(--ink3)"/><path d="M196 58 l8 4 l-8 4" stroke="var(--ink3)"/>
+    <path d="M204 78 H96" stroke="var(--acc)" stroke-width="2.4"/><path d="M104 74 l-8 4 l8 4" stroke="var(--acc)" stroke-width="2.4"/>
+    <rect x="14" y="126" width="82" height="34"/>
+    <rect x="204" y="126" width="82" height="34"/>
+    <path d="M96 136 H204" stroke="var(--ink3)"/><path d="M196 132 l8 4 l-8 4" stroke="var(--ink3)"/>
+    <path d="M204 152 H96" stroke="var(--acc)" stroke-width="1.1"/><path d="M104 148 l-8 4 l8 4" stroke="var(--acc)" stroke-width="1.1"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.2" text-anchor="middle">
+    <text x="55" y="72" font-size="9" fill="var(--ink)">Wish List</text>
+    <text x="245" y="72" font-size="9" fill="var(--ink)">Profile</text>
+    <text x="150" y="42" fill="var(--ink2)">“give me the customer”</text>
+    <text x="150" y="100" fill="var(--acc)">45 attributes · 500 KB · 2,000 a second = 1 GB/s</text>
+    <text x="55" y="146" font-size="9" fill="var(--ink)">Wish List</text>
+    <text x="245" y="146" font-size="9" fill="var(--ink)">Profile</text>
+    <text x="150" y="116" fill="var(--ink3)">…or…</text>
+    <text x="150" y="176" fill="var(--acc)">just the name · 200 bytes · 400 Kb/s in total</text>
+    <text x="150" y="198" fill="var(--ink)">stamp coupling: send only what the caller needs.</text>
+    <text x="150" y="210" fill="var(--ink2)">private endpoints · field selectors · GraphQL · consumer-driven contracts</text>
+  </g>
+</svg>
+
+<!--@ fallacies -->
+<svg viewBox="0 0 620 296" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.3">
+    <rect x="6" y="30" width="148" height="52"/><rect x="160" y="30" width="148" height="52"/>
+    <rect x="314" y="30" width="148" height="52"/><rect x="468" y="30" width="146" height="52"/>
+    <rect x="6" y="90" width="148" height="52"/><rect x="160" y="90" width="148" height="52"/>
+    <rect x="314" y="90" width="148" height="52"/><rect x="468" y="90" width="146" height="52"/>
+    <rect x="6" y="168" width="196" height="52" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="212" y="168" width="196" height="52" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="418" y="168" width="196" height="52" fill="var(--accBg)" stroke="var(--acc)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="6" y="20" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--ink3)">DEUTSCH ET AL., 1994 — ALL EIGHT STILL APPLY</text>
+    <g font-size="9.4" fill="var(--ink)">
+      <text x="80" y="52">the network</text><text x="80" y="64">is reliable</text>
+      <text x="234" y="52">latency</text><text x="234" y="64">is zero</text>
+      <text x="388" y="52">bandwidth</text><text x="388" y="64">is infinite</text>
+      <text x="541" y="52">the network</text><text x="541" y="64">is secure</text>
+      <text x="80" y="112">the topology</text><text x="80" y="124">never changes</text>
+      <text x="234" y="112">there is one</text><text x="234" y="124">administrator</text>
+      <text x="388" y="112">transport cost</text><text x="388" y="124">is zero</text>
+      <text x="541" y="112">the network is</text><text x="541" y="124">homogeneous</text>
+    </g>
+    <text x="6" y="158" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--acc)">AND THREE THE AUTHORS ADD</text>
+    <g font-size="9.4" fill="var(--acc)">
+      <text x="104" y="190">versioning is easy</text>
+      <text x="310" y="190">compensating updates always work</text>
+      <text x="516" y="190">observability is optional</text>
+    </g>
+    <g font-size="8" fill="var(--ink2)">
+      <text x="104" y="206">per service or per system?</text><text x="104" y="215">how many live at once?</text>
+      <text x="310" y="206">what happens when the</text><text x="310" y="215">compensating update fails?</text>
+      <text x="516" y="206">useful in a monolith.</text><text x="516" y="215">critical in a distributed one.</text>
+    </g>
+    <text x="310" y="248" font-size="9" fill="var(--ink)">Do you know your production round-trip latency? Not the average — the 95th percentile.</text>
+    <text x="310" y="266" font-size="9" fill="var(--acc)">Average 60 ms with a 400 ms tail is what kills a distributed architecture.</text>
+    <text x="310" y="286" font-size="8.4" fill="var(--ink2)">Chain ten calls at 100 ms each and you have added a full second to one business request.</text>
+  </g>
+</svg>
+
+<!--@ teams -->
+<svg viewBox="0 0 620 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="6" y="32" width="284" height="42" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <rect x="6" y="86" width="284" height="42" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <rect x="314" y="32" width="144" height="96"/>
+    <rect x="470" y="32" width="144" height="96"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <path d="M290 53 H314 M290 107 L314 90 M458 80 H470"/>
+      <path d="M306 49 l8 4 l-8 4"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace">
+    <text x="6" y="20" font-size="8.6" letter-spacing="1.6" fill="var(--ink3)">TEAM TOPOLOGIES — SKELTON &amp; PAIS</text>
+    <text x="20" y="52" font-size="10" fill="var(--acc)">STREAM-ALIGNED</text>
+    <text x="20" y="66" font-size="8.2" fill="var(--ink2)">one product, service or capability. moves fast. everything else exists to unblock it.</text>
+    <text x="20" y="106" font-size="10" fill="var(--acc)">STREAM-ALIGNED</text>
+    <text x="20" y="120" font-size="8.2" fill="var(--ink2)">a stream is a line of work scoped to a business domain.</text>
+    <text x="328" y="52" font-size="10" fill="var(--ink)">ENABLING</text>
+    <text x="328" y="68" font-size="8.2" fill="var(--ink2)">bridges a capability gap:</text>
+    <text x="328" y="79" font-size="8.2" fill="var(--ink2)">research and learning that</text>
+    <text x="328" y="90" font-size="8.2" fill="var(--ink2)">is important, not urgent</text>
+    <text x="328" y="112" font-size="8.2" fill="var(--ink2)">+ COMPLICATED-SUBSYSTEM:</text>
+    <text x="328" y="123" font-size="8.2" fill="var(--ink2)">owns the hard part, cuts others' load</text>
+    <text x="484" y="52" font-size="10" fill="var(--ink)">PLATFORM</text>
+    <text x="484" y="68" font-size="8.2" fill="var(--ink2)">self-service APIs, tools and</text>
+    <text x="484" y="79" font-size="8.2" fill="var(--ink2)">support as an internal product</text>
+    <text x="484" y="95" font-size="8.2" fill="var(--ink2)">removes friction while keeping</text>
+    <text x="484" y="106" font-size="8.2" fill="var(--ink2)">governance on quality, security</text>
+    <text x="310" y="158" font-size="9" text-anchor="middle" fill="var(--ink)">Conway's Law: a design copies the communication structure of the people who made it.</text>
+    <text x="310" y="176" font-size="9" text-anchor="middle" fill="var(--acc)">The Inverse Conway Maneuver: change the teams to get the architecture you want.</text>
+    <text x="310" y="194" font-size="8.4" text-anchor="middle" fill="var(--ink2)">this is why layered architectures came with a DBA department and a frontend department</text>
+  </g>
+</svg>
+
+<!--@ mud -->
+<svg viewBox="0 0 300 246" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none"><path d="M139.1 184.7 L186.9 74.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/><path d="M149.7 28.8 L16.2 110.0" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M21.1 74.5 L139.1 23.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M127.7 19.3 L159.5 35.7" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M149.7 28.8 L182.1 144.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M139.1 23.3 L17.8 86.1" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M39.7 43.9 L21.1 74.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M139.1 23.3 L186.9 133.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M159.5 172.3 L68.9 184.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.25"/><path d="M17.8 86.1 L149.7 179.2" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M168.3 43.9 L21.1 74.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M104.0 192.0 L168.3 43.9" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/><path d="M17.8 86.1 L139.1 23.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M25.9 144.5 L68.9 23.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M139.1 184.7 L39.7 164.1" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M104.0 192.0 L149.7 179.2" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M80.3 19.3 L182.1 144.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M17.8 121.9 L25.9 144.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M159.5 172.3 L25.9 63.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.25"/><path d="M21.1 133.5 L68.9 184.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M186.9 74.5 L25.9 144.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/><path d="M58.3 28.8 L149.7 28.8" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M127.7 188.7 L80.3 19.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M21.1 74.5 L39.7 164.1" stroke="var(--ink)" stroke-width="0.5" opacity="0.25"/><path d="M168.3 164.1 L32.1 154.7" stroke="var(--ink)" stroke-width="1.2" opacity="0.25"/><path d="M139.1 23.3 L80.3 19.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M159.5 172.3 L92.0 16.8" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M116.0 16.8 L39.7 164.1" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M32.1 53.3 L175.9 53.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/><path d="M190.2 121.9 L159.5 172.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M80.3 188.7 L25.9 144.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M48.5 172.3 L80.3 188.7" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M182.1 63.5 L58.3 179.2" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M92.0 16.8 L68.9 184.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M186.9 133.5 L186.9 74.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M186.9 74.5 L186.9 133.5" stroke="var(--ink)" stroke-width="1.2" opacity="0.35"/><path d="M104.0 16.0 L25.9 144.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M175.9 154.7 L159.5 172.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M68.9 184.7 L16.2 110.0" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M182.1 63.5 L80.3 19.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/><path d="M39.7 164.1 L68.9 23.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M80.3 188.7 L168.3 43.9" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M139.1 23.3 L191.8 110.0" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M48.5 172.3 L190.2 86.1" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M25.9 63.5 L139.1 23.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.25"/><path d="M17.8 86.1 L186.9 74.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/><path d="M104.0 192.0 L32.1 53.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.25"/><path d="M190.2 121.9 L32.1 53.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M39.7 43.9 L175.9 154.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M32.1 154.7 L175.9 53.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M39.7 164.1 L32.1 154.7" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M159.5 35.7 L186.9 74.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M175.9 154.7 L32.1 154.7" stroke="var(--ink)" stroke-width="1.2" opacity="0.35"/><path d="M17.8 121.9 L116.0 16.8" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M186.9 74.5 L80.3 19.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/><path d="M17.8 121.9 L149.7 179.2" stroke="var(--ink)" stroke-width="1.2" opacity="0.25"/><path d="M80.3 19.3 L175.9 154.7" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M190.2 86.1 L116.0 191.2" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M39.7 43.9 L186.9 133.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M182.1 144.5 L80.3 188.7" stroke="var(--ink)" stroke-width="1.2" opacity="0.35"/><path d="M191.8 110.0 L17.8 121.9" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M116.0 16.8 L168.3 164.1" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M191.8 110.0 L80.3 19.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M48.5 172.3 L116.0 191.2" stroke="var(--ink)" stroke-width="0.5" opacity="0.25"/><path d="M186.9 133.5 L168.3 43.9" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M191.8 110.0 L127.7 188.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M32.1 53.3 L104.0 16.0" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M48.5 35.7 L159.5 35.7" stroke="var(--ink)" stroke-width="1.2" opacity="0.25"/><path d="M92.0 191.2 L92.0 16.8" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M191.8 98.0 L58.3 179.2" stroke="var(--ink)" stroke-width="1.2" opacity="0.45"/><path d="M159.5 35.7 L80.3 188.7" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M159.5 35.7 L190.2 86.1" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M116.0 16.8 L186.9 74.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M48.5 35.7 L186.9 74.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M58.3 28.8 L116.0 191.2" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M116.0 16.8 L104.0 16.0" stroke="var(--ink)" stroke-width="1.2" opacity="0.25"/><path d="M17.8 121.9 L182.1 63.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M190.2 121.9 L116.0 16.8" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M159.5 172.3 L21.1 133.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M175.9 154.7 L16.2 110.0" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M139.1 23.3 L116.0 191.2" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M21.1 133.5 L182.1 63.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M17.8 121.9 L21.1 133.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M191.8 98.0 L25.9 63.5" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M191.8 98.0 L186.9 74.5" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/><path d="M16.2 98.0 L139.1 23.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M168.3 43.9 L16.2 98.0" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M191.8 110.0 L168.3 164.1" stroke="var(--ink)" stroke-width="0.5" opacity="0.25"/><path d="M21.1 133.5 L48.5 172.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/><path d="M149.7 28.8 L48.5 172.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M80.3 19.3 L168.3 164.1" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M21.1 133.5 L182.1 144.5" stroke="var(--ink)" stroke-width="1.2" opacity="0.45"/><path d="M16.2 98.0 L191.8 110.0" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M68.9 184.7 L175.9 53.3" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M139.1 184.7 L149.7 28.8" stroke="var(--ink)" stroke-width="1.2" opacity="0.35"/><path d="M58.3 179.2 L149.7 28.8" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M175.9 53.3 L186.9 74.5" stroke="var(--ink)" stroke-width="1.2" opacity="0.45"/><path d="M186.9 74.5 L175.9 154.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M186.9 133.5 L168.3 43.9" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M190.2 86.1 L58.3 28.8" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M92.0 16.8 L58.3 179.2" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M127.7 188.7 L68.9 184.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M139.1 184.7 L159.5 35.7" stroke="var(--ink)" stroke-width="1.2" opacity="0.45"/><path d="M116.0 16.8 L127.7 188.7" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M48.5 172.3 L92.0 16.8" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M127.7 188.7 L17.8 121.9" stroke="var(--ink)" stroke-width="0.7" opacity="0.45"/><path d="M21.1 133.5 L149.7 28.8" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M168.3 43.9 L159.5 35.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M127.7 19.3 L191.8 98.0" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/><path d="M58.3 179.2 L68.9 23.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M186.9 74.5 L16.2 110.0" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M80.3 19.3 L139.1 184.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.45"/><path d="M139.1 23.3 L80.3 19.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M149.7 28.8 L168.3 164.1" stroke="var(--ink)" stroke-width="0.5" opacity="0.25"/><path d="M175.9 154.7 L159.5 35.7" stroke="var(--ink)" stroke-width="0.7" opacity="0.35"/><path d="M149.7 28.8 L175.9 154.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.6"/><path d="M104.0 16.0 L127.7 188.7" stroke="var(--ink)" stroke-width="0.7" opacity="0.6"/><path d="M168.3 164.1 L32.1 53.3" stroke="var(--ink)" stroke-width="0.5" opacity="0.25"/><path d="M17.8 121.9 L92.0 16.8" stroke="var(--ink)" stroke-width="0.5" opacity="0.25"/><path d="M190.2 86.1 L175.9 154.7" stroke="var(--ink)" stroke-width="0.5" opacity="0.35"/></g>
+  <g stroke="none"><circle cx="104.0" cy="16.0" r="2" fill="var(--ink)"/><circle cx="116.0" cy="16.8" r="2" fill="var(--ink)"/><circle cx="127.7" cy="19.3" r="2" fill="var(--ink)"/><circle cx="139.1" cy="23.3" r="2" fill="var(--ink)"/><circle cx="149.7" cy="28.8" r="2" fill="var(--ink)"/><circle cx="159.5" cy="35.7" r="2" fill="var(--ink)"/><circle cx="168.3" cy="43.9" r="2" fill="var(--ink)"/><circle cx="175.9" cy="53.3" r="2" fill="var(--ink)"/><circle cx="182.1" cy="63.5" r="2" fill="var(--ink)"/><circle cx="186.9" cy="74.5" r="2" fill="var(--ink)"/><circle cx="190.2" cy="86.1" r="2" fill="var(--ink)"/><circle cx="191.8" cy="98.0" r="2" fill="var(--ink)"/><circle cx="191.8" cy="110.0" r="2" fill="var(--ink)"/><circle cx="190.2" cy="121.9" r="2" fill="var(--ink)"/><circle cx="186.9" cy="133.5" r="2" fill="var(--ink)"/><circle cx="182.1" cy="144.5" r="2" fill="var(--ink)"/><circle cx="175.9" cy="154.7" r="2" fill="var(--ink)"/><circle cx="168.3" cy="164.1" r="2" fill="var(--ink)"/><circle cx="159.5" cy="172.3" r="2" fill="var(--ink)"/><circle cx="149.7" cy="179.2" r="2" fill="var(--ink)"/><circle cx="139.1" cy="184.7" r="2" fill="var(--ink)"/><circle cx="127.7" cy="188.7" r="2" fill="var(--ink)"/><circle cx="116.0" cy="191.2" r="2" fill="var(--ink)"/><circle cx="104.0" cy="192.0" r="2" fill="var(--ink)"/><circle cx="92.0" cy="191.2" r="2" fill="var(--ink)"/><circle cx="80.3" cy="188.7" r="2" fill="var(--ink)"/><circle cx="68.9" cy="184.7" r="2" fill="var(--ink)"/><circle cx="58.3" cy="179.2" r="2" fill="var(--ink)"/><circle cx="48.5" cy="172.3" r="2" fill="var(--ink)"/><circle cx="39.7" cy="164.1" r="2" fill="var(--ink)"/><circle cx="32.1" cy="154.7" r="2" fill="var(--ink)"/><circle cx="25.9" cy="144.5" r="2" fill="var(--ink)"/><circle cx="21.1" cy="133.5" r="2" fill="var(--ink)"/><circle cx="17.8" cy="121.9" r="2" fill="var(--ink)"/><circle cx="16.2" cy="110.0" r="2" fill="var(--ink)"/><circle cx="16.2" cy="98.0" r="2" fill="var(--ink)"/><circle cx="17.8" cy="86.1" r="2" fill="var(--ink)"/><circle cx="21.1" cy="74.5" r="2" fill="var(--ink)"/><circle cx="25.9" cy="63.5" r="2" fill="var(--ink)"/><circle cx="32.1" cy="53.3" r="2" fill="var(--ink)"/><circle cx="39.7" cy="43.9" r="2" fill="var(--ink)"/><circle cx="48.5" cy="35.7" r="2" fill="var(--ink)"/><circle cx="58.3" cy="28.8" r="2" fill="var(--ink)"/><circle cx="68.9" cy="23.3" r="2" fill="var(--ink)"/><circle cx="80.3" cy="19.3" r="2" fill="var(--ink)"/><circle cx="92.0" cy="16.8" r="2" fill="var(--ink)"/></g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="230" y="60" font-size="9.4" fill="var(--acc)">each dot</text>
+    <text x="230" y="72" font-size="9.4" fill="var(--acc)">is a class</text>
+    <text x="230" y="92" font-size="8.2" fill="var(--ink2)">each line is a</text>
+    <text x="230" y="103" font-size="8.2" fill="var(--ink2)">dependency</text>
+    <text x="150" y="216" font-size="8.6" fill="var(--ink)">Fig. 9-1 · a real Java web application, built fast, for years</text>
+    <text x="150" y="232" font-size="8.6" fill="var(--acc)">changing any class here is a terrifying affair</text>
+  </g>
+</svg>

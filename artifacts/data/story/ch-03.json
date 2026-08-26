@@ -1,0 +1,154 @@
+{
+ "ch": "03",
+ "book": "Chapter 3 · Modularity",
+ "pages": "pp. 37–54",
+ "title": "Measuring How It Holds Together",
+ "gist": "Modularity is an organising principle nobody puts in the requirements, and entropy eats it unless you spend energy on it. This chapter gives you the three tools for measuring it — cohesion, coupling and connascence — and the language to argue about coupling precisely.",
+ "read": "5 min · 45 sec to re-scan",
+ "acc": {
+  "l": "#8A5333",
+  "d": "#DBA173"
+ },
+ "minute": [
+  "**Modularity** is breaking a system apart. **Granularity** is how big the pieces are. Modularity is rarely the problem; granularity is. Spaghetti architecture, distributed monoliths and the big ball of distributed mud are all granularity failures.",
+  "**Cohesion** — how much a module's parts belong together — runs from *functional* (best) down to *coincidental* (same file, that's all). Dividing a cohesive module only increases coupling and decreases readability.",
+  "**Coupling** — *afferent* is incoming (who depends on you), *efferent* is outgoing (who you depend on). From these come **Abstractness**, **Instability** and **Distance from the Main Sequence**, which finds the Zone of Uselessness and the Zone of Pain.",
+  "**Connascence** is not a metric, it's precise vocabulary for coupling: two things are connascent if changing one forces the other to change. **Static** forms (name, type, meaning, position, algorithm) are weaker and safer than **dynamic** ones (execution, timing, values, identity).",
+  "Two rules to work by: **convert strong connascence into weaker forms**, and **the further apart two pieces of code sit, the weaker the form between them must be**. Maximise coupling inside a boundary — that is what the boundary is for."
+ ],
+ "sections": [
+  {
+   "t": "Modularity is not the problem. Granularity is.",
+   "art": "mod-gran",
+   "alt": "A monolith splitting into six pieces above a dial for how big each piece should be",
+   "cap": "Breaking it apart is the easy half. Choosing the size is where architectures die.",
+   "p": "Modularity is a logical grouping of related code — a package, a namespace, a set of functions. It doesn't have to mean physical separation, and it's worth reasoning about separately from whatever separation your platform forces on you. Granularity is the size question, and it is the one that causes coupling between the pieces you just created.",
+   "quotes": [
+    [
+     "95% of the words [written about software architecture] are spent extolling the benefits of “modularity” and little, if anything, is said about how to achieve it.",
+     "Glenford J. Myers, 1978",
+     "Still roughly true, which is why this chapter is about measurement rather than exhortation."
+    ],
+    [
+     "Embrace modularity, but beware of granularity.",
+     "Mark Richards",
+     ""
+    ]
+   ]
+  },
+  {
+   "t": "Cohesion, best to worst",
+   "art": "cohesion-ladder",
+   "alt": "Seven levels of cohesion stacked from functional at the top to coincidental at the bottom",
+   "cap": "Seven rungs. Anything below procedural is worth a second look.",
+   "p": "Cohesion measures how much a module's parts belong in the same module. It is a *less* precise metric than coupling — where a given module sits is often the architect's judgement call, which is exactly the kind of trade-off analysis the job consists of.",
+   "quotes": [
+    [
+     "Attempting to divide a cohesive module would only result in increased coupling and decreased readability.",
+     "Larry Constantine · Structured Design",
+     "The cautionary half. Splitting is not free: what was a call inside a module becomes a call between modules."
+    ]
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "Do customer orders belong in Customer Maintenance?",
+   "art": "lcom",
+   "alt": "Three classes drawn as fields and methods, showing high, low and mixed cohesion",
+   "sit": "A module called **Customer Maintenance** holds: add customer, update customer, get customer, notify customer, **get customer orders**, **cancel customer orders**. The last two are about orders, not customers.",
+   "opts": [
+    [
+     "Leave them. It's one module about one customer.",
+     "Fine if those really are the only two order operations — pulling them out to make a two-method module buys nothing and costs a call across a boundary."
+    ],
+    [
+     "Split out an Order Maintenance module.",
+     "Right if Customer Maintenance is going to keep growing, and wrong if Order Maintenance would need so much customer knowledge that the split just converts cohesion into coupling."
+    ]
+   ],
+   "verdict": "**It depends — and here are the three questions that decide it.** Are those the only order operations? Is Customer Maintenance expected to grow? Would separating them require so much shared knowledge that the coupling cost exceeds the cohesion gain? There is no metric that answers this; **LCOM** (lack of cohesion in methods) finds *structural* lack of cohesion — methods that never share a field — but it cannot tell you whether pieces belong together logically. Second Law again: why beats how."
+  },
+  {
+   "t": "Afferent and efferent coupling",
+   "art": "coupling-ae",
+   "alt": "A module with three incoming arrows labelled afferent and three outgoing arrows labelled efferent",
+   "cap": "Two metrics named almost identically because the authors preferred symmetry to clarity.",
+   "items": [
+    "**Abstractness** — the ratio of abstract artifacts to concrete ones. Five thousand lines in one `main()` scores near zero; a codebase where nobody can find the implementation scores near one.",
+    "**Instability** — efferent over total coupling. High instability means the module breaks easily when things around it change, because it delegates to so many others."
+   ],
+   "p": "Both come from graph analysis of the call graph, and tools exist for essentially every platform. Both are inputs to the one holistic structural metric architects have."
+  },
+  {
+   "t": "Distance from the Main Sequence",
+   "art": "main-sequence",
+   "wide": true,
+   "alt": "Abstractness plotted against instability with a diagonal ideal line, a zone of uselessness top-right and a zone of pain bottom-left",
+   "cap": "Figs. 3-2 to 3-4 · the diagonal is the healthy mix. The corners are the two ways to fail.",
+   "p": "Abstractness and Instability both fall between 0 and 1, so plotting them against each other produces one line where the two competing concerns are in balance — the main sequence. A class's distance from that line is one of the very few holistic structural measurements available.",
+   "items": [
+    "**Zone of Uselessness** (top right) — so abstract that nobody can work out how to use it. `AbstractSingletonProxyFactoryBean` lives here.",
+    "**Zone of Pain** (bottom left) — all implementation, no abstraction: brittle, and hard to change without breaking something.",
+    "Useful when you are getting familiar with an unfamiliar codebase, preparing a migration, or trying to put a number on technical debt. Like every code metric, it still needs interpretation — cyclomatic complexity, for instance, cannot tell *essential* complexity from *accidental*."
+   ]
+  },
+  {
+   "t": "Connascence: precise words for coupling",
+   "art": "connascence",
+   "wide": true,
+   "alt": "Nine forms of connascence on one axis, five static and four dynamic, ordered from weaker to stronger",
+   "cap": "Fig. 3-5 · not a metric — a vocabulary. Two things are connascent if changing one forces the other to change.",
+   "items": [
+    "**Static** forms live in the source and a tool can find them. Name is the weakest and most desirable — modern refactoring makes a rename trivial. Meaning is a magic number where a constant belongs. Position is `updateSeat(\"14D\", \"Ford, N\")` with the arguments the wrong way round: right types, wrong semantics.",
+    "**Dynamic** forms only appear at runtime and cost far more to find. Execution is setting the subject after calling `send()`. Timing is a race condition. Values is a transaction across separate databases that must all change or none. Identity is two components that must share the same instance."
+   ],
+   "p": "The value is the same as the value of design-pattern names. “Don't put a magic string in the middle of a method” is advice; “that's connascence of meaning, refactor it to connascence of name” is an instruction with a direction."
+  },
+  {
+   "t": "Strength, locality, degree",
+   "art": "locality",
+   "alt": "The same coupling drawn twice — once inside one module boundary, once crossing between two",
+   "cap": "The same connascence is tolerable inside a boundary and a defect across one.",
+   "items": [
+    "**Strength** — how easily a developer can refactor it away. Prefer static to dynamic, because static is visible to tools.",
+    "**Locality** — how close the two pieces sit. Strong forms within one module are much less of a smell than the same forms spread apart. This is bounded context, described twenty years early.",
+    "**Degree** — how many things a change touches. Strong dynamic connascence across three modules is survivable; codebases grow, and it will not stay three."
+   ],
+   "p": "Page-Jones's three guidelines: minimise connascence overall by encapsulating; minimise whatever still crosses an encapsulation boundary; and **maximise connascence inside** one. The last is the one people miss — tight coupling inside a boundary is not a failure, it is the reason the boundary is there."
+  },
+  {
+   "k": "decision",
+   "t": "You find `if (status == 1)` in a code review",
+   "art": "connascence",
+   "alt": "Nine forms of connascence on one axis, five static and four dynamic, ordered from weaker to stronger",
+   "sit": "A method compares a status field against the literal `1`. Elsewhere another team's service writes that field, and somewhere there is a comment explaining that `1` means active. Nothing is broken. The tests pass.",
+   "opts": [
+    [
+     "Leave it. It works and the comment explains it.",
+     "This is **connascence of meaning** across a service boundary — the strongest cross-boundary form here. The day someone flips the values, both sides are wrong and neither compiler notices."
+    ],
+    [
+     "Extract a named constant and share it.",
+     "You have converted connascence of meaning into **connascence of name** — the weakest static form, and one that tooling can rename across a whole codebase safely.",
+     1
+    ],
+    [
+     "Extract a constant, but keep a private copy on each side.",
+     "Better than a literal, worse than a shared name: you still have two definitions that must agree, so the connascence is still of meaning, just prettier."
+    ]
+   ],
+   "verdict": "**Rule of Degree** — convert strong forms into weaker ones. **Rule of Locality** — as the distance between two pieces of code grows, the form of connascence between them must get weaker. A magic number in one method is a smell; the same magic number spanning two services is a defect waiting for a release."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 3: Modularity, pp. 37–54. Connascence is Meilir Page-Jones's, popularised by Jim Weirich; the coupling metrics are Yourdon, Constantine and Robert C. Martin's.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

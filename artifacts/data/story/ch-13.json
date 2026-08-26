@@ -1,0 +1,170 @@
+{
+ "ch": "13",
+ "book": "Chapter 13 · Microkernel Architecture Style",
+ "pages": "pp. 193–208",
+ "title": "A Stable Core and Everything Else",
+ "gist": "Take the cyclomatic complexity out of the system, put it in plug-ins, and leave a core that does the happy path. The only style that can be either domain- or technically partitioned — and once you see it, you see it everywhere.",
+ "read": "5 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#5A4E8C",
+  "d": "#ADA2DC"
+ },
+ "minute": [
+  "Two components: a **core system** (the minimal functionality needed to run, or: the happy path) and **plug-ins** holding the custom, volatile, specialised work.",
+  "A **registry** tells the core which plug-ins exist and how to reach them — a map in memory, or ZooKeeper or Consul. A **contract** defines the plug-in's behaviour and its input and output data.",
+  "Plug-ins reach the core **point-to-point** (a method call) or **remotely** (REST, messaging). Remote buys decoupling, scaling and async — and turns a monolith into a distributed system. **The quantum stays 1 either way**, because every request goes through the core.",
+  "Two ways to get it wrong: a **volatile core** (which defeats the point) and **plug-in dependencies** (which make the core resolve transitive version conflicts).",
+  "The unique property: this is the **only style that can be domain-partitioned or technically partitioned**. It fits wherever the domain itself is “the same process, customised per jurisdiction/client/device”."
+ ],
+ "sections": [
+  {
+   "t": "Core plus plug-ins",
+   "art": "microkernel",
+   "alt": "A core system with a registry, surrounded by six plug-ins that do not connect to each other",
+   "cap": "Fig. 13-1 · the whole style. The core knows the plug-ins exist; the plug-ins know nothing of each other.",
+   "p": "The mechanical version: replace a long `if deviceID.equals(\"iPhone6s\") … else if …` chain in the core with a registry lookup that instantiates a plug-in and calls `assess()`. Adding a device becomes adding a plug-in and a registry entry — nothing in the core changes.",
+   "items": [
+    "The core can itself be **layered** or a **modular monolith**, and in some cases split into separately deployed domain services, each carrying its own plug-ins.",
+    "Plug-ins can be **compile-based** (simpler to manage, redeploy everything to change one) or **runtime-based** (add and remove without redeploying, via OSGi, Jigsaw, Penrose or Prism).",
+    "Implement each plug-in as a shared library or, more simply, as a namespace: `app.plug-in.<domain>.<context>` — for example `app.plug-in.assessment.iphone6s`. The second node states that the rules apply; the third groups by purpose; the fourth makes it findable."
+   ]
+  },
+  {
+   "t": "How much microkernel is this?",
+   "art": "microkernality",
+   "wide": true,
+   "alt": "A spectrum from pure microkernel with a near-empty core to a browser that works fine without plug-ins",
+   "cap": "Fig. 13-7 · the degree of “microkern-ality” is how much standalone functionality the core has.",
+   "p": "A linter's core parses source and hands you an abstract syntax tree — useless until someone writes a rule. A browser is perfectly usable with no plug-ins at all. **Judging the volatility of the core** is what tells you which end of this spectrum you should be aiming for."
+  },
+  {
+   "k": "decision",
+   "t": "Point-to-point plug-ins, or remote ones?",
+   "art": "plugin-comms",
+   "alt": "Core calling plug-in libraries directly, above core calling plug-in services over REST",
+   "sit": "Plug-ins can be shared libraries the core calls directly, or standalone services the core reaches over REST or messaging — possibly containerised, possibly microservices.",
+   "opts": [
+    [
+     "Point-to-point: a method call to the plug-in's entry-point class.",
+     "Simple, fast, deployable as one product. The style's default, and what makes it viable as a third-party on-premises product.",
+     1
+    ],
+    [
+     "Remote: each plug-in is a service.",
+     "Better decoupling, better scalability and throughput, runtime changes without OSGi-style frameworks, and **asynchronous** plug-in calls — the core can kick off an assessment and be notified later instead of blocking a user."
+    ]
+   ],
+   "verdict": "Remote turns a monolithic style into a distributed one: more complexity, more cost, a harder deployment topology, and a new failure mode — an unresponsive plug-in over REST means the request cannot complete, which was never true in the monolith. **And it buys you no extra quantum**: every request still passes through the core system, so the architecture quantum remains 1 regardless."
+  },
+  {
+   "k": "decision",
+   "t": "The core keeps changing",
+   "art": "microkernality",
+   "wide": true,
+   "alt": "A spectrum from pure microkernel with a near-empty core to a browser that works fine without plug-ins",
+   "sit": "Six months in, the core is changing every sprint. Each change means retesting everything, because everything routes through it. The plug-ins, meanwhile, are stable.",
+   "opts": [
+    [
+     "Carry on — the core is where the real work is.",
+     "This undermines the entire philosophy. The style's benefit is that change is isolated *into plug-ins*; a core under constant change gives you a monolith with an indirection layer."
+    ],
+    [
+     "Treat it as a misjudgement of volatility and refactor.",
+     "The usual root cause is that the architect mis-read which parts were volatile. What's changing constantly belongs in plug-ins; what's left is the core.",
+     1
+    ]
+   ],
+   "verdict": "Governance here is unusual: the most valuable check is not a code rule but a **churn fitness function** — measure the rate of change in the core from version control history and alarm when it rises. Add contract tests (especially where plug-ins are on different contract versions through gradual evolution) and structural checks on the topology. The other risk is **plug-in dependencies**: complex microkernels like Eclipse do have them, and then the core must resolve transitive conflicts — two plug-ins wanting different versions of the same core library. Avoid where you can."
+  },
+  {
+   "t": "Data, cloud and teams",
+   "art": "mk-data",
+   "alt": "A core owning the shared database, with two plug-ins holding their own small rule stores",
+   "cap": "Fig. 13-8 · decoupling by rule — a database change should reach the core and stop.",
+   "items": [
+    "**Data.** Usually one relational database, and it is uncommon for plug-ins to connect to it. The core passes plug-ins whatever data they need. Plug-ins *may* own private stores — each device-assessment plug-in could carry its own rules engine or embedded database.",
+    "**Cloud.** Three coarse options: all in the cloud; data in the cloud with the core on-premises; or core on-premises with plug-ins in the cloud. The third looks modular and hurts: plug-in calls are frequent and carry a lot of data, so the added latency becomes real overhead.",
+    "**Teams.** The split is obvious — core and plug-ins. **Enabling teams** fit unusually well here, because segregated plug-in behaviour is ideal for A/B tests and experiments. **Complicated-subsystem teams** get specialised behaviour (analytics, say) isolated in a plug-in while the stream-aligned team owns the core."
+   ]
+  },
+  {
+   "t": "Characteristics, and when to reach for it",
+   "wide": true,
+   "gen": {
+    "kind": "ratings",
+    "head": "MICROKERNEL — DOMAIN *OR* TECHNICALLY PARTITIONED · QUANTUM 1",
+    "rows": [
+     [
+      "overall cost",
+      5,
+      ""
+     ],
+     [
+      "simplicity",
+      4,
+      "two component types"
+     ],
+     [
+      "testability",
+      3,
+      "change is scoped to a plug-in"
+     ],
+     [
+      "deployability",
+      3,
+      "runtime plug-ins help"
+     ],
+     [
+      "reliability",
+      3,
+      ""
+     ],
+     [
+      "modularity",
+      3,
+      ""
+     ],
+     [
+      "evolvability",
+      3,
+      "add a form, remove a form"
+     ],
+     [
+      "performance",
+      3,
+      "unplug what you don't need"
+     ],
+     [
+      "fault tolerance",
+      1,
+      ""
+     ],
+     [
+      "scalability",
+      1,
+      "everything routes via the core"
+     ]
+    ]
+   },
+   "alt": "Architecture characteristics ratings for the microkernel style",
+   "cap": "Fig. 13-9 · simplicity and cost are the strengths, as with layered. That is where the resemblance ends.",
+   "items": [
+    "**Performance gets three stars for an unusual reason**: microkernel applications tend to stay small, suffer less from the Architecture Sinkhole antipattern, and can be *streamlined by unplugging* what isn't needed. WildFly gets substantially faster once clustering, caching and messaging are removed.",
+    "**Use it** for product-based software installed at a customer site, and for any domain shaped like *one standard process with per-jurisdiction, per-client or per-device variation*.",
+    "**The two big business examples**: tax-preparation software, where the 1040 summary is the core and every supporting form and worksheet is a plug-in, so a change in tax law is isolated; and insurance claims processing, where each jurisdiction's rules are a plug-in and the standard claim-filing process — which rarely changes — is the core."
+   ],
+   "p": "Most software-development tooling is built this way: Eclipse, PMD, Jira, Jenkins, Chrome, Firefox. The reason it recurs is that a core-plus-plug-ins **structure matches the domain problem of customisation** — and customisation comes up a lot."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 13: Microkernel Architecture Style, pp. 193–208.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

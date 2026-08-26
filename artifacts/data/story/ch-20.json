@@ -1,0 +1,89 @@
+{
+ "ch": "20",
+ "book": "Chapter 20 · Architectural Patterns",
+ "pages": "pp. 371–384",
+ "title": "Patterns Under the Implementations",
+ "gist": "A style is a named topology. A pattern is a contextualised solution to a problem. Four patterns that show up inside the styles you've already read — and why naming the pattern before the tool matters.",
+ "read": "4 min · 30 sec to re-scan",
+ "acc": {
+  "l": "#4A4F8C",
+  "d": "#A0A5DC"
+ },
+ "minute": [
+  "**Identify the pattern first, then choose the implementation.** Tools and frameworks encapsulate patterns at varying fidelity and mixed together; picking the tool first hides which trade-offs you accepted.",
+  "Beware **“best practice”**. Calling something *better* practice invites argument; calling it *best* lets architects stop thinking and apply the same solution every time.",
+  "**Orthogonal coupling**: two parts with distinct purposes that must still intersect. Monitoring is necessary and independent of catalog checkout. Recognising it lets you find the least entangling intersection.",
+  "**CQRS** splits reads from writes into separate stores, so each can carry different architecture characteristics, data models and security posture.",
+  "**Single broker or domain broker** — centralised discovery and minimal infrastructure, against isolation, scale and matching your domain boundaries. Neither is a best practice."
+ ],
+ "sections": [
+  {
+   "t": "Reuse: separating domain from operational coupling",
+   "art": "hexagonal",
+   "alt": "A hexagon with domain logic at the centre surrounded by ports and adapters",
+   "cap": "Fig. 20-1 · Alistair Cockburn's Hexagonal architecture — properly, Ports and Adapters.",
+   "p": "Microservices says duplication is preferable to coupling, and accepts duplicated implementations to preserve decoupling. But some capabilities genuinely *benefit* from coupling — monitoring, logging, authentication, circuit breakers. Letting every team implement monitoring independently descends into chaos: how does anyone verify it was done, and how does an organisation coordinate a version upgrade across all of them?",
+   "items": [
+    "The pattern has a **flaw when applied to microservices**, visible only to people who know its original intent. It treats the database as just another pluggable adapter, and does not treat the data schema as business logic — a common misperception when the name was coined.",
+    "**Eric Evans corrected this in Domain-Driven Design**: wherever they reside, database schemas must change to reflect the system's business logic. Which means the literal pattern would isolate the data and violate a core microservices principle.",
+    "Using “Hexagonal” as shorthand for *separation of domain and operational concerns* is fine. Using it as an implementation instruction, in a microservices context, is not — and the modern implementation of that separation is the **Service Mesh**."
+   ]
+  },
+  {
+   "t": "Sidecar and Service Mesh as an orthogonal reuse pattern",
+   "art": "broker",
+   "wide": true,
+   "alt": "A single broker serving eight services beside two domain brokers serving four each",
+   "cap": "The Sidecar isn't only decoupling — it is a reuse pattern for a specific *kind* of coupling.",
+   "p": "An **orthogonal reuse pattern** reuses something represented by one or more concerns that doesn't fit the preferred hierarchy. Microservices organises around domains; operational coupling has to cut across them. The sidecar isolates those concerns in a cross-cutting but consistent layer.",
+   "items": [
+    "**Advantages**: a consistent way to create isolated coupling; consistent infrastructure coordination; ownership that can be per-team, centralised, or a mix.",
+    "**Disadvantages**: a sidecar per platform; the sidecar component itself grows large and complex; and **implementation drift** between independent teams.",
+    "Hexagonal is the general-purpose implementation of the separation; Service Mesh is the one suited to microservices and other distributed architectures. **The pattern is the separation. The mesh is one way to get it.**"
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "Orchestration or choreography — the trade-offs, listed",
+   "art": "cqrs",
+   "wide": true,
+   "alt": "A client/server application on one database beside a CQRS split into separate write and read stores",
+   "sit": "Four domain services must collaborate to form a workflow. Either a separate orchestrator coordinates them, or they coordinate themselves. You have now met this decision in event-driven architecture *and* in microservices — same pattern, same trade-offs, twice.",
+   "opts": [
+    [
+     "Orchestration.",
+     "**For**: a centralised workflow (valuable as complexity rises), real error handling with a state owner, recoverability through retries during short outages, and queryable workflow state. **Against**: all communication routes through the orchestrator, so it is a throughput bottleneck and a single point of failure; it scales worse by adding coordination points that cut parallelism; and it couples the domain services to itself."
+    ],
+    [
+     "Choreography.",
+     "**For**: fewer chokepoints and more parallelism, so better responsiveness; independent scaling; multiple instances for fault tolerance without the orchestrator's sensitivity; and less coupling. **Against**: no workflow owner makes errors and boundary conditions harder, there is no centralised state, and recoverability suffers — domain services must carry more workflow knowledge."
+    ]
+   ],
+   "verdict": "Any distributed architecture can use either. The reason this is worth naming as a pattern rather than learning twice: **recognising the pattern lurking inside an implementation makes its trade-offs visible**. And the Second Law applies — you cannot run this analysis once and be done."
+  },
+  {
+   "t": "CQRS and the broker patterns",
+   "art": "cqrs",
+   "wide": true,
+   "alt": "A client/server application on one database beside a CQRS split into separate write and read stores",
+   "cap": "Fig. 20-3 · writes to one store, synchronised (usually asynchronously) to another that serves reads.",
+   "p": "**CQRS** — Command Query Responsibility Segregation — suits systems where read and write volumes differ starkly, or where reads should be isolated from writes for security. Separating them lets each side carry different architecture characteristics and, if useful, a different data model entirely.",
+   "items": [
+    "**Single-Broker**: centralised discovery and the least possible infrastructure. Against: it is a fault-tolerance risk — if it goes down the whole workflow stops — and a throughput ceiling as volume rises.",
+    "**Domain-Broker**: each group of related services shares a broker, mirroring the architecture's domain partitioning. Better isolation, matches domain boundaries, more scalable. Against: harder discovery of queues and topics, more infrastructure to pay for, more moving parts to maintain.",
+    "The reason infrastructure shows up in a patterns chapter at all: **in EDA the topic or queue is owned by the sender**, so a service's broker is part of that service's infrastructure. Coupling to infrastructure is coupling."
+   ]
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 20: Architectural Patterns, pp. 371–384.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

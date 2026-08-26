@@ -1,0 +1,111 @@
+<!-- Drawings for chapter 27 · The Laws of Software Architecture, Revisited -->
+
+<!--@ lib-vs-svc -->
+<svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="14" y="34" width="76" height="26"/><rect x="102" y="34" width="76" height="26"/>
+    <rect x="58" y="86" width="76" height="26" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <g stroke="var(--ink3)" stroke-width="1.2"><path d="M52 60 L82 86 M140 60 L112 86"/></g>
+    <path d="M212 30 V120" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <rect x="238" y="34" width="76" height="26"/><rect x="326" y="34" width="76" height="26"/>
+    <g stroke="var(--acc)" stroke-width="1.5">
+      <rect x="246" y="42" width="60" height="10"/><rect x="334" y="42" width="60" height="10"/>
+    </g>
+    <path d="M6 148 H614" stroke="var(--rule)"/>
+    <path d="M6 176 H614 M6 204 H614" stroke="var(--rule2)"/>
+    <path d="M420 130 V240" stroke="var(--rule)"/><path d="M516 130 V240" stroke="var(--rule)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8">
+    <text x="96" y="24" text-anchor="middle" font-size="9" fill="var(--acc)">SHARED SERVICE</text>
+    <text x="320" y="24" text-anchor="middle" font-size="9" fill="var(--ink)">SHARED LIBRARY</text>
+    <text x="96" y="103" text-anchor="middle" font-size="7.6" fill="var(--acc)">called at runtime</text>
+    <text x="320" y="74" text-anchor="middle" font-size="7.6" fill="var(--acc)">compiled in at build time</text>
+    <g font-size="8.6" fill="var(--ink3)" letter-spacing="1.2">
+      <text x="6" y="142">FACTOR</text><text x="468" y="142" text-anchor="middle">LIBRARY</text><text x="565" y="142" text-anchor="middle">SERVICE</text>
+    </g>
+    <g font-size="8.6" fill="var(--ink)">
+      <text x="6" y="164">heterogeneous code · high code volatility</text>
+      <text x="6" y="192">versioning · change risk</text>
+      <text x="6" y="220">performance · fault tolerance · scalability</text>
+    </g>
+    <g font-size="12" text-anchor="middle">
+      <text x="468" y="166" fill="var(--ink2)">−</text><text x="565" y="166" fill="var(--acc)">+</text>
+      <text x="468" y="194" fill="var(--acc)">+</text><text x="565" y="194" fill="var(--ink2)">−</text>
+      <text x="468" y="222" fill="var(--acc)">+</text><text x="565" y="222" fill="var(--ink2)">−</text>
+    </g>
+    <text x="6" y="244" font-size="8.4" fill="var(--acc)">Five pluses to two — unless the team is polyglot, in which case the top row outweighs everything below it.</text>
+  </g>
+</svg>
+
+<!--@ queue-vs-topic -->
+<svg viewBox="0 0 620 236" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="14" y="66" width="74" height="30"/>
+    <rect x="130" y="34" width="44" height="20"/><rect x="130" y="72" width="44" height="20"/><rect x="130" y="110" width="44" height="20"/>
+    <rect x="212" y="34" width="76" height="20"/><rect x="212" y="72" width="76" height="20"/><rect x="212" y="110" width="76" height="20"/>
+    <g stroke="var(--ink)" stroke-width="1.3"><path d="M88 76 L130 44 M88 81 L130 82 M88 88 L130 120 M174 44 H212 M174 82 H212 M174 120 H212"/></g>
+    <path d="M320 24 V150" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <rect x="346" y="66" width="74" height="30"/>
+    <rect x="452" y="60" width="52" height="42" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="540" y="34" width="70" height="20"/><rect x="540" y="72" width="70" height="20"/><rect x="540" y="110" width="70" height="20"/>
+    <path d="M420 81 H452" stroke="var(--acc)" stroke-width="1.8"/>
+    <g stroke="var(--acc)" stroke-width="1.2"><path d="M504 72 L540 44 M504 81 H540 M504 92 L540 120"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="7.6">
+    <text x="51" y="85" text-anchor="middle" fill="var(--ink2)">Trading</text>
+    <text x="152" y="47" text-anchor="middle" fill="var(--ink2)">queue</text>
+    <text x="152" y="85" text-anchor="middle" fill="var(--ink2)">queue</text>
+    <text x="152" y="123" text-anchor="middle" fill="var(--ink2)">queue</text>
+    <text x="383" y="85" text-anchor="middle" fill="var(--ink2)">Trading</text>
+    <text x="478" y="84" text-anchor="middle" font-size="8.4" fill="var(--acc)">topic</text>
+    <text x="14" y="24" font-size="9" fill="var(--ink)">QUEUES — POINT TO POINT</text>
+    <text x="346" y="24" font-size="9" fill="var(--acc)">TOPIC — BROADCAST</text>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="14" y="176">+ different message per consumer</text>
+      <text x="14" y="190">+ monitor and scale each queue</text>
+      <text x="14" y="204">+ more secure — nobody listens in</text>
+      <text x="14" y="222">− tight coupling · a new consumer means reworking Trading</text>
+    </g>
+    <g font-size="8.2" fill="var(--acc)">
+      <text x="346" y="176">+ low coupling · one message sent</text>
+      <text x="346" y="190">+ add a consumer without touching anything</text>
+      <text x="346" y="204">− everyone reads the same message — stamp coupling</text>
+      <text x="346" y="222">− and everyone can read all of it. can't scale one consumer.</text>
+    </g>
+  </g>
+</svg>
+
+<!--@ reuse-tradeoff -->
+<svg viewBox="0 0 300 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <circle cx="112" cy="96" r="62" stroke="var(--acc)" stroke-width="1.8" fill="var(--accBg)"/>
+    <circle cx="188" cy="96" r="62" stroke="var(--acc)" stroke-width="1.8" fill="var(--accBg)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.4">
+    <text x="76" y="94" fill="var(--ink)">good</text>
+    <text x="76" y="106" fill="var(--ink)">abstraction</text>
+    <text x="224" y="94" fill="var(--ink)">low</text>
+    <text x="224" y="106" fill="var(--ink)">volatility</text>
+    <text x="150" y="90" font-size="8" fill="var(--acc)">reuse</text>
+    <text x="150" y="102" font-size="8" fill="var(--acc)">works</text>
+    <text x="150" y="180" fill="var(--ink)">Architects find the first factor and miss the second.</text>
+    <text x="150" y="196" fill="var(--acc)">Frameworks and platforms sit in the overlap. Domain concepts never do —</text>
+    <text x="150" y="208" fill="var(--acc)">the domain is the fastest-changing part of any system.</text>
+  </g>
+</svg>
+
+<!--@ spectrum-3 -->
+<svg viewBox="0 0 620 190" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5">
+    <path d="M60 84 H560"/>
+    <path d="M60 76 v16 M560 76 v16 M185 78 v12 M310 78 v12 M435 78 v12"/>
+    <path d="M368 84 l-10 -16 h20 z" fill="var(--accBg)" stroke="var(--acc)" stroke-width="2"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6">
+    <text x="60" y="110" text-anchor="middle" fill="var(--ink)">architecture</text>
+    <text x="560" y="110" text-anchor="middle" fill="var(--ink)">design</text>
+    <text x="368" y="54" text-anchor="middle" fill="var(--acc)">every real decision</text>
+    <text x="310" y="146" text-anchor="middle" font-size="9.6" fill="var(--ink)">A software architecture decision is one where each of the options has significant trade-offs.</text>
+    <text x="310" y="172" text-anchor="middle" font-size="8.6" fill="var(--acc)">Don't reduce decisions to binaries. Few of them are — which is why the answer is always “it depends”.</text>
+  </g>
+</svg>

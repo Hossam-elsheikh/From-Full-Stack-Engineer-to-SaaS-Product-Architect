@@ -1,0 +1,311 @@
+{
+ "title": "The Architect's Notebook",
+ "eyebrow": "Fundamentals of Software Architecture · notes and highlights · 27 chapters",
+ "lede": "One review sheet per chapter of the book. The chapter's main topics as infographics you can re-scan in seconds, the book's own words kept as quotes, and a short worked scene wherever the chapter turns on a decision.",
+ "note": "All twenty-seven are written. Every sheet opens with a one-minute version — the chapter's claims in a single card — so a re-read costs under a minute and you only scroll further when you want the figure or the reasoning behind one of them.",
+ "parts": [
+  {
+   "t": "Before the parts begin",
+   "w": "Chapter 1 · what the job is",
+   "ch": [
+    "01"
+   ]
+  },
+  {
+   "t": "Part I · Foundations",
+   "w": "Chapters 2–8 · characteristics and components",
+   "ch": [
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08"
+   ]
+  },
+  {
+   "t": "Part II · Architecture Styles",
+   "w": "Chapters 9–20 · the catalogue",
+   "ch": [
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20"
+   ]
+  },
+  {
+   "t": "Part III · Techniques and Soft Skills",
+   "w": "Chapters 21–27 · the half nobody trains for",
+   "ch": [
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27"
+   ]
+  }
+ ],
+ "chapters": [
+  {
+   "ch": "01",
+   "book": "Introduction",
+   "acc": {
+    "l": "#4F6088",
+    "d": "#96A8D0"
+   },
+   "url": "https://claude.ai/code/artifact/5c63e1b2-6a76-4cf4-a1ce-65c923d7b46d"
+  },
+  {
+   "ch": "02",
+   "book": "Architectural Thinking",
+   "acc": {
+    "l": "#4B6B4F",
+    "d": "#93BE99"
+   },
+   "url": "https://claude.ai/code/artifact/e327e832-9186-49ac-891b-69c80185642e"
+  },
+  {
+   "ch": "03",
+   "book": "Modularity",
+   "acc": {
+    "l": "#8A5333",
+    "d": "#DBA173"
+   },
+   "url": "https://claude.ai/code/artifact/71813562-3557-4247-bf9f-825db8deb1e2"
+  },
+  {
+   "ch": "04",
+   "book": "Architectural Characteristics Defined",
+   "acc": {
+    "l": "#2F6A6E",
+    "d": "#86C3C7"
+   },
+   "url": "https://claude.ai/code/artifact/c08e9a5d-46dd-4cd9-82aa-e54e6bb9f6bd"
+  },
+  {
+   "ch": "05",
+   "book": "Identifying Architectural Characteristics",
+   "acc": {
+    "l": "#6B4276",
+    "d": "#C296CE"
+   },
+   "url": "https://claude.ai/code/artifact/94f5ab53-07bb-4844-a473-19fc8590b3a9"
+  },
+  {
+   "ch": "06",
+   "book": "Measuring and Governing Architecture Characteristics",
+   "acc": {
+    "l": "#6A6329",
+    "d": "#C6BC72"
+   },
+   "url": "https://claude.ai/code/artifact/945cfe59-1c03-4929-8324-1b39efbd8301"
+  },
+  {
+   "ch": "07",
+   "book": "The Scope of Architectural Characteristics",
+   "acc": {
+    "l": "#3B5F7D",
+    "d": "#8FB6D2"
+   },
+   "url": "https://claude.ai/code/artifact/86ab4998-06f2-4ad2-a3f1-384e216bc64f"
+  },
+  {
+   "ch": "08",
+   "book": "Component-Based Thinking",
+   "acc": {
+    "l": "#8C4438",
+    "d": "#DE9186"
+   },
+   "url": "https://claude.ai/code/artifact/efc7cf01-586e-4483-98a0-e75b5634ff24"
+  },
+  {
+   "ch": "09",
+   "book": "Foundations",
+   "acc": {
+    "l": "#45566B",
+    "d": "#9FB0C2"
+   },
+   "url": "https://claude.ai/code/artifact/19ccb9d3-d93a-4f19-bae5-addd67d93321"
+  },
+  {
+   "ch": "10",
+   "book": "Layered Architecture Style",
+   "acc": {
+    "l": "#7A6224",
+    "d": "#D2BC6C"
+   },
+   "url": "https://claude.ai/code/artifact/f72fba19-5609-4577-9197-a3db3805fd2e"
+  },
+  {
+   "ch": "11",
+   "book": "The Modular Monolith Architecture Style",
+   "acc": {
+    "l": "#38664B",
+    "d": "#85C09A"
+   },
+   "url": "https://claude.ai/code/artifact/b5b4ea38-d24d-4e9e-bf09-9d810013e1b1"
+  },
+  {
+   "ch": "12",
+   "book": "Pipeline Architecture Style",
+   "acc": {
+    "l": "#8A5220",
+    "d": "#DFA25E"
+   },
+   "url": "https://claude.ai/code/artifact/74728373-ee15-4576-941b-ec0d97bc95da"
+  },
+  {
+   "ch": "13",
+   "book": "Microkernel Architecture Style",
+   "acc": {
+    "l": "#5A4E8C",
+    "d": "#ADA2DC"
+   },
+   "url": "https://claude.ai/code/artifact/fff6cb04-0b4f-4e9c-a198-96dc82dc840f"
+  },
+  {
+   "ch": "14",
+   "book": "Service-Based Architecture Style",
+   "acc": {
+    "l": "#2E6480",
+    "d": "#85BCD8"
+   },
+   "url": "https://claude.ai/code/artifact/9ed73dcd-2c5f-4fe4-8e84-cb423b112fb7"
+  },
+  {
+   "ch": "15",
+   "book": "Event-Driven Architecture Style",
+   "acc": {
+    "l": "#8A5A12",
+    "d": "#DDA954"
+   },
+   "url": "https://claude.ai/code/artifact/039cbe7e-d75a-4cee-b653-0b3d0f75ab55"
+  },
+  {
+   "ch": "16",
+   "book": "Space-Based Architecture Style",
+   "acc": {
+    "l": "#4C6478",
+    "d": "#A3B8C8"
+   },
+   "url": "https://claude.ai/code/artifact/a6d076a1-c43c-4bd3-961c-e2236e40a411"
+  },
+  {
+   "ch": "17",
+   "book": "Orchestration-Driven Service-Oriented Architecture",
+   "acc": {
+    "l": "#7A4A63",
+    "d": "#CE9CB6"
+   },
+   "url": "https://claude.ai/code/artifact/1a84aabe-8be7-408f-bbc8-f1a44a1cba75"
+  },
+  {
+   "ch": "18",
+   "book": "Microservices Architecture",
+   "acc": {
+    "l": "#2F6350",
+    "d": "#82BFA8"
+   },
+   "url": "https://claude.ai/code/artifact/6b90bacc-aec3-4cd2-b50d-4dcca171c5d6"
+  },
+  {
+   "ch": "19",
+   "book": "Choosing the Appropriate Architecture Style",
+   "acc": {
+    "l": "#806418",
+    "d": "#D6BC5F"
+   },
+   "url": "https://claude.ai/code/artifact/f1c93f65-99d8-4d87-a53b-8f0e663118b8"
+  },
+  {
+   "ch": "20",
+   "book": "Architectural Patterns",
+   "acc": {
+    "l": "#4A4F8C",
+    "d": "#A0A5DC"
+   },
+   "url": "https://claude.ai/code/artifact/c68478b9-da9e-40de-a713-1a4f51914868"
+  },
+  {
+   "ch": "21",
+   "book": "Architectural Decisions",
+   "acc": {
+    "l": "#7E3B3B",
+    "d": "#D18E8E"
+   },
+   "url": "https://claude.ai/code/artifact/0e23b1dc-ecda-406c-b984-d714d6d14f8a"
+  },
+  {
+   "ch": "22",
+   "book": "Analyzing Architecture Risk",
+   "acc": {
+    "l": "#8A5C1E",
+    "d": "#DCA95E"
+   },
+   "url": "https://claude.ai/code/artifact/aa3e1fc8-7d2d-4b4a-a5b8-0ed05eed6a35"
+  },
+  {
+   "ch": "23",
+   "book": "Diagramming Architecture",
+   "acc": {
+    "l": "#3D6570",
+    "d": "#92BCC7"
+   },
+   "url": "https://claude.ai/code/artifact/72c77629-8ff4-43a7-b941-56c4c1e5e6b4"
+  },
+  {
+   "ch": "24",
+   "book": "Making Teams Effective",
+   "acc": {
+    "l": "#63528A",
+    "d": "#B4A4D9"
+   },
+   "url": "https://claude.ai/code/artifact/fb8a83ac-ee12-4ca3-89aa-a20ce636d120"
+  },
+  {
+   "ch": "25",
+   "book": "Negotiation and Leadership Skills",
+   "acc": {
+    "l": "#8A4A32",
+    "d": "#DB9878"
+   },
+   "url": "https://claude.ai/code/artifact/b6ceb8ca-2744-4a71-a271-26e3fa4d9b2a"
+  },
+  {
+   "ch": "26",
+   "book": "Architectural Intersections",
+   "acc": {
+    "l": "#4E6B58",
+    "d": "#9CC2A9"
+   },
+   "url": "https://claude.ai/code/artifact/d068f55d-22ce-462a-b4a0-bdf513f9ced8"
+  },
+  {
+   "ch": "27",
+   "book": "The Laws of Software Architecture, Revisited",
+   "acc": {
+    "l": "#3F5B8A",
+    "d": "#92AAD6"
+   },
+   "url": "https://claude.ai/code/artifact/d71a7430-2949-409e-87eb-73cdab142d6b"
+  }
+ ],
+ "source": "Adapted from Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). The companies, people and incidents in each chapter are invented; the ideas, terms and trade-offs are the book's.",
+ "links": [
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

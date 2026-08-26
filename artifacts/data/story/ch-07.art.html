@@ -1,0 +1,176 @@
+<!-- Drawings for chapter 07 · The Scope of Architectural Characteristics -->
+
+<!--@ quantum -->
+<svg viewBox="0 0 300 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="58" y="28" width="184" height="112" stroke="var(--acc)" stroke-width="2" stroke-dasharray="7 4" fill="var(--accBg)"/>
+    <rect x="76" y="46" width="70" height="30"/><rect x="154" y="46" width="70" height="30"/>
+    <ellipse cx="150" cy="102" rx="44" ry="10"/>
+    <path d="M106 102 v18 a44 10 0 0 0 88 0 v-18"/>
+    <path d="M111 76 L136 92 M189 76 L164 92" stroke="var(--ink3)" stroke-width="1"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="150" y="20" font-size="9.6" fill="var(--acc)">ONE ARCHITECTURE QUANTUM</text>
+    <text x="111" y="65" font-size="8.4" fill="var(--ink2)">service</text>
+    <text x="189" y="65" font-size="8.4" fill="var(--ink2)">service</text>
+    <text x="150" y="106" font-size="8.4" fill="var(--ink2)">its own data</text>
+    <g font-size="9" fill="var(--ink)" text-anchor="start">
+      <text x="10" y="164">1 · deploys independently</text>
+      <text x="10" y="180">2 · high functional cohesion</text>
+      <text x="10" y="196">3 · low external static coupling</text>
+      <text x="10" y="212">4 · synchronous calls define its edge</text>
+    </g>
+  </g>
+</svg>
+
+<!--@ coupling-4 -->
+<svg viewBox="0 0 620 214" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="6" y="34" width="146" height="120"/><rect x="160" y="34" width="146" height="120"/>
+    <rect x="314" y="34" width="146" height="120" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="468" y="34" width="146" height="120" fill="var(--accBg)" stroke="var(--acc)"/>
+    <path d="M6 62 H152 M160 62 H306 M314 62 H460 M468 62 H614" stroke="var(--rule)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="6" y="18" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--ink3)">TWO THINGS ARE COUPLED IF CHANGING ONE MIGHT BREAK THE OTHER</text>
+    <g font-size="10" fill="var(--ink)">
+      <text x="79" y="54">SEMANTIC</text><text x="233" y="54">IMPLEMENTATION</text>
+      <text x="387" y="54" fill="var(--acc)">STATIC</text><text x="541" y="54" fill="var(--acc)">DYNAMIC</text>
+    </g>
+    <g font-size="8.6" fill="var(--ink2)">
+      <text x="79" y="82">the problem's own</text><text x="79" y="94">coupling — carts,</text><text x="79" y="106">orders, inventory</text>
+      <text x="79" y="128">no pattern saves</text><text x="79" y="140">you from a change</text><text x="79" y="152">to the domain</text>
+      <text x="233" y="82">how you chose to</text><text x="233" y="94">build it — one DB</text><text x="233" y="106">or many, mono or not</text>
+      <text x="233" y="128">barely touches the</text><text x="233" y="140">semantics, decides</text><text x="233" y="152">the architecture</text>
+      <text x="387" y="82">the wiring. who</text><text x="387" y="94">depends on whom</text><text x="387" y="106">to exist at all</text>
+      <text x="387" y="128">shared database?</text><text x="387" y="140">same quantum.</text><text x="387" y="152">no exceptions.</text>
+      <text x="541" y="82">the calls. who</text><text x="541" y="94">talks to whom</text><text x="541" y="106">while running</text>
+      <text x="541" y="128">sync or async is</text><text x="541" y="140">the whole trade-off</text><text x="541" y="152">— see Ch. 15</text>
+    </g>
+    <text x="310" y="184" font-size="9" fill="var(--ink)">Higher coupling is fine at narrow scope.</text>
+    <text x="310" y="202" font-size="9" fill="var(--acc)">The broader the scope, the looser the coupling has to be.</text>
+  </g>
+</svg>
+
+<!--@ sync-async -->
+<svg viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="12" y="34" width="76" height="32"/>
+    <rect x="204" y="34" width="80" height="32"/>
+    <path d="M88 50 H204" stroke="var(--ink)" stroke-width="1.6"/>
+    <path d="M196 46 l8 4 l-8 4"/>
+    <g stroke="var(--acc)" stroke-width="2">
+      <path d="M132 74 l16 16 M148 74 l-16 16"/>
+    </g>
+    <path d="M12 128 H288" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <rect x="12" y="164" width="76" height="32"/>
+    <rect x="118" y="164" width="52" height="32" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="204" y="164" width="80" height="32"/>
+    <path d="M88 180 H118 M170 180 H204" stroke="var(--ink3)"/>
+    <path d="M110 176 l8 4 l-8 4 M196 176 l8 4 l-8 4" stroke="var(--ink3)"/>
+    <g stroke="var(--acc)" stroke-width="1"><path d="M126 170 v20 M134 170 v20 M142 170 v20 M150 170 v20 M158 170 v20"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="8" y="22" font-size="8.6" letter-spacing="1.4" text-anchor="start" fill="var(--ink3)">SYNCHRONOUS</text>
+    <text x="50" y="54" font-size="9" fill="var(--ink)">Auction</text>
+    <text x="244" y="54" font-size="9" fill="var(--ink)">Payment</text>
+    <text x="244" y="80" font-size="8.2" fill="var(--ink2)">one every 500 ms</text>
+    <text x="150" y="106" font-size="8.4" fill="var(--acc)">a thousand auctions end at once</text>
+    <text x="150" y="118" font-size="8.4" fill="var(--acc)">and the second call onward fails</text>
+    <text x="8" y="152" font-size="8.6" letter-spacing="1.4" text-anchor="start" fill="var(--acc)">ASYNCHRONOUS</text>
+    <text x="50" y="184" font-size="9" fill="var(--ink)">Auction</text>
+    <text x="144" y="158" font-size="8.2" fill="var(--acc)">queue</text>
+    <text x="244" y="184" font-size="9" fill="var(--ink)">Payment</text>
+    <text x="150" y="216" font-size="8.4" fill="var(--ink2)">the buffer lets two different scalability profiles coexist</text>
+    <text x="150" y="230" font-size="8.4" fill="var(--ink2)">— until the burst stops being a burst</text>
+  </g>
+</svg>
+
+<!--@ decision-tree -->
+<svg viewBox="0 0 620 268" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="222" y="14" width="176" height="36" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <path d="M310 50 V70 M120 70 H500 M120 70 V88 M500 70 V88"/>
+    <rect x="46" y="88" width="148" height="32"/>
+    <rect x="426" y="88" width="148" height="32"/>
+    <path d="M120 120 V148"/><path d="M500 120 V148"/>
+    <rect x="46" y="148" width="148" height="32"/>
+    <rect x="426" y="148" width="148" height="32"/>
+    <path d="M500 180 V208"/>
+    <rect x="426" y="208" width="148" height="32" fill="var(--accBg)" stroke="var(--acc)"/>
+    <path d="M114 142 l6 6 l6 -6 M494 142 l6 6 l6 -6 M494 202 l6 6 l6 -6 M304 64 l6 6 l6 -6"/>
+    <path d="M114 82 l6 6 l6 -6 M494 82 l6 6 l6 -6"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="310" y="30" font-size="10" fill="var(--acc)">how many sets of characteristics</text>
+    <text x="310" y="43" font-size="10" fill="var(--acc)">does this problem need?</text>
+    <text x="120" y="102" font-size="10" fill="var(--ink)">one set</text>
+    <text x="120" y="114" font-size="8.4" fill="var(--ink2)">→ monolithic</text>
+    <text x="500" y="102" font-size="10" fill="var(--ink)">more than one</text>
+    <text x="500" y="114" font-size="8.4" fill="var(--ink2)">→ distributed</text>
+    <text x="120" y="162" font-size="9.4" fill="var(--ink)">one database</text>
+    <text x="120" y="174" font-size="8.4" fill="var(--ink2)">deployed in lockstep</text>
+    <text x="500" y="162" font-size="9.4" fill="var(--ink)">quantum boundaries, then data</text>
+    <text x="500" y="174" font-size="8.4" fill="var(--ink2)">shared DB, or partitioned per service</text>
+    <text x="500" y="222" font-size="9.4" fill="var(--acc)">synchronous or asynchronous?</text>
+    <text x="500" y="234" font-size="8.4" fill="var(--ink2)">this can move the boundaries you just drew</text>
+    <text x="310" y="262" font-size="8.6" fill="var(--ink2)">Fig. 7-1 · scope first, style second — not the other way round</text>
+  </g>
+</svg>
+
+<!--@ going-green -->
+<svg viewBox="0 0 620 240" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="8" y="40" width="192" height="128" stroke="var(--acc)" stroke-width="1.8" stroke-dasharray="7 4" fill="var(--accBg)"/>
+    <rect x="214" y="40" width="192" height="128" stroke="var(--acc)" stroke-width="1.8" stroke-dasharray="7 4" fill="var(--accBg)"/>
+    <rect x="420" y="40" width="192" height="128" stroke="var(--acc)" stroke-width="1.8" stroke-dasharray="7 4" fill="var(--accBg)"/>
+    <rect x="26" y="58" width="70" height="26"/><rect x="112" y="58" width="70" height="26"/>
+    <rect x="232" y="58" width="70" height="26"/><rect x="318" y="58" width="70" height="26"/>
+    <rect x="438" y="58" width="70" height="26"/><rect x="524" y="58" width="70" height="26"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="8" y="26" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--ink3)">GOING GREEN — THREE CLUSTERS, THEREFORE THREE QUANTA</text>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="61" y="74">kiosk</text><text x="147" y="74">website</text>
+      <text x="267" y="74">receiving</text><text x="353" y="74">payments</text>
+      <text x="473" y="74">assessment</text><text x="559" y="74">pricing</text>
+    </g>
+    <g font-size="10" fill="var(--acc)">
+      <text x="104" y="112">scalability</text><text x="104" y="128">availability</text><text x="104" y="144">agility</text>
+      <text x="310" y="112">security</text><text x="310" y="128">data integrity</text><text x="310" y="144">auditability</text>
+      <text x="516" y="112">maintainability</text><text x="516" y="128">deployability</text><text x="516" y="144">testability</text>
+    </g>
+    <g font-size="8.4" fill="var(--ink)">
+      <text x="104" y="188">PUBLIC FACING</text><text x="310" y="188">BACK OFFICE</text><text x="516" y="188">ASSESSMENT</text>
+    </g>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="104" y="204">bursty, public,</text><text x="104" y="215">changes often</text>
+      <text x="310" y="204">money and</text><text x="310" y="215">regulators</text>
+      <text x="516" y="204">new phone models</text><text x="516" y="215">arrive constantly</text>
+    </g>
+    <text x="310" y="236" font-size="8.6" fill="var(--ink)">fast deployability and auditability fight each other — so stop making them share a boundary</text>
+  </g>
+</svg>
+
+<!--@ scope-rule -->
+<svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="16" y="34" width="104" height="72" fill="var(--accBg)" stroke="var(--acc)" stroke-dasharray="6 4"/>
+    <rect x="30" y="50" width="34" height="20"/><rect x="72" y="50" width="34" height="20"/>
+    <rect x="52" y="80" width="34" height="20"/>
+    <g stroke="var(--acc)" stroke-width="2"><path d="M64 60 H72 M50 70 L62 80 M88 70 L76 80"/></g>
+    <rect x="164" y="34" width="120" height="72" stroke="var(--ink3)" stroke-dasharray="6 4"/>
+    <rect x="174" y="50" width="42" height="20"/><rect x="232" y="76" width="42" height="20"/>
+    <path d="M216 60 C246 60 246 76 232 84" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="4 4"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.4">
+    <text x="68" y="26" font-size="9.4" fill="var(--acc)">NARROW SCOPE</text>
+    <text x="224" y="26" font-size="9.4" fill="var(--ink)">BROAD SCOPE</text>
+    <text x="68" y="124" fill="var(--ink2)">inside a service:</text>
+    <text x="68" y="135" fill="var(--ink2)">couple tightly, be cohesive</text>
+    <text x="224" y="124" fill="var(--ink2)">between quanta:</text>
+    <text x="224" y="135" fill="var(--ink2)">couple as loosely as you can</text>
+    <text x="150" y="164" fill="var(--ink)">rename State to StateCode inside a service: one caller.</text>
+    <text x="150" y="180" fill="var(--acc)">do it on a shared contract: everything you never knew depended on it.</text>
+  </g>
+</svg>

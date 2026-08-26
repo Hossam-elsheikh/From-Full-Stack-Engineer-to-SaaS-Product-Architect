@@ -1,0 +1,281 @@
+<title>Taking the Database Out of the Path</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+[hidden]{display:none !important}
+:root{--acc:#4C6478;--accBg:rgba(76,100,120,.12);--accLine:rgba(76,100,120,.42);--dot:rgba(76,100,120,.22)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--acc:#A3B8C8;--accBg:rgba(163,184,200,.12);--accLine:rgba(163,184,200,.42);--dot:rgba(163,184,200,.22)}}
+:root[data-theme="dark"]{--acc:#A3B8C8;--accBg:rgba(163,184,200,.12);--accLine:rgba(163,184,200,.42);--dot:rgba(163,184,200,.22)}
+/* ---------- chapter sheet: notes you re-scan, not prose you re-read ----------
+   The figure is the unit of memory. Text is caption-length. Decisions are the
+   only place a scene appears, and they are boxed so they read as a different
+   kind of thing. --acc/--accBg/--accLine/--dot come from build.py per chapter. */
+
+.scroll{position:sticky;top:0;z-index:6;height:3px;background:var(--sunk);border-bottom:1px solid var(--rule)}
+.scroll i{display:block;height:100%;width:0;background:var(--acc);transition:width .18s linear}
+
+/* ---------- cover ---------- */
+.cover{padding:clamp(22px,3.8vw,44px) clamp(18px,3vw,38px) clamp(20px,3vw,34px);
+  border-bottom:1px solid var(--rule);background:var(--sheet);
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(16px,2.6vw,32px);align-items:start}
+@media(max-width:640px){.cover{grid-template-columns:1fr}}
+.cover .num{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:clamp(3rem,9vw,5.4rem);
+  line-height:.78;color:var(--acc);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.cover .bk{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--ink3)}
+.cover h1{font-size:clamp(1.9rem,4.8vw,3rem);margin-top:7px}
+.cover .gist{font-size:1.04rem;line-height:1.55;color:var(--ink2);max-width:62ch;margin-top:11px}
+
+/* ---------- the card you actually come back for ---------- */
+.minute{margin:clamp(15px,2.6vw,30px);border:2px solid var(--acc);background:var(--accBg);
+  padding:clamp(16px,2.6vw,26px)}
+.minute .h{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between;
+  padding-bottom:11px;margin-bottom:13px;border-bottom:1px solid var(--accLine)}
+.minute h2{font-size:clamp(1.15rem,2.4vw,1.45rem);letter-spacing:.02em}
+.minute .h .lbl{color:var(--acc)}
+.minute ol{margin:0;padding:0;list-style:none;counter-reset:m;display:flex;flex-direction:column;gap:10px}
+.minute li{counter-increment:m;display:grid;grid-template-columns:26px minmax(0,1fr);gap:11px;
+  font-size:.97rem;line-height:1.52;max-width:88ch}
+.minute li::before{content:counter(m,decimal-leading-zero);font-family:"IBM Plex Mono",monospace;
+  font-size:.7rem;color:var(--acc);padding-top:4px;font-variant-numeric:tabular-nums}
+
+/* ---------- topics ---------- */
+.sec{padding:clamp(20px,3vw,34px) clamp(16px,3vw,32px);border-top:1px solid var(--rule2)}
+.sechead{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin-bottom:14px}
+.sechead .k{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--acc)}
+.sechead h2{font-size:clamp(1.25rem,2.7vw,1.7rem);flex-basis:100%}
+.split{display:grid;grid-template-columns:minmax(0,46%) minmax(0,1fr);gap:clamp(16px,2.6vw,30px);align-items:start}
+@media(max-width:780px){.split{grid-template-columns:1fr}}
+.sec.wide .split{grid-template-columns:1fr}
+figure{margin:0;border:1px solid var(--rule);background:var(--sunk);
+  background-image:radial-gradient(var(--dot) 1.1px,transparent 1.2px);background-size:7px 7px}
+figure svg{width:100%;height:auto;display:block;padding:clamp(12px,2vw,20px);max-width:560px;margin:0 auto}
+.sec.wide figure svg{max-width:900px}
+figcaption{font-family:"IBM Plex Mono",monospace;font-size:.68rem;line-height:1.6;color:var(--ink2);
+  padding:9px 13px;border-top:1px solid var(--rule);background:var(--sheet)}
+.body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.body p{font-size:.96rem;line-height:1.6;max-width:70ch;color:var(--ink2)}
+.body ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.body li{font-size:.95rem;line-height:1.5;padding-left:15px;position:relative;max-width:70ch}
+.body li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:1px;background:var(--acc)}
+
+/* ---------- the book's own words ---------- */
+.qs{display:flex;flex-direction:column;gap:10px}
+.q{border-left:4px solid var(--acc);background:var(--chip);padding:13px 16px;
+  display:flex;flex-direction:column;gap:7px}
+.q .t{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:clamp(1.12rem,2.3vw,1.4rem);
+  line-height:1.18;letter-spacing:.01em;text-wrap:balance}
+.q .a{font-family:"IBM Plex Mono",monospace;font-size:.63rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--acc)}
+.q .n{font-size:.9rem;line-height:1.55;color:var(--ink2);max-width:70ch}
+
+/* ---------- decisions ---------- */
+.dec{border:2px solid var(--ink);background:var(--sheet);margin:clamp(16px,2.6vw,30px);
+  display:flex;flex-direction:column}
+.dec .top{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:10px 16px;
+  background:var(--ink);color:var(--sheet)}
+.dec .top .tag{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  border:1px solid currentColor;padding:2px 8px}
+.dec .top h2{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1.12rem;letter-spacing:.03em;color:inherit}
+.dec .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,38%);gap:0}
+@media(max-width:820px){.dec .in{grid-template-columns:1fr}}
+.dec .main{padding:clamp(15px,2.2vw,24px);display:flex;flex-direction:column;gap:14px;min-width:0}
+.dec .art{border-left:1px solid var(--rule);background:var(--sunk);
+  background-image:radial-gradient(var(--dot) 1.1px,transparent 1.2px);background-size:7px 7px;
+  display:flex;align-items:center;justify-content:center;padding:clamp(12px,2vw,18px)}
+@media(max-width:820px){.dec .art{border-left:0;border-top:1px solid var(--rule);order:-1}}
+.dec .art svg{width:100%;height:auto;max-width:330px;display:block}
+.sit{font-size:.98rem;line-height:1.58;max-width:74ch}
+.opts{display:flex;flex-direction:column;gap:1px;background:var(--rule2);border:1px solid var(--rule)}
+.opt{background:var(--sheet);padding:11px 14px;display:flex;flex-direction:column;gap:4px}
+.opt .o{font-size:.95rem;font-weight:600;line-height:1.4}
+.opt .c{font-size:.88rem;line-height:1.52;color:var(--ink2)}
+.opt.pick{background:var(--accBg)}
+.opt.pick .o::after{content:"the book's answer";font-family:"IBM Plex Mono",monospace;font-size:.58rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-left:9px;white-space:nowrap;font-weight:400}
+.verdict{border-left:4px solid var(--acc);padding:2px 0 2px 13px;font-size:.94rem;line-height:1.58;max-width:74ch}
+
+.foot{display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:space-between;align-items:center;
+  padding:14px 18px;border-top:1px solid var(--rule);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
+.foot a{color:var(--acc);text-decoration:none;border-bottom:1px solid var(--accLine)}
+.foot .cite{font-family:"IBM Plex Mono",monospace;font-size:.68rem;max-width:78ch}
+</style>
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Chapter</span><span class="v" id="tbC">—</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v" id="tbT">—</span></div>
+    <div class="tcell"><span class="lbl">Figures</span><span class="v" id="tbF">—</span></div>
+    <div class="tcell"><span class="lbl">Read</span><span class="v" id="tbR">—</span></div>
+  </header>
+  <div class="scroll"><i id="sc"></i></div>
+
+  <section class="cover">
+    <span class="num" id="cN"></span>
+    <div>
+      <p class="bk" id="cB"></p>
+      <h1 id="cT"></h1>
+      <p class="gist" id="cG"></p>
+    </div>
+  </section>
+
+  <section class="minute">
+    <div class="h"><h2>The one-minute version</h2><span class="lbl" id="mL"></span></div>
+    <ol id="minute"></ol>
+  </section>
+
+  <div id="secs"></div>
+
+  <footer class="foot">
+    <span class="cite" id="cite"></span>
+    <span id="links"></span>
+  </footer>
+</div>
+</div>
+<script>
+const D={"ch": "16", "book": "Chapter 16 · Space-Based Architecture Style", "pages": "pp. 283–314", "title": "Taking the Database Out of the Path", "gist": "Built for one problem: extreme and unpredictable concurrency. It solves it by removing the database from the transaction path entirely and replacing it with replicated in-memory grids — and everything hard about it follows from that one move.", "read": "6 min · 45 sec to re-scan", "acc": {"l": "#4C6478", "d": "#A3B8C8"}, "minute": ["Scale the web tier and the bottleneck moves to the app tier; scale that and it moves to the **database**, which is hardest and most expensive to scale. Space-based removes the database from the transactional path instead of fighting it.", "Data lives **in-memory, replicated across processing units**. Updates go to the database asynchronously through a **data pump**, so consistency is always eventual.", "Eight moving parts: processing units, virtualized middleware (**messaging grid, data grid, processing grid, deployment manager**), data pumps, data writers and data readers.", "**Replicated caching** optimises performance and fault tolerance; **distributed caching** optimises consistency. Choose per processing unit, not per system. The near-cache hybrid is explicitly not recommended here.", "**Elasticity, scalability and performance rate five stars** — the only style in the book that does. The bill is paid in simplicity, testability and cost, and in the data risks: collisions, pump bottlenecks, memory limits."], "sections": [{"t": "Why the usual scaling story runs out", "art": "bottleneck-triangle", "alt": "Three stacked tiers narrowing from web servers to application servers to the database", "cap": "Fig. 16-1 · the triangle. The widest part is the cheapest to widen.", "p": "Caching products and database scaling help, and for extreme, *variable* load they are a retrofit onto something that fundamentally cannot scale. This style takes the architectural answer instead: if the database is the ceiling, take it out of the request path."}, {"t": "The eight moving parts", "art": "sba-topology", "wide": true, "alt": "Processing units with in-memory grids above virtualized middleware, with data pumps, writers and readers feeding a database", "cap": "Fig. 16-2 · the name comes from *tuple space* — parallel processors communicating through shared memory.", "items": ["**Processing unit** — application logic plus an in-memory data grid and replication engine (Hazelcast, Apache Ignite, Oracle Coherence). Small applications fit in one; larger ones split by functional area.", "**Messaging grid** — routes incoming requests to an available processing unit and manages session state. Usually just a load-balancing web server: HAProxy, Nginx.", "**Data grid** — keeps same-named caches in sync across units, asynchronously, typically inside 100 ms. Each instance holds a **member list** of every other instance sharing that cache; joins and departures update it automatically.", "**Processing grid** — optional, orchestrates a request spanning several processing units. Modern implementations use small per-workflow orchestration units rather than one coarse engine.", "**Deployment manager** — starts and stops instances on load. This is what makes elasticity real, and Kubernetes or the cloud provider usually is it.", "**Data pump / writer / reader** — always asynchronous, usually messaging, so you get guaranteed delivery, persistence and FIFO order, and the unit keeps working when the writer is down."], "p": "A new instance doesn't read the database to warm up: it broadcasts a join request, and an existing instance ships it the cache. **Data readers only fire in three situations** — every instance of a cache crashed, they were all redeployed, or someone asked for archive data not held in memory."}, {"k": "decision", "t": "Replicated cache, or distributed?", "art": "caching", "wide": true, "alt": "Three processing units replicating caches between themselves, beside three units sharing one central cache server, with a five-row comparison", "sit": "Every processing unit needs the same data, and the messaging grid may route a request to any of them. Each unit can hold its own copy and sync with the others, or all of them can read one central cache server.", "opts": [["Replicated — each unit holds the cache.", "Extremely fast, and **no single point of failure**. Breaks down in two situations: caches over ~100 MB (units run in containers with finite memory, which caps how many you can start) and very high update rates the replication engine cannot keep up with."], ["Distributed — one central cache server.", "Strong consistency, because the data is in one place and never replicated. Slower — every access is remote — and the cache server is a single point of failure. Mirroring it helps, and reintroduces the consistency problem it was solving."]], "verdict": "**Neither, system-wide.** Below 100 MB and with a manageable update rate, this is a straight choice between consistency (distributed) and performance plus fault tolerance (replicated), and the deciding factor is usually the *kind* of data. Inventory counts need consistency — distributed. Reference data like product codes and descriptions barely changes — replicated. Use both, in different processing units, and take each model's strength."}, {"k": "decision", "t": "Collisions are appearing in the inventory cache", "art": "collision", "wide": true, "alt": "Two instances updating the same inventory count and overwriting each other, with the collision-rate formula and three levers", "sit": "Two instances hold 500 blue widgets. A sells 10 and writes 490; before that replicates, B sells 5 and writes 495. Replication crosses. A ends at 495, B at 490, and the true answer — 485 — exists nowhere.", "opts": [["Reduce replication latency.", "The strongest lever, because it is the multiplier: 100 ms → 1 ms takes 14.4 collisions an hour down to 0.1, at the same 72,000 updates. It depends on network type and physical distance between units."], ["Reduce the number of instances sharing the cache.", "Directly proportional: 5 instances → 2 gives 5.8 an hour instead of 14.4. It also caps your throughput, which is why you were here."], ["Shrink the cache.", "**Backwards.** Cache size is the one *inverse* factor — 50,000 rows → 10,000 takes collisions from 14.4 to 72 an hour."]], "verdict": "`collision rate = N × (UR² ÷ S) × RL`. Worth running before committing to replicated caching: at 20 updates a second across 5 instances of a 50,000-row cache at 100 ms latency, you get 14 collisions in 72,000 updates — 0.02%, entirely viable. **Measure RL in production**; it is rarely published, and 100 ms is the planning number when you have nothing better. And calculate minimum, normal *and* peak rates, because no real system has a flat update rate across a day."}, {"t": "Risks, governance and the cloud split", "art": "hybrid-cloud", "wide": true, "alt": "Processing units and middleware in the cloud connected by a data pump to an on-premises database", "cap": "Fig. 16-14 · transactional processing in elastic cloud, physical data and analytics on-premises.", "items": ["**Frequent database reads** defeat the style. Reads should only happen for archive data and cold starts. If most data has to be archived and re-fetched, or units crash and redeploy often, this is the wrong architecture for the problem.", "**Pump bottlenecks.** Database writes take longer than cache writes, so the pump is a backpressure point. Under high concurrency it delays data reaching the database — a real risk if downstream systems need current data. Govern it with a fitness function on **queue depth**.", "**Data loss in the pump** — mitigate with persisted queues and client-acknowledge mode in the writers, accepting that both slow responsiveness and degrade consistency.", "**Memory.** All transactional data is cached in the units, so volumes must stay low, especially as instance counts rise. Watch cache size or a unit runs out of memory and dies."], "p": "Governance here is unusually measurable: track **average synchronisation time** per unit and overall as a continuous fitness function, so you can see whether architectural changes made it better or worse against the business's timing goal. Also track read frequency, and measure scalability, elasticity and responsiveness directly — since those are the reasons you chose this style."}, {"t": "Characteristics, teams, and when to reach for it", "wide": true, "alt": "Architecture characteristics ratings for space-based architecture", "cap": "Fig. 16-18 · the only style in the book with three fives — and it pays for every one of them.", "items": ["**Teams**: technically partitioned, and most effective with technically aligned teams. **Stream-aligned teams struggle** as the system grows, because one domain change can touch processing units, pumps, readers, writers, cache contracts, orchestrators *and* the database.", "**Enabling teams fit well here** — the opposite of event-driven — because pumps, readers, writers and middleware are shared, cross-cutting artifacts a dedicated team can make more efficient independently.", "**Complicated-subsystem teams** are close to essential: handling data collisions and asynchronous synchronisation errors in the writers is genuinely complex work, and domain teams working on processing units should not have to think about it.", "**Use it** for high and *variable* concurrency — the driving case is unpredictable load spikes, not merely large load. **Don't use it** where the data must be strongly consistent, where cached volumes are too large for memory, or where the team cannot carry the operational complexity."], "art": "_gen5"}], "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 16: Space-Based Architecture Style, pp. 283–314.", "links": [["All 27 chapters", "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"], ["The Architect's Atlas", "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"]], "art": {"bottleneck-triangle": "<svg viewBox=\"0 0 300 216\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.5\" stroke-linejoin=\"round\">\n    <rect x=\"24\" y=\"30\" width=\"252\" height=\"34\"/>\n    <rect x=\"66\" y=\"80\" width=\"168\" height=\"34\"/>\n    <rect x=\"112\" y=\"130\" width=\"76\" height=\"34\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-width=\"1.9\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.2\"><path d=\"M150 64 V80 M150 114 V130\"/></g>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\" font-size=\"8.4\">\n    <text x=\"150\" y=\"52\" font-size=\"9.4\" fill=\"var(--ink)\">web servers</text>\n    <text x=\"150\" y=\"102\" font-size=\"9.4\" fill=\"var(--ink)\">application servers</text>\n    <text x=\"150\" y=\"152\" font-size=\"9.4\" fill=\"var(--acc)\">database</text>\n    <text x=\"290\" y=\"52\" text-anchor=\"end\" font-size=\"7.6\" fill=\"var(--ink2)\">easy, cheap</text>\n    <text x=\"290\" y=\"102\" text-anchor=\"end\" font-size=\"7.6\" fill=\"var(--ink2)\">harder, dearer</text>\n    <text x=\"290\" y=\"152\" text-anchor=\"end\" font-size=\"7.6\" fill=\"var(--acc)\">hardest</text>\n    <text x=\"150\" y=\"188\" fill=\"var(--ink)\">Scale the top and the bottleneck moves down a layer.</text>\n    <text x=\"150\" y=\"204\" fill=\"var(--acc)\">Eventually it stops moving, and the database is the ceiling.</text>\n  </g>\n</svg>", "sba-topology": "<svg viewBox=\"0 0 620 270\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\" stroke-linejoin=\"round\">\n    <rect x=\"14\" y=\"34\" width=\"316\" height=\"122\" stroke=\"var(--ink3)\" stroke-dasharray=\"6 4\"/>\n    <g stroke=\"var(--acc)\" stroke-width=\"1.6\">\n      <rect x=\"30\" y=\"52\" width=\"90\" height=\"88\" fill=\"var(--accBg)\"/>\n      <rect x=\"132\" y=\"52\" width=\"90\" height=\"88\" fill=\"var(--accBg)\"/>\n      <rect x=\"234\" y=\"52\" width=\"80\" height=\"88\" fill=\"var(--accBg)\"/>\n      <path d=\"M120 96 H132 M222 96 H234\" stroke-dasharray=\"4 3\"/>\n      <rect x=\"42\" y=\"96\" width=\"66\" height=\"30\"/><rect x=\"144\" y=\"96\" width=\"66\" height=\"30\"/>\n      <rect x=\"246\" y=\"96\" width=\"56\" height=\"30\"/>\n    </g>\n    <rect x=\"14\" y=\"176\" width=\"316\" height=\"34\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.2\"><path d=\"M172 156 V176\"/></g>\n    <rect x=\"378\" y=\"52\" width=\"52\" height=\"30\"/><rect x=\"378\" y=\"110\" width=\"52\" height=\"30\"/>\n    <rect x=\"452\" y=\"52\" width=\"70\" height=\"30\"/><rect x=\"452\" y=\"110\" width=\"70\" height=\"30\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.2\">\n      <path d=\"M330 76 H378 M330 116 H378 M430 67 H452 M430 125 H452\"/>\n    </g>\n    <ellipse cx=\"570\" cy=\"88\" rx=\"42\" ry=\"9\"/><path d=\"M528 88 v16 a42 9 0 0 0 84 0 v-16\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.2\"><path d=\"M522 74 L534 82 M522 118 L534 104\"/></g>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\" font-size=\"8\">\n    <text x=\"14\" y=\"26\" text-anchor=\"start\" font-size=\"8.6\" fill=\"var(--ink3)\">PROCESSING UNITS — application logic + in-memory data grid</text>\n    <g fill=\"var(--acc)\" font-size=\"7.6\">\n      <text x=\"75\" y=\"72\">unit</text><text x=\"177\" y=\"72\">unit</text><text x=\"274\" y=\"72\">unit</text>\n      <text x=\"75\" y=\"115\">cache</text><text x=\"177\" y=\"115\">cache</text><text x=\"274\" y=\"115\">cache</text>\n    </g>\n    <text x=\"172\" y=\"197\" font-size=\"8.6\" fill=\"var(--ink)\">VIRTUALIZED MIDDLEWARE — messaging grid · data grid · processing grid · deployment manager</text>\n    <text x=\"404\" y=\"71\" fill=\"var(--ink2)\">data</text><text x=\"404\" y=\"80\" fill=\"var(--ink2)\">pump</text>\n    <text x=\"404\" y=\"125\" fill=\"var(--ink2)\">reverse</text><text x=\"404\" y=\"134\" fill=\"var(--ink2)\">pump</text>\n    <text x=\"487\" y=\"71\" fill=\"var(--ink2)\">data writer</text>\n    <text x=\"487\" y=\"129\" fill=\"var(--ink2)\">data reader</text>\n    <text x=\"570\" y=\"93\" fill=\"var(--ink2)\">database</text>\n    <text x=\"310\" y=\"240\" font-size=\"9\" fill=\"var(--ink)\">No processing unit reads or writes the database directly. That is the whole trick.</text>\n    <text x=\"310\" y=\"258\" font-size=\"8.4\" fill=\"var(--acc)\">Replication between same-named caches completes in under about 100 ms, asynchronously.</text>\n  </g>\n</svg>", "caching": "<svg viewBox=\"0 0 620 250\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\" stroke-linejoin=\"round\">\n    <g stroke=\"var(--acc)\" stroke-width=\"1.6\">\n      <rect x=\"14\" y=\"40\" width=\"66\" height=\"52\" fill=\"var(--accBg)\"/><rect x=\"92\" y=\"40\" width=\"66\" height=\"52\" fill=\"var(--accBg)\"/>\n      <rect x=\"170\" y=\"40\" width=\"66\" height=\"52\" fill=\"var(--accBg)\"/>\n      <path d=\"M80 66 H92 M158 66 H170\" stroke-dasharray=\"4 3\"/>\n      <path d=\"M47 92 C90 116 160 116 203 92\" stroke-dasharray=\"4 3\"/>\n    </g>\n    <rect x=\"332\" y=\"40\" width=\"58\" height=\"34\"/><rect x=\"402\" y=\"40\" width=\"58\" height=\"34\"/>\n    <rect x=\"472\" y=\"40\" width=\"58\" height=\"34\"/>\n    <rect x=\"392\" y=\"112\" width=\"88\" height=\"34\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-width=\"1.8\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.2\"><path d=\"M361 74 L420 112 M431 74 V112 M501 74 L452 112\"/></g>\n    <path d=\"M6 168 H614\" stroke=\"var(--rule)\"/>\n    <path d=\"M300 160 V244\" stroke=\"var(--rule)\"/>\n    <path d=\"M452 160 V244\" stroke=\"var(--rule)\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" font-size=\"8\">\n    <text x=\"125\" y=\"28\" text-anchor=\"middle\" font-size=\"9.4\" fill=\"var(--acc)\">REPLICATED</text>\n    <text x=\"431\" y=\"28\" text-anchor=\"middle\" font-size=\"9.4\" fill=\"var(--ink)\">DISTRIBUTED</text>\n    <g fill=\"var(--ink2)\" text-anchor=\"middle\">\n      <text x=\"47\" y=\"70\">cache</text><text x=\"125\" y=\"70\">cache</text><text x=\"203\" y=\"70\">cache</text>\n      <text x=\"361\" y=\"60\">unit</text><text x=\"431\" y=\"60\">unit</text><text x=\"501\" y=\"60\">unit</text>\n      <text x=\"436\" y=\"133\" fill=\"var(--acc)\">one cache server</text>\n    </g>\n    <text x=\"125\" y=\"126\" text-anchor=\"middle\" fill=\"var(--ink2)\">no single point of failure. very fast.</text>\n    <text x=\"431\" y=\"162\" text-anchor=\"middle\" fill=\"var(--ink2)\">consistent, remote, and a single point of failure</text>\n    <g font-size=\"8.6\" text-anchor=\"end\" fill=\"var(--ink)\">\n      <text x=\"292\" y=\"186\">optimises for</text><text x=\"292\" y=\"204\">cache size</text>\n      <text x=\"292\" y=\"222\">data</text><text x=\"292\" y=\"240\">fault tolerance</text>\n    </g>\n    <g font-size=\"8.6\" text-anchor=\"middle\">\n      <text x=\"376\" y=\"186\" fill=\"var(--acc)\">performance</text><text x=\"376\" y=\"204\" fill=\"var(--acc)\">small, under 100 MB</text>\n      <text x=\"376\" y=\"222\" fill=\"var(--acc)\">static, low update rate</text><text x=\"376\" y=\"240\" fill=\"var(--acc)\">high</text>\n      <text x=\"533\" y=\"186\" fill=\"var(--ink2)\">consistency</text><text x=\"533\" y=\"204\" fill=\"var(--ink2)\">large, over 500 MB</text>\n      <text x=\"533\" y=\"222\" fill=\"var(--ink2)\">highly dynamic</text><text x=\"533\" y=\"240\" fill=\"var(--ink2)\">low</text>\n    </g>\n    <text x=\"150\" y=\"196\" text-anchor=\"middle\" font-size=\"8.6\" fill=\"var(--ink)\">Table 16-1 · not a system-wide choice.</text>\n    <text x=\"150\" y=\"212\" text-anchor=\"middle\" font-size=\"8.6\" fill=\"var(--ink)\">Inventory counts want a distributed cache;</text>\n    <text x=\"150\" y=\"226\" text-anchor=\"middle\" font-size=\"8.6\" fill=\"var(--ink)\">customer profiles want a replicated one.</text>\n    <text x=\"150\" y=\"244\" text-anchor=\"middle\" font-size=\"8.2\" fill=\"var(--acc)\">The near-cache hybrid is not recommended here.</text>\n  </g>\n</svg>", "collision": "<svg viewBox=\"0 0 620 246\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.5\" stroke-linejoin=\"round\">\n    <rect x=\"40\" y=\"44\" width=\"150\" height=\"40\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <rect x=\"240\" y=\"44\" width=\"150\" height=\"40\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <g stroke=\"var(--acc)\" stroke-width=\"1.4\" stroke-dasharray=\"5 4\">\n      <path d=\"M190 56 H240\"/><path d=\"M240 74 H190\"/>\n    </g>\n    <path d=\"M424 34 H614 M424 62 H614 M424 90 H614 M424 118 H614\" stroke=\"var(--rule2)\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" font-size=\"8.2\">\n    <text x=\"115\" y=\"62\" text-anchor=\"middle\" font-size=\"9\" fill=\"var(--acc)\">instance A</text>\n    <text x=\"115\" y=\"76\" text-anchor=\"middle\" fill=\"var(--ink2)\">500 → 490 (sold 10)</text>\n    <text x=\"315\" y=\"62\" text-anchor=\"middle\" font-size=\"9\" fill=\"var(--acc)\">instance B</text>\n    <text x=\"315\" y=\"76\" text-anchor=\"middle\" fill=\"var(--ink2)\">500 → 495 (sold 5)</text>\n    <text x=\"215\" y=\"108\" text-anchor=\"middle\" fill=\"var(--ink)\">A replicates → B becomes 490. B replicates → A becomes 495.</text>\n    <text x=\"215\" y=\"124\" text-anchor=\"middle\" fill=\"var(--acc)\">Both wrong. The answer was 485.</text>\n    <text x=\"215\" y=\"150\" text-anchor=\"middle\" font-size=\"9.6\" fill=\"var(--ink)\">collision rate = N × (UR² ÷ S) × RL</text>\n    <text x=\"215\" y=\"166\" text-anchor=\"middle\" font-size=\"8\" fill=\"var(--ink2)\">instances × update rate squared ÷ cache rows × replication latency</text>\n    <text x=\"424\" y=\"24\" font-size=\"8.6\" fill=\"var(--ink3)\">FROM 14.4 COLLISIONS/HOUR, CHANGE ONE THING:</text>\n    <g font-size=\"8.6\" fill=\"var(--ink)\">\n      <text x=\"424\" y=\"54\">RL 100 ms → 1 ms</text>\n      <text x=\"424\" y=\"82\">instances 5 → 2</text>\n      <text x=\"424\" y=\"110\">cache 50,000 → 10,000 rows</text>\n    </g>\n    <g font-size=\"8.6\" text-anchor=\"end\">\n      <text x=\"614\" y=\"54\" fill=\"var(--acc)\">0.1 / hour</text>\n      <text x=\"614\" y=\"82\" fill=\"var(--acc)\">5.8 / hour</text>\n      <text x=\"614\" y=\"110\" fill=\"var(--ink2)\">72 / hour</text>\n    </g>\n    <text x=\"424\" y=\"140\" font-size=\"8.4\" fill=\"var(--ink2)\">Cache size is the one inverse factor:</text>\n    <text x=\"424\" y=\"152\" font-size=\"8.4\" fill=\"var(--ink2)\">a smaller cache collides more.</text>\n    <text x=\"424\" y=\"176\" font-size=\"8.4\" fill=\"var(--acc)\">Measure RL in production. It is never published;</text>\n    <text x=\"424\" y=\"188\" font-size=\"8.4\" fill=\"var(--acc)\">100 ms is the planning number.</text>\n    <text x=\"310\" y=\"222\" font-size=\"9\" text-anchor=\"middle\" fill=\"var(--ink)\">Collisions happen when the update rate outruns replication latency.</text>\n    <text x=\"310\" y=\"238\" font-size=\"8.4\" text-anchor=\"middle\" fill=\"var(--ink2)\">Calculate minimum, normal and peak rates — nobody's update rate is flat across a day.</text>\n  </g>\n</svg>", "hybrid-cloud": "<svg viewBox=\"0 0 620 210\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\" stroke-linejoin=\"round\">\n    <rect x=\"14\" y=\"40\" width=\"300\" height=\"110\" stroke=\"var(--acc)\" stroke-width=\"1.8\" stroke-dasharray=\"7 4\" fill=\"var(--accBg)\"/>\n    <g stroke=\"var(--acc)\" stroke-width=\"1.4\">\n      <rect x=\"34\" y=\"58\" width=\"80\" height=\"34\"/><rect x=\"126\" y=\"58\" width=\"80\" height=\"34\"/><rect x=\"218\" y=\"58\" width=\"76\" height=\"34\"/>\n      <rect x=\"34\" y=\"108\" width=\"260\" height=\"26\"/>\n    </g>\n    <rect x=\"380\" y=\"40\" width=\"226\" height=\"110\" stroke=\"var(--ink3)\" stroke-width=\"1.8\" stroke-dasharray=\"7 4\"/>\n    <ellipse cx=\"493\" cy=\"82\" rx=\"60\" ry=\"10\"/><path d=\"M433 82 v20 a60 10 0 0 0 120 0 v-20\"/>\n    <g stroke=\"var(--ink3)\" stroke-width=\"1.3\"><path d=\"M314 90 H380\"/><path d=\"M372 86 l8 4 l-8 4\"/></g>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\" font-size=\"8.2\">\n    <text x=\"164\" y=\"30\" font-size=\"9.4\" fill=\"var(--acc)\">CLOUD — elastic, transactional</text>\n    <text x=\"493\" y=\"30\" font-size=\"9.4\" fill=\"var(--ink)\">ON-PREMISES — secure, analytical</text>\n    <text x=\"74\" y=\"79\" fill=\"var(--ink2)\">unit</text><text x=\"166\" y=\"79\" fill=\"var(--ink2)\">unit</text><text x=\"256\" y=\"79\" fill=\"var(--ink2)\">unit</text>\n    <text x=\"164\" y=\"125\" fill=\"var(--ink2)\">virtualized middleware</text>\n    <text x=\"493\" y=\"88\" fill=\"var(--ink2)\">physical data · reporting · analytics</text>\n    <text x=\"347\" y=\"82\" font-size=\"7.4\" fill=\"var(--ink3)\">data pump</text>\n    <text x=\"310\" y=\"180\" font-size=\"9\" fill=\"var(--ink)\">Fig. 16-14 · asynchronous pumps and eventual consistency make this split practical.</text>\n    <text x=\"310\" y=\"198\" font-size=\"8.4\" fill=\"var(--acc)\">No other style in the book can be deployed half in the cloud and half on-premises this cleanly.</text>\n  </g>\n</svg>", "_gen5": "<svg viewBox=\"0 0 620 278\" xmlns=\"http://www.w3.org/2000/svg\">\n<g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\">\n<text x=\"0\" y=\"13\" font-size=\"8.6\" letter-spacing=\"1.6\" fill=\"var(--ink3)\">SPACE-BASED — TECHNICALLY PARTITIONED</text>\n<text x=\"620\" y=\"13\" font-size=\"8.6\" text-anchor=\"end\" fill=\"var(--ink2)\">1 = weak   5 = strong</text>\n</g>\n<text x=\"178\" y=\"38\" font-size=\"10\" text-anchor=\"end\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink)\">elasticity</text>\n<rect x=\"190\" y=\"26\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"217\" y=\"26\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"244\" y=\"26\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"271\" y=\"26\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"298\" y=\"26\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<text x=\"333\" y=\"38\" font-size=\"9\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink2)\">the deployment manager's job</text>\n<text x=\"178\" y=\"61\" font-size=\"10\" text-anchor=\"end\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink)\">scalability</text>\n<rect x=\"190\" y=\"49\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"217\" y=\"49\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"244\" y=\"49\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"271\" y=\"49\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"298\" y=\"49\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<text x=\"333\" y=\"61\" font-size=\"9\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink2)\">millions of concurrent users</text>\n<text x=\"178\" y=\"84\" font-size=\"10\" text-anchor=\"end\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink)\">performance</text>\n<rect x=\"190\" y=\"72\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"217\" y=\"72\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"244\" y=\"72\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"271\" y=\"72\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"298\" y=\"72\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<text x=\"333\" y=\"84\" font-size=\"9\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink2)\">in-memory, no database in the path</text>\n<text x=\"178\" y=\"107\" font-size=\"10\" text-anchor=\"end\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink)\">fault tolerance</text>\n<rect x=\"190\" y=\"95\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"217\" y=\"95\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"244\" y=\"95\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"271\" y=\"95\" width=\"21\" height=\"13\" fill=\"var(--acc)\" stroke=\"var(--acc)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"298\" y=\"95\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<text x=\"333\" y=\"107\" font-size=\"9\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink2)\">replicated cache has no SPOF</text>\n<text x=\"178\" y=\"130\" font-size=\"10\" text-anchor=\"end\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink)\">evolvability</text>\n<rect x=\"190\" y=\"118\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"217\" y=\"118\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"244\" y=\"118\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"271\" y=\"118\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"298\" y=\"118\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<text x=\"178\" y=\"153\" font-size=\"10\" text-anchor=\"end\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink)\">deployability</text>\n<rect x=\"190\" y=\"141\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"217\" y=\"141\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"244\" y=\"141\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"271\" y=\"141\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"298\" y=\"141\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<text x=\"178\" y=\"176\" font-size=\"10\" text-anchor=\"end\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink)\">overall cost</text>\n<rect x=\"190\" y=\"164\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"217\" y=\"164\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"244\" y=\"164\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"271\" y=\"164\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"298\" y=\"164\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<text x=\"333\" y=\"176\" font-size=\"9\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink2)\">a lot of moving parts to run</text>\n<text x=\"178\" y=\"199\" font-size=\"10\" text-anchor=\"end\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink)\">data consistency</text>\n<rect x=\"190\" y=\"187\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"217\" y=\"187\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"244\" y=\"187\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"271\" y=\"187\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"298\" y=\"187\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<text x=\"333\" y=\"199\" font-size=\"9\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink2)\">eventual, by construction</text>\n<text x=\"178\" y=\"222\" font-size=\"10\" text-anchor=\"end\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink)\">testability</text>\n<rect x=\"190\" y=\"210\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"217\" y=\"210\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"244\" y=\"210\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"271\" y=\"210\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"298\" y=\"210\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<text x=\"333\" y=\"222\" font-size=\"9\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink2)\">hard to simulate this load</text>\n<text x=\"178\" y=\"245\" font-size=\"10\" text-anchor=\"end\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink)\">simplicity</text>\n<rect x=\"190\" y=\"233\" width=\"21\" height=\"13\" fill=\"var(--ink)\" stroke=\"var(--ink)\" stroke-width=\"1.2\" opacity=\".92\"/>\n<rect x=\"217\" y=\"233\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"244\" y=\"233\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"271\" y=\"233\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<rect x=\"298\" y=\"233\" width=\"21\" height=\"13\" fill=\"none\" stroke=\"var(--rule)\" stroke-width=\"1.2\"/>\n<text x=\"333\" y=\"245\" font-size=\"9\" font-family=\"IBM Plex Mono, monospace\" fill=\"var(--ink2)\">the most complex style here</text>\n</svg>"}};
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function md(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
+  .replace(/`(.+?)`/g,"<code>$1</code>").replace(/\*(.+?)\*/g,"<em>$1</em>")}
+const $=s=>document.querySelector(s);
+
+function fig(s){
+  if(!s.art)return"";
+  return '<figure role="img" aria-label="'+esc(s.alt||"")+'">'+(D.art[s.art]||"")+
+    (s.cap?'<figcaption>'+md(s.cap)+'</figcaption>':"")+'</figure>';
+}
+function quotes(list){
+  return '<div class="qs">'+list.map(q=>'<div class="q"><span class="t">'+md(q[0])+
+    '</span><span class="a">'+esc(q[1])+'</span>'+
+    (q[2]?'<span class="n">'+md(q[2])+'</span>':"")+'</div>').join("")+'</div>';
+}
+function topic(s,i){
+  const body='<div class="body">'+
+    (s.quotes?quotes(s.quotes):"")+
+    (s.items?'<ul>'+s.items.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul>':"")+
+    (s.p?'<p>'+md(s.p)+'</p>':"")+'</div>';
+  return '<section class="sec'+(s.wide?" wide":"")+'" id="s'+i+'">'+
+    '<div class="sechead"><span class="k">'+esc(s.k==="quote"?"The book\u2019s words":"Topic "+s.n)+
+    '</span><h2>'+md(s.t)+'</h2></div>'+
+    '<div class="split">'+fig(s)+body+'</div></section>';
+}
+function decision(s,i){
+  return '<section class="dec" id="s'+i+'">'+
+    '<div class="top"><span class="tag">Decision</span><h2>'+md(s.t)+'</h2></div>'+
+    '<div class="in"><div class="main">'+
+      '<p class="sit">'+md(s.sit)+'</p>'+
+      '<div class="opts">'+s.opts.map(o=>'<div class="opt'+(o[2]?" pick":"")+'">'+
+        '<span class="o">'+md(o[0])+'</span><span class="c">'+md(o[1])+'</span></div>').join("")+'</div>'+
+      '<p class="verdict">'+md(s.verdict)+'</p>'+
+    '</div>'+(s.art?'<div class="art" role="img" aria-label="'+esc(s.alt||"")+'">'+
+      (D.art[s.art]||"")+'</div>':"")+'</div></section>';
+}
+
+let n=0;
+$("#secs").innerHTML=D.sections.map((s,i)=>{
+  if(s.k==="decision")return decision(s,i);
+  if(s.k!=="quote")s.n=String(++n).padStart(2,"0");
+  return topic(s,i);
+}).join("");
+
+const figs=D.sections.filter(s=>s.art).length;
+$("#tbC").textContent="Ch. "+D.ch; $("#tbT").textContent=D.title;
+$("#tbF").textContent=figs; $("#tbR").textContent=D.read;
+$("#cN").textContent=D.ch; $("#cB").textContent=D.book+" · "+D.pages;
+$("#cT").textContent=D.title; $("#cG").textContent=D.gist;
+$("#mL").textContent=D.minute.length+" things to keep";
+$("#minute").innerHTML=D.minute.map(x=>'<li><span>'+md(x)+'</span></li>').join("");
+$("#cite").textContent=D.source||"";
+$("#links").innerHTML=(D.links||[]).map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener">'+
+  esc(l[0])+' &#8599;</a>').join(" &middot; ");
+
+const bar=$("#sc"),onScroll=()=>{
+  const h=document.documentElement.scrollHeight-innerHeight;
+  bar.style.width=(h>0?Math.min(100,Math.max(0,scrollY/h*100)):0)+"%";
+};
+addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);onScroll();
+</script>

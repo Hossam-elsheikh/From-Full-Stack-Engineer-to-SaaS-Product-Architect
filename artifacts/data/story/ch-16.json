@@ -1,0 +1,179 @@
+{
+ "ch": "16",
+ "book": "Chapter 16 · Space-Based Architecture Style",
+ "pages": "pp. 283–314",
+ "title": "Taking the Database Out of the Path",
+ "gist": "Built for one problem: extreme and unpredictable concurrency. It solves it by removing the database from the transaction path entirely and replacing it with replicated in-memory grids — and everything hard about it follows from that one move.",
+ "read": "6 min · 45 sec to re-scan",
+ "acc": {
+  "l": "#4C6478",
+  "d": "#A3B8C8"
+ },
+ "minute": [
+  "Scale the web tier and the bottleneck moves to the app tier; scale that and it moves to the **database**, which is hardest and most expensive to scale. Space-based removes the database from the transactional path instead of fighting it.",
+  "Data lives **in-memory, replicated across processing units**. Updates go to the database asynchronously through a **data pump**, so consistency is always eventual.",
+  "Eight moving parts: processing units, virtualized middleware (**messaging grid, data grid, processing grid, deployment manager**), data pumps, data writers and data readers.",
+  "**Replicated caching** optimises performance and fault tolerance; **distributed caching** optimises consistency. Choose per processing unit, not per system. The near-cache hybrid is explicitly not recommended here.",
+  "**Elasticity, scalability and performance rate five stars** — the only style in the book that does. The bill is paid in simplicity, testability and cost, and in the data risks: collisions, pump bottlenecks, memory limits."
+ ],
+ "sections": [
+  {
+   "t": "Why the usual scaling story runs out",
+   "art": "bottleneck-triangle",
+   "alt": "Three stacked tiers narrowing from web servers to application servers to the database",
+   "cap": "Fig. 16-1 · the triangle. The widest part is the cheapest to widen.",
+   "p": "Caching products and database scaling help, and for extreme, *variable* load they are a retrofit onto something that fundamentally cannot scale. This style takes the architectural answer instead: if the database is the ceiling, take it out of the request path."
+  },
+  {
+   "t": "The eight moving parts",
+   "art": "sba-topology",
+   "wide": true,
+   "alt": "Processing units with in-memory grids above virtualized middleware, with data pumps, writers and readers feeding a database",
+   "cap": "Fig. 16-2 · the name comes from *tuple space* — parallel processors communicating through shared memory.",
+   "items": [
+    "**Processing unit** — application logic plus an in-memory data grid and replication engine (Hazelcast, Apache Ignite, Oracle Coherence). Small applications fit in one; larger ones split by functional area.",
+    "**Messaging grid** — routes incoming requests to an available processing unit and manages session state. Usually just a load-balancing web server: HAProxy, Nginx.",
+    "**Data grid** — keeps same-named caches in sync across units, asynchronously, typically inside 100 ms. Each instance holds a **member list** of every other instance sharing that cache; joins and departures update it automatically.",
+    "**Processing grid** — optional, orchestrates a request spanning several processing units. Modern implementations use small per-workflow orchestration units rather than one coarse engine.",
+    "**Deployment manager** — starts and stops instances on load. This is what makes elasticity real, and Kubernetes or the cloud provider usually is it.",
+    "**Data pump / writer / reader** — always asynchronous, usually messaging, so you get guaranteed delivery, persistence and FIFO order, and the unit keeps working when the writer is down."
+   ],
+   "p": "A new instance doesn't read the database to warm up: it broadcasts a join request, and an existing instance ships it the cache. **Data readers only fire in three situations** — every instance of a cache crashed, they were all redeployed, or someone asked for archive data not held in memory."
+  },
+  {
+   "k": "decision",
+   "t": "Replicated cache, or distributed?",
+   "art": "caching",
+   "wide": true,
+   "alt": "Three processing units replicating caches between themselves, beside three units sharing one central cache server, with a five-row comparison",
+   "sit": "Every processing unit needs the same data, and the messaging grid may route a request to any of them. Each unit can hold its own copy and sync with the others, or all of them can read one central cache server.",
+   "opts": [
+    [
+     "Replicated — each unit holds the cache.",
+     "Extremely fast, and **no single point of failure**. Breaks down in two situations: caches over ~100 MB (units run in containers with finite memory, which caps how many you can start) and very high update rates the replication engine cannot keep up with."
+    ],
+    [
+     "Distributed — one central cache server.",
+     "Strong consistency, because the data is in one place and never replicated. Slower — every access is remote — and the cache server is a single point of failure. Mirroring it helps, and reintroduces the consistency problem it was solving."
+    ]
+   ],
+   "verdict": "**Neither, system-wide.** Below 100 MB and with a manageable update rate, this is a straight choice between consistency (distributed) and performance plus fault tolerance (replicated), and the deciding factor is usually the *kind* of data. Inventory counts need consistency — distributed. Reference data like product codes and descriptions barely changes — replicated. Use both, in different processing units, and take each model's strength."
+  },
+  {
+   "k": "decision",
+   "t": "Collisions are appearing in the inventory cache",
+   "art": "collision",
+   "wide": true,
+   "alt": "Two instances updating the same inventory count and overwriting each other, with the collision-rate formula and three levers",
+   "sit": "Two instances hold 500 blue widgets. A sells 10 and writes 490; before that replicates, B sells 5 and writes 495. Replication crosses. A ends at 495, B at 490, and the true answer — 485 — exists nowhere.",
+   "opts": [
+    [
+     "Reduce replication latency.",
+     "The strongest lever, because it is the multiplier: 100 ms → 1 ms takes 14.4 collisions an hour down to 0.1, at the same 72,000 updates. It depends on network type and physical distance between units."
+    ],
+    [
+     "Reduce the number of instances sharing the cache.",
+     "Directly proportional: 5 instances → 2 gives 5.8 an hour instead of 14.4. It also caps your throughput, which is why you were here."
+    ],
+    [
+     "Shrink the cache.",
+     "**Backwards.** Cache size is the one *inverse* factor — 50,000 rows → 10,000 takes collisions from 14.4 to 72 an hour."
+    ]
+   ],
+   "verdict": "`collision rate = N × (UR² ÷ S) × RL`. Worth running before committing to replicated caching: at 20 updates a second across 5 instances of a 50,000-row cache at 100 ms latency, you get 14 collisions in 72,000 updates — 0.02%, entirely viable. **Measure RL in production**; it is rarely published, and 100 ms is the planning number when you have nothing better. And calculate minimum, normal *and* peak rates, because no real system has a flat update rate across a day."
+  },
+  {
+   "t": "Risks, governance and the cloud split",
+   "art": "hybrid-cloud",
+   "wide": true,
+   "alt": "Processing units and middleware in the cloud connected by a data pump to an on-premises database",
+   "cap": "Fig. 16-14 · transactional processing in elastic cloud, physical data and analytics on-premises.",
+   "items": [
+    "**Frequent database reads** defeat the style. Reads should only happen for archive data and cold starts. If most data has to be archived and re-fetched, or units crash and redeploy often, this is the wrong architecture for the problem.",
+    "**Pump bottlenecks.** Database writes take longer than cache writes, so the pump is a backpressure point. Under high concurrency it delays data reaching the database — a real risk if downstream systems need current data. Govern it with a fitness function on **queue depth**.",
+    "**Data loss in the pump** — mitigate with persisted queues and client-acknowledge mode in the writers, accepting that both slow responsiveness and degrade consistency.",
+    "**Memory.** All transactional data is cached in the units, so volumes must stay low, especially as instance counts rise. Watch cache size or a unit runs out of memory and dies."
+   ],
+   "p": "Governance here is unusually measurable: track **average synchronisation time** per unit and overall as a continuous fitness function, so you can see whether architectural changes made it better or worse against the business's timing goal. Also track read frequency, and measure scalability, elasticity and responsiveness directly — since those are the reasons you chose this style."
+  },
+  {
+   "t": "Characteristics, teams, and when to reach for it",
+   "wide": true,
+   "gen": {
+    "kind": "ratings",
+    "head": "SPACE-BASED — TECHNICALLY PARTITIONED",
+    "rows": [
+     [
+      "elasticity",
+      5,
+      "the deployment manager's job"
+     ],
+     [
+      "scalability",
+      5,
+      "millions of concurrent users"
+     ],
+     [
+      "performance",
+      5,
+      "in-memory, no database in the path"
+     ],
+     [
+      "fault tolerance",
+      4,
+      "replicated cache has no SPOF"
+     ],
+     [
+      "evolvability",
+      3,
+      ""
+     ],
+     [
+      "deployability",
+      3,
+      ""
+     ],
+     [
+      "overall cost",
+      2,
+      "a lot of moving parts to run"
+     ],
+     [
+      "data consistency",
+      1,
+      "eventual, by construction"
+     ],
+     [
+      "testability",
+      1,
+      "hard to simulate this load"
+     ],
+     [
+      "simplicity",
+      1,
+      "the most complex style here"
+     ]
+    ]
+   },
+   "alt": "Architecture characteristics ratings for space-based architecture",
+   "cap": "Fig. 16-18 · the only style in the book with three fives — and it pays for every one of them.",
+   "items": [
+    "**Teams**: technically partitioned, and most effective with technically aligned teams. **Stream-aligned teams struggle** as the system grows, because one domain change can touch processing units, pumps, readers, writers, cache contracts, orchestrators *and* the database.",
+    "**Enabling teams fit well here** — the opposite of event-driven — because pumps, readers, writers and middleware are shared, cross-cutting artifacts a dedicated team can make more efficient independently.",
+    "**Complicated-subsystem teams** are close to essential: handling data collisions and asynchronous synchronisation errors in the writers is genuinely complex work, and domain teams working on processing units should not have to think about it.",
+    "**Use it** for high and *variable* concurrency — the driving case is unpredictable load spikes, not merely large load. **Don't use it** where the data must be strongly consistent, where cached volumes are too large for memory, or where the team cannot carry the operational complexity."
+   ]
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 16: Space-Based Architecture Style, pp. 283–314.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

@@ -1,0 +1,152 @@
+<!-- Drawings for chapter 04 · Architectural Characteristics Defined -->
+
+<!--@ domain-vs-ac -->
+<svg viewBox="0 0 300 186" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="14" y="34" width="126" height="82"/>
+    <rect x="160" y="34" width="126" height="82" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M26 66 h100 M26 80 h100 M26 94 h70"/></g>
+    <g stroke="var(--acc)" stroke-width="1.1"><path d="M172 66 h100 M172 80 h100 M172 94 h70"/></g>
+    <path d="M150 30 V120" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <path d="M14 134 H286" stroke="var(--ink)" stroke-width="2"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="77" y="24" font-size="9.6" fill="var(--ink)">THE DOMAIN</text>
+    <text x="223" y="24" font-size="9.6" fill="var(--acc)">CHARACTERISTICS</text>
+    <text x="77" y="53" font-size="8.4" fill="var(--ink2)">what the system does</text>
+    <text x="223" y="53" font-size="8.4" fill="var(--acc)">what it must be good at</text>
+    <text x="77" y="130" font-size="8.4" fill="var(--ink2)">behaviour · requirements</text>
+    <text x="223" y="130" font-size="8.4" fill="var(--ink2)">capabilities · the -ilities</text>
+    <text x="150" y="152" font-size="9.4" fill="var(--ink)">a software solution needs both</text>
+    <text x="150" y="172" font-size="8.4" fill="var(--ink2)">only one of them arrives written down (Fig. 4-1)</text>
+  </g>
+</svg>
+
+<!--@ ac-triangle -->
+<svg viewBox="0 0 320 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <path d="M160 26 L282 186 H38 Z" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <circle cx="160" cy="26" r="5" fill="var(--acc)" stroke="none"/>
+    <circle cx="282" cy="186" r="5" fill="var(--acc)" stroke="none"/>
+    <circle cx="38" cy="186" r="5" fill="var(--acc)" stroke="none"/>
+    <path d="M160 186 l-8 -12 h16 z" fill="var(--ink)" stroke="none"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <g font-size="9.6" fill="var(--ink)">
+      <text x="160" y="16">NON-DOMAIN</text>
+      <text x="282" y="202">STRUCTURAL</text>
+      <text x="38" y="202">CRITICAL</text>
+    </g>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="160" y="70">not about what the</text><text x="160" y="81">system does, but how</text>
+      <text x="160" y="92">and why it does it</text>
+      <text x="252" y="216">needs special</text>
+      <text x="252" y="141">shape, not just</text><text x="252" y="152">careful coding</text>
+      <text x="66" y="141">important enough</text><text x="66" y="152">to be worth the</text>
+      <text x="66" y="163">complexity it adds</text>
+    </g>
+    <text x="160" y="212" font-size="8.4" fill="var(--acc)">all three, or it is not an architecture characteristic (Fig. 4-2)</text>
+  </g>
+</svg>
+
+<!--@ categories -->
+<svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="6" y="26" width="146" height="192"/>
+    <rect x="160" y="26" width="146" height="192"/>
+    <rect x="314" y="26" width="146" height="192" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="468" y="26" width="146" height="192"/>
+    <path d="M6 52 H152 M160 52 H306 M314 52 H460 M468 52 H614" stroke="var(--rule)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="8" y="16" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--ink3)">FOUR CATEGORIES — AND NO UNIVERSAL STANDARD BEHIND ANY OF THEM</text>
+    <g font-size="10" fill="var(--ink)">
+      <text x="79" y="45">OPERATIONAL</text><text x="233" y="45">STRUCTURAL</text>
+      <text x="387" y="45" fill="var(--acc)">CLOUD</text><text x="541" y="45">CROSS-CUTTING</text>
+    </g>
+    <g font-size="9" fill="var(--ink2)">
+      <text x="79" y="72">availability</text><text x="79" y="88">continuity</text><text x="79" y="104">performance</text>
+      <text x="79" y="120">recoverability</text><text x="79" y="136">reliability / safety</text><text x="79" y="152">robustness</text>
+      <text x="79" y="168">scalability</text>
+      <text x="233" y="72">configurability</text><text x="233" y="88">extensibility</text><text x="233" y="104">installability</text>
+      <text x="233" y="120">reuse</text><text x="233" y="136">localization</text><text x="233" y="152">maintainability</text>
+      <text x="233" y="168">portability</text><text x="233" y="184">upgradeability</text>
+      <text x="387" y="72">on-demand scaling</text><text x="387" y="88">on-demand elasticity</text>
+      <text x="387" y="104">zone availability</text><text x="387" y="120">region privacy</text>
+      <text x="387" y="136">region security</text>
+      <text x="541" y="72">accessibility</text><text x="541" y="88">archivability</text><text x="541" y="104">authentication</text>
+      <text x="541" y="120">authorization</text><text x="541" y="136">legal</text><text x="541" y="152">privacy</text>
+      <text x="541" y="168">security</text><text x="541" y="184">supportability</text><text x="541" y="200">usability</text>
+    </g>
+    <g font-size="8" fill="var(--ink3)">
+      <text x="79" y="204">the ones that most</text><text x="79" y="214">often force structure</text>
+      <text x="387" y="164" fill="var(--acc)">new in the 2nd ed.</text>
+      <text x="541" y="214">the ones that defy</text>
+    </g>
+    <text x="310" y="240" font-size="8.6" fill="var(--ink2)">every list is incomplete — each organisation writes its own, with definitions</text>
+  </g>
+</svg>
+
+<!--@ design-or-structure -->
+<svg viewBox="0 0 300 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="14" y="42" width="118" height="56"/>
+    <rect x="168" y="42" width="118" height="56" fill="var(--accBg)" stroke="var(--acc)"/>
+    <path d="M132 70 H168" stroke="var(--ink3)"/>
+    <path d="M160 66 l8 4 l-8 4" stroke="var(--ink3)"/>
+    <path d="M14 130 H286" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <rect x="14" y="152" width="118" height="42"/>
+    <path d="M20 158 l106 30 M126 158 l-106 30" stroke="var(--ink)" stroke-width="1.6"/>
+    <rect x="168" y="152" width="118" height="42" fill="var(--accBg)" stroke="var(--acc)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="8" y="20" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--ink3)">SECURITY — EITHER ROUTE WORKS</text>
+    <text x="73" y="66" font-size="9.4" fill="var(--ink)">by design</text>
+    <text x="73" y="82" font-size="8.2" fill="var(--ink2)">encrypt, hash, salt</text>
+    <text x="227" y="66" font-size="9.4" fill="var(--acc)">by structure</text>
+    <text x="227" y="82" font-size="8.2" fill="var(--ink2)">a hardened service</text>
+    <text x="8" y="146" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--acc)">SCALABILITY — ONLY ONE ROUTE</text>
+    <text x="73" y="176" font-size="9.4" fill="var(--ink2)">no clever design</text>
+    <text x="227" y="171" font-size="9.4" fill="var(--acc)">change the style</text>
+    <text x="227" y="185" font-size="8.2" fill="var(--ink2)">go distributed</text>
+    <text x="150" y="216" font-size="8.4" fill="var(--ink2)">the ones that force structure are the ones to worry about</text>
+  </g>
+</svg>
+
+<!--@ synergy -->
+<svg viewBox="0 0 300 196" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <path d="M150 116 l-22 34 h44 z" fill="var(--ink)" stroke="none"/>
+    <path d="M42 78 L258 132" stroke="var(--acc)" stroke-width="2.4"/>
+    <rect x="14" y="52" width="62" height="26" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="226" y="118" width="62" height="26"/>
+    <path d="M45 44 v-14 M39 36 l6 -8 l6 8" stroke="var(--acc)" stroke-width="1.6"/>
+    <path d="M257 154 v14 M251 162 l6 8 l6 -8" stroke="var(--ink)" stroke-width="1.6"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="9">
+    <text x="45" y="69" fill="var(--acc)">security</text>
+    <text x="257" y="135" fill="var(--ink)">performance</text>
+    <text x="45" y="22" font-size="8.2" fill="var(--acc)">raise this</text>
+    <text x="257" y="186" font-size="8.2" fill="var(--ink2)">and this moves</text>
+    <text x="150" y="180" font-size="8.4" fill="var(--ink2)">on-the-fly encryption,</text>
+    <text x="150" y="191" font-size="8.4" fill="var(--ink2)">indirection, hidden secrets</text>
+  </g>
+</svg>
+
+<!--@ least-worst -->
+<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5">
+    <path d="M40 152 H284 M40 152 V22"/>
+    <path d="M40 148 C110 146 160 120 200 74 C222 48 236 34 268 26" stroke="var(--acc)" stroke-width="2.2"/>
+    <rect x="46" y="118" width="58" height="32" fill="var(--accBg)" stroke="var(--acc)" stroke-dasharray="5 4"/>
+    <circle cx="75" cy="141" r="4" fill="var(--acc)" stroke="none"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace">
+    <text x="34" y="88" font-size="8.6" fill="var(--ink)" transform="rotate(-90 34 88)" text-anchor="middle">design cost</text>
+    <text x="162" y="170" font-size="8.6" text-anchor="middle" fill="var(--ink)">characteristics supported →</text>
+    <text x="75" y="110" font-size="8.4" text-anchor="middle" fill="var(--acc)">aim here</text>
+    <text x="256" y="46" font-size="8.4" text-anchor="middle" fill="var(--ink2)">generic solution</text>
+    <text x="256" y="57" font-size="8.4" text-anchor="middle" fill="var(--ink2)">that solves nothing</text>
+    <text x="150" y="190" font-size="8.6" text-anchor="middle" fill="var(--acc)">never the best architecture — the least worst one</text>
+  </g>
+</svg>

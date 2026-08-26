@@ -1,0 +1,96 @@
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Chapter</span><span class="v" id="tbC">—</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v" id="tbT">—</span></div>
+    <div class="tcell"><span class="lbl">Figures</span><span class="v" id="tbF">—</span></div>
+    <div class="tcell"><span class="lbl">Read</span><span class="v" id="tbR">—</span></div>
+  </header>
+  <div class="scroll"><i id="sc"></i></div>
+
+  <section class="cover">
+    <span class="num" id="cN"></span>
+    <div>
+      <p class="bk" id="cB"></p>
+      <h1 id="cT"></h1>
+      <p class="gist" id="cG"></p>
+    </div>
+  </section>
+
+  <section class="minute">
+    <div class="h"><h2>The one-minute version</h2><span class="lbl" id="mL"></span></div>
+    <ol id="minute"></ol>
+  </section>
+
+  <div id="secs"></div>
+
+  <footer class="foot">
+    <span class="cite" id="cite"></span>
+    <span id="links"></span>
+  </footer>
+</div>
+</div>
+<script>
+const D=__DATA__;
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function md(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
+  .replace(/`(.+?)`/g,"<code>$1</code>").replace(/\*(.+?)\*/g,"<em>$1</em>")}
+const $=s=>document.querySelector(s);
+
+function fig(s){
+  if(!s.art)return"";
+  return '<figure role="img" aria-label="'+esc(s.alt||"")+'">'+(D.art[s.art]||"")+
+    (s.cap?'<figcaption>'+md(s.cap)+'</figcaption>':"")+'</figure>';
+}
+function quotes(list){
+  return '<div class="qs">'+list.map(q=>'<div class="q"><span class="t">'+md(q[0])+
+    '</span><span class="a">'+esc(q[1])+'</span>'+
+    (q[2]?'<span class="n">'+md(q[2])+'</span>':"")+'</div>').join("")+'</div>';
+}
+function topic(s,i){
+  const body='<div class="body">'+
+    (s.quotes?quotes(s.quotes):"")+
+    (s.items?'<ul>'+s.items.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul>':"")+
+    (s.p?'<p>'+md(s.p)+'</p>':"")+'</div>';
+  return '<section class="sec'+(s.wide?" wide":"")+'" id="s'+i+'">'+
+    '<div class="sechead"><span class="k">'+esc(s.k==="quote"?"The book\u2019s words":"Topic "+s.n)+
+    '</span><h2>'+md(s.t)+'</h2></div>'+
+    '<div class="split">'+fig(s)+body+'</div></section>';
+}
+function decision(s,i){
+  return '<section class="dec" id="s'+i+'">'+
+    '<div class="top"><span class="tag">Decision</span><h2>'+md(s.t)+'</h2></div>'+
+    '<div class="in"><div class="main">'+
+      '<p class="sit">'+md(s.sit)+'</p>'+
+      '<div class="opts">'+s.opts.map(o=>'<div class="opt'+(o[2]?" pick":"")+'">'+
+        '<span class="o">'+md(o[0])+'</span><span class="c">'+md(o[1])+'</span></div>').join("")+'</div>'+
+      '<p class="verdict">'+md(s.verdict)+'</p>'+
+    '</div>'+(s.art?'<div class="art" role="img" aria-label="'+esc(s.alt||"")+'">'+
+      (D.art[s.art]||"")+'</div>':"")+'</div></section>';
+}
+
+let n=0;
+$("#secs").innerHTML=D.sections.map((s,i)=>{
+  if(s.k==="decision")return decision(s,i);
+  if(s.k!=="quote")s.n=String(++n).padStart(2,"0");
+  return topic(s,i);
+}).join("");
+
+const figs=D.sections.filter(s=>s.art).length;
+$("#tbC").textContent="Ch. "+D.ch; $("#tbT").textContent=D.title;
+$("#tbF").textContent=figs; $("#tbR").textContent=D.read;
+$("#cN").textContent=D.ch; $("#cB").textContent=D.book+" · "+D.pages;
+$("#cT").textContent=D.title; $("#cG").textContent=D.gist;
+$("#mL").textContent=D.minute.length+" things to keep";
+$("#minute").innerHTML=D.minute.map(x=>'<li><span>'+md(x)+'</span></li>').join("");
+$("#cite").textContent=D.source||"";
+$("#links").innerHTML=(D.links||[]).map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener">'+
+  esc(l[0])+' &#8599;</a>').join(" &middot; ");
+
+const bar=$("#sc"),onScroll=()=>{
+  const h=document.documentElement.scrollHeight-innerHeight;
+  bar.style.width=(h>0?Math.min(100,Math.max(0,scrollY/h*100)):0)+"%";
+};
+addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);onScroll();
+</script>

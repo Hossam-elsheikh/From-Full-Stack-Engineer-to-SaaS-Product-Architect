@@ -1,0 +1,158 @@
+{
+ "ch": "05",
+ "book": "Chapter 5 · Identifying Architectural Characteristics",
+ "pages": "pp. 67–79",
+ "title": "Translating What the Business Said",
+ "gist": "Stakeholders talk about time to market and user satisfaction; architects talk about deployability and fault tolerance. This chapter is the translation table, the trap of composite characteristics, and a technique for getting a room of people down to three priorities.",
+ "read": "5 min · 45 sec to re-scan",
+ "acc": {
+  "l": "#6B4276",
+  "d": "#C296CE"
+ },
+ "minute": [
+  "Characteristics come from three places: **domain concerns**, **requirements documents**, and your own **implicit domain knowledge** of that industry.",
+  "The business and the architect speak different languages. *Time to market* means agility, testability, deployability. *Mergers and acquisitions* means interoperability, scalability, adaptability, extensibility. Translating is the work.",
+  "**Composite characteristics** — agility, for one — have no objective definition. Break them into measurable parts before you design for them, and never pick just one of the parts.",
+  "**Scalability** is more users over time; **elasticity** is bursts. A hotel booking system needs the first, a concert-ticket system needs the second, and they are not the same design.",
+  "Overspecifying is as damaging as underspecifying. Ask stakeholders to rank everything and the answer is “all of them” — so use a **seven-slot worksheet and pick the top three, in any order**."
+ ],
+ "sections": [
+  {
+   "t": "The translation table",
+   "art": "translate",
+   "wide": true,
+   "alt": "Five business concerns on the left mapped to the architecture characteristics that support them",
+   "cap": "Table 5-1 · say “availability” to a stakeholder and you lose the room; say it as *user satisfaction* and you keep it.",
+   "p": "Most characteristics come out of listening to domain stakeholders, and the obstacle is vocabulary. They talk about mergers, user satisfaction, time to market and competitive advantage; you talk about interoperability, fault tolerance and learnability. Neither side can act on the other's words until someone translates — and knowing the key domain goals is what makes an architecture decision justifiable rather than merely defensible."
+  },
+  {
+   "t": "Composite characteristics have to be broken up",
+   "art": "composite",
+   "alt": "Agility cracking into three measurable parts: deployability, modularity and testability",
+   "cap": "There is no unit of agility. There are units of deployability, modularity and testability.",
+   "p": "The common false equivalence is *agility = time to market*. Agility has no single objective definition; it is composed of other things that can actually be measured. Decomposing composites and giving the parts objective definitions is part of the job — and it is what makes governance possible at all (Ch. 6)."
+  },
+  {
+   "k": "decision",
+   "t": "“End-of-day fund pricing must complete on time”",
+   "art": "composite",
+   "alt": "Agility cracking into three measurable parts: deployability, modularity and testability",
+   "sit": "A domain stakeholder tells you, with regulators in mind, that end-of-day fund pricing absolutely must finish on time. The concern is obviously about speed.",
+   "opts": [
+    [
+     "Design for performance. That's what they asked for.",
+     "This is the flour-missing-from-the-cake antipattern: picking the one visible part of a composite. It doesn't matter how fast the system is if it isn't up, can't cope as funds are added, crashes at 85%, or prices things wrongly."
+    ],
+    [
+     "Decompose the concern, then design for all of it.",
+     "Performance **and** availability (it must be there), scalability (more funds every year), reliability (it must not crash mid-run), recoverability (restart from 85%, not from zero) and auditability (the prices must be right, provably).",
+     1
+    ]
+   ],
+   "verdict": "Business goals arrive as composites almost every time. The architect's contribution is to take one sentence from a stakeholder and return six characteristics with objective definitions — not to design against the sentence as written."
+  },
+  {
+   "t": "Scalability is not elasticity",
+   "art": "scale-vs-elastic",
+   "alt": "A rising curve of users over time beside a spiky burst graph",
+   "cap": "Figs. 5-1 and 5-2 · one is a slope, one is a spike. They need different designs.",
+   "p": "A sandwich-shop brief that says “thousands, perhaps millions of users” is asking for scalability out loud. It is also asking for elasticity silently, because nobody eats evenly across the day — traffic arrives at mealtimes. Requirements sometimes state a characteristic outright; more often it lurks in the domain and you are expected to find it."
+  },
+  {
+   "t": "Deriving characteristics: Silicon Sandwiches",
+   "art": "sandwiches",
+   "wide": true,
+   "alt": "Two columns of characteristics derived from the kata, explicit on the left and implicit on the right",
+   "cap": "Architecture katas — Ted Neward's idea — give you a brief, some users, requirements and additional context.",
+   "p": "Work through a brief line by line and most requirements contribute nothing structural. “Dispatch the driver with the order” needs no special characteristic. But “thousands, perhaps millions” is scalability, “national and local promotions” is customizability, “plans to expand overseas” is internationalization, and “franchised, each with a different owner” is a cost constraint — check feasibility before designing anything expensive.",
+   "quotes": [
+    [
+     "How do we get great designers? Great designers design, of course.",
+     "Fred Brooks",
+     "The argument for katas. An architect might design half a dozen real systems in a career, which is not enough repetitions to get good at it by accident."
+    ]
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "The external traffic service is down",
+   "art": "scale-vs-elastic",
+   "alt": "A rising curve of users over time beside a spiky burst graph",
+   "sit": "Pickup customers get directions to the shop, integrated with external mapping services that include traffic information. That's a third-party integration point, and third-party calls fail.",
+   "opts": [
+    [
+     "Treat the integration as required and design hard for reliability around it.",
+     "You have just made a sandwich shop's ordering system depend on a traffic API. Now a stranger's outage takes your orders offline, and you paid design effort for the privilege."
+    ],
+    [
+     "Degrade: show directions without traffic information.",
+     "Slightly less efficient directions, orders still flowing. The characteristic you needed was not high reliability of the integration — it was not being brittle.",
+     1
+    ]
+   ],
+   "verdict": "Integration points do affect reliability, and it is right to notice them. It is equally right to **guard against building unnecessary brittleness or fragility into a design**. Overspecifying a characteristic is a real cost, not a safe default."
+  },
+  {
+   "k": "decision",
+   "t": "Customizability: architecture, or design?",
+   "art": "sandwiches",
+   "alt": "Two columns of characteristics derived from the kata, explicit on the left and implicit on the right",
+   "sit": "National promotions, local promotions, locally overridden directions, regional recipes. Several parts of the domain need custom behaviour. Do you build structure for it, or write it in the application?",
+   "opts": [
+    [
+     "Microkernel: default behaviour in the core, the custom parts as plug-ins.",
+     "Structural support for customisation, and the style is built for exactly this (Ch. 13). It also brings its own costs in performance and coupling that may fight your other characteristics."
+    ],
+    [
+     "A design pattern — Template Method — inside whatever style you pick.",
+     "A parent class defines the workflow and children override the varying parts. No structural commitment, and you keep the style you chose for other reasons."
+    ],
+    [
+     "Decide it with the tech lead, the developers and the domain analysts.",
+     "Whichever of the two you land on, this is the part that isn't optional. An architecture decision made alone, away from the people implementing it, is the **Ivory Tower** antipattern.",
+     1
+    ]
+   ],
+   "verdict": "Three questions settle the first two options: are there good reasons *not* to use microkernel here? Are other desirable characteristics harder in one design than the other? And what does supporting it in the architecture cost, versus supporting it in the design? A characteristic only becomes architectural when part of the domain **relies on custom structure** to support it."
+  },
+  {
+   "t": "Limit the list, then pick three",
+   "art": "worksheet",
+   "wide": true,
+   "alt": "A worksheet with seven driving slots, a column of implicit characteristics, and an others-considered column",
+   "cap": "Fig. 5-3 · seven slots, because a list has to stop somewhere.",
+   "items": [
+    "Implicit characteristics sit in their own column; **pull one left** when it becomes a genuine driver for this system.",
+    "When the seven slots are full and something better appears, the loser moves right into *others considered* — nothing is deleted, so the reasoning survives.",
+    "Then ask the stakeholders for the **top three, in any order**. Ranking all seven never reaches consensus and produces frustration; picking three does, and it starts the conversation about what actually matters.",
+    "A useful counter-exercise: ask which characteristic you would **remove** if forced. Explicit ones usually go first, since implicit ones tend to underpin general success."
+   ],
+   "p": "Ask a room full of stakeholders which characteristics they want and the answer is always “all of them”. The Vasa was built that way — troop transport *and* gunship, two decks instead of one, every cannon twice the usual size. It capsized in Stockholm harbour firing its own salute.",
+   "quotes": [
+    [
+     "There are no wrong answers in architecture, only expensive ones.",
+     "Mark Richards",
+     ""
+    ]
+   ]
+  },
+  {
+   "t": "The Vasa",
+   "art": "vasa",
+   "alt": "A top-heavy two-decked warship listing over",
+   "cap": "Built 1626–28 for a king who wanted every characteristic at once. Sank on its maiden voyage; salvaged in 1961; now a museum.",
+   "p": "The shipbuilders had doubts and could not say no to King Adolphus. Every characteristic added, none removed, and the result was top-heavy. Don't obsess over the exact number in your list — but do remember what the number is for: keeping the design simple enough to build."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 5: Identifying Architectural Characteristics, pp. 67–79. Architecture katas are Ted Neward's; the Silicon Sandwiches kata runs through several later chapters.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

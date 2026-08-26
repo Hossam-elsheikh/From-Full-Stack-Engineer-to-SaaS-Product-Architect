@@ -1,0 +1,92 @@
+{
+ "ch": "19",
+ "book": "Chapter 19 · Choosing the Appropriate Architecture Style",
+ "pages": "pp. 359–370",
+ "title": "It Depends, With a Method",
+ "gist": "The chapter that refuses to answer the question — and then gives you the seven things to know first, the three decisions to make in order, and two worked designs that show what the answer looks like.",
+ "read": "4 min · 35 sec to re-scan",
+ "acc": {
+  "l": "#806418",
+  "d": "#D6BC5F"
+ },
+ "minute": [
+  "Architecture fashion shifts for reasons: **observations from past pain**, ecosystem change, new capabilities, acceleration, domain change, technology change, and external factors like licence cost.",
+  "Seven things to know before choosing: the **domain**, the **architecture characteristics**, the **data architecture**, **cloud deployment**, **organisational factors**, **process/teams/operations**, and **domain-architecture isomorphism**.",
+  "The star charts throughout Part II rate **characteristics, not domains** — because almost any generic style can implement almost any domain, and the real difference is how well each supports which characteristics.",
+  "Three decisions, in order: **monolith or distributed** → **where does data live** → **synchronous or asynchronous**.",
+  "**Default to synchronous; go asynchronous only when necessary.** It presents fewer design, implementation and debugging challenges."
+ ],
+ "sections": [
+  {
+   "t": "What you need to know first",
+   "art": "criteria",
+   "wide": true,
+   "alt": "Seven decision criteria for choosing an architecture style",
+   "cap": "Not a checklist to complete — a set of gaps to close before the decision is meaningful.",
+   "items": [
+    "**The domain** — not as a subject-matter expert, but well enough to see what affects operational characteristics. Business analysts fill the gaps.",
+    "**Architecture characteristics** — the actual differentiator between styles, which is why every scorecard in Part II is about characteristics rather than domains.",
+    "**Data architecture** — a specialisation in its own right, and it matters most when the new system must live alongside an older data design.",
+    "**Cloud deployment** — how much data will be stored, and how much has to move (which costs real money). The cloud is also the clearest example of a sophisticated capability becoming a commodity: elasticity used to take esoteric skills and is now a configuration parameter.",
+    "**Organisational factors** — a vendor's price can veto the right design. Planned mergers push you toward open solutions and integration architectures.",
+    "**Process, teams, operations** — if the organisation lacks maturity in Agile engineering practices, styles that depend on them (microservices) will be painful."
+   ]
+  },
+  {
+   "t": "Isomorphism: does the shape fit the problem?",
+   "art": "isomorphism",
+   "wide": true,
+   "alt": "Layered against modular monolith shapes, and monolithic against distributed shapes",
+   "cap": "Figs. 19-1 and 19-2 · *isos* equal, *morph* shape — a map that preserves relations among elements.",
+   "p": "Some domains match a topology directly. **Microkernel** suits anything needing customisation, because customisations become plug-ins. **Space-based** suits genome analysis, which is a large number of discrete operations. And some domains fit a style badly on purpose: a multipage insurance form where each page depends on the previous one is a **highly semantically coupled problem**, and modelling it in a highly decoupled architecture fights the domain. Service-based — an intentionally coupled architecture — suits it better."
+  },
+  {
+   "k": "decision",
+   "t": "Three questions, in this order",
+   "art": "three-questions",
+   "wide": true,
+   "alt": "Three sequential questions: monolith or distributed, where data lives, synchronous or asynchronous",
+   "sit": "You have done the characteristics analysis and the component design. Now the style has to be chosen — and these three questions, taken in order, do most of the choosing.",
+   "opts": [
+    [
+     "Monolith or distributed?",
+     "One set of characteristics suffices → monolithic. Different parts need different sets → distributed. **The architecture quantum from Chapter 7 is the tool** for making this call."
+    ],
+    [
+     "Where does data live?",
+     "In a monolith, usually one relational database. In a distributed architecture you must decide which services persist what — and that means thinking about how data flows through the workflows, not just where it sits."
+    ],
+    [
+     "Synchronous or asynchronous?",
+     "Synchronous is more convenient and trades away scalability and reliability. Asynchronous buys performance and scale and hands you data synchronisation, deadlocks, race conditions and debugging."
+    ]
+   ],
+   "verdict": "**Default to synchronous, and use asynchronous when necessary.** And note what the output of this process actually is: not just a topology, but the topology *plus* the **ADRs** covering the decisions that took the most effort, *plus* the **fitness functions** protecting the principles and operational characteristics you have just committed to."
+  },
+  {
+   "t": "Two worked answers",
+   "art": "ggg-quanta",
+   "wide": true,
+   "alt": "The Going, Going, Gone microservices design resolved into five quantum boundaries",
+   "cap": "Fig. 19-6 · GGG resolves to five quanta: Payment, Auctioneer, Bidder, Bidder Streams, Bid Tracker.",
+   "items": [
+    "**Silicon Sandwiches — modular monolith.** One relational database, one web UI designed carefully for mobile, each domain as a component. The style doesn't handle customisation, so that becomes domain design: an **Override endpoint** every domain component references — and a fitness function to check that they do.",
+    "**Silicon Sandwiches — microkernel.** Domains and a database in the core; common customisations in one plug-in set, local ones each with their own data. It also uses **Backends for Frontends**: the API layer becomes a thin microkernel adapter, and each BFF (iOS, Android, web) reshapes generic backend output — format, pagination, latency — for its device.",
+    "**GGG — microservices.** Both event-driven and microservices matched the characteristics; microservices won because it **supports variation in operational characteristics between services**, where pure EDA separates pieces by communication style rather than by characteristics.",
+    "The asynchronous choices in GGG exist for a specific reason: Payment processes one payment every 500 ms. If many auctions end at once, synchronous calls become timeouts. **Message queues add reliability to a critical but fragile part of the architecture.**"
+   ],
+   "p": "In both cases the separation of tables in the monolith designs is deliberate: partitioning the database along the same lines as the domain components is what makes a later migration to a distributed architecture possible rather than theoretical."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 19: Choosing the Appropriate Architecture Style, pp. 359–370.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

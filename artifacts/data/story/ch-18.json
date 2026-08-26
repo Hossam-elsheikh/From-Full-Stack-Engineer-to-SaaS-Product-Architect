@@ -1,0 +1,213 @@
+{
+ "ch": "18",
+ "book": "Chapter 18 · Microservices Architecture",
+ "pages": "pp. 329–357",
+ "title": "Duplication Over Coupling",
+ "gist": "Domain partitioning taken to its physical limit: one bounded context per service, its own database inside it, and duplication preferred to reuse. The style that earns the most five-star ratings in the book, and charges for every one.",
+ "read": "7 min · 50 sec to re-scan",
+ "acc": {
+  "l": "#2F6350",
+  "d": "#82BFA8"
+ },
+ "minute": [
+  "Built on **bounded context**. Everything a subdomain needs lives inside the service — code, schema, database. Nothing couples across the boundary, which is why it is called a *share nothing* architecture.",
+  "**Reuse is implemented via coupling**, so this style deliberately chooses **duplication over reuse**. A shared `Address` class is a coupling point, and it gets copied instead.",
+  "The one thing it *does* share is operational: the **Sidecar** pattern plus a **service mesh** gives every service the same monitoring, logging and circuit breakers without domain coupling.",
+  "**“Micro” is a label, not a description.** Too-fine services (the *Grains of Sand* antipattern) force communication back in and produce a big ball of distributed mud. Find boundaries by purpose, transactions and choreography cost.",
+  "**Database-per-service** is not optional here — a shared database breaks the bounded context outright. And the advice on distributed transactions is blunt: **don't. Fix the granularity instead.**"
+ ],
+ "sections": [
+  {
+   "t": "Topology: a service is a bounded context",
+   "art": "ms-topology",
+   "wide": true,
+   "alt": "An API layer above five services, each inside a dashed bounded context with its own database",
+   "cap": "Fig. 18-1 · each service runs in its own process, in a VM or container, with everything it needs inside.",
+   "p": "Named unusually early — Martin Fowler and James Lewis's 2014 post defined it rather than describing something already common. It is heavily inspired by domain-driven design, and it **physically embodies** DDD's logical bounded context.",
+   "items": [
+    "**The API layer** (usually a gateway) sits between consumers and services and handles **routing and cross-cutting concerns only** — security, monitoring, logging, naming. Putting orchestration or business logic in it violates the philosophy: mediators belong to technically partitioned architectures, and this one is firmly domain partitioned.",
+    "**Frontends**: the original vision put the UI inside the bounded context. Web partitioning makes that hard, so in practice you see either a **monolithic frontend** calling through the API layer, or **micro-frontends** — UI components matched one-to-one with backend services.",
+    "**Performance is the standing cost.** Network calls dwarf method calls, and a security check at every endpoint adds more. Which puts granularity at the centre of everything."
+   ]
+  },
+  {
+   "t": "Granularity, and how to find it",
+   "art": "choreo-orch",
+   "wide": true,
+   "alt": "A choreographed front-controller service beside an orchestrated mediator",
+   "cap": "Three questions for where the boundary goes.",
+   "items": [
+    "**Purpose** — each service should be functionally cohesive, contributing one significant behaviour to the application. The domain is the first source of boundaries.",
+    "**Transactions** — entities that must cooperate in a transaction suggest a boundary. Designing to *avoid* distributed transactions tends to produce better designs anyway.",
+    "**Choreography** — a set of services with beautiful domain isolation that has to talk constantly is a candidate for being bundled back into one coarser service."
+   ],
+   "quotes": [
+    [
+     "The term microservice is a label, not a description.",
+     "Martin Fowler",
+     "It was named to contrast with the dominant style of 2007, service-oriented architecture — which could equally have been called “gigantic services”. Many developers read the prefix as a commandment."
+    ]
+   ],
+   "p": "**Iteration is the only way to get this right.** Nobody discovers the right granularity, data dependencies and communication style on the first pass."
+  },
+  {
+   "t": "The one thing it shares: operations",
+   "art": "sidecar-mesh",
+   "wide": true,
+   "alt": "Five services each with a sidecar, all wired into a service plane forming a mesh",
+   "cap": "Figs. 18-2 to 18-4 · domain concerns duplicated, operational concerns shared deliberately.",
+   "p": "Traditional SOA reused everything, domain and operational alike. Microservices splits them: circuit breaker, logging and monitoring live in a **sidecar** owned by a shared infrastructure team, and the sidecars wire into a **service plane** (Istio and similar) to form a **service mesh**. Upgrading the monitoring tool is then one team's change rather than forty teams' backlog items — and **service discovery** usually rides in the same place, giving elasticity somewhere consistent to live.",
+   "items": [
+    "**Protocol-aware heterogeneous interoperability** is the communication model. *Protocol-aware*: with no integration hub, each service must know or discover how to call the others. *Heterogeneous*: full polyglot support, since each service can be a different stack. *Interoperability*: services do call each other over the network.",
+    "One architect took this to its logical end: **mandating that every team use a different technology stack**, so that sharing a class accidentally became impossible. The opposite of most enterprise standardisation, and the point stands — not every service needs an industrial-strength relational database."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "Choreography, or orchestration?",
+   "art": "choreo-orch",
+   "wide": true,
+   "alt": "A choreographed front-controller service beside an orchestrated mediator",
+   "sit": "A business process spans six services. There is no global mediator in this style — so either the services call each other as needed, or you build a service whose only job is coordination.",
+   "opts": [
+    [
+     "Choreography — services call each other directly.",
+     "Preserves the decoupling that the whole style exists for, and performs better: less coupling, faster communication, fewer bottlenecks. For a simple case — wish list calling demographics for a missing field — it is obviously right."
+    ],
+    [
+     "Orchestration — build a local mediator service.",
+     "Coupling concentrates in one place and the other services stay simple. You have created coupling deliberately, in a spot you chose."
+    ]
+   ],
+   "verdict": "Neither is right; watch for the failure mode. In a complex workflow, choreography quietly produces the **Front Controller pattern** — the first service called becomes a mediator *in addition to* its own domain responsibilities, and carries both complexities. **Domain workflows are often inherently coupled**; the architect's job is choosing where to represent that coupling, not pretending it isn't there."
+  },
+  {
+   "k": "decision",
+   "t": "This transaction spans three services",
+   "art": "saga",
+   "alt": "A mediator coordinating four services where one fails and the successful ones must be undone",
+   "sit": "Two services need to update together atomically. In a monolith this was one commit. Here they are separate services with separate databases.",
+   "opts": [
+    [
+     "Wire a distributed transaction across them.",
+     "This violates the core decoupling principle *and* creates **Connascence of Values** across services — the worst dynamic form in the vocabulary from Chapter 3."
+    ],
+    [
+     "Fix the granularity: put them in one service.",
+     "The book's actual advice, stated plainly. Needing transactions to hold your microservices together is a sign the design is **too granular**.",
+     1
+    ],
+    [
+     "Use a Saga, if the boundaries genuinely must differ.",
+     "The legitimate exception — two services needing genuinely different architecture characteristics. A mediator calls each part, records success or failure, and on failure sends **compensating transactions** to undo the parts that succeeded, usually with requests held pending until overall success."
+    ]
+   ],
+   "verdict": "Compensating transactions generate substantial network coordination traffic, and juggling asynchronous requests gets hard fast when new requests depend on pending transactional state. The line worth remembering: **a few transactions crossing services is sometimes necessary; if it is the dominant feature of the architecture, microservices is the wrong choice.** *Software Architecture: The Hard Parts* catalogues eight Saga patterns for the cases where you do need one."
+  },
+  {
+   "k": "decision",
+   "t": "Two services need the same table",
+   "art": "ms-data",
+   "wide": true,
+   "alt": "Sixty services on one database, database-per-service, and a wider bounded context of three services sharing one database",
+   "sit": "You have split payment processing into credit card, gift card, PayPal and rewards points. All four write to and read the same data. Database-per-service says four databases.",
+   "opts": [
+    [
+     "One database for everything.",
+     "With sixty services sharing a database, renaming a column means coordinating sixty deployments with a schema release. Worse, the bounded context has stopped existing — and databases rarely scale with the service instances around them."
+    ],
+    [
+     "Strict database-per-service, four databases.",
+     "Correct by the rule and wrong for this case: they genuinely need the same data, so you have created four services that must synchronise constantly."
+    ],
+    [
+     "Let those services share a database, inside a wider bounded context.",
+     "A bounded context does not have to contain exactly one service. Draw it around the payment types — or the shipping methods — and let them share. **No more than five or six**, or the change-control, scalability and fault-tolerance problems return.",
+     1
+    ]
+   ],
+   "verdict": "**Database-per-service is the standard topology here and the one that preserves the bounded context**: other services request data through a contract, so they are decoupled from the internal structure, and you can swap a relational database for a document database without telling anyone. The trade-off of a wider context is exactly the one you re-accept: a schema change now coordinates several deployments."
+  },
+  {
+   "t": "Characteristics, risks, and when to reach for it",
+   "wide": true,
+   "gen": {
+    "kind": "ratings",
+    "head": "MICROSERVICES — DOMAIN PARTITIONED · MANY QUANTA",
+    "rows": [
+     [
+      "scalability",
+      5,
+      "some of the most scalable systems built"
+     ],
+     [
+      "elasticity",
+      5,
+      ""
+     ],
+     [
+      "fault tolerance",
+      5,
+      "one vital sign fails, the rest monitor on"
+     ],
+     [
+      "evolvability",
+      5,
+      "add a service, change nothing"
+     ],
+     [
+      "deployability",
+      5,
+      "impossible without DevOps"
+     ],
+     [
+      "testability",
+      5,
+      "scope of a change is one service"
+     ],
+     [
+      "modularity",
+      5,
+      ""
+     ],
+     [
+      "performance",
+      2,
+      "network calls, security checks, data latency"
+     ],
+     [
+      "overall cost",
+      1,
+      ""
+     ],
+     [
+      "simplicity",
+      1,
+      ""
+     ]
+    ]
+   },
+   "alt": "Architecture characteristics ratings for microservices",
+   "cap": "Fig. 18-16 · the most distinct quanta of any modern architecture. In many ways it is what the quantum measure was invented to describe.",
+   "items": [
+    "**Grains of Sand** — services made too fine because *micro* was read as a size instruction. The fix is combining them into coarser services.",
+    "**Too much interservice communication** — usually the same root cause, and the same fix.",
+    "**Too much data sharing** — costs exactly the change control, scalability, fault tolerance and agility that this style is chosen for.",
+    "**Shared code.** Reuse through a common JAR or DLL spreads one bounded context across several, so a change to shared code can break services elsewhere. Versioning helps and does not remove the complication.",
+    "**Governance**: watch static coupling (shared libraries, contracts) with a software bill of materials and dependency tooling; watch dynamic coupling by having every service log its outbound calls consistently, or by having services register their interservice calls to a configuration server like ZooKeeper, then querying it for a map of the whole ecosystem."
+   ],
+   "p": "On **serverless**: the authors do not treat it as an architecture style but as a **deployment model of microservices** — a single-purpose, separately deployed unit that does one thing is the definition of both. Microservices deploys equally well as containers under Kubernetes. The worked example is a patient vital-signs monitor: one service per vital sign, each with its own store, sharing only *Alert Staff* and *Display Vital Signs* — and if the blood-pressure service crashes, every other vital sign keeps being watched."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 18: Microservices Architecture, pp. 329–357.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

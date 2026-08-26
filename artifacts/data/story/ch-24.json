@@ -1,0 +1,114 @@
+{
+ "ch": "24",
+ "book": "Chapter 24 · Making Teams Effective",
+ "pages": "pp. 433–452",
+ "title": "The Room You Build For Them",
+ "gist": "An architect who designs alone and hands the result over gets an architecture nobody implements correctly. This is the other half of the job: how much to be involved, when the team has grown too big, and how to give guidance that isn't control.",
+ "read": "5 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#63528A",
+  "d": "#B4A4D9"
+ },
+ "minute": [
+  "Constraints are a **room**. Too tight and developers can't reach the tools they need and leave. Too loose and they end up doing the architect's job. The right size is the deliverable.",
+  "Three personalities: **control freak** (tight boundaries, writes your pseudocode), **armchair** (loose boundaries, hasn't coded in years, never around), **effective** (appropriate boundaries, present, unblocking).",
+  "**Five factors** decide involvement: team familiarity, team size, overall experience, project complexity, project duration. Re-run them as the project moves.",
+  "Three signs a team has grown too large: **process loss** (Brooks's Law — merge conflicts mean people are in each other's way), **pluralistic ignorance**, **diffusion of responsibility**.",
+  "Ask for a **business justification** alongside the technical one. It is the single most effective tool in this chapter, and it changes the person asking as much as the decision."
+ ],
+ "sections": [
+  {
+   "t": "Boundaries are the deliverable",
+   "art": "boundaries",
+   "wide": true,
+   "alt": "Three rooms with a team inside: one too small, one far too large, one right-sized",
+   "cap": "Fig. 24-3 · the room the team works in, and the two ways to get it wrong.",
+   "p": "The traditional split — architect defines characteristics, picks a style, creates logical components; developers build classes, screens and code — fails on the **unidirectional arrow** between them. Architects' decisions don't reach the team, and the team's changes never come back. Both sides have to be on one virtual team, with bidirectional collaboration, because modern architectures change with nearly every iteration.",
+   "items": [
+    "**Too tight**: no open-source libraries, prescribed naming conventions, method lengths, pseudocode handed down. It steals the art of programming from developers, and they lose respect for the architect — and then leave.",
+    "**Too loose**: too many choices, so the team takes on the architect's role by default. Endless proofs of concept, agonised design decisions, unproductive and confused.",
+    "The temptation to the first is strongest in **new architects**, who are used to picking the design patterns themselves. Identifying the `ReferenceManager` component and its operations is the architect's job. Deciding it should use a parallel loader with an internal cache is the **developer's**."
+   ]
+  },
+  {
+   "t": "The armchair architect",
+   "art": "warnings",
+   "wide": true,
+   "alt": "Process loss, pluralistic ignorance and diffusion of responsibility",
+   "cap": "Three warning signs that a team has grown past its effective size.",
+   "p": "The armchair architect hasn't coded in a long time, ignores implementation detail, and moves to the next project once the first diagrams are done. The chapter's sharpest observation: **developers can't fake it — either you can write source code or you can't. What does an architect do? Draw lines and boxes. It's very easy to fake.** A two-box diagram of a trading system and its compliance engine isn't wrong; it's just too high-level to be of use to anyone.",
+   "items": [
+    "**Process loss** — Brooks's Law. Actual productivity is always below group potential, and the gap widens with size. Frequent merge conflicts are the visible symptom: people working on the same code, getting in each other's way. Before agreeing to a new team member, **look for a parallel work stream**; if there isn't one, tell the project manager the addition will hurt.",
+    "**Pluralistic ignorance** — everyone privately rejects a norm and agrees to it anyway, afraid they're missing something obvious. The larger the group, the less willing anyone is to confront it. The architect's job here is to watch faces and body language, then **ask the skeptic directly and support them when they speak up — even if they turn out to be wrong**.",
+    "**Diffusion of responsibility** — a stranded motorist on a country road gets help from everyone; on a city highway, nobody stops, because someone else must have called. On a team it looks like confusion about who owns what, and things quietly getting dropped."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "How involved should you be with this team?",
+   "art": "involvement",
+   "wide": true,
+   "alt": "A scale from armchair architect to control freak with five contributing factors",
+   "sit": "You are assigned to a team. You could sit with them daily, or check in fortnightly. Roy Osherove's **Elastic Leadership** says the answer varies — and here it varies on five factors, each worth ±20 points.",
+   "opts": [
+    [
+     "Scenario 1: new members, four people, all experienced, simple project, two months. Score −60.",
+     "Stay largely hands-off. Facilitate, answer questions, confirm they're on track — and otherwise let an experienced team ship quickly.",
+     1
+    ],
+    [
+     "Scenario 2: they know each other well, twelve people, mostly junior, complex, six months. Score +20.",
+     "Mentor and coach, involved in day-to-day work, but not so involved that you disrupt them.",
+     1
+    ]
+   ],
+   "verdict": "**Project duration is the counter-intuitive factor.** A two-month project already has its own urgency; a control-freak architect just delays it. A two-year project has people planning holidays and taking long lunches — that is where the architect keeps the schedule moving and ensures the hardest work happens first. Re-run all five factors **throughout the project**, not just at the start; the right answer moves."
+  },
+  {
+   "t": "Checklists, and getting them used",
+   "art": "stack",
+   "wide": true,
+   "alt": "Three categories of third-party library with who decides for each",
+   "cap": "Airline pilots and surgeons use them. Gawande's surgical checklists took infection rates to near zero.",
+   "items": [
+    "**When not to use one.** Procedural flows with dependent tasks are not checklists — you can't verify the table before submitting the form. Nor are simple, familiar processes executed frequently without error.",
+    "**When to use one.** Processes without a set order or dependencies, and processes where people frequently skip steps or make mistakes.",
+    "**Three that earn their place**: developer **code completion** (which doubles as a definition of done), **unit and functional testing** (add every case QA finds; usually the longest), and **software release** (the most volatile — after every failed build or deployment, add the root cause).",
+    "**Automate items off the list.** Anything a code-crawling tool can check should leave the checklist. That shortens it and improves its signal-to-noise, and short checklists are the ones people actually use.",
+    "**Don't worry about stating the obvious** — the obvious steps are the ones that get missed. Gawande found exactly the same in surgery."
+   ],
+   "p": "The hard part is getting them used rather than ticked. Talk about why they matter, have the team decide collaboratively what belongs on them so there's ownership — and failing that, the **Hawthorne effect**: tell the team checklists will be verified, then spot-check occasionally. People behave differently when they believe someone is looking."
+  },
+  {
+   "k": "decision",
+   "t": "A developer wants to introduce Scala",
+   "art": "stack",
+   "wide": true,
+   "alt": "Three categories of third-party library with who decides for each",
+   "sit": "A complex Java project, a large team. One member is obsessed with Scala and wants to use it. The advocacy has become disruptive enough that two key developers have said they will leave for a *less toxic* environment.",
+   "opts": [
+    [
+     "Refuse. It's the wrong tool for this project.",
+     "You are correct, you have won nothing, and the enthusiasm goes underground while the two departures still happen."
+    ],
+    [
+     "Agree — on condition that they produce a business justification for the training and rewriting costs.",
+     "They came back the next day and said *thank you*. They had every technical argument in the world and **none of them carried business value against the cost, budget and timeline**. They also realised they had been disrupting the team.",
+     1
+    ]
+   ],
+   "verdict": "The developer became one of the team's best members, and the two who were leaving stayed. **Being asked for a business justification is what made them a better developer** — it is a teaching mechanism disguised as a governance step. Generalise it: for every proposed library, ask whether it overlaps with something you already have, and ask for the justification, technically *and* commercially. Then set who decides: **special-purpose libraries the developer chooses, general-purpose ones need architect approval, framework libraries are the architect's alone.**"
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 24: Making Teams Effective, pp. 433–452. Elastic Leadership is Roy Osherove's; process loss is Fred Brooks; the checklist argument is Atul Gawande's.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

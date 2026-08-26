@@ -1,0 +1,240 @@
+{
+ "ch": "15",
+ "book": "Chapter 15 · Event-Driven Architecture Style",
+ "pages": "pp. 227–281",
+ "title": "Reacting Instead of Requesting",
+ "gist": "The longest chapter in the book, and the densest. Fire-and-forget processors reacting to things that already happened — with a payload decision, a granularity decision, a topology decision and a data decision, each of which can sink it.",
+ "read": "9 min · 60 sec to re-scan",
+ "acc": {
+  "l": "#8A5A12",
+  "d": "#DDA954"
+ },
+ "minute": [
+  "**Request-based** systems direct deterministic requests to processors. **Event-based** systems react to something that already happened. Placing a bid is not a request — it is an event the system must respond to.",
+  "An **event** says something happened, expects no reply, and is broadcast to many. A **message** is a command or query, usually wants a reply, and goes to one. Broadcasting a command does not make it an event.",
+  "Payloads: **data-based** (everything, fast, fragile, stamp-coupled) or **key-based** (just an ID, consistent, cheap, but every consumer must query). Choose **per event**, not per system, and avoid **anemic events** at one extreme and the **Swarm of Gnats** at the other.",
+  "**Choreographed** gives performance and scalability; **mediated** gives workflow control, state, and error recovery. The mediator uses commands, must scale too, and can become a bottleneck.",
+  "A **synchronous call between two quanta fuses them into one** — Dynamic Quantum Entanglement. Watch for it, because it silently undoes the decoupling the whole style is for."
+ ],
+ "sections": [
+  {
+   "t": "Topology: initiating event, processor, derived event",
+   "art": "eda-topology",
+   "wide": true,
+   "alt": "An initiating event entering an event processor which triggers derived events consumed by four more processors",
+   "cap": "Fig. 15-3 · four processors react to *order placed* in parallel, and each advertises what it did.",
+   "p": "Four components: the **initiating event** that starts the flow, the **event broker** (usually federated — clustered instances per domain, each holding that domain's channels), the **event processor**, and the **derived event** it triggers to tell the rest of the system what it did. This continues until every processor is idle and every derived event is consumed.",
+   "items": [
+    "The relay-race analogy is the useful one: once a processor hands off, it is out of that race and free for the next event. Each processor also **scales independently** against its own load.",
+    "Notice what *isn't* there: nobody is listening to *email sent*. That is not waste — it is an **extensible derived event**, a built-in hook. Add an Email Analyzer later and no existing processor changes.",
+    "**Poison event**: a derived event that loops back and re-triggers itself forever. Easy to create here, so trace your flows."
+   ]
+  },
+  {
+   "t": "Events and messages are not the same thing",
+   "art": "event-vs-message",
+   "wide": true,
+   "alt": "A four-row comparison of events against messages, with four sentences classified as one or the other",
+   "cap": "Four differences, and a test. The third sentence is the one that catches people.",
+   "p": "EDA mostly uses events — hence the name — but it uses messages where it must: requesting data from another processor, and controlling processing order in the mediated topology."
+  },
+  {
+   "t": "Responsiveness is not performance",
+   "art": "async-response",
+   "wide": true,
+   "alt": "A synchronous path taking 3,100 ms to the user beside an asynchronous path taking 25 ms",
+   "cap": "Fig. 15-6 · the work still takes 3,000 ms either way. Only one of them makes the user watch.",
+   "p": "Posting a product review needs several parsing engines — banned words, abusive phrasing, on-topic check. Synchronously that is 3,100 ms to the user; asynchronously it is 25 ms to *acknowledge*, and the work happens after. **Responsiveness** is telling the user it was accepted. **Performance** is making the end-to-end work faster — parallelising the parsers, caching. They are different problems with different fixes.",
+   "items": [
+    "The caveat is real: the synchronous path *guarantees* the comment was posted. The asynchronous path promises it will be. If the comment is rejected for profanity there is no one to tell — unless the user is registered, in which case you can message them.",
+    "Now imagine the same trade-off on a stock purchase. **Error handling is the price of asynchrony**, and it is most of what makes this style complex."
+   ]
+  },
+  {
+   "t": "Dynamic Quantum Entanglement",
+   "art": "entanglement",
+   "wide": true,
+   "alt": "Two systems joined synchronously forming one quantum, beside the same two joined asynchronously forming two",
+   "cap": "Figs. 15-7 and 15-8 · one synchronous call, and two independent systems become one.",
+   "p": "Portfolio Management sends a trade order to Trade Order and blocks waiting for a confirmation number. They are now **one architecture quantum**: characteristics live across both. Trade Order slow means Portfolio slow; Trade Order down means no orders; Portfolio needing to scale means Trade Order must scale too. Replace the call with a queue and a separate reply channel and they detangle into two quanta — orders keep flowing, confirmations arrive when they arrive."
+  },
+  {
+   "k": "decision",
+   "t": "Data-based payload, or key-based?",
+   "art": "payload",
+   "wide": true,
+   "alt": "A 500 KB data-based event beside a single-key event, with a six-row trade-off table",
+   "sit": "An order has 45 attributes and weighs 500 KB. The *order_placed* event can carry all of it, or carry `{\"order_id\": \"123\"}` and let each consumer query the database.",
+   "opts": [
+    [
+     "Send all the data.",
+     "Consumers never touch the database — better performance, responsiveness and scalability. Essential when consumers can't reach the data at all, which is normal under strict bounded contexts. **Costs:** two systems of record that drift (a customer fixing their shipping address immediately after ordering is enough to break it), heavy contract-versioning burden, **stamp coupling**, and bandwidth."
+    ],
+    [
+     "Send the key.",
+     "One system of record, so consistency and integrity hold even when data changes mid-flow. Contracts stay simple, schema-less and stable — no versioning or deprecation strategy needed. Minimal bandwidth. **Costs:** every consumer queries the database, in parallel, which can flatten it."
+    ]
+   ],
+   "verdict": "**Neither, globally — decide per event.** Creating or deleting an order works fine key-based; *updating* one does not, because the consumer can't tell what changed or what the previous values were. That is an **anemic event**. The bandwidth number is worth carrying: at 500 orders per second, a 500 KB payload is 250 MB/s to deliver 30 bytes of useful data. Consumer-driven contracts would fix stamp coupling, and are hard here — because broadcast means you often don't know who your consumers are."
+  },
+  {
+   "t": "Too few events, and too many",
+   "art": "gnats",
+   "wide": true,
+   "alt": "One processor emitting five fine-grained field-change events, beside the same processor emitting one outcome event",
+   "cap": "Figs. 15-16 and 15-17 · a customer moved house. One action; five events, or one.",
+   "items": [
+    "**Too coarse**: one `fraud_checked` event with the outcome buried in the payload forces every consumer to receive it, open it, and decide whether it applies. Two events — `fraud_detected` and `no_fraud_detected` — put the context *outside* the payload so consumers subscribe only to what concerns them.",
+    "**Too fine — the Swarm of Gnats**: a profile update emitting a separate event per changed field saturates the system with events about one action, and makes the overall flows impossible to follow.",
+    "The rule that resolves both: **focus derived events on the outcome or the state change**, and carry the before-and-after values so consumers have context the database no longer holds."
+   ]
+  },
+  {
+   "t": "Error handling: the Workflow Event pattern",
+   "art": "workflow-event",
+   "wide": true,
+   "alt": "A consumer delegating a failed message to a workflow processor that repairs and resubmits it",
+   "cap": "Fig. 15-18 · delegation, containment, repair. A pattern from reactive architecture.",
+   "p": "On error the consumer **immediately delegates and moves to the next message** — that is the point. Stopping to reason about a bad message delays every message behind it. The workflow processor inspects the failure, repairs the data programmatically and resubmits it to the original queue, where it arrives as a new message. What it can't fix goes to a queue backing a human dashboard, and the person resubmits it via the `reply-to` header.",
+   "items": [
+    "The worked example: a trade instruction reading `2WE35HF6DHF,BUY,AAPL,8756 SHARES` throws a `NumberFormatException`. The workflow processor strips `SHARES`, resubmits, and the trade goes through — no human, no lost basket.",
+    "**The consequence to plan for**: repaired messages return **out of order**. If order matters within a context — all trades in one brokerage account — hold that account's subsequent trades in a temporary FIFO queue until the repaired one clears."
+   ]
+  },
+  {
+   "t": "Preventing data loss",
+   "art": "data-loss",
+   "wide": true,
+   "alt": "Three points where a message can be lost between producer, queue, consumer and database, each with its mitigation",
+   "cap": "Figs. 15-20 and 15-21 · three failure points, three standard answers.",
+   "items": [
+    "**It never reached the queue** — the producer crashed before acknowledgement, or the broker crashed after. Fix: **persistent queues** (the event is written to disk, not just memory) plus **synchronous send**, which blocks the producer until the broker confirms it persisted.",
+    "**The consumer read it and crashed.** By default a read removes the event from the queue — *auto acknowledge*. Fix: **client acknowledge mode**, which keeps the event in the queue with the client ID attached so nobody else takes it.",
+    "**The consumer couldn't persist it.** Fix: an **ACID commit** plus **last participant support**, which only removes the event from the queue once all processing and persistence are confirmed.",
+    "This is the **Event Forwarding pattern**, for AMQP brokers (SNS, RabbitMQ, Solace, Azure Event Hubs) and for JMS topics with **durable subscribers**. Kafka-style streaming prevents loss by entirely different means."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "Choreographed, or mediated?",
+   "art": "mediator",
+   "wide": true,
+   "alt": "An event mediator sending commands to five processors over dedicated queues and receiving acknowledgements",
+   "sit": "Placing an order is five steps, some parallel, some strictly ordered — fulfilment cannot start until payment is applied. Do the processors work it out between themselves, or does something own the workflow?",
+   "opts": [
+    [
+     "Choreographed — processors broadcast, others react.",
+     "Maximum decoupling, maximum performance and scalability. Nobody holds the workflow, so nobody can tell you its state, restart it, or recover it cleanly."
+    ],
+    [
+     "Mediated — a mediator holds the steps and issues commands.",
+     "It knows the workflow, keeps event state, and handles errors, recovery and restart: expired card at step 2 means it stops, persists state, and resumes at step 3 once payment clears. It uses **commands** (`ship_order`) not events (`order_shipped`), and processors acknowledge rather than advertise."
+    ]
+   ],
+   "verdict": "**Workflow control and error handling against performance and scalability.** Mediated is still good at both, just not as good. Its costs: complex dynamic flows are hard to model declaratively (most real systems end up **hybrid**), the mediator must scale too and can bottleneck, and processors are less decoupled. Use **several mediators**, one per domain, or you have built a single point of failure. Match the tool to the flow: Apache Camel, Mule or Spring Integration for simple flows; BPEL engines (Apache ODE, Oracle BPEL) for heavy conditional routing; a **BPM engine like jBPM** when a human has to approve something mid-workflow. Classify events as simple, hard or complex and let a simple mediator delegate onward."
+  },
+  {
+   "k": "decision",
+   "t": "Which database topology?",
+   "art": "eda-data",
+   "wide": true,
+   "alt": "Monolithic, domain and dedicated database topologies for event-driven architecture",
+   "sit": "Order Placement needs two things it doesn't own: how many items are in stock, and what shipping options exist for this customer. Where the data lives decides how it gets them.",
+   "opts": [
+    [
+     "Monolithic — one database for everything.",
+     "Any processor queries what it needs directly, with no synchronous calls at all — a real advantage in a style built on decoupling. **Costs:** the database is a single point of failure for every processor, it must scale to the combined concurrent load of all of them, one schema change coordinates everyone, and the whole system is **one quantum**."
+    ],
+    [
+     "Domain — one database per domain.",
+     "Better fault tolerance, scalability and change control. If the order-processing database is down, order placement keeps accepting orders and the event channel acts as backpressure. **Cost:** shipping options now need a **synchronous call** into another domain."
+    ],
+    [
+     "Dedicated — database per processor.",
+     "Highest isolation of the three: an outage stays inside one processor, each database scales for one consumer, a schema change touches one thing. **Costs:** expensive, and Order Placement now needs synchronous calls to *both* Inventory and Order Shipment."
+    ]
+   ],
+   "verdict": "Identify every data requirement of every processor **before** choosing. The failure mode is the same in both partitioned options: synchronous coupling creeping back in, which costs exactly the fault tolerance and scalability you moved right to get. If processors are talking synchronously too much, **move left** — merge domains, or go monolithic — or reconsider whether EDA fits at all."
+  },
+  {
+   "t": "Characteristics, risks, and when to reach for it",
+   "wide": true,
+   "gen": {
+    "kind": "ratings",
+    "head": "EVENT-DRIVEN — TECHNICALLY PARTITIONED · QUANTUM 1 TO MANY",
+    "rows": [
+     [
+      "performance",
+      5,
+      "async plus parallelism"
+     ],
+     [
+      "scalability",
+      5,
+      "competing consumers"
+     ],
+     [
+      "fault tolerance",
+      4,
+      "held back by the database"
+     ],
+     [
+      "elasticity",
+      4,
+      ""
+     ],
+     [
+      "evolvability",
+      4,
+      "add a consumer, change nothing"
+     ],
+     [
+      "overall cost",
+      3,
+      ""
+     ],
+     [
+      "deployability",
+      3,
+      ""
+     ],
+     [
+      "simplicity",
+      1,
+      "the hardest style here"
+     ],
+     [
+      "testability",
+      1,
+      "non-deterministic end-to-end flows"
+     ],
+     [
+      "data consistency",
+      1,
+      "eventual, always"
+     ]
+    ]
+   },
+   "alt": "Architecture characteristics ratings for event-driven architecture",
+   "cap": "Fig. 15-39 · performance and scalability are the reason to be here. Simplicity and testability are the bill.",
+   "items": [
+    "**Non-deterministic side effects** — processors triggering derived events unexpectedly, or failing to respond when they should. Flows get complex enough that nobody can predict what one event will do.",
+    "**Static coupling through contracts.** The style is dynamically decoupled and statically coupled by event payloads, and you often don't know who consumes an event, so changing a contract is genuinely dangerous. Govern the **rate of contract change** and record which fields consumers never read.",
+    "**State management.** Knowing when an initiating event has been *fully* processed is hard and often impossible. Sometimes you can identify the terminal event and have the originator subscribe to it; usually you can't.",
+    "**Teams**: technically partitioned, so stream-aligned teams struggle as the system grows — a new step in order placement can mean changing several processors and restructuring derived events. **Enabling teams fit badly** here; **complicated-subsystem teams fit well**, because complex processing isolates cleanly into its own processor."
+   ],
+   "p": "**Choose request-based** for well-structured, data-driven requests where certainty and control of the workflow matter. **Choose event-based** for flexible, action-based events needing high responsiveness and scale with dynamic processing. The trade you accept: eventual consistency only, less control over the flow, less certainty about the outcome, and real difficulty testing and debugging."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 15: Event-Driven Architecture Style, pp. 227–281 — the longest chapter in the book.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

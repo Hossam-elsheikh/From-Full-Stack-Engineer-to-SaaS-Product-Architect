@@ -1,0 +1,179 @@
+{
+ "ch": "10",
+ "book": "Chapter 10 · Layered Architecture Style",
+ "pages": "pp. 153–164",
+ "title": "The One Everybody Already Built",
+ "gist": "The default architecture — the one you get by just starting to code. Cheap, simple, familiar, and degrading in every dimension as it grows. Worth knowing precisely, because you will inherit one.",
+ "read": "4 min · 35 sec to re-scan",
+ "acc": {
+  "l": "#7A6224",
+  "d": "#D2BC6C"
+ },
+ "minute": [
+  "Four standard layers — **presentation, business, persistence, database**. Technically partitioned, so every domain is smeared across all of them. Domain-driven design fits it badly.",
+  "**Layers of isolation**: a change in one layer doesn't touch the others, *provided the layers in the request path are closed*. Open a layer and you trade isolation for a shortcut.",
+  "The **Architecture Sinkhole** antipattern: requests passing through layers that do nothing. 20% is fine. 80% means the style is wrong for the problem.",
+  "Its strengths are **cost and simplicity**; its weaknesses are **deployability, testability, elasticity and scalability**. Every rating starts good and degrades as the codebase grows.",
+  "Good for small applications, tight budgets, and as a starting point while you work out whether you need something more complex. **Keep reuse minimal and inheritance shallow** so you can leave later."
+ ],
+ "sections": [
+  {
+   "t": "Topology: four layers, technically partitioned",
+   "art": "layers",
+   "alt": "Five stacked layers with a services layer marked open and a bypass arrow around it",
+   "cap": "Fig. 10-1 · a closed layer must be passed through. An open layer may be skipped.",
+   "p": "Also called n-tiered. It is the de facto standard for legacy applications, and it is what *Architecture by Implication* and *Accidental Architecture* both produce: when a team just starts coding without deciding on a style, this is the style they get.",
+   "items": [
+    "Each layer forms an abstraction around one kind of work. Presentation doesn't know how customer data is fetched; business doesn't know how it will be displayed.",
+    "That separation makes role and responsibility models easy, and lets developers work to their technical specialism. **The trade-off is holistic agility** — the system's ability to respond to change as a whole.",
+    "Because partitioning is technical, the domain of *customer* lives in presentation, business, rules, services and database at once. Changing that domain means touching every layer."
+   ]
+  },
+  {
+   "t": "Three ways to deploy it",
+   "art": "deploy-variants",
+   "wide": true,
+   "alt": "Three physical topology variants: one unit plus database, UI split off, and everything in one unit",
+   "cap": "Fig. 10-2 · the logical layers stay the same; only the deployment boundary moves.",
+   "p": "The third variant — all four layers in one unit with an embedded or in-memory database — is how a great many on-premises products ship to customers, and how mobile applications are built."
+  },
+  {
+   "k": "decision",
+   "t": "Presentation wants to read the database directly",
+   "art": "layers",
+   "alt": "Five stacked layers with a services layer marked open and a bypass arrow around it",
+   "sit": "A screen needs a simple customer lookup. Going presentation → business → persistence → database is slower and more code than reading it directly. In the early 2000s this shortcut had a name: the **Fast-Lane Reader** pattern.",
+   "opts": [
+    [
+     "Open the layers so simple reads can skip.",
+     "Faster, and it dissolves layers of isolation. Now a change to persistence reaches both business *and* presentation, and you have a tightly coupled, brittle architecture that is difficult and expensive to change."
+    ],
+    [
+     "Keep the layers on the request path closed.",
+     "You pay for a hop you didn't need. In exchange, any layer can be replaced without touching the others — swapping the UI framework stays inside presentation, provided contracts hold.",
+     1
+    ],
+    [
+     "Open one specific layer, deliberately, and document why.",
+     "The right move when there's a reason. Adding a **Services layer** for shared business objects only works if that layer is open — otherwise business is forced to route through it to reach persistence."
+    ]
+   ],
+   "verdict": "The rule is **layers of isolation**: layers involved in the major request flow must be closed, or the isolation is fictional. Which layers are open, which are closed, and *why*, has to be documented — failing to communicate it is how these architectures become brittle, untestable and undeployable."
+  },
+  {
+   "k": "decision",
+   "t": "Most requests pass through doing nothing",
+   "art": "sinkhole",
+   "alt": "A request traversing four layers with no logic applied at any of them",
+   "sit": "You audit the request log. A large share of requests enter presentation, get handed to business unchanged, handed to persistence unchanged, become one SQL call, and return up the stack with nothing added — no aggregation, no calculation, no rules.",
+   "opts": [
+    [
+     "Nothing. It's only some of the requests.",
+     "Correct, if it really is only some. Every layered architecture has sinkhole scenarios; the 80-20 rule is the usual guide, and around 20% is acceptable."
+    ],
+    [
+     "Open all the layers so simple requests short-circuit.",
+     "Fixes the wasted object instantiation and memory. The trade-off you just accepted is that change is now much harder to manage."
+    ],
+    [
+     "Treat it as evidence the style is wrong here.",
+     "If 80% of requests are sinkholes, the architecture is doing almost no work per request and charging you for four layers of ceremony to do it.",
+     1
+    ]
+   ],
+   "verdict": "The **Architecture Sinkhole antipattern** is not a bug to fix but a ratio to measure. The useful discipline is that you *count* it rather than argue about it — and the count is a genuine signal about whether the style fits the problem domain."
+  },
+  {
+   "t": "Risks, governance and teams",
+   "art": "deploy-variants",
+   "wide": true,
+   "alt": "Three physical topology variants: one unit plus database, UI split off, and everything in one unit",
+   "cap": "One deployment unit means one failure domain and one restart.",
+   "items": [
+    "**Fault tolerance is poor.** One out-of-memory condition anywhere crashes the whole unit. Availability suffers too, because monolithic **mean time to recover** is high — two minutes for a small application, fifteen or more for a large one.",
+    "**Governance is unusually good.** The original structural testing tools were built with this style in mind: ArchUnit's `layeredArchitecture()` states exactly which layer may be accessed by which, and enforces open and closed layers on every build.",
+    "**Team topologies: it fits all four.** Stream-aligned teams own a flow through every layer. Enabling teams can experiment inside one layer — a new UI library touches only presentation. Complicated-subsystem teams get a clean hook at the persistence layer for analytics.",
+    "**The platform team carries the long-term cost.** Keep adding features and, however well partitioned, the monolith eventually strains against database connections, memory, concurrent users or something else — and keeping it running gets progressively harder."
+   ]
+  },
+  {
+   "t": "Characteristics, and when to reach for it",
+   "gen": {
+    "kind": "ratings",
+    "head": "LAYERED ARCHITECTURE",
+    "rows": [
+     [
+      "overall cost",
+      5,
+      "its main argument"
+     ],
+     [
+      "simplicity",
+      5,
+      "familiar to everyone"
+     ],
+     [
+      "reliability",
+      3,
+      ""
+     ],
+     [
+      "performance",
+      3,
+      "cache and thread to lift it"
+     ],
+     [
+      "testability",
+      2,
+      "you can mock a whole layer"
+     ],
+     [
+      "deployability",
+      2,
+      "three lines = full redeploy"
+     ],
+     [
+      "evolvability",
+      1,
+      ""
+     ],
+     [
+      "fault tolerance",
+      1,
+      "one OOM kills the unit"
+     ],
+     [
+      "scalability",
+      1,
+      "quantum is always 1"
+     ],
+     [
+      "elasticity",
+      1,
+      ""
+     ]
+    ]
+   },
+   "alt": "Architecture characteristics ratings for the layered style",
+   "cap": "Cost and simplicity carry it. Everything else starts adequate and degrades with size.",
+   "items": [
+    "**Use it** for small, simple applications and websites; when budget and time are very tight; and as a starting point while you work out whether something more complex is warranted. It is often the cheapest route to **feasibility** — can we deliver this scope, in this time, with these people?",
+    "**Don't use it** once the application is large. Maintainability, agility, testability and deployability all degrade with size, and this is the style that degrades first.",
+    "**If you use it as a stepping stone**, keep code reuse minimal and inheritance trees shallow. That is what makes moving to another style later possible rather than theoretical."
+   ],
+   "p": "The style also shows up far outside application code, for exactly the same reason — separation of concerns. Operating systems layer hardware, kernel, system-call interface and user space. TCP/IP layers physical, data link, network, transport and application.",
+   "wide": true
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 10: Layered Architecture Style, pp. 153–164. Ratings are the chapter's own scorecard.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

@@ -1,0 +1,66 @@
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Sheet</span><span class="v">Serial</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v" id="tbT"></span></div>
+    <div class="tcell"><span class="lbl">Chapters</span><span class="v" id="tbN"></span></div>
+    <div class="tcell"><span class="lbl">Drawn</span><span class="v" id="tbD"></span></div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="lbl" id="hEy"></span>
+      <h1 id="hT"></h1>
+      <p class="lede" id="hL"></p>
+      <p class="note" id="hN"></p>
+    </div>
+    <div class="tally">
+      <span class="big" id="tD"></span>
+      <span class="of" id="tO"></span>
+      <div class="pbar"><i id="tB" style="width:0"></i></div>
+    </div>
+  </section>
+
+  <div id="parts"></div>
+
+  <footer class="foot">
+    <span class="cite" id="cite"></span>
+    <span id="links"></span>
+  </footer>
+</div>
+</div>
+<script>
+const D=__DATA__;
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const $=s=>document.querySelector(s);
+
+function row(c){
+  const live=!!c.url;
+  const inner='<span class="n a'+c.ch+'">'+esc(c.ch)+'<span class="sw"></span></span>'+
+    '<span class="mid"><span class="bk">Chapter '+(+c.ch)+(live?' &middot; '+esc(c.book):"")+'</span>'+
+    '<h3>'+esc(live?c.t:c.book)+'</h3>'+
+    (c.log?'<span class="log">'+esc(c.log)+'</span>':"")+'</span>'+
+    '<span class="meta">'+(live
+      ? '<span>'+c.figs+' figures</span><span>'+esc(c.read)+'</span><span class="go">Read &rarr;</span>'
+      : '<span>not drawn yet</span>')+'</span>';
+  return live
+    ? '<a class="row a'+c.ch+'" href="'+c.url+'" target="_blank" rel="noopener">'+inner+'</a>'
+    : '<div class="row todo a'+c.ch+'">'+inner+'</div>';
+}
+
+const drawn=D.chapters.filter(c=>c.url).length, N=D.chapters.length;
+$("#tbT").textContent=D.title; $("#tbN").textContent=N; $("#tbD").textContent=drawn+" / "+N;
+$("#hEy").textContent=D.eyebrow; $("#hT").textContent=D.title;
+$("#hL").textContent=D.lede; $("#hN").textContent=D.note;
+$("#tD").textContent=String(drawn).padStart(2,"0");
+$("#tO").textContent="of "+N+" drawn";
+$("#tB").style.width=(drawn/N*100)+"%";
+$("#parts").innerHTML=D.parts.map(p=>
+  '<section class="part"><div class="parthead"><h2>'+esc(p.t)+'</h2>'+
+  '<span class="lbl">'+esc(p.w)+'</span></div><div class="rows">'+
+  D.chapters.filter(c=>p.ch.includes(c.ch)).map(row).join("")+'</div></section>').join("");
+$("#cite").textContent=D.source||"";
+$("#links").innerHTML=(D.links||[]).map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener">'+
+  esc(l[0])+' &#8599;</a>').join(" &middot; ");
+</script>

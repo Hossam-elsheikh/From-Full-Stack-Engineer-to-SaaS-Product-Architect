@@ -1,0 +1,187 @@
+{
+ "ch": "02",
+ "book": "Chapter 2 · Architectural Thinking",
+ "pages": "pp. 17–36",
+ "title": "Seeing With an Architect's Eye",
+ "gist": "Where architecture stops and design begins, why breadth beats depth once you cross that line, how to keep breadth current on twenty minutes a day, and what trade-off analysis looks like when you actually do it properly.",
+ "read": "5 min · 45 sec to re-scan",
+ "acc": {
+  "l": "#4B6B4F",
+  "d": "#93BE99"
+ },
+ "minute": [
+  "**Architecture or design?** Three questions decide it: how *strategic* is it, how much *effort* to build or change, and how *significant* are the trade-offs. Most real decisions land between the two ends, not at one.",
+  "**The knowledge pyramid** — stuff you know · stuff you know you don't know · stuff you don't know you don't know. A developer's job is to grow the top; an architect's is to grow the middle.",
+  "Depth costs time to *maintain*. Moving to architect means letting some expertise atrophy on purpose. The two failure modes: spreading yourself ragged across everything, and **stale expertise** you still believe is current.",
+  "Keep breadth alive with **20 minutes a day, first thing, before email**, and a **personal radar** — four quadrants × four rings (hold, assess, trial, adopt).",
+  "**\"It depends\"** is the honest answer, not a dodge. Programmers know the benefits of everything and the trade-offs of nothing. And every architect should still write code — just never the code on the critical path."
+ ],
+ "sections": [
+  {
+   "t": "Architecture or design? Three questions",
+   "art": "spectrum-ad",
+   "wide": true,
+   "alt": "A two-column comparison: architecture on the left, design on the right, across three criteria",
+   "cap": "Fig. 2-1 · a spectrum, not a boundary. Where a decision lands also decides who owns it.",
+   "p": "Picture your dream house: floors, roof shape, number of bedrooms — that's the architecture. Carpet or hardwood, wall colour, floor lamps — that's the design. Software splits the same way: architecture is about structure, design is about appearance. The awkward cases (break this service apart? which UI framework?) sit in the middle, and these three questions are how you place them.",
+   "quotes": [
+    [
+     "Architecture is the stuff that's hard to change.",
+     "Martin Fowler · “Who Needs an Architect?”",
+     "The level-of-effort test in one line. Monolith to microservices is architecture; rearranging fields on a screen is design."
+    ]
+   ]
+  },
+  {
+   "t": "The knowledge pyramid",
+   "art": "pyramid",
+   "alt": "A triangle in three bands: stuff you know at the apex, stuff you know you don't know, and the large base of stuff you don't know you don't know",
+   "cap": "Fig. 2-2 · all technical knowledge, in three bands. The bottom one is the biggest by far.",
+   "items": [
+    "**Stuff you know** — what you use daily and are expert in. The smallest band, because nobody can be expert at everything.",
+    "**Stuff you know you don't know** — heard of it, know roughly what it is, couldn't write it. Much larger, because familiarity is cheap.",
+    "**Stuff you don't know you don't know** — the biggest band, and the one that hurts. It contains the perfect solution to your current problem."
+   ],
+   "p": "The career move is to promote things up one band at a time: from the bottom into the middle by hearing about them, and from the middle to the top only when expertise is actually needed."
+  },
+  {
+   "t": "The pyramid changes shape when you become an architect",
+   "art": "pyramid-shift",
+   "alt": "Two pyramids: a developer's with a deep narrow top, an architect's with a shallower top and a much deeper middle band",
+   "cap": "Figs. 2-3 to 2-5 · sacrifice some hard-won expertise, buy a wider middle.",
+   "p": "The top band is not free to keep — expertise in Ruby on Rails does not survive two years of ignoring Ruby on Rails. Developers spend a career growing the top; architects deliberately trade some of it for breadth, because it is worth more to know that five solutions exist than to be expert in one. Some depth stays, usually in whatever you enjoy; the rest usefully atrophies.",
+   "items": [
+    "**Dysfunction one** — trying to hold expertise in everything. You succeed at none of it and work yourself ragged.",
+    "**Dysfunction two** — **stale expertise**: the mistaken sensation that your outdated information is still cutting edge. Common in founders who moved into leadership and still decide on ancient criteria."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "“But what if we lose Italy?”",
+   "art": "hickey",
+   "alt": "Two rows of ledgers — benefits filled in both, trade-offs empty for the programmer and filled for the architect",
+   "sit": "An architect on the review board blocks every centralised design with the same question. Years ago a freak communication failure cut headquarters off from the stores in Italy for a day. The chance of it recurring is very small. The question comes up every time.",
+   "opts": [
+    [
+     "Design for it. It's cheap insurance.",
+     "You are now buying an availability characteristic on every system because of one incident, and nobody prices a requirement that was never questioned."
+    ],
+    [
+     "Assess whether the risk is real, then decide.",
+     "Risk assessment is genuinely part of the job — it just has to be realistic. Telling genuine technical risk from perceived technical risk is the skill being tested.",
+     1
+    ],
+    [
+     "Overrule it and move on.",
+     "You won the meeting and learned nothing about whether the risk was real. It will be back next quarter."
+    ]
+   ],
+   "verdict": "The **Frozen Caveman antipattern**: reverting to a pet irrational concern on every architecture, usually because you were burned by one in the past. Worth watching for in yourself — thinking like an architect means noticing when the question you always ask is about your history rather than about this system."
+  },
+  {
+   "t": "Twenty minutes, before anything else",
+   "art": "twenty",
+   "alt": "A day timeline with a twenty-minute block at the start and crossed-out blocks at lunch and evening",
+   "cap": "Fig. 2-6 · the slot survives only where nothing has started yet.",
+   "p": "Twenty minutes a day on something new — a buzzword looked up, a Refcard, InfoQ, the Thoughtworks Technology Radar — promotes things from *don't know you don't know* into *know you don't know*. Most people schedule it at lunch or after work; both fail. Lunch becomes catching up on work, and evenings have families in them. Take it first thing, with the coffee, **before you open email** — once email is open, the day has started and the morning is gone."
+  },
+  {
+   "t": "Build a personal radar",
+   "art": "radar",
+   "wide": true,
+   "alt": "A radar of four concentric rings — hold, assess, trial, adopt — divided into four quadrants",
+   "cap": "Fig. 2-7 · four quadrants, four rings. The rings run outside-in: hold, assess, trial, adopt.",
+   "p": "Get invested enough in one technology and you end up in a memetic bubble — everyone inside cares about it as much as you do, honest outside appraisals never reach you, and there is no warning before it collapses. One of the authors watched exactly that happen to Clipper. A radar is the antidote: a living document that forces you to place things.",
+   "items": [
+    "**Hold** — don't start anything new with it. For personal use, also the place for habits you're trying to break and low-value information streams.",
+    "**Assess** — worth exploring: a spike, a research project, a conference session. A staging area for future research.",
+    "**Trial** — worth pursuing now, on a low-risk project, until you understand it well enough to put it in a trade-off analysis.",
+    "**Adopt** — what you're most excited about and your current best answer for a class of problem.",
+    "Treat the portfolio like a financial one: **diversify**. Some skills widely in demand and tracked, plus a couple of gambits. The conversation the radar forces is worth more than the diagram it produces."
+   ]
+  },
+  {
+   "t": "“It depends” is the honest answer",
+   "art": "hickey",
+   "alt": "Two rows of ledgers — benefits filled in both, trade-offs empty for the programmer and filled for the architect",
+   "cap": "Everyone can list the benefits. The second column is the job.",
+   "quotes": [
+    [
+     "Architecture is the stuff you can't Google or ask an LLM about.",
+     "Mark Richards",
+     "Not because the tools are weak, but because the answer depends on deployment environment, business drivers, culture, budget, timeframe and the skills of the people who will build it."
+    ],
+    [
+     "There are no right or wrong answers in architecture — only trade-offs.",
+     "Neal Ford",
+     ""
+    ],
+    [
+     "Programmers know the benefits of everything and the trade-offs of nothing. Architects need to understand both.",
+     "Rich Hickey",
+     "The practical instruction in this chapter: having found the obvious answer, go and look for what it costs. If you can't find anything, you haven't looked hard enough — that's the First Law's first corollary again."
+    ]
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "One topic, or three queues?",
+   "art": "topic-queue",
+   "alt": "A producer publishing to one topic feeding three consumers, above a producer writing to three separate queues",
+   "sit": "An item-auction system. A **Bid Producer** sends every bid to three services — capture, tracking and analytics. Asynchronous either way. A single topic in publish-and-subscribe, or three queues point-to-point?",
+   "opts": [
+    [
+     "One topic, publish-and-subscribe.",
+     "**For:** the producer holds one connection, and adding a Bid History service later needs no change to any existing service or to the infrastructure — it just subscribes. The producer never learns who consumes it. **Against:** a topic is easy to wiretap, every consumer must accept the *same* contract, and you can't see queue depth, so you can't autoscale on it."
+    ],
+    [
+     "Three queues, point-to-point.",
+     "**For:** each consumer gets its own contract and its own channel; a rogue listener steals messages, so the loss is noticed immediately; each queue is monitorable, so consumers scale independently. **Against:** the producer holds three connections, and Bid History means a new queue *and* a change to the producer."
+    ]
+   ],
+   "verdict": "**It depends** — and here that is the answer, not a dodge. Extensibility and decoupling on one side; security, heterogeneous contracts and programmatic scaling on the other. An auction house under a compliance regime answers differently from a startup shipping a new consumer every month. Note too that the trade-off is partly technology-specific: AMQP's split between an exchange and a queue recovers the monitoring advantage."
+  },
+  {
+   "k": "decision",
+   "t": "Which code does the architect own?",
+   "art": "bottleneck",
+   "alt": "Work from a team funnelling through a single narrow point labelled you",
+   "sit": "You believe architects should code, and you want to stay hands-on. The framework and the trickiest parts of the system are the interesting code, and you understand them best. You are also not a full-time developer — you have diagrams and meetings and more meetings.",
+   "opts": [
+    [
+     "Own the framework and the critical path.",
+     "The **Bottleneck Trap**. Everything the team needs routes through the one person who cannot give it full time, and the team's progress becomes your calendar."
+    ],
+    [
+     "Delegate the critical path; code a minor feature one to three iterations out.",
+     "You write production code without blocking anyone, the hard parts land with the team who should own them, and — most valuable — you feel the same build, test and deploy pain the team feels every day.",
+     1
+    ],
+    [
+     "Stop coding and stay in the diagrams.",
+     "Depth erodes, and so does credibility with the people implementing your decisions."
+    ]
+   ],
+   "verdict": "The point of coding is not the code. It is that an architect who ships nothing stops noticing what their decisions cost the people who do."
+  },
+  {
+   "t": "Five ways to stay hands-on",
+   "art": "handson",
+   "wide": true,
+   "alt": "Five labelled routes to keeping hands-on: proofs of concept, technical debt, bug fixes, automation, code reviews",
+   "cap": "When you can't get into the iteration with the team, these are the fallbacks.",
+   "p": "On proofs of concept, one warning: write them at production quality. Throwaway POC code has a habit of landing in the repository and becoming the reference example everyone copies — and sloppy POCs are also just practice at writing badly. Automation counts double here, because fitness functions that check architectural compliance are code *and* governance at the same time (Ch. 6)."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 2: Architectural Thinking, pp. 17–36. Quotations are the book's; the decision scenarios are worked from the situations the chapter describes.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

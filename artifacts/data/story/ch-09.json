@@ -1,0 +1,147 @@
+{
+ "ch": "09",
+ "book": "Chapter 9 · Foundations",
+ "pages": "pp. 131–152",
+ "title": "Before the Catalogue",
+ "gist": "What a style actually commits you to, the one partitioning decision that shapes everything after it, and the eleven things about networks that distributed architectures will teach you the hard way if you let them.",
+ "read": "7 min · 50 sec to re-scan",
+ "acc": {
+  "l": "#45566B",
+  "d": "#9FB0C2"
+ },
+ "minute": [
+  "A **style** dictates five things at once: component topology, physical architecture, deployment, communication style and data topology. A **pattern** is a contextualised solution to one problem. Styles are also the *default* characteristics you inherit, good and bad.",
+  "**Top-level partitioning** is one of the first decisions and the hardest to reverse: **technical** (layers — presentation, business, services, persistence) or **domain** (workflows — CatalogCheckout, ShipOrder). Technical smears every workflow across all layers.",
+  "**Conway's Law**: a design copies the communication structure of the organisation that produced it. The **Inverse Conway Maneuver** uses that on purpose — change the teams to get the architecture.",
+  "The **eight fallacies of distributed computing** (Deutsch, 1994) all still hold, and the authors add three: versioning is easy, compensating updates always work, and observability is optional.",
+  "Know your production latency at the **95th percentile**, not the average. A 60 ms mean with a 400 ms tail is what kills a distributed architecture."
+ ],
+ "sections": [
+  {
+   "t": "A style is five commitments in one word",
+   "art": "style-vs-pattern",
+   "wide": true,
+   "alt": "Five things a style dictates: component topology, physical architecture, deployment, communication style, data topology",
+   "cap": "Saying “event-driven” settles all five before anyone has drawn anything.",
+   "p": "Styles aren't decreed by a committee. An architect notices that a new capability solves an old problem, combines it with a few other things, and other architects copy it until it's common enough to need a name. Microservices came from DevOps tooling plus reliable open-source operating systems plus domain-driven design — and the *name* was a reaction to the huge orchestrated services of the time. **It is a label, not an instruction to build the smallest services you can.**"
+  },
+  {
+   "t": "The Big Ball of Mud",
+   "art": "mud",
+   "alt": "A circle of class dots connected by a dense tangle of dependency lines",
+   "cap": "Fig. 9-1 · every dot is a class, every line a dependency. A real client codebase.",
+   "quotes": [
+    [
+     "A haphazardly structured, sprawling, sloppy, duct-tape-and-baling-wire, spaghetti-code jungle… Information is shared promiscuously among distant elements of the system, often to the point where nearly all the important information becomes global or duplicated.",
+     "Brian Foote & Joseph Yoder, 1997",
+     "Few architects intend to build one. Most of these arrive through absent governance around code quality and structure, one expedient repair at a time."
+    ]
+   ],
+   "p": "The damage isn't only the missing structure. Because everything couples to everything, changes have unpredictable rippling effects — and there is a point past which developers spend all their time chasing side effects instead of building features."
+  },
+  {
+   "t": "Unitary, client/server, three-tier",
+   "art": "tiers",
+   "wide": true,
+   "alt": "The progression from one machine, through client and server, to three tiers and beyond",
+   "cap": "Every era draws a new line through the same question: what runs where, and who owns the data.",
+   "p": "Client/server has had four wardrobes — desktop plus database server, browser plus web server, single-page JavaScript apps that are the desktop model again with the rich client in the browser, and three-tier with an application server in the middle. There will always be layers separating parts of an architecture; what changes is where the platform makes it cheap to draw them.",
+   "items": [
+    "A cautionary detail: Java's designers assumed three-tier computing was permanent and baked object **serialization** into the language so objects could move over the network conveniently. The style came and went. Every new Java feature still has to support serialization for backward compatibility.",
+    "The advice to favour simple designs is, among other things, a future-proofing strategy — because nobody has ever been good at predicting the long-term implications of a design decision."
+   ]
+  },
+  {
+   "t": "Technical or domain partitioning",
+   "art": "partitioning",
+   "wide": true,
+   "alt": "A layered technical partition with one workflow crossing every layer, beside a domain partition where the workflow is one component",
+   "cap": "Figs. 9-3 and 9-4 · the same workflow, drawn under both regimes.",
+   "items": [
+    "**Technical partitioning** organises by capability: presentation, business rules, services, persistence. Persistence code is easy to find; the Model-View-Controller pattern maps onto it, which is why it's many organisations' default. The decoupling is real — a change in the Services layer touches only its neighbours.",
+    "**Domain partitioning** organises by workflow. Inspired by domain-driven design, and the philosophy microservices is built on. Components nest, so CatalogCheckout may still have layers *inside* it — the top level is what's being decided here.",
+    "The cost of technical partitioning is that **most realistic workflows cut across technical capabilities**, so the domain ends up smeared across every layer. The cost of domain partitioning is that cross-cutting code appears in several places."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "Silicon Sandwiches: which partitioning?",
+   "art": "partitioning",
+   "wide": true,
+   "alt": "A layered technical partition with one workflow crossing every layer, beside a domain partition where the workflow is one component",
+   "sit": "The sandwich-shop kata needs national and local customisation throughout. Two designs are on the table: components per workflow (Purchase, Promotion, MakeOrder, ManageInventory, Recipes, Delivery, Location), or top-level Common and Local components with Purchase and Delivery handling the workflow.",
+   "opts": [
+    [
+     "Domain partitioning.",
+     "Models how the business works rather than an implementation detail; makes cross-functional teams easy to form; message flow matches the problem; migrating to a distributed architecture later is straightforward. **Cost:** customisation code appears in several places."
+    ],
+    [
+     "Technical partitioning around Common and Local.",
+     "Cleanly separates the customisation code and matches the layered style. **Cost:** high global coupling — a change to Common or Local hits everything; domain concepts get duplicated across both; and data coupling tends to be high, which is what makes a later migration painful."
+    ]
+   ],
+   "verdict": "It depends, and this one is genuinely balanced — but note where the costs *land*. Technical partitioning's disadvantages are all about **later**: untangling data relationships, migrating to distributed, duplicated concepts. That asymmetry is why the industry has drifted toward domain partitioning for both monoliths and distributed systems over the last decade."
+  },
+  {
+   "t": "Eleven fallacies",
+   "art": "fallacies",
+   "wide": true,
+   "alt": "The eight fallacies of distributed computing in a grid, plus three more the authors add",
+   "cap": "Every architect learns these — from the list, or one at a time over a career.",
+   "items": [
+    "**The network is reliable.** Service B can be perfectly healthy and unreachable. This is why timeouts and circuit breakers exist.",
+    "**Latency is zero.** A local call is nanoseconds; a remote one is milliseconds. Know your production number, and know the 95th percentile — the long tail is what kills you.",
+    "**Bandwidth is infinite.** Irrelevant in a monolith, decisive once you split. See the stamp-coupling example below.",
+    "**The network is secure.** Every endpoint of every deployment unit must be secured, interservice calls included — which is part of why highly distributed synchronous styles are slower.",
+    "**The topology never changes.** It changes constantly, and a “minor” 2am upgrade can invalidate every latency assumption you hold.",
+    "**There is only one administrator.** A large company has dozens. Who do you call about latency?",
+    "**Transport cost is zero.** Not latency — money. Hardware, servers, gateways, firewalls, subnets, proxies. Distributed costs significantly more.",
+    "**The network is homogeneous.** Multiple hardware vendors, mostly interoperable, occasionally not — which loops back into reliability, latency and bandwidth."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "Service B returns 45 fields. You need one.",
+   "art": "stamp",
+   "alt": "A profile service returning 500 KB when only 200 bytes are needed, compared with a trimmed response",
+   "sit": "The Wish List service needs the customer's **name** for its response. It calls the Profile service, which returns 45 attributes totalling 500 KB. Wish list requests arrive about **2,000 times a second**.",
+   "opts": [
+    [
+     "Leave it. It's one field off an existing endpoint.",
+     "2,000 × 500 KB is **1 GB per second** of interservice traffic to move 200 bytes of useful data. That slows the network, which worsens latency and reliability — three fallacies in one call."
+    ],
+    [
+     "Send only what the caller needs.",
+     "400 Kb/s in total. Private RESTful endpoints, field selectors in the contract, GraphQL, consumer-driven contracts, or an internal messaging endpoint — the technique matters less than the principle.",
+     1
+    ]
+   ],
+   "verdict": "This is **stamp coupling**: passing a large data structure where a small one would do. It is invisible in a monolith and expensive the moment a network is involved, which makes it one of the most common surprises in a first migration to microservices."
+  },
+  {
+   "t": "Team topologies",
+   "art": "teams",
+   "wide": true,
+   "alt": "Stream-aligned teams supported by enabling, complicated-subsystem and platform teams",
+   "cap": "Skelton and Pais's four team types, and how each one shows up in an architecture.",
+   "items": [
+    "**Stream-aligned** — scoped to one business domain or capability, delivering discrete value. Every other team type exists to reduce friction for these.",
+    "**Enabling** — bridges a capability gap with research and learning that is important but not urgent. Highly collaborative, proactive, temporary by nature.",
+    "**Complicated-subsystem** — owns a genuinely specialised part so that stream-aligned teams don't have to carry it. Its purpose is reducing others' cognitive load.",
+    "**Platform** — self-service APIs, tools, services and support arranged as a compelling internal product, so delivery teams move faster with less coordination. Removes friction while keeping governance on quality and security."
+   ],
+   "p": "This connects straight back to partitioning. Layered architectures came with a backend department, a DBA department and a presentation team — an artificial separation of common concerns that hampers collaboration, and a textbook case of Conway's Law being obeyed rather than used."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 9: Foundations, pp. 131–152. The fallacies are L. Peter Deutsch et al. (Sun Microsystems, 1994); Big Ball of Mud is Foote & Yoder; Team Topologies is Skelton & Pais.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

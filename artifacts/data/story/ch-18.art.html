@@ -1,0 +1,171 @@
+<!-- Drawings for chapter 18 · Microservices Architecture -->
+
+<!--@ ms-topology -->
+<svg viewBox="0 0 620 236" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="222" y="18" width="176" height="26"/>
+    <rect x="120" y="58" width="380" height="24" stroke="var(--ink3)"/>
+    <path d="M310 44 V58" stroke="var(--ink3)"/>
+    <g stroke="var(--acc)" stroke-width="1.7">
+      <rect x="14" y="106" width="108" height="98" fill="var(--accBg)" stroke-dasharray="6 4"/>
+      <rect x="140" y="106" width="108" height="98" fill="var(--accBg)" stroke-dasharray="6 4"/>
+      <rect x="266" y="106" width="108" height="98" fill="var(--accBg)" stroke-dasharray="6 4"/>
+      <rect x="392" y="106" width="108" height="98" fill="var(--accBg)" stroke-dasharray="6 4"/>
+      <rect x="512" y="106" width="96" height="98" fill="var(--accBg)" stroke-dasharray="6 4"/>
+    </g>
+    <g stroke="var(--ink)" stroke-width="1.3">
+      <rect x="28" y="120" width="80" height="30"/><rect x="154" y="120" width="80" height="30"/>
+      <rect x="280" y="120" width="80" height="30"/><rect x="406" y="120" width="80" height="30"/>
+      <rect x="524" y="120" width="72" height="30"/>
+      <ellipse cx="68" cy="172" rx="28" ry="7"/><path d="M40 172 v12 a28 7 0 0 0 56 0 v-12"/>
+      <ellipse cx="194" cy="172" rx="28" ry="7"/><path d="M166 172 v12 a28 7 0 0 0 56 0 v-12"/>
+      <ellipse cx="320" cy="172" rx="28" ry="7"/><path d="M292 172 v12 a28 7 0 0 0 56 0 v-12"/>
+      <ellipse cx="446" cy="172" rx="28" ry="7"/><path d="M418 172 v12 a28 7 0 0 0 56 0 v-12"/>
+      <ellipse cx="560" cy="172" rx="26" ry="7"/><path d="M534 172 v12 a26 7 0 0 0 52 0 v-12"/>
+      <path d="M68 150 V165 M194 150 V165 M320 150 V165 M446 150 V165 M560 150 V165" stroke="var(--ink3)"/>
+    </g>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M180 82 L68 106 M250 82 L194 106 M310 82 V106 M370 82 L446 106 M440 82 L560 106"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="310" y="35" fill="var(--ink2)">user interface</text>
+    <text x="310" y="74" fill="var(--ink2)">API layer — routing and cross-cutting concerns only</text>
+    <text x="68" y="139" font-size="7.6" fill="var(--ink2)">service</text>
+    <text x="310" y="220" font-size="8.6" fill="var(--acc)">each dashed box is a bounded context: the service, its schema, its database, everything it needs.</text>
+    <text x="310" y="234" font-size="8.4" fill="var(--ink2)">No orchestration in the API layer. Business logic belongs inside a bounded context.</text>
+  </g>
+</svg>
+
+<!--@ sidecar-mesh -->
+<svg viewBox="0 0 620 214" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <g stroke-width="1.4">
+      <rect x="20" y="40" width="90" height="52"/><rect x="150" y="40" width="90" height="52"/>
+      <rect x="280" y="40" width="90" height="52"/><rect x="410" y="40" width="90" height="52"/>
+      <rect x="530" y="40" width="76" height="52"/>
+    </g>
+    <g stroke="var(--acc)" stroke-width="1.7" fill="var(--accBg)">
+      <rect x="20" y="98" width="90" height="24"/><rect x="150" y="98" width="90" height="24"/>
+      <rect x="280" y="98" width="90" height="24"/><rect x="410" y="98" width="90" height="24"/>
+      <rect x="530" y="98" width="76" height="24"/>
+    </g>
+    <rect x="20" y="146" width="586" height="30" stroke="var(--acc)" stroke-width="1.9"/>
+    <g stroke="var(--acc)" stroke-width="1.2"><path d="M65 122 V146 M195 122 V146 M325 122 V146 M455 122 V146 M568 122 V146"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="20" y="30" text-anchor="start" font-size="8.6" fill="var(--ink3)">DOMAIN LOGIC — duplicated rather than shared</text>
+    <g fill="var(--ink2)" font-size="7.6">
+      <text x="65" y="70">service</text><text x="195" y="70">service</text><text x="325" y="70">service</text>
+      <text x="455" y="70">service</text><text x="568" y="70">service</text>
+    </g>
+    <g fill="var(--acc)" font-size="7.6">
+      <text x="65" y="114">sidecar</text><text x="195" y="114">sidecar</text><text x="325" y="114">sidecar</text>
+      <text x="455" y="114">sidecar</text><text x="568" y="114">sidecar</text>
+    </g>
+    <text x="313" y="165" font-size="9.4" fill="var(--acc)">SERVICE PLANE — the mesh (Istio and friends)</text>
+    <text x="310" y="196" font-size="8.6" fill="var(--ink)">Operational concerns are the one thing microservices does share: circuit breakers, logging, monitoring, discovery.</text>
+    <text x="310" y="210" font-size="8.4" fill="var(--ink2)">Upgrading the monitoring tool becomes one team's change to the sidecar, not forty teams' backlog item.</text>
+  </g>
+</svg>
+
+<!--@ choreo-orch -->
+<svg viewBox="0 0 620 236" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="14" y="90" width="80" height="30" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="150" y="30" width="80" height="26"/><rect x="150" y="76" width="80" height="26"/>
+    <rect x="150" y="122" width="80" height="26"/><rect x="150" y="168" width="80" height="26"/>
+    <g stroke="var(--ink3)" stroke-width="1.1">
+      <path d="M94 100 L150 43 M94 103 L150 89 M94 110 L150 135 M94 116 L150 181"/>
+    </g>
+    <path d="M290 20 V216" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <rect x="322" y="90" width="76" height="30"/>
+    <rect x="440" y="90" width="90" height="30" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="546" y="30" width="62" height="26"/><rect x="546" y="76" width="62" height="26"/>
+    <rect x="546" y="122" width="62" height="26"/><rect x="546" y="168" width="62" height="26"/>
+    <path d="M398 105 H440" stroke="var(--ink3)"/>
+    <g stroke="var(--acc)" stroke-width="1.2">
+      <path d="M530 100 L546 43 M530 103 L546 89 M530 110 L546 135 M530 116 L546 181"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="7.6">
+    <text x="14" y="18" text-anchor="start" font-size="9" fill="var(--acc)">CHOREOGRAPHY · FRONT CONTROLLER</text>
+    <text x="322" y="18" text-anchor="start" font-size="9" fill="var(--ink)">ORCHESTRATION</text>
+    <text x="54" y="109" fill="var(--acc)">first service</text>
+    <text x="360" y="109" fill="var(--ink2)">caller</text>
+    <text x="485" y="109" fill="var(--acc)">mediator</text>
+    <text x="150" y="216" font-size="8.4" fill="var(--ink2)">the first service quietly becomes a mediator</text>
+    <text x="150" y="228" font-size="8.4" fill="var(--ink2)">*and* keeps its domain job. complexity doubles.</text>
+    <text x="465" y="216" font-size="8.4" fill="var(--acc)">coupling concentrates in one service,</text>
+    <text x="465" y="228" font-size="8.4" fill="var(--acc)">and the others stay simple.</text>
+  </g>
+</svg>
+
+<!--@ saga -->
+<svg viewBox="0 0 620 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="248" y="24" width="124" height="34" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="30" y="112" width="110" height="32"/><rect x="200" y="112" width="110" height="32"/>
+    <rect x="370" y="112" width="110" height="32"/><rect x="510" y="112" width="96" height="32"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <path d="M270 58 L96 112 M290 58 L250 112 M330 58 L418 112 M352 58 L546 112"/>
+    </g>
+    <g stroke="var(--acc)" stroke-width="1.8">
+      <path d="M96 112 L272 62"/><path d="M418 112 L346 62"/>
+      <path d="M240 118 l16 16 M256 118 l-16 16"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="310" y="45" font-size="9.4" fill="var(--acc)">mediator</text>
+    <text x="85" y="132" fill="var(--ink2)">ok</text>
+    <text x="255" y="150" fill="var(--acc)">failed</text>
+    <text x="425" y="132" fill="var(--ink2)">ok</text>
+    <text x="558" y="132" fill="var(--ink2)">pending</text>
+    <text x="310" y="180" font-size="8.6" fill="var(--ink)">One part fails, so the mediator tells every successful part to undo — a compensating transaction.</text>
+    <text x="310" y="196" font-size="8.4" fill="var(--acc)">Requests sit in a pending state until the mediator confirms overall success.</text>
+    <text x="310" y="210" font-size="8.2" fill="var(--ink2)">Connascence of Values across services — the worst dynamic form there is. Fix the granularity instead.</text>
+  </g>
+</svg>
+
+<!--@ ms-data -->
+<svg viewBox="0 0 620 236" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.3" stroke-linejoin="round">
+    <g stroke="var(--ink3)">
+      <rect x="14" y="34" width="22" height="16"/><rect x="42" y="34" width="22" height="16"/>
+      <rect x="70" y="34" width="22" height="16"/><rect x="98" y="34" width="22" height="16"/>
+      <rect x="126" y="34" width="22" height="16"/><rect x="154" y="34" width="22" height="16"/>
+      <rect x="14" y="58" width="22" height="16"/><rect x="42" y="58" width="22" height="16"/>
+      <rect x="70" y="58" width="22" height="16"/><rect x="98" y="58" width="22" height="16"/>
+      <rect x="126" y="58" width="22" height="16"/><rect x="154" y="58" width="22" height="16"/>
+    </g>
+    <ellipse cx="95" cy="126" rx="62" ry="10"/><path d="M33 126 v16 a62 10 0 0 0 124 0 v-16"/>
+    <g stroke="var(--ink3)" stroke-width=".8"><path d="M25 74 L70 116 M53 74 L80 116 M81 74 L92 116 M109 74 L104 116 M137 74 L118 116 M165 74 L130 116"/></g>
+    <path d="M62 156 l66 30 M128 156 l-66 30" stroke="var(--ink)" stroke-width="2"/>
+
+    <g stroke="var(--acc)" stroke-width="1.6">
+      <rect x="238" y="34" width="66" height="112" stroke-dasharray="6 4" fill="var(--accBg)"/>
+      <rect x="316" y="34" width="66" height="112" stroke-dasharray="6 4" fill="var(--accBg)"/>
+    </g>
+    <rect x="250" y="46" width="42" height="24"/><rect x="328" y="46" width="42" height="24"/>
+    <ellipse cx="271" cy="104" rx="20" ry="7"/><path d="M251 104 v12 a20 7 0 0 0 40 0 v-12"/>
+    <ellipse cx="349" cy="104" rx="20" ry="7"/><path d="M329 104 v12 a20 7 0 0 0 40 0 v-12"/>
+    <path d="M271 70 V97 M349 70 V97" stroke="var(--ink3)"/>
+
+    <rect x="432" y="34" width="176" height="112" stroke="var(--acc)" stroke-width="1.6" stroke-dasharray="6 4" fill="var(--accBg)"/>
+    <rect x="446" y="46" width="46" height="24"/><rect x="500" y="46" width="46" height="24"/><rect x="554" y="46" width="42" height="24"/>
+    <ellipse cx="520" cy="104" rx="42" ry="8"/><path d="M478 104 v14 a42 8 0 0 0 84 0 v-14"/>
+    <g stroke="var(--ink3)"><path d="M469 70 L500 96 M523 70 V96 M575 70 L542 96"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="95" y="24" font-size="9" fill="var(--ink)">SIXTY SERVICES, ONE DATABASE</text>
+    <text x="310" y="24" font-size="9" fill="var(--acc)">DATABASE PER SERVICE</text>
+    <text x="520" y="24" font-size="9" fill="var(--acc)">A WIDER BOUNDED CONTEXT</text>
+    <g fill="var(--ink2)" font-size="7.8">
+      <text x="95" y="182">rename a column, coordinate</text><text x="95" y="193">sixty deployments</text>
+      <text x="95" y="207">and the bounded context</text><text x="95" y="218">no longer exists</text>
+      <text x="310" y="182">the standard topology.</text><text x="310" y="193">change the database type</text>
+      <text x="310" y="204">without telling anyone.</text>
+      <text x="520" y="182">five or six services sharing one</text><text x="520" y="193">database, deliberately — the</text>
+      <text x="520" y="204">payment types, the shipping methods.</text>
+      <text x="520" y="218">past six, the problems come back.</text>
+    </g>
+  </g>
+</svg>

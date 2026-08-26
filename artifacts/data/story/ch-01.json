@@ -1,0 +1,185 @@
+{
+ "ch": "01",
+ "book": "Chapter 1 · Introduction",
+ "pages": "pp. 1–13",
+ "title": "What the Job Actually Is",
+ "gist": "Before any style or pattern: what the word architecture covers, the three laws that sit under every decision in the rest of the book, and the eight things an architect is expected to do — four of which have nothing to do with code.",
+ "read": "4 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#4F6088",
+  "d": "#96A8D0"
+ },
+ "minute": [
+  "Architecture is **four things resting on the system's structure**: the *style* you start from, the *characteristics* it must be good at, the *logical components* that do the work, and the *decisions* that constrain all three.",
+  "**Three laws.** Everything is a trade-off. Why is more important than how. Almost no decision is binary — most sit on a spectrum between extremes.",
+  "An architect **guides** technology choices rather than making them: *a reactive framework*, not *React*. Specify a named technology only when it is the only way to hold a characteristic.",
+  "**Eight expectations** define the role, and four of them — trends, business domain, leading people, politics — are not technical at all. Leadership is roughly half the job.",
+  "**Every architecture is a product of its context.** Microservices in 2002 was not a worse idea; it was 130 licences. Judge an old architecture by what it cost then, not by what it costs now."
+ ],
+ "sections": [
+  {
+   "t": "Architecture is four things, not one",
+   "art": "four-dim",
+   "wide": true,
+   "alt": "Four labelled columns — style, characteristics, components, decisions — standing on a beam labelled structure",
+   "cap": "Fig. 1-1 in the book. The heavy line is the structure; nothing above it stands without it.",
+   "items": [
+    "**Architecture style** — the starting shape. Layered, microkernel, pipeline, event-driven, microservices. Chosen *after* you know the other two, not before.",
+    "**Architecture characteristics** — the *-ilities*. Scalability, availability, auditability, elasticity. These define the system's capabilities and what counts as success.",
+    "**Logical components** — the domains, entities and workflows. Characteristics say what a system must *be*; components say what it *does*.",
+    "**Architecture decisions** — the rules of construction. *Only the business and services layers may reach the database.* Constraints, and the direction teams need."
+   ],
+   "p": "Architects analyse them roughly in that order — characteristics and components first, which is what tells you which style to reach for. The whole of Part I is those first two."
+  },
+  {
+   "t": "The three laws",
+   "art": "spectrum",
+   "alt": "A toggle switch struck through, above a dial with a marker somewhere between two extremes",
+   "cap": "Two decades of looking produced exactly three laws. This is the newest one.",
+   "quotes": [
+    [
+     "Everything in software architecture is a trade-off.",
+     "First Law",
+     "**Corollary 1** — if you think you've found something that isn't a trade-off, you just haven't identified the trade-off yet. **Corollary 2** — you can't run the analysis once and be done; every new situation makes you run it again."
+    ],
+    [
+     "Why is more important than how.",
+     "Second Law",
+     "Anyone patient enough can read *how* out of the running system. *Why* — the trade-offs that were weighed, the context at the time — exists nowhere but in the architect's head until it is written down."
+    ],
+    [
+     "Most architecture decisions aren't binary but rather exist on a spectrum between extremes.",
+     "Third Law · new in the 2nd edition",
+     "Which is why *always* and *never* are usually the sound of a trade-off going unexamined. Teams would love one big trade-off jamboree that settles the defaults forever. It doesn't hold."
+    ]
+   ]
+  },
+  {
+   "t": "Eight expectations of an architect",
+   "art": "expectations",
+   "wide": true,
+   "alt": "Eight labelled boxes in two rows: four on the system, four on everything else",
+   "cap": "Irrespective of role, title or job description — these eight are the job.",
+   "p": "The role ranges from expert programmer to setting a company's technical direction, so defining it is a fool's errand — but what is *expected* is stable. Note where the difficulty actually sits: the industry is full of excellent technologists who cannot lead a team, coach a developer, or get a decision approved, and those are the ones who struggle to hold the job."
+  },
+  {
+   "k": "decision",
+   "t": "Name the framework, or name the category?",
+   "art": "frameworks",
+   "alt": "One box naming React beside a dashed boundary containing four reactive frameworks",
+   "sit": "Four teams are arguing about front-end frameworks and none of them can settle it. You could end the argument this afternoon by putting **React** in the standard.",
+   "opts": [
+    [
+     "Name React.",
+     "The argument ends. So does every team's ability to pick correctly for a screen you haven't seen yet — and you now own that choice on all of their behalf, forever."
+    ],
+    [
+     "Name *a reactive framework*.",
+     "The argument ends too, because the category is what was actually in dispute. React, Vue, Angular or Elm stays with the team that has to live with it.",
+     1
+    ],
+    [
+     "Write no rule at all.",
+     "The argument continues, and you get four incompatible front-ends and no way to move a developer between teams."
+    ]
+   ],
+   "verdict": "**Guide, don't specify.** *Use a reactive framework* is an architecture decision; *use React* is a technology decision you took off someone else's desk. The test is whether your decision helps teams make the right technical choice or makes the choice for them. Cross the line only when one named technology is the only way to preserve a characteristic — and Ch. 21 is entirely about this."
+  },
+  {
+   "t": "Breadth beats depth — for this job",
+   "art": "breadth",
+   "alt": "A wide shallow bar crossed by a narrow deep column, forming a T",
+   "cap": "Better to know the pros and cons of ten caching products than to be the only expert in one.",
+   "items": [
+    "**Technical depth** — what a developer is paid for. One language, one framework, deeply enough to make it work at 3am.",
+    "**Technical breadth** — what an architect is paid for. Enough about many things to *choose* between them, plus the few things you still know deeply."
+   ],
+   "p": "Most environments are heterogeneous, so the minimum bar is knowing how to interface with systems whatever their language or platform. Getting there means deliberately stretching outside the comfort zone, because breadth is not what a normal career accumulates on its own."
+  },
+  {
+   "t": "Every architecture is a product of its context",
+   "art": "then-now",
+   "alt": "A 2002 server rack beside six small containers, divided by a dashed line",
+   "cap": "2002: fifty Windows licences, thirty application-server licences, fifty database licences. Today: a container and a line on a bill.",
+   "p": "Walking into a 2002 data centre and asking for a service per machine with its own database was not a bold idea badly received — it was unaffordable, and correctly rejected. Open source and the DevOps years changed the price, not the argument. This cuts both ways: it is why today's obvious choices will look strange later, and why an architecture you inherit deserves the question *what did this cost when it was decided?* before you call it wrong."
+  },
+  {
+   "t": "Structural decay and architecture vitality",
+   "art": "drift",
+   "alt": "Five boxes joined by three solid lines and five dashed ones",
+   "cap": "Nine connections arrived one pull request at a time. Each was reasonable on the day. None was drawn.",
+   "items": [
+    "**Structural decay** — coding and design changes that quietly erode a characteristic you promised. Each change is reasonable on the day; nothing breaks, so nobody notices the performance or availability leaving.",
+    "**Architecture vitality** — whether an architecture defined three or more years ago is still viable *today*, given how far the business and the technology have moved."
+   ],
+   "p": "Continually analysing the existing architecture is the second expectation and the most commonly skipped one. It rarely appears in a job posting and never in a sprint, so if the architect does not own the question, nobody does."
+  },
+  {
+   "t": "The agility nobody outside the building can see",
+   "art": "train",
+   "alt": "Three bars on one timeline: code one day, test three weeks, release six weeks",
+   "cap": "Changing code fast is a kind of agility. It is not the kind a customer experiences.",
+   "p": "Testing and release environments are part of the architecture whether or not anyone drew them. If a change takes a day to write, three weeks to test and six to release, the system does not have agility — and no amount of restructuring the code will give it any. This is a frequently forgotten half of *continually analyse the architecture*."
+  },
+  {
+   "k": "decision",
+   "t": "The layer someone went around",
+   "art": "bypass",
+   "alt": "Four layers with a dashed shortcut curving from the top layer straight to the database",
+   "sit": "You ruled that only the business and services layers may touch the database. A UI developer has given the presentation layer a **direct connection** — for performance. The screen is nine milliseconds faster. It works, and nothing is broken.",
+   "opts": [
+    [
+     "Let it stand. It's faster and no one is harmed.",
+     "The rule existed so a schema change could not reach the screens. That protection is gone now, and you find out at the next migration — which is the worst possible moment to find out."
+    ],
+    [
+     "Revert it and restate the rule in the document.",
+     "It returns in six weeks under a different deadline, because a document is not a check and the next developer has the same good reason."
+    ],
+    [
+     "Revert it, and put an automated check in the build.",
+     "The decision now survives contact with a deadline. This is exactly what fitness functions are for — Ch. 6.",
+     1
+    ]
+   ],
+   "verdict": "**A decision nobody verifies is a suggestion.** *Ensure compliance with decisions* is the one expectation that cannot be met by writing more clearly: it needs continual verification, and the reason it matters is that a violated characteristic gives you no signal. Nothing breaks. The system simply stops being the one you designed."
+  },
+  {
+   "k": "decision",
+   "t": "Close the CRM database?",
+   "art": "query-log",
+   "alt": "Seven systems drawing lines into one database cylinder; only one of them is highlighted",
+   "sit": "Too many systems read the CRM database directly. You cannot secure the customer data, cannot change the schema, and cannot tell who breaks when you try. You decide that each application's database is reachable **only by the application that owns it**.",
+   "opts": [
+    [
+     "Leave it open.",
+     "Nobody objects today. Every schema change stays a cross-team negotiation forever, the customer data has no single owner, and the security question has no answer."
+    ],
+    [
+     "Silo it, and go win the argument.",
+     "You get control of the data, the schema and the security. Every team except CRM objects — they need remote calls where they had a join, and the work lands in quarters that never voted for it.",
+     1
+    ]
+   ],
+   "verdict": "A developer choosing a design pattern needs no approval; that is the art of programming. **Almost every decision an architect makes will be challenged** — not because people are difficult, but because the cost lands on someone who did not get to make the call. Product owners see cost, developers see a worse approach, and you have to negotiate all of it. That is why Ch. 25 is a whole chapter on negotiation."
+  },
+  {
+   "t": "Why survives. How is already written down.",
+   "art": "why-how",
+   "alt": "A card containing a diagram labelled how, beside a card of written lines labelled why",
+   "cap": "How is recoverable from the running system. Why is recoverable only from you.",
+   "p": "Show an experienced architect a system they have never seen and they will work out how it functions. What they will struggle with is *why* the previous team decided as they did — and an undocumented reason is indistinguishable from no reason, so the next architect undoes it and pays the tuition again. Ch. 21 turns this into a habit with architecture decision records."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 1: Introduction, pp. 1–13. Quotations are the book's; the decision scenarios are worked examples built from the situations the chapter describes.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

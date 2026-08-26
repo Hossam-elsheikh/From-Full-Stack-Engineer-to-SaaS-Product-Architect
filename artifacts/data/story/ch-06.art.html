@@ -1,0 +1,162 @@
+<!-- Drawings for chapter 06 · Measuring and Governing Architecture Characteristics -->
+
+<!--@ avg-vs-max -->
+<svg viewBox="0 0 300 206" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <path d="M26 140 H286 M26 140 V22"/>
+    <path d="M26 138 C56 136 66 40 92 38 C118 36 128 118 150 130 C176 134 190 130 210 130 C240 130 250 128 284 128"
+          stroke="var(--ink)" stroke-width="1.8"/>
+    <path d="M92 140 V30" stroke="var(--ink3)" stroke-dasharray="4 4"/>
+    <rect x="214" y="122" width="70" height="18" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.6"/>
+    <path d="M249 122 V70" stroke="var(--acc)" stroke-width="1.4"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.4">
+    <text x="92" y="24" text-anchor="middle" fill="var(--ink2)">the average</text>
+    <text x="249" y="62" text-anchor="middle" fill="var(--acc)">the 1% at 10x</text>
+    <text x="249" y="52" text-anchor="middle" fill="var(--acc)">the maximum</text>
+    <text x="156" y="156" text-anchor="middle" fill="var(--ink)">response time →</text>
+    <text x="150" y="180" text-anchor="middle" fill="var(--ink2)">with enough traffic the outliers never show up in the mean</text>
+    <text x="150" y="196" text-anchor="middle" fill="var(--acc)">good teams alarm on a statistical model, not a fixed number</text>
+  </g>
+</svg>
+
+<!--@ cc -->
+<svg viewBox="0 0 320 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <path d="M20 104 H300"/>
+    <path d="M20 98 v12 M76 98 v12 M132 98 v12 M216 98 v12 M292 98 v12"/>
+    <rect x="20" y="76" width="56" height="20" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <rect x="76" y="76" width="56" height="20"/>
+    <rect x="132" y="76" width="84" height="20" stroke="var(--ink3)"/>
+    <rect x="216" y="76" width="76" height="20" stroke="var(--ink3)" stroke-dasharray="5 4"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace">
+    <text x="20" y="30" font-size="9.6" fill="var(--ink)">CC = E − N + 2P</text>
+    <text x="20" y="44" font-size="8.4" fill="var(--ink2)">edges − nodes + 2 × connected components</text>
+    <text x="20" y="58" font-size="8.4" fill="var(--ink2)">no branches = 1 · one conditional = 2</text>
+    <g font-size="9" text-anchor="middle">
+      <text x="48" y="90" fill="var(--acc)">under 5</text>
+      <text x="104" y="90" fill="var(--ink)">under 10</text>
+      <text x="174" y="90" fill="var(--ink2)">over 50</text>
+      <text x="254" y="90" fill="var(--ink2)">800</text>
+    </g>
+    <g font-size="8.2" text-anchor="middle" fill="var(--ink2)">
+      <text x="48" y="122">what the authors</text><text x="48" y="132">actually want</text>
+      <text x="104" y="122">the industry's</text><text x="104" y="132">accepted line</text>
+      <text x="174" y="122">Crap4J: no amount</text><text x="174" y="132">of coverage saves it</text>
+      <text x="254" y="122">one C function,</text><text x="254" y="132">4,000 lines, GOTOs</text>
+    </g>
+    <text x="160" y="164" font-size="8.6" text-anchor="middle" fill="var(--ink)">CC cannot tell essential complexity from accidental complexity</text>
+    <text x="160" y="180" font-size="8.6" text-anchor="middle" fill="var(--acc)">so ask: hard problem, bad code, or badly partitioned code?</text>
+    <text x="160" y="202" font-size="8.4" text-anchor="middle" fill="var(--ink2)">TDD lowers it as a side effect · generative AI tends to raise it</text>
+  </g>
+</svg>
+
+<!--@ cycles -->
+<svg viewBox="0 0 300 196" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="112" y="20" width="76" height="30"/>
+    <rect x="20" y="98" width="76" height="30"/>
+    <rect x="204" y="98" width="76" height="30"/>
+    <g stroke="var(--acc)" stroke-width="1.7">
+      <path d="M118 50 L74 98"/><path d="M96 110 H204"/><path d="M226 98 L182 50"/>
+      <path d="M76 92 l-4 10 l10 -2"/><path d="M196 106 l10 4 l-10 4"/><path d="M184 56 l-4 -10 l10 2"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6" text-anchor="middle">
+    <text x="150" y="39" font-size="9.4" fill="var(--ink)">component a</text>
+    <text x="58" y="117" font-size="9.4" fill="var(--ink)">component b</text>
+    <text x="242" y="117" font-size="9.4" fill="var(--ink)">component c</text>
+    <text x="150" y="154" fill="var(--acc)">you cannot reuse one without bringing all three</text>
+    <text x="150" y="170" fill="var(--ink2)">Fig. 6-3 · the IDE offers to auto-import, and everyone says yes</text>
+    <text x="150" y="188" fill="var(--ink2)">unchecked, this becomes the big ball of mud</text>
+  </g>
+</svg>
+
+<!--@ ff-mechanisms -->
+<svg viewBox="0 0 620 236" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <ellipse cx="310" cy="118" rx="96" ry="34" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="8" y="34" width="128" height="34"/><rect x="8" y="98" width="128" height="34"/>
+    <rect x="8" y="162" width="128" height="34"/>
+    <rect x="484" y="34" width="128" height="34"/><rect x="484" y="98" width="128" height="34"/>
+    <rect x="484" y="162" width="128" height="34"/>
+    <g stroke="var(--ink3)" stroke-width="1.1">
+      <path d="M136 51 L226 100 M136 115 H214 M136 179 L226 136"/>
+      <path d="M484 51 L394 100 M484 115 H406 M484 179 L394 136"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="9.4">
+    <text x="310" y="114" fill="var(--acc)" font-size="11">FITNESS FUNCTION</text>
+    <text x="310" y="130" fill="var(--ink2)" font-size="8.2">any objective integrity check</text>
+    <g fill="var(--ink)">
+      <text x="72" y="55">unit test frameworks</text>
+      <text x="72" y="119">metrics tools</text>
+      <text x="72" y="183">code coverage</text>
+      <text x="548" y="55">monitors</text>
+      <text x="548" y="119">chaos engineering</text>
+      <text x="548" y="183">architecture tests</text>
+    </g>
+    <g fill="var(--ink2)" font-size="8">
+      <text x="72" y="196">assertions, not touches</text>
+      <text x="548" y="196">ArchUnit · NetArchTest</text>
+    </g>
+    <text x="310" y="220" font-size="8.6" fill="var(--ink2)">Fig. 6-2 · not a framework to download — a new use for tools you already run</text>
+  </g>
+</svg>
+
+<!--@ layers-rule -->
+<svg viewBox="0 0 300 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="70" y="20" width="160" height="34"/>
+    <rect x="70" y="80" width="160" height="34"/>
+    <rect x="70" y="140" width="160" height="34"/>
+    <g stroke="var(--acc)" stroke-width="1.7">
+      <path d="M150 54 V74"/><path d="M144 68 l6 8 l6 -8"/>
+      <path d="M150 114 V134"/><path d="M144 128 l6 8 l6 -8"/>
+    </g>
+    <path d="M70 34 C24 34 24 158 70 158" stroke="var(--ink3)" stroke-width="1.4" stroke-dasharray="5 4"/>
+    <path d="M40 84 l16 16 M56 84 l-16 16" stroke="var(--ink)" stroke-width="2"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="9.6">
+    <text x="150" y="41" fill="var(--ink)">controller</text>
+    <text x="150" y="101" fill="var(--ink)">service</text>
+    <text x="150" y="161" fill="var(--ink)">persistence</text>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="248" y="41" text-anchor="start">accessed by</text><text x="248" y="51" text-anchor="start">no layer</text>
+      <text x="248" y="101" text-anchor="start">only by</text><text x="248" y="111" text-anchor="start">controller</text>
+      <text x="248" y="161" text-anchor="start">only by</text><text x="248" y="171" text-anchor="start">service</text>
+    </g>
+    <text x="150" y="196" font-size="8.6" fill="var(--acc)">whereLayer(“Persistence”).mayOnlyBeAccessedByLayers(“Service”)</text>
+    <text x="150" y="210" font-size="8.4" fill="var(--ink2)">the rule stops being a paragraph and starts being a build failure</text>
+  </g>
+</svg>
+
+<!--@ simian -->
+<svg viewBox="0 0 620 172" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="6" y="30" width="120" height="60" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="132" y="30" width="120" height="60" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="258" y="30" width="120" height="60" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="384" y="30" width="112" height="60"/>
+    <rect x="502" y="30" width="112" height="60"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="6" y="18" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--ink3)">NETFLIX'S SIMIAN ARMY — GOVERNANCE THAT RUNS IN PRODUCTION</text>
+    <g font-size="10" fill="var(--ink)">
+      <text x="66" y="52" fill="var(--acc)">Chaos Monkey</text><text x="192" y="52" fill="var(--acc)">Latency Monkey</text>
+      <text x="318" y="52" fill="var(--acc)">Chaos Kong</text>
+      <text x="440" y="52">Conformity</text><text x="558" y="52">Janitor</text>
+    </g>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="66" y="70">kills instances</text><text x="66" y="81">at random</text>
+      <text x="192" y="70">simulates the</text><text x="192" y="81">slow AWS instance</text>
+      <text x="318" y="70">takes out a whole</text><text x="318" y="81">datacenter</text>
+      <text x="440" y="70">your rules, checked</text><text x="440" y="81">on live services</text>
+      <text x="558" y="70">deletes services</text><text x="558" y="81">nothing routes to</text>
+    </g>
+    <text x="310" y="122" font-size="9" fill="var(--ink)">Not if something breaks — when. Anticipate it, then test for it.</text>
+    <text x="310" y="142" font-size="9" fill="var(--acc)">A Security Monkey is a checklist, not a bureaucracy.</text>
+    <text x="310" y="160" font-size="8.4" fill="var(--ink2)">pilots and surgeons use them for the same reason: repetition makes details slip</text>
+  </g>
+</svg>

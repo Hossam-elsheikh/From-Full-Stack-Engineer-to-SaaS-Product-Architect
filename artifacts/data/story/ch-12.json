@@ -1,0 +1,166 @@
+{
+ "ch": "12",
+ "book": "Chapter 12 · Pipeline Architecture Style",
+ "pages": "pp. 181–192",
+ "title": "Pipes, Filters, and One Direction",
+ "gist": "Two component types and one rule about direction. It is the architecture behind every Unix shell pipeline, every ETL tool and every Step Function — and its whole value comes from what it refuses to let filters do.",
+ "read": "4 min · 35 sec to re-scan",
+ "acc": {
+  "l": "#8A5220",
+  "d": "#DFA25E"
+ },
+ "minute": [
+  "Two components only. **Filters** hold functionality — stateless, one task each. **Pipes** carry data between them, **one-way and point-to-point**.",
+  "Four filter types: **producer** (the source), **transformer** (`map`), **tester** (`reduce` — test and optionally forward), **consumer** (the termination point).",
+  "Technically partitioned, quantum of 1, usually monolithic. Its strengths are **cost, simplicity and modularity**; any filter can be replaced without touching the others.",
+  "The risks are all boundary risks: **overloaded filters**, **bidirectional communication**, unclear **error exits** from a running pipeline, and **contract changes** between filters.",
+  "Use it for **distinct, ordered, deterministic one-way steps**. For non-deterministic workflows, use event-driven architecture instead — piling tester filters into a pipeline to fake it wrecks maintainability."
+ ],
+ "sections": [
+  {
+   "t": "Four filter types, one direction",
+   "art": "pipes-filters",
+   "wide": true,
+   "alt": "Producer, transformer, tester and consumer filters joined by one-way pipes",
+   "cap": "Fig. 12-1 · the isomorphic shape: one deployment unit, functionality in filters, unidirectional pipes.",
+   "p": "Pipes carry any data format, though architects favour small payloads for performance. If filters are deployed as separate services, the pipe becomes a one-way remote call — REST, messaging, streaming. Either way, monolithic or distributed, pipes can be synchronous or asynchronous; in a monolith, asynchrony means threads or embedded messaging.",
+   "quotes": [
+    [
+     "tr -cs A-Za-z '\\n' | tr A-Z a-z | sort | uniq -c | sort -rn | sed ${1}q",
+     "Doug McIlroy",
+     "Donald Knuth was asked to print the *n* most frequent words in a file, sorted by frequency. He wrote ten-plus pages of Pascal and designed a new algorithm along the way. McIlroy answered with six shell filters. The composability is the point of the style."
+    ]
+   ]
+  },
+  {
+   "t": "A worked pipeline",
+   "art": "pipeline-example",
+   "wide": true,
+   "alt": "Four filters in sequence, three of them writing to their own databases",
+   "cap": "Most pipelines are monolithic with one database. Nothing in the style requires that.",
+   "p": "This one is a continuous fitness function running in production against an operational characteristic. Note the separation: **Capture Raw Data** knows only how to subscribe and receive; **Duration** (a tester) knows only how to qualify data and decide whether to forward it; **Duration Calculator** knows only the calculation. Change the calculation and no other filter moves."
+  },
+  {
+   "k": "decision",
+   "t": "Two filters need to talk back and forth",
+   "art": "bidirectional",
+   "alt": "Two filters with a forward pipe and a crossed-out return pipe",
+   "sit": "Filter B needs something back from filter A mid-processing. The obvious fix is to let the pipe carry a response, or add a second pipe going the other way.",
+   "opts": [
+    [
+     "Add the return pipe. It's one exception.",
+     "Pipes are unidirectional precisely so that filters never collaborate. The moment they do, the clear separation of concerns is gone and you have a monolith with extra ceremony."
+    ],
+    [
+     "Restructure: the filters are probably too complex.",
+     "Bidirectional need is usually a symptom that functionality is demarcated wrongly, or that one filter is doing more than one thing.",
+     1
+    ],
+    [
+     "Accept that this is the wrong style here.",
+     "Also a legitimate answer. Back-and-forth communication is one of the two explicit *when not to use* signals for this style.",
+     1
+    ]
+   ],
+   "verdict": "The other risks live in the same place. **Overloaded filters** turn a pipeline into an unstructured monolith — governance here is largely about tagging each filter with its type (`@Filter(FilterType.TRANSFORMER)`) so developers can see the role they are about to violate. **Error handling** is genuinely hard: once a pipeline is running, exiting and recovering cleanly is difficult, so identify the fatal conditions *before* defining the architecture. And every pipe is a **contract** — changing one needs strict governance and testing so downstream filters don't break."
+  },
+  {
+   "k": "decision",
+   "t": "You need scalability. Distribute the filters?",
+   "art": "pipeline-example",
+   "wide": true,
+   "alt": "Four filters in sequence, three of them writing to their own databases",
+   "sit": "The pipeline works, but elasticity, scalability and fault tolerance all rate one star because it deploys as a single unit. Each filter could be its own deployment unit, with pipes as remote asynchronous calls.",
+   "opts": [
+    [
+     "Distribute it. Each filter becomes a service or a lambda.",
+     "Elasticity, scalability and fault tolerance all improve substantially. On AWS this is literally a Step Function with one lambda per filter; filters can equally be containers or serverless functions."
+    ],
+    [
+     "Keep it monolithic.",
+     "You keep the two things this style is chosen for — low cost and simplicity — and you keep the one-star operational ratings that come with a single deployment unit."
+    ]
+   ],
+   "verdict": "There is no third answer here, and that is the lesson. **Distributing raises the operational characteristics and lowers cost and simplicity, in direct proportion.** This is the classic trade-off of software architecture appearing in its cleanest form: the same architecture, two deployment choices, and the scorecard simply moves along one axis."
+  },
+  {
+   "t": "Characteristics, and when to reach for it",
+   "wide": true,
+   "gen": {
+    "kind": "ratings",
+    "head": "PIPELINE — TECHNICALLY PARTITIONED · QUANTUM 1",
+    "rows": [
+     [
+      "overall cost",
+      5,
+      "no distributed tax"
+     ],
+     [
+      "simplicity",
+      4,
+      "two component types"
+     ],
+     [
+      "modularity",
+      4,
+      "swap one filter freely"
+     ],
+     [
+      "reliability",
+      3,
+      ""
+     ],
+     [
+      "performance",
+      3,
+      ""
+     ],
+     [
+      "testability",
+      3,
+      "better than layered"
+     ],
+     [
+      "deployability",
+      3,
+      ""
+     ],
+     [
+      "fault tolerance",
+      1,
+      "one unit, one crash"
+     ],
+     [
+      "scalability",
+      1,
+      ""
+     ],
+     [
+      "elasticity",
+      1,
+      ""
+     ]
+    ]
+   },
+   "alt": "Architecture characteristics ratings for the pipeline style",
+   "cap": "Every one-star rating here is a consequence of monolithic deployment, and every one of them is buyable.",
+   "items": [
+    "**Use it** for systems of any complexity with distinct, ordered, deterministic one-way processing steps — and where the time frame and budget are tight.",
+    "**Don't use it** where you need high scalability, elasticity or fault tolerance without distributing; where filters need back-and-forth communication; or for **non-deterministic workflows**. Faking those with lots of tester filters overcomplicates a simple style and damages maintainability, testability, deployability and therefore reliability.",
+    "**Team topologies: it fits all four.** Enabling teams in particular do well here — a specialist can add a transformer after the Time Series Selector to try alternative analysis, using the same data, without disturbing the existing flow."
+   ],
+   "p": "You have already used this style whether or not you named it. EDI tools build document transformations as pipes and filters; database ETL tools move and modify data the same way; orchestrators and mediators like Apache Camel pass information from one business-process step to the next; and MapReduce follows the same topology."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 12: Pipeline Architecture Style, pp. 181–192. The Knuth/McIlroy story comes from Jon Bentley's “More Shell, Less Egg”.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

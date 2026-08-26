@@ -1,0 +1,251 @@
+<!-- Drawings for chapter 02 · Architectural Thinking -->
+
+<!--@ spectrum-ad -->
+<svg viewBox="0 0 620 210" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5">
+    <rect x="150" y="20" width="232" height="176" fill="var(--accBg)" stroke="var(--acc)"/>
+    <path d="M8 52 H612" stroke="var(--rule)"/>
+    <path d="M8 100 H612 M8 148 H612" stroke="var(--rule2)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace">
+    <g font-size="10.5" letter-spacing="1.6" text-anchor="middle">
+      <text x="266" y="40" fill="var(--acc)">ARCHITECTURE</text>
+      <text x="497" y="40" fill="var(--ink)">DESIGN</text>
+    </g>
+    <g font-size="9.6" fill="var(--ink)" text-anchor="end">
+      <text x="140" y="76">how strategic?</text>
+      <text x="140" y="124">level of effort?</text>
+      <text x="140" y="172">trade-offs?</text>
+    </g>
+    <g font-size="9.2" fill="var(--ink2)">
+      <text x="162" y="72">weeks of planning, many</text><text x="162" y="86">stakeholders, long-term</text>
+      <text x="394" y="72">minutes, alone,</text><text x="394" y="86">changes again soon</text>
+      <text x="162" y="120">hard to change — layered</text><text x="162" y="134">monolith to microservices</text>
+      <text x="394" y="120">easy — rearrange</text><text x="394" y="134">fields on a screen</text>
+      <text x="162" y="168">significant — scale bought</text><text x="162" y="182">with complexity and cost</text>
+      <text x="394" y="168">minor — one more</text><text x="394" y="182">class to manage</text>
+    </g>
+    <text x="310" y="14" font-size="8.6" text-anchor="middle" fill="var(--ink3)">most real decisions land somewhere between the two columns</text>
+  </g>
+</svg>
+
+<!--@ pyramid -->
+<svg viewBox="0 0 346 240" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round">
+    <path d="M100 18 L180 202 H20 Z"/>
+    <path d="M69 90 H131" />
+    <path d="M45 148 H155"/>
+    <path d="M100 18 L131 90 L69 90 Z" fill="var(--accBg)" stroke="var(--acc)"/>
+    <g stroke="var(--ink3)" stroke-width="1">
+      <path d="M120 56 H186"/><path d="M138 120 H186"/><path d="M160 176 H186"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="9">
+    <text x="190" y="52" fill="var(--acc)">stuff you know</text>
+    <text x="190" y="64" fill="var(--ink2)">your depth — and it</text>
+    <text x="190" y="75" fill="var(--ink2)">decays if you stop</text>
+    <text x="190" y="116" fill="var(--ink)">stuff you know</text>
+    <text x="190" y="128" fill="var(--ink)">you don't know</text>
+    <text x="190" y="140" fill="var(--ink2)">heard of it, can't</text>
+    <text x="190" y="151" fill="var(--ink2)">write it — your breadth</text>
+    <text x="190" y="180" fill="var(--ink)">stuff you don't know</text>
+    <text x="190" y="192" fill="var(--ink)">you don't know</text>
+    <text x="190" y="204" fill="var(--ink2)">where the answer to</text>
+    <text x="190" y="215" fill="var(--ink2)">your problem is hiding</text>
+    <text x="8" y="232" font-size="8.6" fill="var(--ink2)">the goal is to move things up one band, not two</text>
+  </g>
+</svg>
+
+<!--@ pyramid-shift -->
+<svg viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M70 24 L130 160 H10 Z"/>
+    <path d="M52 66 H88" stroke="var(--ink3)" stroke-width="1"/>
+    <path d="M70 24 L88 66 L52 66 Z" fill="var(--accBg)" stroke="var(--acc)"/>
+    <path d="M31 113 H109" stroke="var(--ink3)" stroke-width="1"/>
+
+    <path d="M230 24 L290 160 H170 Z"/>
+    <path d="M222 48 H238" stroke="var(--ink3)" stroke-width="1"/>
+    <path d="M230 24 L238 48 L222 48 Z" fill="var(--accBg)" stroke="var(--acc)"/>
+    <path d="M191 145 H269" stroke="var(--acc)" stroke-width="1.4"/>
+    <path d="M222 48 L269 145 H191 L238 48 Z" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.2" opacity=".55"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="70" y="178" font-size="10.5" fill="var(--ink)">DEVELOPER</text>
+    <text x="70" y="192" font-size="8.6" fill="var(--ink2)">deep top, and it</text>
+    <text x="70" y="203" font-size="8.6" fill="var(--ink2)">costs time to hold</text>
+    <text x="230" y="178" font-size="10.5" fill="var(--acc)">ARCHITECT</text>
+    <text x="230" y="192" font-size="8.6" fill="var(--ink2)">some depth traded</text>
+    <text x="230" y="203" font-size="8.6" fill="var(--ink2)">for a wider middle</text>
+    <text x="150" y="96" font-size="14" fill="var(--ink3)">→</text>
+  </g>
+</svg>
+
+<!--@ twenty -->
+<svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5">
+    <path d="M20 92 H286"/>
+    <path d="M278 88 l8 4 l-8 4"/>
+    <rect x="20" y="76" width="26" height="32" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <rect x="128" y="80" width="34" height="24"/><rect x="220" y="80" width="34" height="24"/>
+      <path d="M128 80 l34 24 M162 80 l-34 24 M220 80 l34 24 M254 80 l-34 24"/>
+    </g>
+    <path d="M62 92 v-1" />
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6" text-anchor="middle">
+    <text x="33" y="66" fill="var(--acc)" font-size="10">20 MIN</text>
+    <text x="33" y="126" fill="var(--acc)">first thing,</text>
+    <text x="33" y="137" fill="var(--acc)">before email</text>
+    <text x="145" y="126" fill="var(--ink2)">lunch — you</text>
+    <text x="145" y="137" fill="var(--ink2)">work through it</text>
+    <text x="237" y="126" fill="var(--ink2)">evening — family,</text>
+    <text x="237" y="137" fill="var(--ink2)">plans, exhaustion</text>
+    <text x="153" y="172" fill="var(--ink2)">the slot only survives if nothing has started yet</text>
+    <text x="286" y="108" fill="var(--ink3)" text-anchor="end">the day</text>
+  </g>
+</svg>
+
+<!--@ radar -->
+<svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.3">
+    <circle cx="310" cy="152" r="132" stroke="var(--rule)"/>
+    <circle cx="310" cy="152" r="99" stroke="var(--rule)"/>
+    <circle cx="310" cy="152" r="66" stroke="var(--rule)"/>
+    <circle cx="310" cy="152" r="33" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.6"/>
+    <path d="M178 152 H442 M310 20 V284" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <g fill="var(--ink)" stroke="none">
+      <circle cx="286" cy="138" r="3.4"/><circle cx="332" cy="166" r="3.4"/>
+      <circle cx="262" cy="120" r="3.4"/><circle cx="358" cy="190" r="3.4"/>
+      <circle cx="230" cy="196" r="3.4"/><circle cx="388" cy="104" r="3.4"/>
+      <circle cx="352" cy="88" r="3.4"/><circle cx="252" cy="222" r="3.4"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace">
+    <g font-size="9" fill="var(--ink2)" text-anchor="middle">
+      <text x="310" y="155" fill="var(--acc)">ADOPT</text>
+      <text x="310" y="105">TRIAL</text>
+      <text x="310" y="72">ASSESS</text>
+      <text x="310" y="39">HOLD</text>
+    </g>
+    <g font-size="10" fill="var(--ink)">
+      <text x="8" y="24">TECHNIQUES</text>
+      <text x="612" y="24" text-anchor="end">TOOLS</text>
+      <text x="8" y="292">LANGUAGES &amp; FRAMEWORKS</text>
+      <text x="612" y="292" text-anchor="end">PLATFORMS</text>
+    </g>
+    <g font-size="8.6" fill="var(--ink2)">
+      <text x="8" y="38">practices, processes,</text><text x="8" y="49">engineering advice</text>
+      <text x="612" y="38" text-anchor="end">IDEs through to</text><text x="612" y="49" text-anchor="end">integration tooling</text>
+      <text x="8" y="278">libraries and languages,</text><text x="8" y="267">usually open source</text>
+      <text x="612" y="278" text-anchor="end">databases, cloud,</text><text x="612" y="267" text-anchor="end">operating systems</text>
+    </g>
+  </g>
+</svg>
+
+<!--@ hickey -->
+<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5">
+    <rect x="66" y="30" width="106" height="58"/>
+    <rect x="182" y="30" width="106" height="58" stroke-dasharray="5 4" stroke="var(--ink3)"/>
+    <rect x="66" y="110" width="106" height="58"/>
+    <rect x="182" y="110" width="106" height="58" fill="var(--accBg)" stroke="var(--acc)"/>
+    <g stroke="var(--ink3)" stroke-width="1">
+      <path d="M78 46 h82 M78 58 h82 M78 70 h60"/>
+      <path d="M78 126 h82 M78 138 h82 M78 150 h60"/>
+    </g>
+    <g stroke="var(--acc)" stroke-width="1.1">
+      <path d="M194 126 h82 M194 138 h82 M194 150 h64"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="9">
+    <text x="119" y="22" text-anchor="middle" fill="var(--ink)">BENEFITS</text>
+    <text x="235" y="22" text-anchor="middle" fill="var(--ink)">TRADE-OFFS</text>
+    <text x="60" y="62" text-anchor="end" fill="var(--ink2)">programmer</text>
+    <text x="60" y="142" text-anchor="end" fill="var(--acc)">architect</text>
+    <text x="235" y="63" text-anchor="middle" font-size="14" fill="var(--ink3)">—</text>
+    <text x="150" y="190" text-anchor="middle" font-size="8.6" fill="var(--ink2)">the empty cell is where the surprises come from</text>
+  </g>
+</svg>
+
+<!--@ topic-queue -->
+<svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="8" y="42" width="58" height="26"/>
+    <rect x="102" y="42" width="52" height="26" fill="var(--accBg)" stroke="var(--acc)"/>
+    <path d="M66 55 H102" stroke="var(--acc)" stroke-width="1.6"/>
+    <rect x="200" y="14" width="86" height="22"/><rect x="200" y="44" width="86" height="22"/>
+    <rect x="200" y="74" width="86" height="22"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M154 55 L200 25 M154 55 H200 M154 55 L200 85"/></g>
+
+    <path d="M8 122 H292" stroke="var(--rule)" stroke-dasharray="4 5"/>
+
+    <rect x="8" y="180" width="58" height="26"/>
+    <rect x="102" y="146" width="52" height="20"/><rect x="102" y="182" width="52" height="20"/>
+    <rect x="102" y="218" width="52" height="20"/>
+    <g stroke="var(--acc)" stroke-width="1.5"><path d="M66 188 L102 156 M66 191 L102 192 M66 196 L102 226"/></g>
+    <rect x="200" y="146" width="86" height="20"/><rect x="200" y="182" width="86" height="20"/>
+    <rect x="200" y="218" width="86" height="20"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M154 156 H200 M154 192 H200 M154 228 H200"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8" text-anchor="middle">
+    <text x="150" y="10" font-size="9.6" fill="var(--acc)">ONE TOPIC · PUB-SUB</text>
+    <text x="37" y="58">producer</text><text x="128" y="58" fill="var(--acc)">topic</text>
+    <text x="243" y="28">capture</text><text x="243" y="58">tracking</text><text x="243" y="88">analytics</text>
+    <text x="150" y="108" fill="var(--ink2)">one connection · new consumer costs nothing</text>
+    <text x="150" y="140" font-size="9.6" fill="var(--ink)">THREE QUEUES · POINT-TO-POINT</text>
+    <text x="37" y="196">producer</text>
+    <text x="128" y="160">queue</text><text x="128" y="196">queue</text><text x="128" y="232">queue</text>
+    <text x="243" y="160">capture</text><text x="243" y="196">tracking</text><text x="243" y="232">analytics</text>
+    <text x="150" y="254" fill="var(--ink2)">three connections · own contract, own scaling</text>
+  </g>
+</svg>
+
+<!--@ bottleneck -->
+<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M12 26 H128 L162 92 L128 158 H12" stroke="var(--ink3)" stroke-dasharray="5 4"/>
+    <circle cx="156" cy="92" r="17" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <path d="M173 92 H286"/>
+    <path d="M278 88 l8 4 l-8 4"/>
+    <g stroke="var(--ink)" stroke-width="1.4">
+      <path d="M26 44 H104"/><path d="M26 68 H112"/><path d="M26 116 H112"/><path d="M26 140 H104"/>
+    </g>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M100 40 l8 4 l-8 4 M108 64 l8 4 l-8 4 M108 112 l8 4 l-8 4 M100 136 l8 4 l-8 4"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6">
+    <text x="14" y="18" fill="var(--ink2)">everything the team needs</text>
+    <text x="156" y="95" text-anchor="middle" font-size="9" fill="var(--acc)">you</text>
+    <text x="156" y="130" text-anchor="middle" fill="var(--acc)">not a full-time</text>
+    <text x="156" y="141" text-anchor="middle" fill="var(--acc)">developer</text>
+    <text x="286" y="82" text-anchor="end" fill="var(--ink2)">progress</text>
+    <text x="150" y="186" text-anchor="middle" fill="var(--ink2)">own the critical path and you become the narrow point</text>
+  </g>
+</svg>
+
+<!--@ handson -->
+<svg viewBox="0 0 620 156" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5">
+    <rect x="6" y="26" width="116" height="52"/><rect x="130" y="26" width="116" height="52"/>
+    <rect x="254" y="26" width="116" height="52"/><rect x="378" y="26" width="116" height="52"/>
+    <rect x="502" y="26" width="116" height="52" fill="var(--accBg)" stroke="var(--acc)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="8" y="16" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--ink3)">STAY HANDS-ON WITHOUT OWNING THE CRITICAL PATH</text>
+    <g font-size="10" fill="var(--ink)">
+      <text x="64" y="48">proofs of</text><text x="64" y="61">concept</text>
+      <text x="188" y="48">technical</text><text x="188" y="61">debt</text>
+      <text x="312" y="55">bug fixes</text>
+      <text x="436" y="48">automate the</text><text x="436" y="61">repetitive bits</text>
+      <text x="560" y="48" fill="var(--acc)">code</text><text x="560" y="61" fill="var(--acc)">reviews</text>
+    </g>
+    <g font-size="8.4" fill="var(--ink2)">
+      <text x="64" y="96">write them at</text><text x="64" y="107">production quality</text>
+      <text x="188" y="96">low priority, so</text><text x="188" y="107">slipping costs nothing</text>
+      <text x="312" y="96">finds the weak spots</text><text x="312" y="107">in the code and design</text>
+      <text x="436" y="96">fitness functions</text><text x="436" y="107">count — see Ch. 6</text>
+      <text x="560" y="96">not coding, but it</text><text x="560" y="107">holds compliance</text>
+    </g>
+    <text x="312" y="134" font-size="8.6" fill="var(--ink2)">code a minor feature one to three iterations out — never the framework</text>
+  </g>
+</svg>

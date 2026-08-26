@@ -1,0 +1,122 @@
+{
+ "ch": "25",
+ "book": "Chapter 25 · Negotiation and Leadership Skills",
+ "pages": "pp. 453–472",
+ "title": "Almost Every Decision Gets Challenged",
+ "gist": "Roughly half of being an effective architect is people skills. Three negotiations — with stakeholders, with other architects, with developers — and the language changes that decide whether anyone collaborates with you.",
+ "read": "5 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#8A4A32",
+  "d": "#DB9878"
+ },
+ "minute": [
+  "**Read the buzzwords.** “I needed it yesterday” means time to market. “Lightning fast” means performance. “Zero downtime” means availability. They're not literal; they're the real concern.",
+  "**Gather information before negotiating**, then move the conversation off jargon and onto numbers. Five nines is 5 min 35 sec a year — about a second a day.",
+  "**Demonstration defeats discussion.** Don't argue REST versus messaging; build both in a production-like environment and show the result.",
+  "**Give the justification before the demand.** People stop listening the moment they hear something they disagree with, so the reason has to arrive first.",
+  "**Turn requests into favours** and use people's names. Humans dislike being told what to do and generally want to help."
+ ],
+ "sections": [
+  {
+   "k": "decision",
+   "t": "“The trading system must have five nines”",
+   "art": "nines",
+   "wide": true,
+   "alt": "A table of availability percentages against downtime per year and per day, with three nines highlighted",
+   "sit": "Parker, the SVP sponsoring the project, insists on 99.999% availability. You know that with two hours a day between global markets when no trading happens, **99.9% would meet the requirement**. Parker isn't technical, thinks they are, and does not take correction well.",
+   "opts": [
+    [
+     "Explain that they're wrong about five nines.",
+     "Correct and useless. Parker doesn't respond well to correction, especially if it reads as condescending, and you have made an adversary out of the project's sponsor."
+    ],
+    [
+     "Validate the concern, then move from jargon to numbers.",
+     "*“I understand availability is very important for this system.”* Then leave the nines vernacular behind: three nines is **86 seconds of unplanned downtime a day** — a number Parker can evaluate for a global trading system.",
+     1
+    ],
+    [
+     "Divide and conquer: does the *whole* system need five nines?",
+     "Sun Tzu, applied to requirements: *if his forces are united, separate them.* Narrow it to the specific areas that genuinely need it, and both the requirement and the negotiation shrink."
+    ]
+   ],
+   "verdict": "Hold **cost and time in reserve**. Opening with *“that's going to cost a lot”* or *“we don't have time”* starts the negotiation on the wrong foot — try every other justification first, and bring money up only once you've agreed on the substance. And note where the useful information came from: the phrase *five nines* told you the concern was availability before any requirement document did."
+  },
+  {
+   "k": "decision",
+   "t": "Addison insists REST is always faster than messaging",
+   "art": "four-cs",
+   "alt": "The four Cs: communicate, collaborate, clear, concise",
+   "sit": "You're the senior of two architects. You want asynchronous messaging between a group of services for performance and scalability. Addison strongly disagrees, citing a Google search and the output of a generative-AI prompt. This isn't your first heated debate with them.",
+   "opts": [
+    [
+     "Pull rank. Your opinion carries.",
+     "It intensifies the animosity, and an unhealthy relationship between the two architects on a project lands squarely on the development team."
+    ],
+    [
+     "Build both in a production-like environment and show the numbers.",
+     "**Demonstration defeats discussion.** Every environment differs, which is exactly why Googling it rarely yields the right answer — and why a measurement ends the argument without an argument.",
+     1
+    ]
+   ],
+   "verdict": "When a negotiation turns personal or heated, **stop it and re-engage later**, once both parties have calmed down. Architects argue; the ones who stay calm and project leadership generally find the other person backs down. This is also why the chapter treats politics as a technical skill rather than an unfortunate distraction."
+  },
+  {
+   "k": "decision",
+   "t": "A developer wants the framework you rejected",
+   "art": "language",
+   "wide": true,
+   "alt": "Three commanding phrasings beside three collaborative rewrites",
+   "sit": "You chose Framework X because Framework Y doesn't satisfy the system's security requirements. A developer strongly disagrees and wants Y.",
+   "opts": [
+    [
+     "Explain your analysis and move on.",
+     "You may be right, and you have spent credibility rather than earned it — and the developer still doesn't believe you."
+    ],
+    [
+     "Tell them: show me how Y addresses the security concerns and we'll use it.",
+     "**Either outcome is a win.** If they fail, they understand first-hand why Y is out, and because they reached it themselves, you have their buy-in automatically. If they succeed, you missed something and now you have a better solution — and they still feel part of the decision.",
+     1
+    ]
+   ],
+   "verdict": "This is the same principle as the phrasing changes. *“You must go through the Business layer”* invites disagreement; *“since change control is most important to us we closed the layers, which means all database calls come from Business”* puts the justification first and turns a demand into a statement of fact — and the developer's reply changes from *“I disagree”* to *“OK, but how do I handle performance on simple queries?”* Same constraint, completely different conversation."
+  },
+  {
+   "t": "Pragmatic, yet visionary",
+   "art": "pragmatic",
+   "alt": "A beam balanced between pragmatic and visionary",
+   "cap": "Both ends are failures. The balance is what earns respect from stakeholders and developers at once.",
+   "p": "A **visionary** plans the future with imagination and wisdom, which is what keeps an architecture vital for years — and left alone, produces solutions too theoretical to implement or understand. A **pragmatist** deals with things sensibly: budget, time, the team's actual skill level, the trade-offs of each decision, the technical limits of the design.",
+   "items": [
+    "Faced with unexplained load spikes, the visionary answer is a data mesh — distributed domain-partitioned databases separating analytical from transactional concerns. Possible in theory. Has the company ever run one? What are its trade-offs? Would it even solve this?",
+    "The pragmatic first move is to **find the bottleneck**. Is the database the constraint for some of the services? Could caching reduce the calls? That is not a lesser answer; it is the answer that ships.",
+    "**Accidental complexity** is the failure mode to watch in yourself: complexity added to prove worth when something looks too simple, to stay in the loop on decisions, or for job security. *Developers are drawn to complexity like moths to a flame — frequently with the same result.*"
+   ]
+  },
+  {
+   "t": "Leading by example",
+   "art": "language",
+   "wide": true,
+   "alt": "Three commanding phrasings beside three collaborative rewrites",
+   "cap": "“No matter what the problem is, it's a people problem.” — Gerald Weinberg",
+   "items": [
+    "**One sentence can close a team.** A developer suggests something, the architect says *“well, that's a dumb idea”* — and now nobody in the room offers anything again.",
+    "**“What you need to do is” → “Have you considered”.** The first is communicating without collaborating. The second returns control to the developer and starts a conversation.",
+    "**Turn a request into a favour, and use the person's name.** *“Sridhar, I'm in a real bind and I waited too long — any way you could squeeze this in?”* works where *“I'm going to need you to…”* got a flat refusal. Learn names, learn correct pronunciation, repeat it back and ask if you got it right.",
+    "**Facilitate collaboration between others, not just with yourself.** If you hear a team member using demanding or condescending language, take them aside and coach them on it.",
+    "**Become the go-to person.** Step in when someone is stuck, technically or otherwise; run periodic brown-bag sessions, which double as practice at mentoring and public speaking."
+   ],
+   "p": "On meetings: they arrive in two kinds — imposed on you, and imposed by you. For the first, **ask why you're needed**, and ask for the agenda; if the point is keeping you in the loop, that is what meeting notes are for. Ask whether you're needed for the whole thing or one agenda item. And when a developer or tech lead is invited, **consider going in their place** — it costs you time and it buys the team focus, and their respect. On conduct: a firm handshake with eye contact, two or three seconds, aware that greetings are cultural. Never hugs — in a professional setting they make people uncomfortable and can become harassment."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 25: Negotiation and Leadership Skills, pp. 453–472. The chapter recommends Tanya Reilly's The Staff Engineer's Path and Fisher, Ury & Patton's Getting to Yes.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

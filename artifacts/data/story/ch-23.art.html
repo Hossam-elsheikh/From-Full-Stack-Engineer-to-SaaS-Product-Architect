@@ -1,0 +1,100 @@
+<!-- Drawings for chapter 23 · Diagramming Architecture -->
+
+<!--@ rep-consistency -->
+<svg viewBox="0 0 620 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="14" y="42" width="150" height="94"/>
+    <g stroke-width="1.2">
+      <rect x="26" y="54" width="40" height="22"/><rect x="74" y="54" width="40" height="22"/>
+      <rect x="122" y="54" width="30" height="22" stroke="var(--acc)" stroke-width="1.8" fill="var(--accBg)"/>
+      <rect x="26" y="86" width="40" height="22"/><rect x="74" y="86" width="40" height="22"/>
+    </g>
+    <rect x="236" y="42" width="150" height="94"/>
+    <g stroke-width="1.2" stroke="var(--ink3)">
+      <rect x="248" y="54" width="40" height="22"/><rect x="296" y="54" width="40" height="22"/>
+      <rect x="248" y="86" width="40" height="22"/><rect x="296" y="86" width="40" height="22"/>
+    </g>
+    <rect x="336" y="48" width="42" height="82" stroke="var(--acc)" stroke-width="2" fill="var(--accBg)"/>
+    <rect x="458" y="42" width="150" height="94" stroke="var(--acc)" stroke-width="2" fill="var(--accBg)"/>
+    <g stroke="var(--acc)" stroke-width="1.3">
+      <rect x="472" y="56" width="56" height="24"/><rect x="538" y="56" width="56" height="24"/>
+      <rect x="472" y="96" width="56" height="24"/><rect x="538" y="96" width="56" height="24"/>
+    </g>
+    <g stroke="var(--ink3)" stroke-width="1.2"><path d="M164 89 H236 M386 89 H458"/><path d="M228 85 l8 4 l-8 4 M450 85 l8 4 l-8 4"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.2">
+    <text x="89" y="32" fill="var(--ink)">the whole topology</text>
+    <text x="311" y="32" fill="var(--ink)">where the part sits in it</text>
+    <text x="533" y="32" fill="var(--acc)">the part, in detail</text>
+    <text x="310" y="164" font-size="9" fill="var(--ink)">Representational consistency: always show the relationship before you change the view.</text>
+    <text x="310" y="184" font-size="8.6" fill="var(--acc)">Show a portion without its place in the whole and you have manufactured confusion.</text>
+  </g>
+</svg>
+
+<!--@ layers -->
+<svg viewBox="0 0 300 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <path d="M40 150 L150 110 L260 150 L150 190 Z" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <path d="M40 108 L150 68 L260 108 L150 148 Z"/>
+    <path d="M40 66 L150 26 L260 66 L150 106 Z" stroke="var(--ink3)" stroke-dasharray="5 4"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.2">
+    <text x="272" y="152" fill="var(--acc)">topology</text>
+    <text x="272" y="163" fill="var(--ink2)">containers, brokers,</text>
+    <text x="272" y="174" fill="var(--ink2)">databases, dependencies</text>
+    <text x="272" y="108" fill="var(--ink)">implementation</text>
+    <text x="272" y="119" fill="var(--ink2)">which database, which protocol</text>
+    <text x="272" y="64" fill="var(--ink2)">context overlays</text>
+    <text x="272" y="75" fill="var(--ink2)">DDD boundaries, transaction scope</text>
+    <text x="150" y="208" text-anchor="middle" font-size="8.6" fill="var(--ink)">Use layers semantically, not decoratively.</text>
+    <text x="14" y="20" font-size="8.4" fill="var(--ink2)">the base layer says</text>
+    <text x="14" y="31" font-size="8.4" fill="var(--ink2)">“synchronous” —</text>
+    <text x="14" y="42" font-size="8.4" fill="var(--ink2)">not “gRPC”</text>
+  </g>
+</svg>
+
+<!--@ standards -->
+<svg viewBox="0 0 620 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="8" y="36" width="190" height="96"/>
+    <rect x="214" y="36" width="190" height="96" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="420" y="36" width="192" height="96"/>
+    <path d="M8 62 H198 M214 62 H404 M420 62 H612" stroke="var(--rule)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <g font-size="10.5">
+      <text x="103" y="54" fill="var(--ink)">UML</text><text x="309" y="54" fill="var(--acc)">C4</text><text x="516" y="54" fill="var(--ink)">ARCHIMATE</text>
+    </g>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="103" y="80">Booch, Jacobson, Rumbaugh,</text><text x="103" y="91">1980s. Designed by committee</text>
+      <text x="103" y="102">to unify three philosophies.</text>
+      <text x="103" y="120" fill="var(--ink)">class and sequence diagrams survive.</text>
+      <text x="309" y="80">Simon Brown, 2006–11.</text>
+      <text x="309" y="91">Context · Container · Component · Class</text>
+      <text x="309" y="102">— and it keeps class diagrams from UML,</text>
+      <text x="309" y="113">because they work.</text>
+      <text x="516" y="80">The Open Group. Enterprise</text><text x="516" y="91">modelling across business domains.</text>
+      <text x="516" y="108">deliberately “as small as possible”,</text><text x="516" y="119">not covering every edge case.</text>
+    </g>
+    <text x="310" y="160" font-size="9" fill="var(--ink)">Establish a standard. Then allow reasonable exceptions — architects break the rules whenever the standard has no good way to say the thing.</text>
+    <text x="310" y="182" font-size="8.6" fill="var(--acc)">The one near-universal convention: solid lines are synchronous, dotted lines are asynchronous.</text>
+  </g>
+</svg>
+
+<!--@ attachment -->
+<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <path d="M40 148 H278 M40 148 V26"/>
+    <path d="M44 144 L268 36" stroke="var(--acc)" stroke-width="2.2"/>
+    <circle cx="90" cy="122" r="4" fill="var(--acc)" stroke="none"/>
+    <circle cx="230" cy="54" r="4" fill="var(--acc)" stroke="none"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.2">
+    <text x="30" y="88" fill="var(--ink)" transform="rotate(-90 30 88)" text-anchor="middle">attachment</text>
+    <text x="160" y="164" text-anchor="middle" fill="var(--ink)">hours spent producing it →</text>
+    <text x="98" y="118" fill="var(--ink2)">whiteboard photo</text>
+    <text x="238" y="48" text-anchor="end" fill="var(--acc)">four hours in Visio</text>
+    <text x="150" y="186" text-anchor="middle" font-size="8.6" fill="var(--acc)">Irrational Artifact Attachment</text>
+    <text x="150" y="198" text-anchor="middle" font-size="8.2" fill="var(--ink2)">the harder it was to make, the harder it is to throw away</text>
+  </g>
+</svg>

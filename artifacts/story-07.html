@@ -1,0 +1,281 @@
+<title>Where One Set Ends and the Next Begins</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+[hidden]{display:none !important}
+:root{--acc:#3B5F7D;--accBg:rgba(59,95,125,.12);--accLine:rgba(59,95,125,.42);--dot:rgba(59,95,125,.22)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--acc:#8FB6D2;--accBg:rgba(143,182,210,.12);--accLine:rgba(143,182,210,.42);--dot:rgba(143,182,210,.22)}}
+:root[data-theme="dark"]{--acc:#8FB6D2;--accBg:rgba(143,182,210,.12);--accLine:rgba(143,182,210,.42);--dot:rgba(143,182,210,.22)}
+/* ---------- chapter sheet: notes you re-scan, not prose you re-read ----------
+   The figure is the unit of memory. Text is caption-length. Decisions are the
+   only place a scene appears, and they are boxed so they read as a different
+   kind of thing. --acc/--accBg/--accLine/--dot come from build.py per chapter. */
+
+.scroll{position:sticky;top:0;z-index:6;height:3px;background:var(--sunk);border-bottom:1px solid var(--rule)}
+.scroll i{display:block;height:100%;width:0;background:var(--acc);transition:width .18s linear}
+
+/* ---------- cover ---------- */
+.cover{padding:clamp(22px,3.8vw,44px) clamp(18px,3vw,38px) clamp(20px,3vw,34px);
+  border-bottom:1px solid var(--rule);background:var(--sheet);
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(16px,2.6vw,32px);align-items:start}
+@media(max-width:640px){.cover{grid-template-columns:1fr}}
+.cover .num{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:clamp(3rem,9vw,5.4rem);
+  line-height:.78;color:var(--acc);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.cover .bk{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--ink3)}
+.cover h1{font-size:clamp(1.9rem,4.8vw,3rem);margin-top:7px}
+.cover .gist{font-size:1.04rem;line-height:1.55;color:var(--ink2);max-width:62ch;margin-top:11px}
+
+/* ---------- the card you actually come back for ---------- */
+.minute{margin:clamp(15px,2.6vw,30px);border:2px solid var(--acc);background:var(--accBg);
+  padding:clamp(16px,2.6vw,26px)}
+.minute .h{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between;
+  padding-bottom:11px;margin-bottom:13px;border-bottom:1px solid var(--accLine)}
+.minute h2{font-size:clamp(1.15rem,2.4vw,1.45rem);letter-spacing:.02em}
+.minute .h .lbl{color:var(--acc)}
+.minute ol{margin:0;padding:0;list-style:none;counter-reset:m;display:flex;flex-direction:column;gap:10px}
+.minute li{counter-increment:m;display:grid;grid-template-columns:26px minmax(0,1fr);gap:11px;
+  font-size:.97rem;line-height:1.52;max-width:88ch}
+.minute li::before{content:counter(m,decimal-leading-zero);font-family:"IBM Plex Mono",monospace;
+  font-size:.7rem;color:var(--acc);padding-top:4px;font-variant-numeric:tabular-nums}
+
+/* ---------- topics ---------- */
+.sec{padding:clamp(20px,3vw,34px) clamp(16px,3vw,32px);border-top:1px solid var(--rule2)}
+.sechead{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin-bottom:14px}
+.sechead .k{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--acc)}
+.sechead h2{font-size:clamp(1.25rem,2.7vw,1.7rem);flex-basis:100%}
+.split{display:grid;grid-template-columns:minmax(0,46%) minmax(0,1fr);gap:clamp(16px,2.6vw,30px);align-items:start}
+@media(max-width:780px){.split{grid-template-columns:1fr}}
+.sec.wide .split{grid-template-columns:1fr}
+figure{margin:0;border:1px solid var(--rule);background:var(--sunk);
+  background-image:radial-gradient(var(--dot) 1.1px,transparent 1.2px);background-size:7px 7px}
+figure svg{width:100%;height:auto;display:block;padding:clamp(12px,2vw,20px);max-width:560px;margin:0 auto}
+.sec.wide figure svg{max-width:900px}
+figcaption{font-family:"IBM Plex Mono",monospace;font-size:.68rem;line-height:1.6;color:var(--ink2);
+  padding:9px 13px;border-top:1px solid var(--rule);background:var(--sheet)}
+.body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.body p{font-size:.96rem;line-height:1.6;max-width:70ch;color:var(--ink2)}
+.body ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.body li{font-size:.95rem;line-height:1.5;padding-left:15px;position:relative;max-width:70ch}
+.body li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:1px;background:var(--acc)}
+
+/* ---------- the book's own words ---------- */
+.qs{display:flex;flex-direction:column;gap:10px}
+.q{border-left:4px solid var(--acc);background:var(--chip);padding:13px 16px;
+  display:flex;flex-direction:column;gap:7px}
+.q .t{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:clamp(1.12rem,2.3vw,1.4rem);
+  line-height:1.18;letter-spacing:.01em;text-wrap:balance}
+.q .a{font-family:"IBM Plex Mono",monospace;font-size:.63rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--acc)}
+.q .n{font-size:.9rem;line-height:1.55;color:var(--ink2);max-width:70ch}
+
+/* ---------- decisions ---------- */
+.dec{border:2px solid var(--ink);background:var(--sheet);margin:clamp(16px,2.6vw,30px);
+  display:flex;flex-direction:column}
+.dec .top{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:10px 16px;
+  background:var(--ink);color:var(--sheet)}
+.dec .top .tag{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  border:1px solid currentColor;padding:2px 8px}
+.dec .top h2{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1.12rem;letter-spacing:.03em;color:inherit}
+.dec .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,38%);gap:0}
+@media(max-width:820px){.dec .in{grid-template-columns:1fr}}
+.dec .main{padding:clamp(15px,2.2vw,24px);display:flex;flex-direction:column;gap:14px;min-width:0}
+.dec .art{border-left:1px solid var(--rule);background:var(--sunk);
+  background-image:radial-gradient(var(--dot) 1.1px,transparent 1.2px);background-size:7px 7px;
+  display:flex;align-items:center;justify-content:center;padding:clamp(12px,2vw,18px)}
+@media(max-width:820px){.dec .art{border-left:0;border-top:1px solid var(--rule);order:-1}}
+.dec .art svg{width:100%;height:auto;max-width:330px;display:block}
+.sit{font-size:.98rem;line-height:1.58;max-width:74ch}
+.opts{display:flex;flex-direction:column;gap:1px;background:var(--rule2);border:1px solid var(--rule)}
+.opt{background:var(--sheet);padding:11px 14px;display:flex;flex-direction:column;gap:4px}
+.opt .o{font-size:.95rem;font-weight:600;line-height:1.4}
+.opt .c{font-size:.88rem;line-height:1.52;color:var(--ink2)}
+.opt.pick{background:var(--accBg)}
+.opt.pick .o::after{content:"the book's answer";font-family:"IBM Plex Mono",monospace;font-size:.58rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-left:9px;white-space:nowrap;font-weight:400}
+.verdict{border-left:4px solid var(--acc);padding:2px 0 2px 13px;font-size:.94rem;line-height:1.58;max-width:74ch}
+
+.foot{display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:space-between;align-items:center;
+  padding:14px 18px;border-top:1px solid var(--rule);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
+.foot a{color:var(--acc);text-decoration:none;border-bottom:1px solid var(--accLine)}
+.foot .cite{font-family:"IBM Plex Mono",monospace;font-size:.68rem;max-width:78ch}
+</style>
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Chapter</span><span class="v" id="tbC">—</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v" id="tbT">—</span></div>
+    <div class="tcell"><span class="lbl">Figures</span><span class="v" id="tbF">—</span></div>
+    <div class="tcell"><span class="lbl">Read</span><span class="v" id="tbR">—</span></div>
+  </header>
+  <div class="scroll"><i id="sc"></i></div>
+
+  <section class="cover">
+    <span class="num" id="cN"></span>
+    <div>
+      <p class="bk" id="cB"></p>
+      <h1 id="cT"></h1>
+      <p class="gist" id="cG"></p>
+    </div>
+  </section>
+
+  <section class="minute">
+    <div class="h"><h2>The one-minute version</h2><span class="lbl" id="mL"></span></div>
+    <ol id="minute"></ol>
+  </section>
+
+  <div id="secs"></div>
+
+  <footer class="foot">
+    <span class="cite" id="cite"></span>
+    <span id="links"></span>
+  </footer>
+</div>
+</div>
+<script>
+const D={"ch": "07", "book": "Chapter 7 · The Scope of Architectural Characteristics", "pages": "pp. 95–106", "title": "Where One Set Ends and the Next Begins", "gist": "The old frameworks assumed one set of characteristics for a whole system. Modern architectures don't work that way. The architecture quantum is the unit that fixes this — and it turns out to be the thing that chooses your style for you.", "read": "5 min · 40 sec to re-scan", "acc": {"l": "#3B5F7D", "d": "#8FB6D2"}, "minute": ["The fatal flaw in older approaches: **one set of characteristics for the entire system**. A microservices architecture has different characteristics at service level and at system level.", "An **architecture quantum** is the smallest part of the system that runs independently: independently deployable, high functional cohesion, low external implementation static coupling, and defined at its edges by synchronous calls. Its database is inside it.", "Four couplings, and they are not interchangeable. **Semantic** is the problem's own. **Implementation** is what you chose. **Static** is who must exist for whom. **Dynamic** is who calls whom while running.", "**Higher coupling is allowed at narrow scope; the broader the scope, the looser it must be.** Tight coupling inside a service is cohesion. The same coupling across a shared contract is brittleness.", "Scope decides style, in this order: how many sets of characteristics → monolith or distributed → quantum boundaries → persistence → synchronous or asynchronous."], "sections": [{"t": "The architecture quantum", "art": "quantum", "alt": "A dashed boundary containing two services and their own database, with the four defining properties listed", "cap": "Latin *quantum* — “how much”. Informally: the smallest part of the system that runs independently.", "items": ["**Independently deployable** — everything needed to function is inside. If the application uses a database, that database is *in* the quantum, because the system doesn't work without it. Which means virtually every legacy system on a single shared database is, by definition, **a quantum of one**.", "**High functional cohesion** — the quantum does something purposeful. In a monolith the cohesion is basically the whole system; in a distributed architecture you aim each service at a single workflow.", "**Low external implementation static coupling** — the DDD preference for loose coupling between bounded contexts, one level of abstraction above components.", "**Synchronous communication** — the calls between quanta are where operational characteristics collide."], "p": "Code-level metrics can't measure scope. They tell you about the code and say nothing about the dependent things outside it — and no amount of designing a codebase to be elastic helps if its database isn't."}, {"t": "Four kinds of coupling", "art": "coupling-4", "wide": true, "alt": "Four columns defining semantic, implementation, static and dynamic coupling", "cap": "Static defines scope. Dynamic defines what happens when the scopes have to talk.", "p": "**Semantic coupling** is inherent in the problem: an order-processing system couples carts to inventory to customers because the business does. No architecture pattern prevents a change in the domain from rippling — a change to the semantics *is* a change to the requirements. **Implementation coupling** is everything you decided: one database or several, monolith or distributed. It barely touches the semantics and it determines the architecture.", "quotes": [["Higher coupling is allowed for narrower scopes; the broader the scope, the looser the coupling should be.", "Richards & Ford", "An architecture is *brittle* when one implementation change ripples out and breaks apparently unrelated things. Renaming `State` to `StateCode` should affect one caller — the moment it affects nine, the scope was too broad for that much coupling."]]}, {"t": "Bounded context, and why shared entities failed", "art": "scope-rule", "alt": "Tight coupling inside one boundary beside loose coupling between two boundaries", "cap": "Each domain gets its own Customer, and the differences get reconciled at the points where they talk.", "p": "Before domain-driven design, architects chased holistic reuse: one `Customer` class for the whole organisation. It produced tight coupling, harder coordination and more complexity. Eric Evans's **bounded context** says the opposite — everything about a portion of the domain is visible inside it and opaque outside it. Entities work best in a local context, and you pay a small reconciliation cost at the seams instead of a permanent coupling cost everywhere."}, {"k": "decision", "t": "Auction ends. Payment handles one every 500 ms.", "art": "sync-async", "alt": "A synchronous call from Auction to Payment failing, above the same call buffered by a queue", "sit": "Two services in a microservices architecture. When an auction closes, **Auction** sends payment information to **Payment**. Payment can process one payment every 500 ms. A thousand auctions are scheduled to end at the same moment.", "opts": [["Call Payment synchronously — it's a simple request.", "The first call works. Then Payment cannot absorb the rate, and the rest fail. The two services have genuinely different operational characteristics and a synchronous call forces them to share one."], ["Put a queue between them.", "The queue is a buffer, and the two services get to operate at their own scale. Bursts are held until the receiver is ready.", 1]], "verdict": "**Synchronous communication is unforgiving in distributed architectures**, especially where quanta have different characteristics — because a sync call makes the caller inherit the callee's limits. Async is not a free pass: sustained overproduction eventually overflows the queue too. It converts a *burst* problem into a *capacity* problem, which is a much better problem."}, {"t": "Scope chooses the style", "art": "decision-tree", "wide": true, "alt": "A decision tree from how many sets of characteristics through to synchronous or asynchronous communication", "cap": "Fig. 7-1 · run this before picking a style, not after.", "items": ["**One set of characteristics will do** → monolithic, and the number of subsequent decisions collapses. One database, developed and deployed in lockstep with the architecture. Done.", "**More than one set** → distributed, and now you owe answers on quantum boundaries and on data: a single shared database (common in event-driven) or partitioned along service lines (microservices).", "**Then the communication question.** Choosing synchronous can *move* the quantum boundaries you established through static coupling — the two kinds of coupling interact constantly."]}, {"k": "decision", "t": "Going Green: one system, or three?", "art": "going-green", "wide": true, "alt": "Three dashed quantum boundaries around the public-facing, back-office and assessment parts of Going Green", "sit": "A business that buys, recycles and resells old electronics through public kiosks and a website. Characteristics analysis produces three distinct clusters: public-facing needs **scalability, availability, agility**; back-office needs **security, data integrity, auditability**; assessment needs **maintainability, deployability, testability**.", "opts": [["Build one system that satisfies all eight.", "Possible, and difficult. These characteristics counteract each other — fast deployability is much harder when you are also holding auditability, and the kiosk UI needs a completely different scalability profile from the back office."], ["Use the clusters as the quantum boundaries.", "Three quanta, each with one coherent set of characteristics. Using characteristic scope as a first guide to service granularity is how you find a good set of trade-offs rather than an average of bad ones.", 1]], "verdict": "Note *why* assessment gets its own boundary: the business resells the highest-value devices, and new models arrive constantly, so the faster they can update assessments the more valuable the stock they can buy. That is a **business driver producing an architectural characteristic** — exactly the translation from Chapter 5, now deciding a boundary."}, {"t": "Scoping when the operations aren't yours", "art": "quantum", "alt": "A dashed boundary containing two services and their own database, with the four defining properties listed", "cap": "Cloud resources encapsulate operational characteristics, which is convenient right up until you need to reason about them.", "items": ["**Cloud as an alternate operations centre** — you run and orchestrate containers. Then you must consider the characteristics of the containers *and* the constraints the orchestrator imposes.", "**Cloud resources as system components** — triggered functions, managed databases, provider building blocks. Then you are reasoning about the capabilities the provider advertises and hopefully maintains."], "p": "Elasticity used to be won by hand, on physical hardware, by the previous generation of architects; now it is a configuration setting. The specific difficulties moved — provider availability, a wider security surface — but the shape of the job didn't. Analysing trade-offs is the constant."}], "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 7: The Scope of Architectural Characteristics, pp. 95–106. The architecture quantum was developed for Building Evolutionary Architectures; bounded context is Eric Evans's.", "links": [["All 27 chapters", "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"], ["The Architect's Atlas", "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"]], "art": {"quantum": "<svg viewBox=\"0 0 300 226\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.5\" stroke-linejoin=\"round\">\n    <rect x=\"58\" y=\"28\" width=\"184\" height=\"112\" stroke=\"var(--acc)\" stroke-width=\"2\" stroke-dasharray=\"7 4\" fill=\"var(--accBg)\"/>\n    <rect x=\"76\" y=\"46\" width=\"70\" height=\"30\"/><rect x=\"154\" y=\"46\" width=\"70\" height=\"30\"/>\n    <ellipse cx=\"150\" cy=\"102\" rx=\"44\" ry=\"10\"/>\n    <path d=\"M106 102 v18 a44 10 0 0 0 88 0 v-18\"/>\n    <path d=\"M111 76 L136 92 M189 76 L164 92\" stroke=\"var(--ink3)\" stroke-width=\"1\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\">\n    <text x=\"150\" y=\"20\" font-size=\"9.6\" fill=\"var(--acc)\">ONE ARCHITECTURE QUANTUM</text>\n    <text x=\"111\" y=\"65\" font-size=\"8.4\" fill=\"var(--ink2)\">service</text>\n    <text x=\"189\" y=\"65\" font-size=\"8.4\" fill=\"var(--ink2)\">service</text>\n    <text x=\"150\" y=\"106\" font-size=\"8.4\" fill=\"var(--ink2)\">its own data</text>\n    <g font-size=\"9\" fill=\"var(--ink)\" text-anchor=\"start\">\n      <text x=\"10\" y=\"164\">1 · deploys independently</text>\n      <text x=\"10\" y=\"180\">2 · high functional cohesion</text>\n      <text x=\"10\" y=\"196\">3 · low external static coupling</text>\n      <text x=\"10\" y=\"212\">4 · synchronous calls define its edge</text>\n    </g>\n  </g>\n</svg>", "coupling-4": "<svg viewBox=\"0 0 620 214\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\">\n    <rect x=\"6\" y=\"34\" width=\"146\" height=\"120\"/><rect x=\"160\" y=\"34\" width=\"146\" height=\"120\"/>\n    <rect x=\"314\" y=\"34\" width=\"146\" height=\"120\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <rect x=\"468\" y=\"34\" width=\"146\" height=\"120\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <path d=\"M6 62 H152 M160 62 H306 M314 62 H460 M468 62 H614\" stroke=\"var(--rule)\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\">\n    <text x=\"6\" y=\"18\" font-size=\"8.6\" letter-spacing=\"1.6\" text-anchor=\"start\" fill=\"var(--ink3)\">TWO THINGS ARE COUPLED IF CHANGING ONE MIGHT BREAK THE OTHER</text>\n    <g font-size=\"10\" fill=\"var(--ink)\">\n      <text x=\"79\" y=\"54\">SEMANTIC</text><text x=\"233\" y=\"54\">IMPLEMENTATION</text>\n      <text x=\"387\" y=\"54\" fill=\"var(--acc)\">STATIC</text><text x=\"541\" y=\"54\" fill=\"var(--acc)\">DYNAMIC</text>\n    </g>\n    <g font-size=\"8.6\" fill=\"var(--ink2)\">\n      <text x=\"79\" y=\"82\">the problem's own</text><text x=\"79\" y=\"94\">coupling — carts,</text><text x=\"79\" y=\"106\">orders, inventory</text>\n      <text x=\"79\" y=\"128\">no pattern saves</text><text x=\"79\" y=\"140\">you from a change</text><text x=\"79\" y=\"152\">to the domain</text>\n      <text x=\"233\" y=\"82\">how you chose to</text><text x=\"233\" y=\"94\">build it — one DB</text><text x=\"233\" y=\"106\">or many, mono or not</text>\n      <text x=\"233\" y=\"128\">barely touches the</text><text x=\"233\" y=\"140\">semantics, decides</text><text x=\"233\" y=\"152\">the architecture</text>\n      <text x=\"387\" y=\"82\">the wiring. who</text><text x=\"387\" y=\"94\">depends on whom</text><text x=\"387\" y=\"106\">to exist at all</text>\n      <text x=\"387\" y=\"128\">shared database?</text><text x=\"387\" y=\"140\">same quantum.</text><text x=\"387\" y=\"152\">no exceptions.</text>\n      <text x=\"541\" y=\"82\">the calls. who</text><text x=\"541\" y=\"94\">talks to whom</text><text x=\"541\" y=\"106\">while running</text>\n      <text x=\"541\" y=\"128\">sync or async is</text><text x=\"541\" y=\"140\">the whole trade-off</text><text x=\"541\" y=\"152\">— see Ch. 15</text>\n    </g>\n    <text x=\"310\" y=\"184\" font-size=\"9\" fill=\"var(--ink)\">Higher coupling is fine at narrow scope.</text>\n    <text x=\"310\" y=\"202\" font-size=\"9\" fill=\"var(--acc)\">The broader the scope, the looser the coupling has to be.</text>\n  </g>\n</svg>", "scope-rule": "<svg viewBox=\"0 0 300 190\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.5\" stroke-linejoin=\"round\">\n    <rect x=\"16\" y=\"34\" width=\"104\" height=\"72\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-dasharray=\"6 4\"/>\n    <rect x=\"30\" y=\"50\" width=\"34\" height=\"20\"/><rect x=\"72\" y=\"50\" width=\"34\" height=\"20\"/>\n    <rect x=\"52\" y=\"80\" width=\"34\" height=\"20\"/>\n    <g stroke=\"var(--acc)\" stroke-width=\"2\"><path d=\"M64 60 H72 M50 70 L62 80 M88 70 L76 80\"/></g>\n    <rect x=\"164\" y=\"34\" width=\"120\" height=\"72\" stroke=\"var(--ink3)\" stroke-dasharray=\"6 4\"/>\n    <rect x=\"174\" y=\"50\" width=\"42\" height=\"20\"/><rect x=\"232\" y=\"76\" width=\"42\" height=\"20\"/>\n    <path d=\"M216 60 C246 60 246 76 232 84\" stroke=\"var(--ink3)\" stroke-width=\"1.2\" stroke-dasharray=\"4 4\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\" font-size=\"8.4\">\n    <text x=\"68\" y=\"26\" font-size=\"9.4\" fill=\"var(--acc)\">NARROW SCOPE</text>\n    <text x=\"224\" y=\"26\" font-size=\"9.4\" fill=\"var(--ink)\">BROAD SCOPE</text>\n    <text x=\"68\" y=\"124\" fill=\"var(--ink2)\">inside a service:</text>\n    <text x=\"68\" y=\"135\" fill=\"var(--ink2)\">couple tightly, be cohesive</text>\n    <text x=\"224\" y=\"124\" fill=\"var(--ink2)\">between quanta:</text>\n    <text x=\"224\" y=\"135\" fill=\"var(--ink2)\">couple as loosely as you can</text>\n    <text x=\"150\" y=\"164\" fill=\"var(--ink)\">rename State to StateCode inside a service: one caller.</text>\n    <text x=\"150\" y=\"180\" fill=\"var(--acc)\">do it on a shared contract: everything you never knew depended on it.</text>\n  </g>\n</svg>", "sync-async": "<svg viewBox=\"0 0 300 240\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.5\" stroke-linejoin=\"round\">\n    <rect x=\"12\" y=\"34\" width=\"76\" height=\"32\"/>\n    <rect x=\"204\" y=\"34\" width=\"80\" height=\"32\"/>\n    <path d=\"M88 50 H204\" stroke=\"var(--ink)\" stroke-width=\"1.6\"/>\n    <path d=\"M196 46 l8 4 l-8 4\"/>\n    <g stroke=\"var(--acc)\" stroke-width=\"2\">\n      <path d=\"M132 74 l16 16 M148 74 l-16 16\"/>\n    </g>\n    <path d=\"M12 128 H288\" stroke=\"var(--rule)\" stroke-dasharray=\"4 5\"/>\n    <rect x=\"12\" y=\"164\" width=\"76\" height=\"32\"/>\n    <rect x=\"118\" y=\"164\" width=\"52\" height=\"32\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <rect x=\"204\" y=\"164\" width=\"80\" height=\"32\"/>\n    <path d=\"M88 180 H118 M170 180 H204\" stroke=\"var(--ink3)\"/>\n    <path d=\"M110 176 l8 4 l-8 4 M196 176 l8 4 l-8 4\" stroke=\"var(--ink3)\"/>\n    <g stroke=\"var(--acc)\" stroke-width=\"1\"><path d=\"M126 170 v20 M134 170 v20 M142 170 v20 M150 170 v20 M158 170 v20\"/></g>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\">\n    <text x=\"8\" y=\"22\" font-size=\"8.6\" letter-spacing=\"1.4\" text-anchor=\"start\" fill=\"var(--ink3)\">SYNCHRONOUS</text>\n    <text x=\"50\" y=\"54\" font-size=\"9\" fill=\"var(--ink)\">Auction</text>\n    <text x=\"244\" y=\"54\" font-size=\"9\" fill=\"var(--ink)\">Payment</text>\n    <text x=\"244\" y=\"80\" font-size=\"8.2\" fill=\"var(--ink2)\">one every 500 ms</text>\n    <text x=\"150\" y=\"106\" font-size=\"8.4\" fill=\"var(--acc)\">a thousand auctions end at once</text>\n    <text x=\"150\" y=\"118\" font-size=\"8.4\" fill=\"var(--acc)\">and the second call onward fails</text>\n    <text x=\"8\" y=\"152\" font-size=\"8.6\" letter-spacing=\"1.4\" text-anchor=\"start\" fill=\"var(--acc)\">ASYNCHRONOUS</text>\n    <text x=\"50\" y=\"184\" font-size=\"9\" fill=\"var(--ink)\">Auction</text>\n    <text x=\"144\" y=\"158\" font-size=\"8.2\" fill=\"var(--acc)\">queue</text>\n    <text x=\"244\" y=\"184\" font-size=\"9\" fill=\"var(--ink)\">Payment</text>\n    <text x=\"150\" y=\"216\" font-size=\"8.4\" fill=\"var(--ink2)\">the buffer lets two different scalability profiles coexist</text>\n    <text x=\"150\" y=\"230\" font-size=\"8.4\" fill=\"var(--ink2)\">— until the burst stops being a burst</text>\n  </g>\n</svg>", "decision-tree": "<svg viewBox=\"0 0 620 268\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\" stroke-linejoin=\"round\">\n    <rect x=\"222\" y=\"14\" width=\"176\" height=\"36\" fill=\"var(--accBg)\" stroke=\"var(--acc)\" stroke-width=\"1.7\"/>\n    <path d=\"M310 50 V70 M120 70 H500 M120 70 V88 M500 70 V88\"/>\n    <rect x=\"46\" y=\"88\" width=\"148\" height=\"32\"/>\n    <rect x=\"426\" y=\"88\" width=\"148\" height=\"32\"/>\n    <path d=\"M120 120 V148\"/><path d=\"M500 120 V148\"/>\n    <rect x=\"46\" y=\"148\" width=\"148\" height=\"32\"/>\n    <rect x=\"426\" y=\"148\" width=\"148\" height=\"32\"/>\n    <path d=\"M500 180 V208\"/>\n    <rect x=\"426\" y=\"208\" width=\"148\" height=\"32\" fill=\"var(--accBg)\" stroke=\"var(--acc)\"/>\n    <path d=\"M114 142 l6 6 l6 -6 M494 142 l6 6 l6 -6 M494 202 l6 6 l6 -6 M304 64 l6 6 l6 -6\"/>\n    <path d=\"M114 82 l6 6 l6 -6 M494 82 l6 6 l6 -6\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\">\n    <text x=\"310\" y=\"30\" font-size=\"10\" fill=\"var(--acc)\">how many sets of characteristics</text>\n    <text x=\"310\" y=\"43\" font-size=\"10\" fill=\"var(--acc)\">does this problem need?</text>\n    <text x=\"120\" y=\"102\" font-size=\"10\" fill=\"var(--ink)\">one set</text>\n    <text x=\"120\" y=\"114\" font-size=\"8.4\" fill=\"var(--ink2)\">→ monolithic</text>\n    <text x=\"500\" y=\"102\" font-size=\"10\" fill=\"var(--ink)\">more than one</text>\n    <text x=\"500\" y=\"114\" font-size=\"8.4\" fill=\"var(--ink2)\">→ distributed</text>\n    <text x=\"120\" y=\"162\" font-size=\"9.4\" fill=\"var(--ink)\">one database</text>\n    <text x=\"120\" y=\"174\" font-size=\"8.4\" fill=\"var(--ink2)\">deployed in lockstep</text>\n    <text x=\"500\" y=\"162\" font-size=\"9.4\" fill=\"var(--ink)\">quantum boundaries, then data</text>\n    <text x=\"500\" y=\"174\" font-size=\"8.4\" fill=\"var(--ink2)\">shared DB, or partitioned per service</text>\n    <text x=\"500\" y=\"222\" font-size=\"9.4\" fill=\"var(--acc)\">synchronous or asynchronous?</text>\n    <text x=\"500\" y=\"234\" font-size=\"8.4\" fill=\"var(--ink2)\">this can move the boundaries you just drew</text>\n    <text x=\"310\" y=\"262\" font-size=\"8.6\" fill=\"var(--ink2)\">Fig. 7-1 · scope first, style second — not the other way round</text>\n  </g>\n</svg>", "going-green": "<svg viewBox=\"0 0 620 240\" xmlns=\"http://www.w3.org/2000/svg\">\n  <g fill=\"none\" stroke=\"var(--ink)\" stroke-width=\"1.4\" stroke-linejoin=\"round\">\n    <rect x=\"8\" y=\"40\" width=\"192\" height=\"128\" stroke=\"var(--acc)\" stroke-width=\"1.8\" stroke-dasharray=\"7 4\" fill=\"var(--accBg)\"/>\n    <rect x=\"214\" y=\"40\" width=\"192\" height=\"128\" stroke=\"var(--acc)\" stroke-width=\"1.8\" stroke-dasharray=\"7 4\" fill=\"var(--accBg)\"/>\n    <rect x=\"420\" y=\"40\" width=\"192\" height=\"128\" stroke=\"var(--acc)\" stroke-width=\"1.8\" stroke-dasharray=\"7 4\" fill=\"var(--accBg)\"/>\n    <rect x=\"26\" y=\"58\" width=\"70\" height=\"26\"/><rect x=\"112\" y=\"58\" width=\"70\" height=\"26\"/>\n    <rect x=\"232\" y=\"58\" width=\"70\" height=\"26\"/><rect x=\"318\" y=\"58\" width=\"70\" height=\"26\"/>\n    <rect x=\"438\" y=\"58\" width=\"70\" height=\"26\"/><rect x=\"524\" y=\"58\" width=\"70\" height=\"26\"/>\n  </g>\n  <g stroke=\"none\" font-family=\"IBM Plex Mono, monospace\" text-anchor=\"middle\">\n    <text x=\"8\" y=\"26\" font-size=\"8.6\" letter-spacing=\"1.6\" text-anchor=\"start\" fill=\"var(--ink3)\">GOING GREEN — THREE CLUSTERS, THEREFORE THREE QUANTA</text>\n    <g font-size=\"8.2\" fill=\"var(--ink2)\">\n      <text x=\"61\" y=\"74\">kiosk</text><text x=\"147\" y=\"74\">website</text>\n      <text x=\"267\" y=\"74\">receiving</text><text x=\"353\" y=\"74\">payments</text>\n      <text x=\"473\" y=\"74\">assessment</text><text x=\"559\" y=\"74\">pricing</text>\n    </g>\n    <g font-size=\"10\" fill=\"var(--acc)\">\n      <text x=\"104\" y=\"112\">scalability</text><text x=\"104\" y=\"128\">availability</text><text x=\"104\" y=\"144\">agility</text>\n      <text x=\"310\" y=\"112\">security</text><text x=\"310\" y=\"128\">data integrity</text><text x=\"310\" y=\"144\">auditability</text>\n      <text x=\"516\" y=\"112\">maintainability</text><text x=\"516\" y=\"128\">deployability</text><text x=\"516\" y=\"144\">testability</text>\n    </g>\n    <g font-size=\"8.4\" fill=\"var(--ink)\">\n      <text x=\"104\" y=\"188\">PUBLIC FACING</text><text x=\"310\" y=\"188\">BACK OFFICE</text><text x=\"516\" y=\"188\">ASSESSMENT</text>\n    </g>\n    <g font-size=\"8.2\" fill=\"var(--ink2)\">\n      <text x=\"104\" y=\"204\">bursty, public,</text><text x=\"104\" y=\"215\">changes often</text>\n      <text x=\"310\" y=\"204\">money and</text><text x=\"310\" y=\"215\">regulators</text>\n      <text x=\"516\" y=\"204\">new phone models</text><text x=\"516\" y=\"215\">arrive constantly</text>\n    </g>\n    <text x=\"310\" y=\"236\" font-size=\"8.6\" fill=\"var(--ink)\">fast deployability and auditability fight each other — so stop making them share a boundary</text>\n  </g>\n</svg>"}};
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function md(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
+  .replace(/`(.+?)`/g,"<code>$1</code>").replace(/\*(.+?)\*/g,"<em>$1</em>")}
+const $=s=>document.querySelector(s);
+
+function fig(s){
+  if(!s.art)return"";
+  return '<figure role="img" aria-label="'+esc(s.alt||"")+'">'+(D.art[s.art]||"")+
+    (s.cap?'<figcaption>'+md(s.cap)+'</figcaption>':"")+'</figure>';
+}
+function quotes(list){
+  return '<div class="qs">'+list.map(q=>'<div class="q"><span class="t">'+md(q[0])+
+    '</span><span class="a">'+esc(q[1])+'</span>'+
+    (q[2]?'<span class="n">'+md(q[2])+'</span>':"")+'</div>').join("")+'</div>';
+}
+function topic(s,i){
+  const body='<div class="body">'+
+    (s.quotes?quotes(s.quotes):"")+
+    (s.items?'<ul>'+s.items.map(x=>'<li>'+md(x)+'</li>').join("")+'</ul>':"")+
+    (s.p?'<p>'+md(s.p)+'</p>':"")+'</div>';
+  return '<section class="sec'+(s.wide?" wide":"")+'" id="s'+i+'">'+
+    '<div class="sechead"><span class="k">'+esc(s.k==="quote"?"The book\u2019s words":"Topic "+s.n)+
+    '</span><h2>'+md(s.t)+'</h2></div>'+
+    '<div class="split">'+fig(s)+body+'</div></section>';
+}
+function decision(s,i){
+  return '<section class="dec" id="s'+i+'">'+
+    '<div class="top"><span class="tag">Decision</span><h2>'+md(s.t)+'</h2></div>'+
+    '<div class="in"><div class="main">'+
+      '<p class="sit">'+md(s.sit)+'</p>'+
+      '<div class="opts">'+s.opts.map(o=>'<div class="opt'+(o[2]?" pick":"")+'">'+
+        '<span class="o">'+md(o[0])+'</span><span class="c">'+md(o[1])+'</span></div>').join("")+'</div>'+
+      '<p class="verdict">'+md(s.verdict)+'</p>'+
+    '</div>'+(s.art?'<div class="art" role="img" aria-label="'+esc(s.alt||"")+'">'+
+      (D.art[s.art]||"")+'</div>':"")+'</div></section>';
+}
+
+let n=0;
+$("#secs").innerHTML=D.sections.map((s,i)=>{
+  if(s.k==="decision")return decision(s,i);
+  if(s.k!=="quote")s.n=String(++n).padStart(2,"0");
+  return topic(s,i);
+}).join("");
+
+const figs=D.sections.filter(s=>s.art).length;
+$("#tbC").textContent="Ch. "+D.ch; $("#tbT").textContent=D.title;
+$("#tbF").textContent=figs; $("#tbR").textContent=D.read;
+$("#cN").textContent=D.ch; $("#cB").textContent=D.book+" · "+D.pages;
+$("#cT").textContent=D.title; $("#cG").textContent=D.gist;
+$("#mL").textContent=D.minute.length+" things to keep";
+$("#minute").innerHTML=D.minute.map(x=>'<li><span>'+md(x)+'</span></li>').join("");
+$("#cite").textContent=D.source||"";
+$("#links").innerHTML=(D.links||[]).map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener">'+
+  esc(l[0])+' &#8599;</a>').join(" &middot; ");
+
+const bar=$("#sc"),onScroll=()=>{
+  const h=document.documentElement.scrollHeight-innerHeight;
+  bar.style.width=(h>0?Math.min(100,Math.max(0,scrollY/h*100)):0)+"%";
+};
+addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);onScroll();
+</script>

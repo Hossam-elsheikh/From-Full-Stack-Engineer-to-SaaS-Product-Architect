@@ -1,0 +1,115 @@
+<!-- Drawings for chapter 11 · The Modular Monolith Architecture Style -->
+
+<!--@ mm-topology -->
+<svg viewBox="0 0 620 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="14" y="34" width="592" height="106" stroke="var(--acc)" stroke-width="1.9" stroke-dasharray="7 4" fill="var(--accBg)"/>
+    <rect x="30" y="52" width="88" height="70"/><rect x="128" y="52" width="88" height="70"/>
+    <rect x="226" y="52" width="88" height="70"/><rect x="324" y="52" width="88" height="70"/>
+    <rect x="422" y="52" width="88" height="70"/><rect x="520" y="52" width="70" height="70"/>
+    <g stroke="var(--ink3)" stroke-width="1">
+      <path d="M40 90 h68 M40 104 h68 M138 90 h68 M138 104 h68 M236 90 h68 M236 104 h68"/>
+      <path d="M334 90 h68 M334 104 h68 M432 90 h68 M432 104 h68 M530 90 h50 M530 104 h50"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.4">
+    <text x="14" y="24" text-anchor="start" font-size="9" fill="var(--acc)">ONE DEPLOYMENT UNIT — WAR, EAR, ASSEMBLY</text>
+    <text x="74" y="70" fill="var(--ink)">Order</text><text x="74" y="80" fill="var(--ink)">Placement</text>
+    <text x="172" y="70" fill="var(--ink)">Inventory</text><text x="172" y="80" fill="var(--ink)">Management</text>
+    <text x="270" y="70" fill="var(--ink)">Payment</text><text x="270" y="80" fill="var(--ink)">Processing</text>
+    <text x="368" y="75" fill="var(--ink)">Notification</text>
+    <text x="466" y="75" fill="var(--ink)">Fulfillment</text>
+    <text x="555" y="75" fill="var(--ink)">Shipping</text>
+    <text x="310" y="164" font-size="9" fill="var(--ink)">layered:  com.app.<tspan fill="var(--ink2)">presentation</tspan>.customer.profile</text>
+    <text x="310" y="182" font-size="9" fill="var(--ink)">modular monolith:  com.app.<tspan fill="var(--acc)">customer</tspan>.profile</text>
+    <text x="310" y="204" font-size="8.4" fill="var(--ink2)">the third node moves from a technical concern to a domain one. that is the whole style.</text>
+  </g>
+</svg>
+
+<!--@ structures -->
+<svg viewBox="0 0 620 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="8" y="38" width="290" height="140"/>
+    <rect x="30" y="58" width="246" height="24"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <rect x="52" y="92" width="90" height="20"/><rect x="52" y="118" width="90" height="20"/>
+      <rect x="52" y="144" width="90" height="20"/><rect x="164" y="92" width="90" height="20"/>
+      <rect x="164" y="118" width="90" height="20"/><rect x="164" y="144" width="90" height="20"/>
+    </g>
+    <rect x="322" y="38" width="290" height="140" fill="var(--accBg)" stroke="var(--acc)"/>
+    <g stroke="var(--acc)" stroke-width="1.5">
+      <rect x="340" y="56" width="76" height="28"/><rect x="428" y="56" width="76" height="28"/><rect x="516" y="56" width="76" height="28"/>
+      <rect x="340" y="94" width="76" height="28"/><rect x="428" y="94" width="76" height="28"/><rect x="516" y="94" width="76" height="28"/>
+    </g>
+    <rect x="378" y="140" width="176" height="26" stroke="var(--acc)" stroke-width="1.8" stroke-dasharray="6 4"/>
+    <g stroke="var(--acc)" stroke-width="1"><path d="M378 122 L420 140 M466 122 V140 M554 122 L512 140"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="8" y="26" font-size="9.6" text-anchor="start" fill="var(--ink)">MONOLITHIC STRUCTURE</text>
+    <text x="322" y="26" font-size="9.6" text-anchor="start" fill="var(--acc)">MODULAR STRUCTURE</text>
+    <text x="153" y="74" font-size="8.4" fill="var(--ink2)">one source repository</text>
+    <text x="466" y="157" font-size="8.4" fill="var(--acc)">assembled at deploy time</text>
+    <g font-size="8" fill="var(--ink2)">
+      <text x="466" y="74">JAR</text><text x="466" y="112">DLL</text>
+    </g>
+    <text x="153" y="196" font-size="8.4" fill="var(--ink2)">simplest to maintain, test and deploy</text>
+    <text x="153" y="208" font-size="8.4" fill="var(--ink2)">— and easiest to erode</text>
+    <text x="466" y="196" font-size="8.4" fill="var(--ink2)">separate repos, separate teams, cleaner</text>
+    <text x="466" y="208" font-size="8.4" fill="var(--ink2)">boundaries — worse when modules must talk</text>
+  </g>
+</svg>
+
+<!--@ communication -->
+<svg viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="18" y="34" width="74" height="30"/><rect x="112" y="34" width="74" height="30"/><rect x="206" y="34" width="74" height="30"/>
+    <g stroke="var(--ink)" stroke-width="1.4">
+      <path d="M92 43 H112 M186 43 H206"/>
+      <path d="M92 56 C130 78 168 78 206 56"/>
+      <path d="M18 56 C60 96 240 96 280 56"/>
+    </g>
+    <path d="M12 118 H288" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <rect x="98" y="146" width="104" height="28" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="18" y="206" width="74" height="28"/><rect x="112" y="206" width="76" height="28"/><rect x="208" y="206" width="74" height="28"/>
+    <g stroke="var(--acc)" stroke-width="1.4">
+      <path d="M124 174 L60 206 M150 174 V206 M176 174 L240 206"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="12" y="24" text-anchor="start" font-size="8.6" letter-spacing="1.4" fill="var(--ink3)">PEER TO PEER</text>
+    <text x="55" y="53" fill="var(--ink2)">Order</text><text x="149" y="53" fill="var(--ink2)">Inventory</text><text x="243" y="53" fill="var(--ink2)">Payment</text>
+    <text x="150" y="108" fill="var(--ink2)">one class instantiates another. convenient, and how a</text>
+    <text x="150" y="116" fill="var(--ink2)">modular monolith becomes a big ball of mud.</text>
+    <text x="12" y="138" text-anchor="start" font-size="8.6" letter-spacing="1.4" fill="var(--acc)">MEDIATOR</text>
+    <text x="150" y="164" font-size="9" fill="var(--acc)">mediator</text>
+    <text x="55" y="224" fill="var(--ink2)">Order</text><text x="150" y="224" fill="var(--ink2)">Inventory</text><text x="245" y="224" fill="var(--ink2)">Payment</text>
+    <text x="150" y="246" fill="var(--ink2)">modules decoupled from each other — and all coupled to the mediator</text>
+  </g>
+</svg>
+
+<!--@ mm-data -->
+<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="16" y="30" width="34" height="26"/><rect x="56" y="30" width="34" height="26"/><rect x="96" y="30" width="34" height="26"/>
+    <ellipse cx="73" cy="92" rx="46" ry="9"/><path d="M27 92 v16 a46 9 0 0 0 92 0 v-16"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M33 56 L60 83 M73 56 V83 M113 56 L86 83"/></g>
+    <path d="M150 24 V176" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <rect x="170" y="30" width="34" height="26" stroke="var(--acc)"/><rect x="212" y="30" width="34" height="26" stroke="var(--acc)"/>
+    <rect x="254" y="30" width="34" height="26" stroke="var(--acc)"/>
+    <g stroke="var(--acc)" stroke-width="1.4">
+      <ellipse cx="187" cy="86" rx="17" ry="6"/><path d="M170 86 v12 a17 6 0 0 0 34 0 v-12"/>
+      <ellipse cx="229" cy="86" rx="17" ry="6"/><path d="M212 86 v12 a17 6 0 0 0 34 0 v-12"/>
+      <ellipse cx="271" cy="86" rx="17" ry="6"/><path d="M254 86 v12 a17 6 0 0 0 34 0 v-12"/>
+      <path d="M187 56 V80 M229 56 V80 M271 56 V80"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.4">
+    <text x="73" y="20" font-size="9" fill="var(--ink)">ONE DATABASE</text>
+    <text x="229" y="20" font-size="9" fill="var(--acc)">ONE PER MODULE</text>
+    <text x="73" y="140" fill="var(--ink2)">shared data means less</text>
+    <text x="73" y="151" fill="var(--ink2)">intermodule communication</text>
+    <text x="229" y="140" fill="var(--ink2)">works when modules are</text>
+    <text x="229" y="151" fill="var(--ink2)">genuinely independent</text>
+    <text x="150" y="184" fill="var(--ink)">the deployment is monolithic. the data does not have to be.</text>
+  </g>
+</svg>

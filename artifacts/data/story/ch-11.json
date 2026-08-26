@@ -1,0 +1,173 @@
+{
+ "ch": "11",
+ "book": "Chapter 11 · The Modular Monolith Architecture Style",
+ "pages": "pp. 165–179",
+ "title": "A Monolith With Real Seams",
+ "gist": "New to the second edition, and popular for a reason: domain partitioning without the cost of going distributed. One deployment unit, modules by domain, and strict governance holding the boundaries.",
+ "read": "5 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#38664B",
+  "d": "#85C09A"
+ },
+ "minute": [
+  "One deployment unit, functionality grouped by **domain** rather than technical capability. In the namespace, the third node stops being *presentation* and becomes *customer*.",
+  "Modules can live as directories in **one repository** (monolithic structure — simplest, easiest to erode) or as separate **JARs and DLLs** assembled at deploy time (modular structure — cleaner boundaries, worse when modules must talk).",
+  "Modules talking to each other is never good and often necessary. **Peer-to-peer** is convenient and turns into a big ball of mud; a **mediator** decouples the modules from each other and couples them all to the mediator.",
+  "Governance is the load-bearing part: enforce the module list in namespaces, cap the number of interdependencies, and forbid specific module pairs from talking.",
+  "Strengths are **cost, simplicity and modularity**. Weaknesses are the monolith's: elasticity, scalability, fault tolerance. Use it when changes are **domain-based**; use layered instead when changes are **technical**."
+ ],
+ "sections": [
+  {
+   "t": "Topology: modules, not layers",
+   "art": "mm-topology",
+   "wide": true,
+   "alt": "Six domain modules inside one dashed deployment boundary, with the namespace comparison below",
+   "cap": "Fig. 11-1 · a single deployment unit with functionality grouped by domain area.",
+   "p": "Domains — or subdomains — are called **modules** here. A module is made of one or more components, so it nests: `com.easymeals.placeorder` contains `.menu`, `.shoppingcart`, `.customerdata`, `.paymentdata`, `.checkout`. If a module is complex enough, it may divide by technical concern *below* the domain node: `com.app.customer.profile.presentation`."
+  },
+  {
+   "k": "decision",
+   "t": "One repository, or one artifact per module?",
+   "art": "structures",
+   "wide": true,
+   "alt": "A monolithic structure of directories in one repo beside a modular structure of separate artifacts assembled at deployment",
+   "sit": "You have six modules. They can be six top-level directories in a single source repository, or six independently built artifacts — JARs, DLLs — combined into one deployment unit at release time.",
+   "opts": [
+    [
+     "Monolithic structure — one repository, directories per module.",
+     "Simplest to maintain, test and deploy: all the source is in one place. It also needs **strict governance**, because developers reuse too much across modules and let modules talk too freely, and a well-architected modular monolith becomes an unstructured big ball of mud."
+    ],
+    [
+     "Modular structure — self-contained artifacts.",
+     "Each module is genuinely self-contained, teams can own their own repositories, and the boundaries stay cleaner because crossing one requires a compile-time dependency. Works best when modules are **largely independent** and when different modules need different expertise."
+    ]
+   ],
+   "verdict": "The deciding question is how much the modules must communicate. Modular structure loses its advantage exactly where modules are interdependent — a module that calls another won't compile without the class references, so you end up creating shared interface artifacts, and too much of that is **JAR Hell** (or DLL Hell). Where modules must talk a lot, the monolithic structure is more effective."
+  },
+  {
+   "k": "decision",
+   "t": "OrderPlacement needs InventoryManagement",
+   "art": "communication",
+   "alt": "Peer-to-peer calls between three modules above a mediator sitting between them",
+   "sit": "Placing an order has to adjust inventory, possibly reorder stock, and apply payment. Three modules, one workflow. How do they reach each other?",
+   "opts": [
+    [
+     "Peer-to-peer — instantiate the class and call the method.",
+     "The most straightforward thing, and in the monolithic structure it is *far* too convenient: any class in any module is one import away. This is the exact mechanism by which the style degrades into a big ball of mud."
+    ],
+    [
+     "A mediator between the modules.",
+     "The mediator orchestrates: it accepts the request and routes it to the right modules. The modules no longer know about each other, and only the **mediator** needs an API or interface to invoke them.",
+     1
+    ]
+   ],
+   "verdict": "The mediator does not remove coupling — every module is now coupled to the mediator instead. What it buys is that the modules stay independent **of each other**, which is the property the style exists to protect. And if intermodule chatter is high whichever way you route it, that is a signal the domains were drawn wrong in the first place."
+  },
+  {
+   "t": "Data, cloud, and the size problem",
+   "art": "mm-data",
+   "alt": "One shared database beside three per-module databases",
+   "cap": "Fig. 11-6 · monolithic deployment doesn't force monolithic data.",
+   "items": [
+    "**Data.** Usually one database — shared data reduces the need for modules to talk. But independent modules doing specific jobs can hold their own contextual data even inside a monolithic deployment.",
+    "**Cloud.** Poorly suited in general: a monolith cannot take much advantage of on-demand provisioning. Small systems in this style can still use cloud file storage, databases and messaging.",
+    "**Too big** is the primary risk, and it has recognisable symptoms: changes take too long; changing one area unexpectedly breaks another; team members get in each other's way; startup takes too long.",
+    "**Too much reuse** is the second risk. Reuse blurs module boundaries and produces the *unstructured monolith* — interdependent to the point where it cannot be unravelled."
+   ]
+  },
+  {
+   "t": "Governance is what keeps it modular",
+   "art": "structures",
+   "wide": true,
+   "alt": "A monolithic structure of directories in one repo beside a modular structure of separate artifacts assembled at deployment",
+   "cap": "Three automated checks, in ArchUnit, ArchUnitNet, NetArchTest, PyTestArch or TSArch.",
+   "items": [
+    "**Enforce the module list.** Walk every namespace in the system and alert on any that doesn't start with one of the defined modules. A new top-level directory is a new module nobody agreed to.",
+    "**Cap the interdependencies.** For each module, count incoming plus outgoing references and alert above a threshold — five is the example used. Subjective, and worth setting anyway.",
+    "**Forbid specific pairs.** `noClasses().that().resideInAPackage(\"..orderplacement..\").should().accessClassesThat().resideInAPackage(\"..shipping..\")`.",
+    "Note the asymmetry: the first check works well for the **monolithic structure** and is awkward for the modular structure, where the code isn't in one repository — there, each module gets tested separately."
+   ],
+   "p": "On teams: this is a domain-partitioned architecture, so it wants **domain-aligned, cross-functional teams**. A team organised by technical layer — UI team, backend team, database team — fits it badly, because every domain requirement then needs coordination across all of them."
+  },
+  {
+   "t": "Characteristics, and when to reach for it",
+   "wide": true,
+   "gen": {
+    "kind": "ratings",
+    "head": "MODULAR MONOLITH — DOMAIN PARTITIONED · QUANTUM 1",
+    "rows": [
+     [
+      "overall cost",
+      5,
+      "no distributed tax"
+     ],
+     [
+      "simplicity",
+      4,
+      ""
+     ],
+     [
+      "modularity",
+      4,
+      "the reason it exists"
+     ],
+     [
+      "reliability",
+      3,
+      ""
+     ],
+     [
+      "performance",
+      3,
+      ""
+     ],
+     [
+      "testability",
+      2,
+      "better than layered"
+     ],
+     [
+      "deployability",
+      2,
+      "still one unit"
+     ],
+     [
+      "fault tolerance",
+      1,
+      "one OOM kills it"
+     ],
+     [
+      "scalability",
+      1,
+      ""
+     ],
+     [
+      "elasticity",
+      1,
+      ""
+     ]
+    ]
+   },
+   "alt": "Architecture characteristics ratings for the modular monolith",
+   "cap": "Deployability and testability beat layered's, on the strength of the module boundaries. Everything monolithic still applies.",
+   "items": [
+    "**Use it** under tight budget and time constraints; as a first system when the architectural direction is still unclear; with domain-focused cross-functional teams; when most changes are **domain-based**; and when the team is doing domain-driven design.",
+    "**Don't use it** when you need high scalability, elasticity, availability, fault tolerance, responsiveness or performance — it is a monolith and cannot buy those.",
+    "**Don't use it** when most changes are **technical** — continuously replacing the UI framework or the database technology hits every module at once and needs heavy coordination between domain teams. Layered is the better choice there.",
+    "Starting here and moving later to service-based (Ch. 14) or microservices (Ch. 18) is usually more effective than jumping straight to a distributed architecture."
+   ],
+   "p": "The worked example is EasyMeals, a small delivery restaurant with no scalability needs and a limited budget: PlaceOrder, PaymentProcessing, PrepareOrder, Delivery, Recipes and Inventory. Adding loyalty points as a payment type means adding `com.easymeals.payment.loyalty` and nothing else — which is what the modularity is for."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 11: The Modular Monolith Architecture Style, pp. 165–179. New in the second edition; the style was popularised by Simon Brown.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

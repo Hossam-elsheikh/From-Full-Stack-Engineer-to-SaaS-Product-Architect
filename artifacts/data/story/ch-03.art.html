@@ -1,0 +1,216 @@
+<!-- Drawings for chapter 03 · Modularity -->
+
+<!--@ mod-gran -->
+<svg viewBox="0 0 300 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="10" y="26" width="60" height="52"/>
+    <path d="M78 52 H108" stroke="var(--ink3)"/><path d="M100 48 l8 4 l-8 4" stroke="var(--ink3)"/>
+    <rect x="118" y="26" width="34" height="22"/><rect x="158" y="26" width="34" height="22"/>
+    <rect x="198" y="26" width="34" height="22"/><rect x="118" y="56" width="34" height="22"/>
+    <rect x="158" y="56" width="34" height="22"/><rect x="198" y="56" width="34" height="22"/>
+    <path d="M20 122 H280"/>
+    <path d="M20 116 v12 M280 116 v12 M150 118 v8"/>
+    <path d="M150 122 l-9 -15 h18 z" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6">
+    <text x="8" y="16" letter-spacing="1.6" fill="var(--ink3)">MODULARITY — BREAKING IT APART</text>
+    <text x="40" y="94" text-anchor="middle" fill="var(--ink2)">monolith</text>
+    <text x="175" y="94" text-anchor="middle" fill="var(--ink2)">pieces</text>
+    <text x="8" y="112" letter-spacing="1.6" fill="var(--acc)">GRANULARITY — HOW BIG EACH PIECE IS</text>
+    <text x="20" y="142" fill="var(--ink2)">too coarse</text>
+    <text x="280" y="142" text-anchor="end" fill="var(--ink2)">too fine</text>
+    <text x="150" y="160" text-anchor="middle" fill="var(--acc)">this is where the trouble lives</text>
+    <g fill="var(--ink2)" font-size="9">
+      <text x="150" y="188" text-anchor="middle">spaghetti architecture · distributed monolith</text>
+      <text x="150" y="202" text-anchor="middle">big ball of distributed mud</text>
+    </g>
+    <text x="150" y="219" text-anchor="middle" fill="var(--ink3)">all three are granularity failures, not modularity ones</text>
+  </g>
+</svg>
+
+<!--@ cohesion-ladder -->
+<svg viewBox="0 0 320 242" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="60" y="14" width="176" height="26" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <rect x="60" y="46" width="176" height="26"/><rect x="60" y="78" width="176" height="26"/>
+    <rect x="60" y="110" width="176" height="26"/><rect x="60" y="142" width="176" height="26"/>
+    <rect x="60" y="174" width="176" height="26"/>
+    <rect x="60" y="206" width="176" height="26" stroke="var(--ink3)" stroke-dasharray="5 4"/>
+    <path d="M44 20 V226" stroke="var(--ink3)" stroke-width="1"/>
+    <path d="M40 24 l4 -6 l4 6 M40 220 l4 6 l4 -6" stroke="var(--ink3)" stroke-width="1"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="9.4">
+    <text x="148" y="31" text-anchor="middle" fill="var(--acc)">functional</text>
+    <text x="148" y="63" text-anchor="middle" fill="var(--ink)">sequential</text>
+    <text x="148" y="95" text-anchor="middle" fill="var(--ink)">communicational</text>
+    <text x="148" y="127" text-anchor="middle" fill="var(--ink)">procedural</text>
+    <text x="148" y="159" text-anchor="middle" fill="var(--ink)">temporal</text>
+    <text x="148" y="191" text-anchor="middle" fill="var(--ink)">logical</text>
+    <text x="148" y="223" text-anchor="middle" fill="var(--ink2)">coincidental</text>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="244" y="30">has everything it needs</text>
+      <text x="244" y="62">one's output, one's input</text>
+      <text x="244" y="94">a chain around shared data</text>
+      <text x="244" y="126">must run in this order</text>
+      <text x="244" y="158">related only by startup time</text>
+      <text x="244" y="190">StringUtils</text>
+      <text x="244" y="222">same file. that's all.</text>
+    </g>
+    <text x="30" y="120" font-size="8.6" fill="var(--ink3)" transform="rotate(-90 30 120)" text-anchor="middle">best to worst</text>
+  </g>
+</svg>
+
+<!--@ lcom -->
+<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="8" y="28" width="84" height="112"/>
+    <rect x="108" y="28" width="84" height="112" stroke="var(--acc)" fill="var(--accBg)"/>
+    <rect x="208" y="28" width="84" height="112"/>
+    <g stroke-width="1.3">
+      <circle cx="34" cy="52" r="8"/><circle cx="66" cy="52" r="8"/>
+      <rect x="20" y="86" width="17" height="15"/><rect x="42" y="86" width="17" height="15"/>
+      <rect x="64" y="86" width="17" height="15"/><rect x="42" y="112" width="17" height="15"/>
+      <g stroke="var(--ink3)" stroke-width="1">
+        <path d="M34 60 L28 86 M34 60 L50 86 M66 60 L72 86 M66 60 L56 86 M50 101 L50 112"/>
+      </g>
+    </g>
+    <g stroke-width="1.3" stroke="var(--acc)">
+      <circle cx="124" cy="52" r="8"/><circle cx="150" cy="52" r="8"/><circle cx="176" cy="52" r="8"/>
+      <rect x="116" y="96" width="17" height="15"/><rect x="142" y="96" width="17" height="15"/>
+      <rect x="168" y="96" width="17" height="15"/>
+      <path d="M124 60 V96 M150 60 V96 M176 60 V96" stroke-width="1"/>
+    </g>
+    <g stroke-width="1.3">
+      <circle cx="232" cy="52" r="8"/><circle cx="268" cy="52" r="8"/>
+      <rect x="218" y="96" width="17" height="15"/><rect x="240" y="96" width="17" height="15"/>
+      <rect x="260" y="96" width="17" height="15"/>
+      <g stroke="var(--ink3)" stroke-width="1">
+        <path d="M232 60 L226 96 M232 60 L248 96 M268 60 L268 96"/>
+      </g>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="9" text-anchor="middle">
+    <text x="50" y="22" fill="var(--ink)">CLASS X</text>
+    <text x="150" y="22" fill="var(--acc)">CLASS Y</text>
+    <text x="250" y="22" fill="var(--ink)">CLASS Z</text>
+    <g font-size="8.4" fill="var(--ink2)">
+      <text x="50" y="156">low LCOM —</text><text x="50" y="167">it is one thing</text>
+      <text x="150" y="156" fill="var(--acc)">high LCOM — three</text><text x="150" y="167" fill="var(--acc)">classes in a trench coat</text>
+      <text x="250" y="156">mixed — one pair</text><text x="250" y="167">wants to leave</text>
+    </g>
+    <text x="150" y="192" font-size="8.2" fill="var(--ink3)">octagons are fields, squares are methods (Fig. 3-1)</text>
+  </g>
+</svg>
+
+<!--@ coupling-ae -->
+<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="112" y="62" width="76" height="46" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <path d="M16 48 H112 M16 85 H112 M16 122 H112"/>
+      <path d="M104 44 l8 4 l-8 4 M104 81 l8 4 l-8 4 M104 118 l8 4 l-8 4"/>
+      <path d="M188 62 H284 M188 85 H284 M188 108 H284"/>
+      <path d="M276 58 l8 4 l-8 4 M276 81 l8 4 l-8 4 M276 104 l8 4 l-8 4"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="9">
+    <text x="150" y="89" text-anchor="middle" fill="var(--acc)">your module</text>
+    <text x="16" y="30" fill="var(--ink)">AFFERENT — incoming</text>
+    <text x="16" y="42" font-size="8.2" fill="var(--ink2)">who depends on you</text>
+    <text x="284" y="30" text-anchor="end" fill="var(--ink)">EFFERENT — outgoing</text>
+    <text x="284" y="42" font-size="8.2" text-anchor="end" fill="var(--ink2)">who you depend on</text>
+    <text x="150" y="152" text-anchor="middle" font-size="8.6" fill="var(--ink2)">a before e, like in before out · the e in efferent is the e in exit</text>
+    <text x="150" y="168" text-anchor="middle" font-size="8.6" fill="var(--acc)">instability I = Ce / (Ce + Ca) — how easily you break when things change</text>
+  </g>
+</svg>
+
+<!--@ main-sequence -->
+<svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <path d="M92 254 H556 M92 254 V40"/>
+    <path d="M548 250 l8 4 l-8 4 M88 48 l4 -8 l4 8" stroke-width="1.2"/>
+    <path d="M92 40 L556 254" stroke="var(--acc)" stroke-width="2.2"/>
+    <circle cx="556" cy="40" r="52" fill="var(--accBg)" stroke="var(--ink3)" stroke-dasharray="5 4"/>
+    <circle cx="92" cy="254" r="52" fill="var(--accBg)" stroke="var(--ink3)" stroke-dasharray="5 4"/>
+    <circle cx="248" cy="196" r="5" fill="var(--ink)" stroke="none"/>
+    <path d="M248 196 L316 133" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="4 3"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace">
+    <text x="70" y="44" font-size="10" text-anchor="end" fill="var(--ink)">1</text>
+    <text x="70" y="258" font-size="10" text-anchor="end" fill="var(--ink)">0</text>
+    <text x="556" y="272" font-size="10" text-anchor="middle" fill="var(--ink)">1</text>
+    <text x="46" y="150" font-size="9.6" fill="var(--ink)" transform="rotate(-90 46 150)" text-anchor="middle">ABSTRACTNESS</text>
+    <text x="324" y="288" font-size="9.6" text-anchor="middle" fill="var(--ink)">INSTABILITY</text>
+    <text x="504" y="34" font-size="9.6" text-anchor="middle" fill="var(--ink)">ZONE OF USELESSNESS</text>
+    <text x="504" y="47" font-size="8.4" text-anchor="middle" fill="var(--ink2)">so abstract nobody</text>
+    <text x="504" y="58" font-size="8.4" text-anchor="middle" fill="var(--ink2)">can work out how to use it</text>
+    <text x="142" y="238" font-size="9.6" text-anchor="middle" fill="var(--ink)">ZONE OF PAIN</text>
+    <text x="142" y="251" font-size="8.4" text-anchor="middle" fill="var(--ink2)">all implementation,</text>
+    <text x="142" y="262" font-size="8.4" text-anchor="middle" fill="var(--ink2)">brittle, hard to change</text>
+    <text x="330" y="128" font-size="9.4" fill="var(--acc)">D = |A + I − 1|</text>
+    <text x="330" y="141" font-size="8.4" fill="var(--ink2)">distance from the line</text>
+    <text x="380" y="196" font-size="8.6" fill="var(--acc)">the main sequence — the healthy mix</text>
+  </g>
+</svg>
+
+<!--@ connascence -->
+<svg viewBox="0 0 620 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="8" y="40" width="60" height="52" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <rect x="76" y="40" width="60" height="52"/><rect x="144" y="40" width="60" height="52"/>
+    <rect x="212" y="40" width="60" height="52"/><rect x="280" y="40" width="60" height="52"/>
+    <rect x="348" y="40" width="60" height="52" stroke="var(--ink3)"/><rect x="416" y="40" width="60" height="52" stroke="var(--ink3)"/>
+    <rect x="484" y="40" width="60" height="52" stroke="var(--ink3)"/><rect x="552" y="40" width="60" height="52" stroke="var(--ink3)"/>
+    <path d="M8 120 H612" stroke="var(--ink3)" stroke-width="1"/>
+    <path d="M604 116 l8 4 l-8 4" stroke="var(--ink3)" stroke-width="1"/>
+    <path d="M340 30 V104" stroke="var(--rule)" stroke-dasharray="4 5"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="8" y="24" font-size="8.6" letter-spacing="1.6" text-anchor="start" fill="var(--acc)">STATIC — visible in the source</text>
+    <text x="612" y="24" font-size="8.6" letter-spacing="1.6" text-anchor="end" fill="var(--ink2)">DYNAMIC — only visible at runtime</text>
+    <g font-size="9.6" fill="var(--ink)">
+      <text x="38" y="62" fill="var(--acc)">name</text><text x="106" y="62">type</text>
+      <text x="174" y="62">meaning</text><text x="242" y="62">position</text><text x="310" y="62">algorithm</text>
+      <text x="378" y="62">execution</text><text x="446" y="62">timing</text>
+      <text x="514" y="62">values</text><text x="582" y="62">identity</text>
+    </g>
+    <g font-size="8" fill="var(--ink2)">
+      <text x="38" y="80">rename it</text><text x="106" y="80">agree a type</text>
+      <text x="174" y="80">magic number</text><text x="242" y="80">arg order</text><text x="310" y="80">same hash</text>
+      <text x="378" y="80">call order</text><text x="446" y="80">race</text>
+      <text x="514" y="80">change together</text><text x="582" y="80">same instance</text>
+    </g>
+    <text x="60" y="138" font-size="8.6" fill="var(--ink2)">weaker · trivial to refactor</text>
+    <text x="560" y="138" font-size="8.6" fill="var(--ink2)">stronger · expensive to unpick</text>
+    <g font-size="9" fill="var(--ink)">
+      <text x="310" y="170">Rule of Degree — convert strong forms into weaker ones.</text>
+      <text x="310" y="188" fill="var(--acc)">Rule of Locality — the further apart the code, the weaker the form must be.</text>
+      <text x="310" y="208" font-size="8.4" fill="var(--ink2)">Jim Weirich, on Meilir Page-Jones</text>
+    </g>
+  </g>
+</svg>
+
+<!--@ locality -->
+<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="10" y="30" width="118" height="72" stroke-dasharray="6 4" stroke="var(--acc)" fill="var(--accBg)"/>
+    <rect x="26" y="48" width="34" height="24"/><rect x="78" y="48" width="34" height="24"/>
+    <path d="M60 60 H78" stroke="var(--acc)" stroke-width="2"/>
+
+    <rect x="166" y="30" width="56" height="72" stroke-dasharray="6 4" stroke="var(--ink3)"/>
+    <rect x="238" y="30" width="52" height="72" stroke-dasharray="6 4" stroke="var(--ink3)"/>
+    <rect x="178" y="48" width="32" height="24"/><rect x="248" y="48" width="32" height="24"/>
+    <path d="M210 60 H248" stroke="var(--ink)" stroke-width="2"/>
+    <path d="M222 52 l14 16 M236 52 l-14 16" stroke="var(--ink)" stroke-width="1.6"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.6" text-anchor="middle">
+    <text x="69" y="22" font-size="9.4" fill="var(--acc)">SAME MODULE</text>
+    <text x="228" y="22" font-size="9.4" fill="var(--ink)">ACROSS MODULES</text>
+    <text x="69" y="120" fill="var(--ink2)">strong connascence</text>
+    <text x="69" y="131" fill="var(--ink2)">here is tolerable</text>
+    <text x="228" y="120" fill="var(--ink2)">the same coupling</text>
+    <text x="228" y="131" fill="var(--ink2)">here is a defect</text>
+    <text x="150" y="158" fill="var(--ink)">minimise it overall · minimise what crosses a boundary</text>
+    <text x="150" y="172" fill="var(--acc)">maximise it inside one — that is what a boundary is for</text>
+  </g>
+</svg>

@@ -55,6 +55,24 @@ Then publish **the phase sheet and the Atlas**, each with its existing URL passe
 
 ---
 
+## The notebook — the architecture book, chapter by chapter
+
+`artifacts/story.html` (**The Architect's Notebook**) is the contents page for a 27-chapter set of
+review sheets on `resources/fundamentals_of_software_architecture_a_modern_engineering.pdf` — one
+published artifact per chapter of the book, `story-NN.html`. All 27 chapters are written and published (2026-08-26).
+
+These are **notes and highlights he re-reads quickly**, not prose. Main topics become infographics,
+the book's own lines are kept as marked quotes, and a short scene appears only where a chapter turns
+on a decision. Every sheet opens with a one-minute version card. Keep a sheet under ~900 words: a
+chapter that needs more needs more figures, not more paragraphs.
+
+It is a **separate track from the phase sheets** — it does not go through `_inbox.md` and does not
+produce concept notes. When revising a chapter or adding to it, follow the recipe in
+`artifacts/artifacts.md` under "The notebook": extract the chapter's real text from the PDF first,
+never write it from memory of the book. Publish the chapter, write its URL into
+`artifacts/data/story/index.json`, then rebuild and republish `story.html` too, or the new chapter
+is unreachable.
+
 ## The simulations
 
 `build-bench.html` (eight design-brief puzzles) and `year-one.html` (a seventeen-decision narrative) are hand-edited: their data sits inline in the page's `<script>`. New notes do **not** automatically belong in them — add a brief or a chapter only when the user asks, or when a whole phase has been captured and has no scenario exercising it. Both pages use the same tokens and title-block identity as everything else; read `artifacts/artifacts.md` before editing either.

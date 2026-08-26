@@ -1,0 +1,119 @@
+{
+ "ch": "22",
+ "book": "Chapter 22 · Analyzing Architecture Risk",
+ "pages": "pp. 405–422",
+ "title": "Making Risk a Number",
+ "gist": "Risk is an opinion until you multiply two ratings together. A matrix, an assessment grid that shows direction as well as level, and a three-phase collaborative exercise that finds the risks one architect never would.",
+ "read": "5 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#8A5C1E",
+  "d": "#DCA95E"
+ },
+ "minute": [
+  "**Risk = impact × likelihood**, each rated 1–3. 1–2 low, 3–4 medium, 6–9 high. Rate **impact first**; if you're unsure of likelihood, use high until you can confirm.",
+  "Build a **risk assessment** from architecture characteristics as criteria and domains as contexts. Rows total to the worst criterion, columns to the worst context.",
+  "A snapshot doesn't show whether things are improving. Add **direction** from continuous fitness-function measurements: ▲ worsening, ▼ improving, ● steady.",
+  "**Risk storming** in three phases: identify **alone** (so nobody's attention gets steered), reach **consensus** together, then **mitigate** with a stakeholder who can authorise the cost.",
+  "**Unknown or unproven technology is automatically a 9.** The matrix cannot rate what nobody in the room understands."
+ ],
+ "sections": [
+  {
+   "t": "The risk matrix",
+   "art": "risk-matrix",
+   "alt": "A three by three matrix of impact against likelihood with products from one to nine",
+   "cap": "Fig. 22-1 · two dimensions, multiplied, so that an opinion becomes a number.",
+   "p": "The worked example: your central database going down has **high impact** — that's the bottom row, 3, 6 or 9. But it sits on highly available clustered servers, so the **likelihood is low** — first column. High impact × low likelihood = **3, medium risk**. The value isn't the number; it's that two architects who disagree now have something specific to disagree about."
+  },
+  {
+   "t": "The assessment, with direction",
+   "art": "risk-assessment",
+   "wide": true,
+   "alt": "A risk assessment grid of five characteristics against four domains, each cell showing a level and a trend arrow",
+   "cap": "Figs. 22-2 to 22-4 · criteria down the side, contexts across the top, direction in the symbol.",
+   "items": [
+    "**Use architecture characteristics as the criteria.** Why analyse performance risk when the system's critical characteristics are scalability, elasticity and data integrity?",
+    "**Use domains or subdomains as the contexts.** Assessing at service level is usually too fine-grained and misses risk that lives in the *communication between* services.",
+    "Read it both ways. In the example, **data integrity totals 17** — the worst criterion — while **availability totals 10**. Context-wise, customer registration carries the most risk and order fulfilment the least. That tells you where to spend effort.",
+    "**Filter for the audience.** Presenting to stakeholders, drop the low and medium cells and show only the high ones. Better signal-to-noise, clearer message.",
+    "**Direction changes the story.** In the example, data integrity is worsening across three contexts — which suggests a database problem — while security and availability are improving. Level alone would have told you none of that."
+   ]
+  },
+  {
+   "t": "Risk storming, in three phases",
+   "art": "risk-storming",
+   "wide": true,
+   "alt": "Identification alone, then consensus together, then mitigation with stakeholders",
+   "cap": "No architect can assess a whole system alone: they'll miss something, and nobody knows every part.",
+   "items": [
+    "**Phase 1 — identification, alone.** Each participant rates risk against a shared architecture diagram, unbiased, before anyone speaks. This is the phase that stops one loud voice directing everyone's attention.",
+    "**Phase 2 — consensus, together.** Sticky notes go on the diagram, and the differences get discussed until the group agrees. This phase is the point of the whole exercise.",
+    "**Phase 3 — mitigation, with money in the room.** Mitigation usually means changing an architecture someone thought was finished, and it usually costs. Include a stakeholder who can decide whether the cost outweighs the risk.",
+    "**Bring senior developers and tech leads**, not just architects. They contribute the implementation perspective — and they come away understanding the architecture."
+   ],
+   "p": "Restrict a session to **one criterion or one context**. “Where are our security risks?” or “What's at risk in customer registration?” — not both at once, which produces sticky notes nobody can interpret. And the technique generalises: teams use the same matrix during story grooming, rating the impact of a story not finishing this iteration against the likelihood that it won't."
+  },
+  {
+   "k": "decision",
+   "t": "One person rated the cache a 9. Nobody else flagged it.",
+   "art": "risk-storming",
+   "wide": true,
+   "alt": "Identification alone, then consensus together, then mitigation with stakeholders",
+   "sit": "During consensus, a developer has put a 9 on the Redis cache. Everyone else left it blank. Asked to explain, they say: *“What's a Redis cache?”*",
+   "opts": [
+    [
+     "Discard it — they don't know the technology, so the rating is uninformed.",
+     "You have just discarded the most useful data point in the session. That a developer who will maintain this system doesn't know a core component *is* the risk."
+    ],
+    [
+     "Keep it at 9. Unknown technology is automatically the highest rating.",
+     "The matrix cannot rate what nobody understands. The architect now has a real choice: change the technology, or budget the training to bring the team up to speed.",
+     1
+    ]
+   ],
+   "verdict": "The parallel case in the same session is the opposite shape: one participant rated the **Push Expansion Servers** a 9 because they had watched that product crash repeatedly under exactly this load, and nobody else had flagged it at all. Without that one person in the room, the risk surfaces in production. **Both of these are why the room is bigger than the architects.**"
+  },
+  {
+   "k": "decision",
+   "t": "The mitigation costs $50,000",
+   "art": "risk-matrix",
+   "alt": "A three by three matrix of impact against likelihood with products from one to nine",
+   "sit": "The session rated the central database a **4** — medium — for availability. The group agrees that clustering it and splitting it into separate physical databases would mitigate the risk. The quote is $50,000.",
+   "opts": [
+    [
+     "Take it to the stakeholders as a yes/no.",
+     "The business owner says no, the risk stays unmitigated, and everyone concludes risk storming produces expensive suggestions nobody acts on."
+    ],
+    [
+     "Take it as a trade-off, and bring a second option.",
+     "The owner rejects $50,000. The architect proposes splitting into two domain-based databases instead — $16,000, and it still reduces the availability risk. The stakeholders agree.",
+     1
+    ]
+   ],
+   "verdict": "This is the part of risk storming that isn't about risk: it **structures the negotiation**. You arrive with a quantified risk and a priced mitigation, which turns “we should really cluster the database” into a decision someone with budget authority can actually make."
+  },
+  {
+   "t": "What three sessions did to one architecture",
+   "art": "hotline",
+   "wide": true,
+   "alt": "A nursing hotline architecture with per-user API gateways, two message channels, an outbreak cache and two databases",
+   "cap": "Figs. 22-8 to 22-12 · the same system, after availability, elasticity and security sessions.",
+   "items": [
+    "**Availability.** The central database rated 6. Nurses could write case notes by hand, but the call router could not function without nurse profiles. Fix: **split into two databases** — clustered profiles, single-instance case notes — which also improved security. For the two external systems, the team went looking for published SLAs and found them: 99.99% on the Diagnostics Engine (52.6 minutes a year) and 99.90% on Medical Records (8.77 hours a year). **That was enough to remove the risk** without changing anything.",
+    "**Elasticity.** The Diagnostics Engine handles 500 requests a second, and self-service patients hit it too. Everyone rated it 9. Queues gave backpressure but left users waiting; the **Ambulance pattern** — two channels, nurses prioritised over self-service — helped but still didn't fix wait times. The answer was a new **Diagnostics Outbreak Cache** absorbing flu and outbreak questions so they never reach the engine at all.",
+    "**Security.** HIPAA requires that only nurses reach medical records. The facilitator had rated the single API gateway a 2; the participants rated it 6 and **convinced him**, on the grounds that admin, self-service and nurse calls all pass through the same gateway. Fix: **one gateway per user type**, so a non-nurse call can never reach the Medical Records interface."
+   ],
+   "p": "Risk storming is **not a one-time process**. Run it on particular dimensions after a major feature lands, or at the end of an iteration — the frequency depends on how fast the system changes and how much architectural refactoring is underway."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 22: Analyzing Architecture Risk, pp. 405–422.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

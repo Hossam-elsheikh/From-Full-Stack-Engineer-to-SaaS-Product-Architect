@@ -1,0 +1,143 @@
+{
+ "ch": "27",
+ "book": "Chapter 27 · The Laws of Software Architecture, Revisited",
+ "pages": "pp. 487–496",
+ "title": "Only Trade-Offs, All The Way Down",
+ "gist": "The three laws again, with the analysis method attached: two worked trade-off tables, the corollary about the trade-off you haven't found yet, and why weighting the criteria matters more than counting them.",
+ "read": "4 min · 35 sec to re-scan",
+ "acc": {
+  "l": "#3F5B8A",
+  "d": "#92AAD6"
+ },
+ "minute": [
+  "**The real job is analysing trade-offs**, not finding silver bullets. Build a reputation as an objective arbiter, not an evangelist — yesterday's best practice becomes tomorrow's antipattern, and evangelism ties your credibility to a decision that will age.",
+  "The method: list the factors that matter **in this context**, score each option against each, then **weight them**. Counting pluses without weighting is the **Out of Context antipattern**.",
+  "The hidden trade-off in code reuse: it needs **good abstraction *and* low volatility**. Architects find the first and miss the second — which is why frameworks reuse well and domain concepts never do.",
+  "**You cannot have decoupling and high institutional reuse.** Reuse is implemented via coupling. The two are fundamentally incompatible, and organisations ask for both constantly.",
+  "You can't do the analysis once. Dozens of variables, subtle differences pushing it either way — **trade-off analysis is the job, not a phase of it**."
+ ],
+ "sections": [
+  {
+   "t": "The three laws",
+   "art": "spectrum-3",
+   "wide": true,
+   "alt": "A spectrum from architecture to design with every real decision sitting somewhere in the middle",
+   "cap": "Two decades of looking produced exactly three. That is the point of them.",
+   "quotes": [
+    [
+     "Everything in software architecture is a trade-off.",
+     "First Law",
+     "**Corollary 1** — if you think you've found something that isn't a trade-off, you just haven't identified it yet. **Corollary 2** — you can't run the analysis once and be done."
+    ],
+    [
+     "Why is more important than how.",
+     "Second Law",
+     "Every trade-off analysis generates a large amount of context that never appears in the solution. Document it — with diagrams *and* ADRs — or the next architect has to redo the whole analysis just to understand the result."
+    ],
+    [
+     "Most architecture decisions aren't binary but rather exist on a spectrum between extremes.",
+     "Third Law · new in the 2nd edition",
+     "This is why comprehensive definitions are so hard to write: architecture versus design, orchestration versus choreography, topics versus queues. **The decision criteria aren't binary; they lie on a messy spectrum.**"
+    ]
+   ],
+   "p": "The third law also gives a usable definition of what makes something architectural: **a software architecture decision is one where each of the options has significant trade-offs.** If everything is a trade-off, then an architectural decision must involve real trade-offs on *every* option — not just one."
+  },
+  {
+   "k": "decision",
+   "t": "Shared library, or shared service?",
+   "art": "lib-vs-svc",
+   "wide": true,
+   "alt": "A shared service called at runtime beside a library compiled into each service, with a seven-factor trade-off table",
+   "sit": "Common behaviour in a distributed architecture. Compile it into each service at build time as a **library**, or stand it up as a **service** other services call at runtime.",
+   "opts": [
+    [
+     "Shared library.",
+     "**Versioning** resolves at compile time rather than runtime. **Change risk** is lower — once it compiles into the service you have real confidence. **Performance, fault tolerance and scalability** all favour it, because calls are in-process rather than across a network."
+    ],
+    [
+     "Shared service.",
+     "**Heterogeneous code**: callers reach it over the network, so the implementation platform is irrelevant — with a library you need a version per stack and must keep them in sync. **High code volatility**: callers get new behaviour as soon as the service deploys, where a library means recompiling and redeploying every consumer."
+    ]
+   ],
+   "verdict": "Five pluses to two says library — **and that count is the trap**. Imagine a team with code in several platforms, unconcerned with performance or scale, wanting a clean way to manage shared behaviour. Now the first two criteria outweigh everything below them and **the service is correct**. That is the **Out of Context antipattern**: understanding the trade-offs but not how to weight them for the situation in front of you. *Generic trade-off analysis isn't very useful; it only becomes valuable applied in a specific context.*"
+  },
+  {
+   "k": "decision",
+   "t": "Queue, or topic?",
+   "art": "queue-vs-topic",
+   "wide": true,
+   "alt": "A trading service writing to three separate queues, beside the same service publishing to one topic",
+   "sit": "The Trading service must send trade information to Notification and Analytics. One queue per consumer, or one topic everyone subscribes to?",
+   "opts": [
+    [
+     "Queues.",
+     "Each consumer can receive a **different message**, tailored to what it needs. Each queue is **monitored and scaled independently**. And it's **more secure** — the sender knows exactly who it talks to, making it harder for a rogue service to listen in. **Cost:** tight coupling. Adding a Compliance service means reworking Trading to write to a third queue."
+    ],
+    [
+     "A topic.",
+     "Extremely **extensible** — a compliance consumer subscribes without touching any existing behaviour, and the publisher neither knows nor cares who consumes. One message sent, low coupling. **Cost:** every consumer gets the *same* message, which invites **stamp coupling**, and everyone can read all of it, which is a security question. No per-consumer monitoring or scaling."
+    ]
+   ],
+   "verdict": "Then go back to the **organisational goals**. If security is the priority, queues. If the company is growing fast and other services will want trade data, extensibility wins and the answer is topics. Same analysis, opposite conclusions, and the deciding input was never technical."
+  },
+  {
+   "t": "The trade-off people miss in reuse",
+   "art": "reuse-tradeoff",
+   "alt": "Two overlapping circles — good abstraction and low volatility — with reuse working only in the intersection",
+   "cap": "Two factors govern whether reuse works. Architects reliably find one of them.",
+   "p": "**Abstraction** is the factor everyone checks: can this be abstracted and called from several places? **Low volatility** is the one that gets missed. Reuse a module that changes constantly and you create churn across the whole system — every change forces every caller to coordinate, and even non-breaking changes must be verified everywhere.",
+   "items": [
+    "This is precisely what orchestration-driven SOA taught the field. Teams working in those architectures were *swimming through quicksand*: every change had the potential to send unpredictable side effects rippling out.",
+    "Which is why the most successful reuse targets are **plumbing** — frameworks, libraries, platforms. The fastest-changing part of most applications is the **domain**, which makes domain concepts terrible reuse candidates.",
+    "And it is the mechanism underneath DDD's bounded context: **no bounded context may reuse another's implementation details.**"
+   ],
+   "quotes": [
+    [
+     "We like microservices because they allow high agility and fast deployment. However, we also want a high degree of institutional reuse so teams aren't constantly rewriting code.",
+     "What clients ask for",
+     "You cannot have both. **The way a system implements reuse is via coupling.** No organisation gets decoupling and high reuse at once; they are fundamentally incompatible — and this is the single most common misunderstanding of a key trade-off."
+    ]
+   ]
+  },
+  {
+   "t": "Parting advice",
+   "art": "spectrum-3",
+   "wide": true,
+   "alt": "A spectrum from architecture to design with every real decision sitting somewhere in the middle",
+   "cap": "Architects rarely get credit for good decisions, and always get blamed for bad ones.",
+   "p": "Two reasons to be an arbiter rather than an advocate. First, **evangelism is dangerous long-term**: decisions made soundly with incomplete knowledge get weakened by an ecosystem in constant churn, and social capital spent evangelising is credibility lost when the decision has to change. Second, decision makers aren't looking for enthusiastic advocacy — they want **sober objectivity**, and the architect known for it becomes the person they trust when the decision matters.",
+   "quotes": [
+    [
+     "How do we get great designers? Great designers design, of course.",
+     "Fred Brooks",
+     ""
+    ],
+    [
+     "So how are we supposed to get great architects, if they only get the chance to architect fewer than a half-dozen times in their career?",
+     "Ted Neward",
+     "The answer the book offers is **architecture katas**, on its companion site. There is no answer guide — the authors tried keeping students' solutions and gave up, because the drawings captured *how* each team solved it and the trade-offs they weighed were never written down. **Keeping only the how meant they had half the story.**"
+    ],
+    [
+     "There are no right or wrong answers in architecture — only trade-offs.",
+     "Neal Ford",
+     ""
+    ]
+   ],
+   "items": [
+    "**We make decisions in a swamp of uncertainty.** Often on incomplete information — and even with complete information the answer would still sit somewhere on a spectrum rather than at one end.",
+    "Their closing instruction, in full: **always learn, always practise, and go do some architecture.**"
+   ]
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 27: The Laws of Software Architecture, Revisited, pp. 487–496. The final chapter of the book.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

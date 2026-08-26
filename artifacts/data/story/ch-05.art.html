@@ -1,0 +1,177 @@
+<!-- Drawings for chapter 05 · Identifying Architectural Characteristics -->
+
+<!--@ translate -->
+<svg viewBox="0 0 620 246" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <path d="M6 40 H614" stroke="var(--rule)"/>
+    <path d="M6 78 H614 M6 116 H614 M6 154 H614 M6 192 H614" stroke="var(--rule2)"/>
+    <path d="M212 22 V226" stroke="var(--acc)" stroke-width="1.6"/>
+    <g stroke="var(--ink3)" stroke-width="1">
+      <path d="M196 60 h10 M196 98 h10 M196 136 h10 M196 174 h10 M196 212 h10"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace">
+    <text x="6" y="16" font-size="8.6" letter-spacing="1.6" fill="var(--ink3)">WHAT THE BUSINESS SAYS</text>
+    <text x="228" y="16" font-size="8.6" letter-spacing="1.6" fill="var(--acc)">WHAT YOU HAVE TO BUILD</text>
+    <g font-size="10" fill="var(--ink)" text-anchor="end">
+      <text x="188" y="64">mergers and acquisitions</text>
+      <text x="188" y="102">time to market</text>
+      <text x="188" y="140">user satisfaction</text>
+      <text x="188" y="178">competitive advantage</text>
+      <text x="188" y="216">time and budget</text>
+    </g>
+    <g font-size="9.4" fill="var(--acc)">
+      <text x="228" y="64">interoperability · scalability · adaptability · extensibility</text>
+      <text x="228" y="102">agility · testability · deployability</text>
+      <text x="228" y="134">performance · availability · fault tolerance ·</text>
+      <text x="228" y="147">testability · deployability · agility · security</text>
+      <text x="228" y="172">agility · testability · deployability ·</text>
+      <text x="228" y="185">scalability · availability · fault tolerance</text>
+      <text x="228" y="216">simplicity · feasibility</text>
+    </g>
+    <text x="310" y="240" font-size="8.6" text-anchor="middle" fill="var(--ink2)">Table 5-1 · neither side can hear the other until someone translates</text>
+  </g>
+</svg>
+
+<!--@ composite -->
+<svg viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="96" y="20" width="108" height="34" stroke-dasharray="6 4" stroke="var(--ink3)"/>
+    <path d="M150 54 V78" stroke="var(--ink3)"/>
+    <path d="M60 78 H240 M60 78 V96 M150 78 V96 M240 78 V96" stroke="var(--ink3)"/>
+    <rect x="16" y="96" width="86" height="38" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="108" y="96" width="86" height="38" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="200" y="96" width="86" height="38" fill="var(--accBg)" stroke="var(--acc)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="150" y="42" font-size="12" fill="var(--ink2)">agility</text>
+    <text x="150" y="14" font-size="8.4" fill="var(--ink3)">no objective definition · nothing to measure</text>
+    <text x="59" y="112" font-size="9.4" fill="var(--acc)">deployability</text>
+    <text x="151" y="112" font-size="9.4" fill="var(--acc)">modularity</text>
+    <text x="243" y="112" font-size="9.4" fill="var(--acc)">testability</text>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="59" y="126">measurable</text><text x="151" y="126">measurable</text><text x="243" y="126">measurable</text>
+    </g>
+    <text x="150" y="164" font-size="9" fill="var(--ink)">a composite has to be broken up before</text>
+    <text x="150" y="177" font-size="9" fill="var(--ink)">it can be measured or governed</text>
+    <text x="150" y="197" font-size="8.4" fill="var(--acc)">picking only one of the parts is the common antipattern</text>
+  </g>
+</svg>
+
+<!--@ scale-vs-elastic -->
+<svg viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <path d="M22 84 H136 M22 84 V16"/>
+    <path d="M22 78 C50 70 74 52 92 38 C106 28 120 24 134 22" stroke="var(--acc)" stroke-width="2"/>
+    <path d="M170 84 H284 M170 84 V16"/>
+    <path d="M170 76 H186 L192 26 L198 76 H222 L228 22 L234 76 H258 L264 34 L270 76 H282" stroke="var(--acc)" stroke-width="2"/>
+    <path d="M22 190 H284" stroke="var(--rule)" stroke-dasharray="4 5"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="79" y="106" font-size="9.6" fill="var(--ink)">SCALABILITY</text>
+    <text x="227" y="106" font-size="9.6" fill="var(--acc)">ELASTICITY</text>
+    <g font-size="8.4" fill="var(--ink2)">
+      <text x="79" y="122">more users, over time</text>
+      <text x="79" y="134">without degrading</text>
+      <text x="227" y="122">bursts — the spike</text>
+      <text x="227" y="134">is the whole problem</text>
+      <text x="79" y="156">hotel reservations:</text><text x="79" y="167">seasonal, predictable</text>
+      <text x="227" y="156">concert tickets:</text><text x="227" y="167">everyone at 09:00</text>
+    </g>
+    <text x="150" y="206" font-size="8.6" fill="var(--ink2)">often lumped together, but a system can be one and not the other</text>
+  </g>
+</svg>
+
+<!--@ sandwiches -->
+<svg viewBox="0 0 620 224" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="6" y="34" width="298" height="150"/>
+    <rect x="316" y="34" width="298" height="150" fill="var(--accBg)" stroke="var(--acc)"/>
+    <path d="M6 60 H304 M316 60 H614" stroke="var(--rule)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace">
+    <text x="6" y="18" font-size="8.6" letter-spacing="1.6" fill="var(--ink3)">SILICON SANDWICHES — WHAT THE KATA ACTUALLY YIELDS</text>
+    <text x="155" y="52" font-size="10" text-anchor="middle" fill="var(--ink)">EXPLICIT — stated in the brief</text>
+    <text x="465" y="52" font-size="10" text-anchor="middle" fill="var(--acc)">IMPLICIT — you have to know</text>
+    <g font-size="9.4" fill="var(--ink)">
+      <text x="20" y="82">scalability</text><text x="20" y="104">performance</text><text x="20" y="126">customizability</text>
+      <text x="20" y="148">internationalization</text><text x="20" y="170">feasibility (cost)</text>
+    </g>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="140" y="82">“thousands, perhaps millions”</text>
+      <text x="140" y="104">nobody waits for a sandwich site</text>
+      <text x="140" y="126">national and local promotions</text>
+      <text x="140" y="148">“plans to expand overseas”</text>
+      <text x="140" y="170">franchised, each owner pays</text>
+    </g>
+    <g font-size="9.4" fill="var(--acc)">
+      <text x="330" y="82">elasticity</text><text x="330" y="104">availability</text><text x="330" y="126">stability</text>
+      <text x="330" y="148">security</text><text x="330" y="170">usability</text>
+    </g>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="430" y="82">nobody said “mealtimes”</text>
+      <text x="430" y="104">the site has to be there</text>
+      <text x="430" y="126">don't drop them mid-order</text>
+      <text x="430" y="148">third-party payments, hygiene</text>
+      <text x="430" y="170">“hire inexpensive labour”</text>
+    </g>
+    <text x="310" y="204" font-size="8.6" text-anchor="middle" fill="var(--ink)">the brief said “thousands of users” — it never said the word scalability</text>
+    <text x="310" y="218" font-size="8.4" text-anchor="middle" fill="var(--ink2)">decoding domain language into engineering language is most of this job</text>
+  </g>
+</svg>
+
+<!--@ worksheet -->
+<svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="6" y="30" width="290" height="182" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.7"/>
+    <rect x="312" y="30" width="140" height="182"/>
+    <rect x="468" y="30" width="146" height="182" stroke="var(--ink3)" stroke-dasharray="5 4"/>
+    <g stroke="var(--acc)" stroke-width="1.2">
+      <path d="M18 62 h266 M18 86 h266 M18 110 h266 M18 134 h266 M18 158 h266 M18 182 h266 M18 202 h266"/>
+      <rect x="18" y="52" width="11" height="11"/><rect x="18" y="76" width="11" height="11"/><rect x="18" y="124" width="11" height="11"/>
+    </g>
+    <g stroke="var(--ink3)" stroke-width="1">
+      <path d="M324 62 h116 M324 86 h116 M324 110 h116 M324 134 h116 M324 158 h116 M324 182 h116"/>
+      <path d="M480 62 h122 M480 86 h122 M480 110 h122"/>
+      <path d="M452 96 h16 M460 92 l8 4 l-8 4"/>
+      <path d="M312 96 h-16" /><path d="M300 92 l-8 4 l8 4"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace">
+    <text x="6" y="20" font-size="9.6" fill="var(--acc)">DRIVING CHARACTERISTICS — seven slots</text>
+    <text x="312" y="20" font-size="9.6" fill="var(--ink)">IMPLICIT</text>
+    <text x="468" y="20" font-size="9.6" fill="var(--ink2)">OTHERS CONSIDERED</text>
+    <g font-size="8.4" fill="var(--ink2)">
+      <text x="34" y="60">scalability</text><text x="34" y="84">availability</text><text x="34" y="132">elasticity</text>
+      <text x="324" y="60">security</text><text x="324" y="84">maintainability</text><text x="324" y="108">observability</text>
+    </g>
+    <text x="6" y="230" font-size="8.6" fill="var(--ink)">Fig. 5-3 · pull an implicit one left when it becomes a driver; push a loser right when the slots fill.</text>
+    <text x="6" y="244" font-size="8.6" fill="var(--acc)">Then tick the top three — in any order. Ranking all seven never reaches consensus.</text>
+  </g>
+</svg>
+
+<!--@ vasa -->
+<svg viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <g transform="rotate(-24 150 120)">
+      <path d="M74 128 h152 l-20 26 h-112 z"/>
+      <path d="M74 104 h152 v24 H74 z"/>
+      <path d="M86 80 h128 v24 H86 z" fill="var(--accBg)" stroke="var(--acc)"/>
+      <path d="M150 80 V26"/>
+      <path d="M150 30 h44 v22 h-44"/>
+      <g stroke="var(--ink3)" stroke-width="1.2">
+        <circle cx="100" cy="116" r="4"/><circle cx="124" cy="116" r="4"/><circle cx="150" cy="116" r="4"/>
+        <circle cx="176" cy="116" r="4"/><circle cx="200" cy="116" r="4"/>
+        <circle cx="106" cy="92" r="4"/><circle cx="132" cy="92" r="4"/><circle cx="158" cy="92" r="4"/><circle cx="184" cy="92" r="4"/>
+      </g>
+    </g>
+    <path d="M8 176 q22 -8 44 0 t44 0 t44 0 t44 0 t44 0 t44 0" stroke="var(--ink3)" stroke-width="1.4"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="150" y="18" font-size="9.6" fill="var(--acc)">THE VASA, 1628</text>
+    <g font-size="8.4" fill="var(--ink2)">
+      <text x="150" y="196">troop transport AND gunship · two decks instead of one</text>
+      <text x="150" y="207">every cannon twice the usual size · capsized in the harbour</text>
+    </g>
+  </g>
+</svg>

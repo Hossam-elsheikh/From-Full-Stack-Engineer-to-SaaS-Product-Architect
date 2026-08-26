@@ -1,0 +1,123 @@
+{
+ "ch": "26",
+ "book": "Chapter 26 · Architectural Intersections",
+ "pages": "pp. 469–487",
+ "title": "Nine Things That Must Point the Same Way",
+ "gist": "A correct architecture can still fail. Nine alignments decide whether it works in practice — and the ones architects skip are the ones that take systems down at 80,000 concurrent users.",
+ "read": "5 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#4E6B58",
+  "d": "#9CC2A9"
+ },
+ "minute": [
+  "**Implementation** must align on three things: operational concerns, structural integrity (the source tree *is* the logical architecture), and constraints.",
+  "**Infrastructure**: an architecture that *can* support scalability won't unless the infrastructure does. Pets.com is the cautionary case — too much success killed the business.",
+  "**Data topologies**: topology, database characteristics, data structure and read/write priority all have to match. The wrong choice cancels out the architecture's superpowers.",
+  "**Engineering practices** are separate from process. Building microservices with manual provisioning, manual deployment and little testing fails regardless of the design.",
+  "**Business environment**: cost-cutting doesn't align with microservices or space-based; aggressive M&A doesn't align with a monolith. *All architectures become iterative because of unknown unknowns — Agile just recognises it sooner.*"
+ ],
+ "sections": [
+  {
+   "t": "The nine intersections",
+   "art": "intersections",
+   "wide": true,
+   "alt": "Nine alignments arranged around the architecture at the centre",
+   "cap": "Implementation · infrastructure · data topologies · engineering practices · team topologies · systems integration · enterprise · business environment · generative AI.",
+   "p": "An architect's second most common response, after *“it depends”*, is **“that's an implementation detail.”** When an architecture fails to achieve its goals, that second response is often to blame."
+  },
+  {
+   "k": "decision",
+   "t": "The team added a replicated cache and the system died at 80,000 users",
+   "art": "cache-mismatch",
+   "wide": true,
+   "alt": "An inventory service replicating a cache into order placement instances, and instances running out of memory",
+   "sit": "You chose microservices for a system needing anywhere from a few thousand to half a million concurrent customers — the right call on scalability and elasticity. In implementation, the team found that Order Placement couldn't reach the inventory database directly and had to call the Inventory service synchronously, which coupled them and hurt responsiveness. So they introduced an **in-memory replicated cache**.",
+   "opts": [
+    [
+     "The team was wrong to change the design.",
+     "They weren't. The cache decoupled the services and significantly improved responsiveness — a good decision, made for good reasons, using a legitimate technique (Hazelcast, Apache Ignite)."
+    ],
+    [
+     "The architecture was wrong.",
+     "It wasn't either. Microservices was the right style for the scalability and elasticity requirements."
+    ],
+    [
+     "Neither was wrong. They were optimising for different goals, and nobody checked.",
+     "The architecture pursued scalability and elasticity; the implementation pursued responsiveness and decoupling. As instances multiplied, the cache's memory demand caused out-of-memory conditions across every VM at around **80,000 concurrent customers**.",
+     1
+    ]
+   ],
+   "verdict": "This is what misalignment looks like from the inside: **two sets of good decisions serving different objectives**, invisible until production load exposes them. It is also the strongest argument in the book for the collaboration model from Chapter 24 — an architect who hands the design over and leaves has no mechanism to catch this."
+  },
+  {
+   "t": "Structural integrity and constraints",
+   "art": "structure",
+   "wide": true,
+   "alt": "An ungoverned tangle of directories beside a governed structure matching the logical architecture",
+   "cap": "Figs. 26-2 and 26-3 · the same system, with and without governance on its source structure.",
+   "items": [
+    "**Structural integrity** — logical components live in directories and namespaces, so *the source tree is the logical architecture*. Without guidance and governance, developers create structures as they please, and the result is hard to maintain, test, deploy and evolve. Automate it: ArchUnit, ArchUnitNet, NetArchTest, PyTestArch, TSArch.",
+    "**Constraints** — governing rules the implementation must obey or the architecture fails. For a tight-budget system expecting frequent database changes, layered is a good fit, but only with two constraints: *all database logic lives in the Persistence layer*, and *Presentation must go through every layer, even for simple queries*.",
+    "Break those and you get exactly what the constraints existed to prevent: UI developers calling the database directly for speed, backend developers merging business and database logic because it's easier to test — and now a dropped column touches code in every layer, and the business goal the style was chosen for is gone."
+   ]
+  },
+  {
+   "t": "Infrastructure, data and engineering practices",
+   "art": "data-align",
+   "wide": true,
+   "alt": "Four ways data can be misaligned: topology, characteristics, structure and read/write priority",
+   "cap": "Databases have superpowers too. Match them to the architecture's.",
+   "items": [
+    "**Infrastructure.** Pets.com had a superstar sock-puppet mascot and no infrastructure. Orders arrived, the site was slow, transactions were lost, deliveries were late, and it closed after one Christmas — selling the mascot as its last valuable asset. **Too much success can kill a business**, and that is where elastic scale came from.",
+    "**Cloud can still misalign.** Deploying across regions or availability zones can cancel out the benefits of replicated and distributed caches; co-locating services or Kubernetes pods on one VM raises performance while damaging scalability, fault tolerance, availability and elasticity.",
+    "**Data.** Four checks: does the topology match the style (microservices requires database-per-service); do the database's characteristics amplify the architecture's (key-value and columnar scale, like the styles that need scaling); does the structure fit (key-value pairs in a relational database is waste — use polyglot databases); and does the read/write priority match (write-heavy → columnar, read-heavy → key-value, document or graph, balanced → relational or NewSQL).",
+    "**Engineering practices are not process.** Process is how teams form, meet and organise; practices are the process-agnostic techniques — XP, CI, CD, TDD. Microservices *assumes* automated provisioning, testing and deployment. Attempting it with an antiquated operations group and manual processes will likely fail whatever the design says."
+   ],
+   "p": "Note the historical shape of the infrastructure intersection. In the 1990s and 2000s, operations was outsourced and outside the architect's control, so architects built **elaborate internal machinery** for scale and elasticity — and vastly more complex architectures as a result. The creators of microservices concluded that operational concerns are better handled by operations, teamed up with them, and the collaboration became DevOps."
+  },
+  {
+   "k": "decision",
+   "t": "The business is in severe cost-cutting. The team wants microservices.",
+   "art": "intersections",
+   "wide": true,
+   "alt": "Nine alignments arranged around the architecture at the centre",
+   "sit": "The company is cutting costs aggressively to stay afloat. The engineering team is proposing a microservices migration on the strength of its scalability, deployability and evolvability ratings.",
+   "opts": [
+    [
+     "Approve it — the ratings are the best in the book.",
+     "Microservices and space-based are the two most **expensive** styles to create and operate. Excellent ratings in the columns that don't currently matter, bought with money the business doesn't have."
+    ],
+    [
+     "Match the architecture to the business environment.",
+     "**Domain-to-architecture isomorphism**: read the company's position and direction and align to it. Cost-cutting doesn't fit microservices; a business expanding aggressively through mergers doesn't fit a monolith that can't evolve.",
+     1
+    ]
+   ],
+   "verdict": "The recurring hazard here is **unknown unknowns** — Rumsfeld's third category, and the reason Big Design Up Front always suffers. As Mark Richards puts it: *all architectures become iterative because of unknown unknowns; Agile just recognises this and does it sooner.* The mitigations are evolutionary and iterative architecture, plus characteristics that keep options open — portability, scalability, evolvability, adaptability. Barry O'Reilly's **residuality theory** treats business changes as *stressors* and architectural responses as *residues*, on the theory that enough residues start covering changes nobody could have predicted."
+  },
+  {
+   "t": "Generative AI, as a component and as an assistant",
+   "art": "cache-mismatch",
+   "wide": true,
+   "alt": "An inventory service replicating a cache into order placement instances, and instances running out of memory",
+   "cap": "Two separate intersections that get conflated.",
+   "items": [
+    "**As a component**: leverage **abstraction and modularity** so one LLM can be swapped for another quickly, and so you can add guardrails and evaluate results. A résumé-anonymising service needs to know whether the model removes too much or too little demographic information — which means gathering samples and metrics and comparing engines. Tools like Langfuse provide that observability.",
+    "**As an assistant**: the authors report limited success. Asking whether microservices or space-based fits a situation *rarely if ever* yields the right answer, because everything is a trade-off and the wisdom required carries so much context that it's faster for the architect to solve the problem than to teach the model the environment. **The nine intersections in this chapter are themselves the evidence** of how much context that is.",
+    "**What does show promise**: tools like Thoughtworks Haiven, which can read an architecture diagram directly and describe the architecture — saving the export to a machine-readable format — and then answer questions about bottlenecks and issues."
+   ],
+   "p": "Two intersections that get less attention and cost as much: **systems integration** — availability, scale and responsiveness of the systems you call, plus protocols, contracts, compatible characteristics and whether the integration preserves each system's quantum — and **the enterprise**, where a technically excellent architecture that ignores enterprise standards, platforms and practices gets labelled a failed one-off and scrapped."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 26: Architectural Intersections, pp. 469–487. Residuality theory is Barry O'Reilly's.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

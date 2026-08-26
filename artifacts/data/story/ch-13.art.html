@@ -1,0 +1,100 @@
+<!-- Drawings for chapter 13 · Microkernel Architecture Style -->
+
+<!--@ microkernel -->
+<svg viewBox="0 0 300 246" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="88" y="94" width="124" height="58" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.9"/>
+    <rect x="18" y="24" width="70" height="30"/><rect x="115" y="18" width="70" height="30"/><rect x="212" y="24" width="70" height="30"/>
+    <rect x="10" y="192" width="70" height="30"/><rect x="115" y="198" width="70" height="30"/><rect x="220" y="192" width="70" height="30"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <path d="M60 54 L108 94 M150 48 V94 M240 54 L192 94"/>
+      <path d="M55 192 L112 152 M150 198 V152 M245 192 L188 152"/>
+    </g>
+    <rect x="112" y="120" width="76" height="18" stroke="var(--acc)" stroke-dasharray="4 3"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.2">
+    <text x="150" y="112" font-size="10" fill="var(--acc)">CORE SYSTEM</text>
+    <text x="150" y="133" font-size="8" fill="var(--acc)">registry</text>
+    <g fill="var(--ink2)">
+      <text x="53" y="43">plug-in</text><text x="150" y="37">plug-in</text><text x="247" y="43">plug-in</text>
+      <text x="45" y="211">plug-in</text><text x="150" y="217">plug-in</text><text x="255" y="211">plug-in</text>
+    </g>
+    <text x="150" y="168" font-size="8.2" fill="var(--ink2)">the happy path, with the</text>
+    <text x="150" y="179" font-size="8.2" fill="var(--ink2)">cyclomatic complexity taken out</text>
+    <text x="150" y="242" font-size="8.4" fill="var(--ink)">plug-ins should not know about each other</text>
+  </g>
+</svg>
+
+<!--@ microkernality -->
+<svg viewBox="0 0 620 176" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5">
+    <path d="M40 96 H580"/>
+    <path d="M40 88 v16 M210 90 v12 M380 90 v12 M580 88 v16"/>
+    <rect x="40" y="56" width="26" height="26" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="540" y="46" width="40" height="36"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="40" y="36" font-size="9.6" text-anchor="start" fill="var(--acc)">PURE MICROKERNEL</text>
+    <text x="580" y="36" font-size="9.6" text-anchor="end" fill="var(--ink)">SUPPORTS PLUG-INS</text>
+    <g font-size="9" fill="var(--ink)">
+      <text x="70" y="120" text-anchor="start">a linter · Eclipse</text>
+      <text x="560" y="120" text-anchor="end">a web browser</text>
+    </g>
+    <g font-size="8.2" fill="var(--ink2)">
+      <text x="70" y="134" text-anchor="start">the core parses code and hands you a syntax tree.</text>
+      <text x="70" y="145" text-anchor="start">until someone writes a plug-in it is of little use.</text>
+      <text x="560" y="134" text-anchor="end">perfectly functional with no plug-ins at all.</text>
+    </g>
+    <text x="310" y="166" font-size="8.6" fill="var(--acc)">All microkernels support plug-ins. Not everything that supports plug-ins is a microkernel.</text>
+    <text x="310" y="82" font-size="8.4" fill="var(--ink2)">how much standalone functionality lives in the core?</text>
+  </g>
+</svg>
+
+<!--@ plugin-comms -->
+<svg viewBox="0 0 300 246" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="20" y="34" width="90" height="36" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="190" y="20" width="90" height="26"/><rect x="190" y="58" width="90" height="26"/>
+    <g stroke="var(--ink)" stroke-width="1.4"><path d="M110 46 L190 33 M110 60 L190 71"/></g>
+    <path d="M14 112 H288" stroke="var(--rule)" stroke-dasharray="4 5"/>
+    <rect x="20" y="146" width="90" height="36" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="190" y="130" width="90" height="26"/><rect x="190" y="172" width="90" height="26"/>
+    <g stroke="var(--ink3)" stroke-width="1.3" stroke-dasharray="5 4"><path d="M110 158 L190 143 M110 172 L190 185"/></g>
+    <rect x="14" y="212" width="274" height="24" stroke="var(--acc)" stroke-width="1.8" stroke-dasharray="6 4"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="14" y="24" text-anchor="start" font-size="8.6" letter-spacing="1.4" fill="var(--ink3)">POINT-TO-POINT</text>
+    <text x="65" y="56" font-size="9" fill="var(--acc)">core</text>
+    <text x="235" y="37" fill="var(--ink2)">JAR / DLL / Gem</text><text x="235" y="75" fill="var(--ink2)">namespace</text>
+    <text x="150" y="98" fill="var(--ink2)">a method call to the plug-in's entry-point class</text>
+    <text x="14" y="132" text-anchor="start" font-size="8.6" letter-spacing="1.4" fill="var(--acc)">REMOTE — REST OR MESSAGING</text>
+    <text x="65" y="168" font-size="9" fill="var(--acc)">core</text>
+    <text x="235" y="147" fill="var(--ink2)">plug-in service</text><text x="235" y="189" fill="var(--ink2)">plug-in service</text>
+    <text x="150" y="228" font-size="8.4" fill="var(--acc)">still one architecture quantum — every request goes through the core</text>
+  </g>
+</svg>
+
+<!--@ mk-data -->
+<svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="96" y="30" width="108" height="38" fill="var(--accBg)" stroke="var(--acc)"/>
+    <ellipse cx="150" cy="118" rx="42" ry="9"/><path d="M108 118 v16 a42 9 0 0 0 84 0 v-16"/>
+    <path d="M150 68 V109" stroke="var(--acc)" stroke-width="1.6"/>
+    <rect x="10" y="42" width="60" height="26"/><rect x="230" y="42" width="60" height="26"/>
+    <g stroke="var(--ink3)" stroke-width="1.2"><path d="M70 55 H96 M204 55 H230"/></g>
+    <g stroke="var(--acc)" stroke-width="1.2">
+      <ellipse cx="40" cy="106" rx="20" ry="7"/><path d="M20 106 v12 a20 7 0 0 0 40 0 v-12"/>
+      <path d="M40 68 V99"/>
+      <ellipse cx="260" cy="106" rx="20" ry="7"/><path d="M240 106 v12 a20 7 0 0 0 40 0 v-12"/>
+      <path d="M260 68 V99"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="150" y="53" font-size="9" fill="var(--acc)">core system</text>
+    <text x="40" y="58" fill="var(--ink2)">plug-in</text><text x="260" y="58" fill="var(--ink2)">plug-in</text>
+    <text x="150" y="122" fill="var(--ink2)">shared database</text>
+    <text x="40" y="140" fill="var(--acc)">own rules</text><text x="260" y="140" fill="var(--acc)">own rules</text>
+    <text x="150" y="164" font-size="8.4" fill="var(--ink)">plug-ins do not touch the shared database — the core passes them data.</text>
+    <text x="150" y="180" font-size="8.4" fill="var(--acc)">so a schema change hits the core and stops there.</text>
+  </g>
+</svg>

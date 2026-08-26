@@ -1,0 +1,352 @@
+<!-- Drawings for chapter 15 · Event-Driven Architecture Style -->
+
+<!--@ eda-topology -->
+<svg viewBox="0 0 620 254" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="8" y="100" width="86" height="34" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="134" y="100" width="96" height="34"/>
+    <rect x="286" y="30" width="102" height="30"/><rect x="286" y="76" width="102" height="30"/>
+    <rect x="286" y="122" width="102" height="30"/><rect x="286" y="168" width="102" height="30"/>
+    <rect x="452" y="53" width="112" height="30"/><rect x="452" y="99" width="112" height="30"/>
+    <rect x="452" y="145" width="112" height="30"/>
+    <g stroke="var(--ink3)" stroke-width="1.1">
+      <path d="M94 117 H134"/><path d="M126 113 l8 4 l-8 4"/>
+      <path d="M230 117 L286 45 M230 117 L286 91 M230 117 H286 M230 117 L286 183"/>
+      <path d="M388 45 L452 68 M388 91 L452 114 M388 137 L452 160 M388 183 L452 160"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="51" y="121" font-size="8.6" fill="var(--acc)">place order</text>
+    <text x="51" y="150" font-size="7.6" fill="var(--acc)">initiating event</text>
+    <text x="182" y="115" font-size="8.6" fill="var(--ink)">Order Placement</text>
+    <text x="182" y="126" font-size="7.4" fill="var(--ink2)">event processor</text>
+    <text x="182" y="150" font-size="7.6" fill="var(--ink2)">order placed →</text>
+    <g fill="var(--ink2)">
+      <text x="337" y="49">Notification</text><text x="337" y="95">Payment</text>
+      <text x="337" y="141">Inventory</text><text x="337" y="187">Order Fulfillment</text>
+      <text x="508" y="72">email sent</text><text x="508" y="118">payment applied / denied</text>
+      <text x="508" y="164">inventory updated</text>
+    </g>
+    <text x="508" y="40" font-size="7.6" fill="var(--acc)">derived events — nobody may be listening,</text>
+    <text x="508" y="30" font-size="7.6" fill="var(--acc)">and that is the extensibility hook</text>
+    <text x="310" y="222" font-size="9" fill="var(--ink)">A relay race: hand off the baton and you are done with this race, free for the next one.</text>
+    <text x="310" y="242" font-size="8.4" fill="var(--acc)">Watch for the poison event — a derived event that loops back and triggers itself forever.</text>
+  </g>
+</svg>
+
+<!--@ event-vs-message -->
+<svg viewBox="0 0 620 236" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="8" y="34" width="298" height="118" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="322" y="34" width="290" height="118"/>
+    <path d="M8 60 H306 M322 60 H612" stroke="var(--rule)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace">
+    <text x="157" y="52" font-size="10.5" text-anchor="middle" fill="var(--acc)">EVENT</text>
+    <text x="467" y="52" font-size="10.5" text-anchor="middle" fill="var(--ink)">MESSAGE</text>
+    <g font-size="9" fill="var(--ink)">
+      <text x="22" y="80">something has already happened</text>
+      <text x="22" y="98">no response expected</text>
+      <text x="22" y="116">broadcast — one to many</text>
+      <text x="22" y="134">a topic, stream or notification service</text>
+      <text x="336" y="80">a command or a query</text>
+      <text x="336" y="98">usually needs a response</text>
+      <text x="336" y="116">directed — one to one</text>
+      <text x="336" y="134">a queue or messaging service</text>
+    </g>
+    <text x="8" y="176" font-size="9" fill="var(--ink3)">Which of these are events?</text>
+    <g font-size="8.6" fill="var(--ink2)">
+      <text x="8" y="192">“Flight 6557, turn left, heading 230.”</text>
+      <text x="8" y="206">“A cold front has moved into the area.”</text>
+      <text x="8" y="220">“Class, turn to page 145.”</text>
+      <text x="8" y="234">“Sorry I'm late for the meeting.”</text>
+    </g>
+    <g font-size="8.6">
+      <text x="330" y="192" fill="var(--ink)">message — a command, aimed at one pilot</text>
+      <text x="330" y="206" fill="var(--acc)">event — happened, broadcast, no reply wanted</text>
+      <text x="330" y="220" fill="var(--ink)">message — broadcasting a command doesn't make it an event</text>
+      <text x="330" y="234" fill="var(--acc)">event</text>
+    </g>
+  </g>
+</svg>
+
+<!--@ async-response -->
+<svg viewBox="0 0 620 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M60 56 H160" stroke="var(--ink3)"/><rect x="160" y="42" width="330" height="28"/>
+    <path d="M490 56 H590" stroke="var(--ink3)"/>
+    <path d="M60 148 H92" stroke="var(--acc)" stroke-width="2"/>
+    <rect x="92" y="134" width="330" height="28" stroke="var(--ink3)" stroke-dasharray="5 4"/>
+    <path d="M60 178 H92 M92 178 V148" stroke="var(--acc)" stroke-width="2"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.4">
+    <text x="8" y="30" font-size="8.6" letter-spacing="1.4" fill="var(--ink3)">SYNCHRONOUS REST</text>
+    <text x="110" y="36" text-anchor="middle" fill="var(--ink2)">50 ms</text>
+    <text x="325" y="60" text-anchor="middle" fill="var(--ink)">3,000 ms — parse, check, validate, post</text>
+    <text x="540" y="36" text-anchor="middle" fill="var(--ink2)">50 ms</text>
+    <text x="600" y="60" text-anchor="end" fill="var(--ink)">3,100 ms to the user</text>
+    <text x="8" y="118" font-size="8.6" letter-spacing="1.4" fill="var(--acc)">ASYNCHRONOUS MESSAGE</text>
+    <text x="257" y="152" text-anchor="middle" fill="var(--ink2)">3,000 ms — same work, later</text>
+    <text x="76" y="196" text-anchor="middle" fill="var(--acc)">25 ms</text>
+    <text x="600" y="152" text-anchor="end" fill="var(--acc)">25 ms to the user</text>
+    <text x="310" y="212" font-size="9" text-anchor="middle" fill="var(--ink)">Responsiveness is telling the user it was accepted. Performance is making the work faster. These are different problems.</text>
+  </g>
+</svg>
+
+<!--@ entanglement -->
+<svg viewBox="0 0 620 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="18" y="46" width="106" height="38"/><rect x="164" y="46" width="106" height="38"/>
+    <path d="M124 58 H164" stroke="var(--ink)" stroke-width="1.6"/><path d="M156 54 l8 4 l-8 4"/>
+    <path d="M164 74 H124" stroke="var(--ink)" stroke-width="1.6"/><path d="M132 70 l-8 4 l8 4"/>
+    <rect x="6" y="34" width="278" height="62" stroke="var(--ink3)" stroke-width="1.8" stroke-dasharray="7 4"/>
+
+    <rect x="348" y="46" width="106" height="38"/><rect x="494" y="46" width="106" height="38"/>
+    <g stroke="var(--acc)" stroke-width="1.5" stroke-dasharray="5 4">
+      <path d="M454 58 H494"/><path d="M494 74 H454"/>
+    </g>
+    <rect x="336" y="34" width="130" height="62" stroke="var(--acc)" stroke-width="1.8" stroke-dasharray="7 4"/>
+    <rect x="482" y="34" width="130" height="62" stroke="var(--acc)" stroke-width="1.8" stroke-dasharray="7 4"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="71" y="69" fill="var(--ink2)">Portfolio Mgmt</text><text x="217" y="69" fill="var(--ink2)">Trade Order</text>
+    <text x="145" y="26" font-size="8.6" fill="var(--ink)">ONE QUANTUM — synchronous</text>
+    <text x="401" y="69" fill="var(--ink2)">Portfolio Mgmt</text><text x="547" y="69" fill="var(--ink2)">Trade Order</text>
+    <text x="474" y="26" font-size="8.6" fill="var(--acc)">TWO QUANTA — asynchronous</text>
+    <text x="145" y="122" font-size="8.4" fill="var(--ink2)">Trade Order slow → Portfolio slow.</text>
+    <text x="145" y="134" font-size="8.4" fill="var(--ink2)">Trade Order down → no orders.</text>
+    <text x="145" y="146" font-size="8.4" fill="var(--ink2)">Portfolio must scale → so must Trade Order.</text>
+    <text x="474" y="122" font-size="8.4" fill="var(--acc)">Trade Order down → orders still accepted.</text>
+    <text x="474" y="134" font-size="8.4" fill="var(--acc)">Confirmation arrives on its own channel.</text>
+    <text x="474" y="146" font-size="8.4" fill="var(--acc)">Each scales on its own.</text>
+    <text x="310" y="184" font-size="9" fill="var(--ink)">Dynamic Quantum Entanglement: a synchronous call between two quanta fuses them into one.</text>
+    <text x="310" y="204" font-size="8.6" fill="var(--acc)">Architecture characteristics then live across both, whether you designed that or not.</text>
+  </g>
+</svg>
+
+<!--@ payload -->
+<svg viewBox="0 0 620 246" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="14" y="40" width="88" height="30"/>
+    <rect x="140" y="34" width="120" height="42" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <path d="M102 55 H140" stroke="var(--acc)" stroke-width="2.6"/>
+    <rect x="14" y="120" width="88" height="30"/>
+    <rect x="176" y="126" width="46" height="20" stroke="var(--acc)"/>
+    <path d="M102 136 H176" stroke="var(--acc)" stroke-width="1"/>
+    <path d="M320 34 H612 M320 62 H612 M320 90 H612 M320 118 H612 M320 146 H612 M320 174 H612" stroke="var(--rule2)"/>
+    <path d="M496 24 V196" stroke="var(--rule)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8">
+    <text x="58" y="59" text-anchor="middle" fill="var(--ink2)">Order Placement</text>
+    <text x="200" y="52" text-anchor="middle" font-size="8.6" fill="var(--acc)">45 attributes</text>
+    <text x="200" y="64" text-anchor="middle" fill="var(--acc)">500 KB</text>
+    <text x="200" y="90" text-anchor="middle" fill="var(--ink2)">data-based</text>
+    <text x="58" y="139" text-anchor="middle" fill="var(--ink2)">Order Placement</text>
+    <text x="199" y="139" text-anchor="middle" font-size="7.4" fill="var(--acc)">order_id</text>
+    <text x="199" y="162" text-anchor="middle" fill="var(--ink2)">key-based</text>
+    <text x="150" y="196" text-anchor="middle" font-size="8.4" fill="var(--ink)">500 orders/sec × 500 KB = 250 MB/s.</text>
+    <text x="150" y="208" text-anchor="middle" font-size="8.4" fill="var(--acc)">The same events at 30 bytes = 15 KB/s.</text>
+    <g font-size="8.6" text-anchor="middle">
+      <text x="410" y="24" fill="var(--acc)">DATA-BASED</text><text x="556" y="24" fill="var(--ink)">KEY-BASED</text>
+    </g>
+    <g font-size="8.6" fill="var(--ink)" text-anchor="end">
+      <text x="312" y="52">performance and scalability</text><text x="312" y="80">contract management</text>
+      <text x="312" y="108">stamp coupling</text><text x="312" y="136">bandwidth</text>
+      <text x="312" y="164">restricted database access</text><text x="312" y="192">overall fragility</text>
+    </g>
+    <g font-size="9" text-anchor="middle">
+      <text x="410" y="52" fill="var(--acc)">good</text><text x="556" y="52" fill="var(--ink2)">bad</text>
+      <text x="410" y="80" fill="var(--ink2)">bad</text><text x="556" y="80" fill="var(--acc)">good</text>
+      <text x="410" y="108" fill="var(--ink2)">bad</text><text x="556" y="108" fill="var(--acc)">good</text>
+      <text x="410" y="136" fill="var(--ink2)">bad</text><text x="556" y="136" fill="var(--acc)">good</text>
+      <text x="410" y="164" fill="var(--acc)">good</text><text x="556" y="164" fill="var(--ink2)">bad</text>
+      <text x="410" y="192" fill="var(--ink2)">bad</text><text x="556" y="192" fill="var(--acc)">good</text>
+    </g>
+    <text x="466" y="222" text-anchor="middle" font-size="8.6" fill="var(--ink)">Table 15-1 · scale and speed against contract management and bandwidth.</text>
+    <text x="466" y="236" text-anchor="middle" font-size="8.4" fill="var(--acc)">It is per event, not per system — different events can use different payloads.</text>
+  </g>
+</svg>
+
+<!--@ gnats -->
+<svg viewBox="0 0 620 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="14" y="70" width="98" height="34"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M112 87 L182 40 M112 87 L182 66 M112 87 H182 M112 87 L182 108 M112 87 L182 134"/></g>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <rect x="182" y="30" width="90" height="20"/><rect x="182" y="56" width="90" height="20"/>
+      <rect x="182" y="82" width="90" height="20"/><rect x="182" y="108" width="90" height="20"/>
+      <rect x="182" y="134" width="90" height="20"/>
+    </g>
+    <rect x="348" y="70" width="98" height="34"/>
+    <rect x="486" y="66" width="112" height="42" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <path d="M446 87 H486" stroke="var(--acc)" stroke-width="1.8"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="7.6">
+    <text x="14" y="58" font-size="8.6" letter-spacing="1.4" fill="var(--ink3)">SWARM OF GNATS</text>
+    <text x="63" y="91" text-anchor="middle" font-size="8.4" fill="var(--ink2)">Customer Profile</text>
+    <g fill="var(--ink2)" text-anchor="middle">
+      <text x="227" y="44">billto_changed</text><text x="227" y="70">shipto_changed</text>
+      <text x="227" y="96">phone_changed</text><text x="227" y="122">email_changed</text><text x="227" y="148">name_changed</text>
+    </g>
+    <text x="348" y="58" font-size="8.6" letter-spacing="1.4" fill="var(--acc)">ONE OUTCOME EVENT</text>
+    <text x="397" y="91" text-anchor="middle" font-size="8.4" fill="var(--ink2)">Customer Profile</text>
+    <text x="542" y="84" text-anchor="middle" font-size="8.6" fill="var(--acc)">profile_updated</text>
+    <text x="542" y="97" text-anchor="middle" fill="var(--acc)">before and after values</text>
+    <text x="150" y="180" font-size="8.4" text-anchor="middle" fill="var(--ink2)">one customer, one action, five events —</text>
+    <text x="150" y="192" font-size="8.4" text-anchor="middle" fill="var(--ink2)">and nobody can follow the flows any more</text>
+    <text x="470" y="180" font-size="8.4" text-anchor="middle" fill="var(--acc)">focus derived events on the outcome</text>
+    <text x="470" y="192" font-size="8.4" text-anchor="middle" fill="var(--acc)">or the state change, not each field</text>
+    <text x="310" y="212" font-size="8.6" text-anchor="middle" fill="var(--ink)">The opposite failure is the anemic event: a key with no context, so no consumer knows what changed or what to do.</text>
+  </g>
+</svg>
+
+<!--@ workflow-event -->
+<svg viewBox="0 0 620 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="14" y="70" width="104" height="36"/>
+    <rect x="164" y="70" width="52" height="36" stroke="var(--ink3)"/>
+    <rect x="262" y="70" width="112" height="36"/>
+    <path d="M118 88 H164 M216 88 H262" stroke="var(--ink3)"/>
+    <path d="M374 88 L440 44" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="440" y="26" width="128" height="36" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <path d="M440 44 C400 20 260 20 262 66" stroke="var(--acc)" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <path d="M504 62 V116" stroke="var(--ink3)" stroke-dasharray="5 4"/>
+    <rect x="440" y="116" width="128" height="34" stroke="var(--ink3)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8" text-anchor="middle">
+    <text x="66" y="92" fill="var(--ink2)">event producer</text>
+    <text x="190" y="92" fill="var(--ink2)">queue</text>
+    <text x="318" y="86" fill="var(--ink)">event consumer</text>
+    <text x="318" y="98" font-size="7.4" fill="var(--ink2)">error? delegate and move on</text>
+    <text x="504" y="42" font-size="8.6" fill="var(--acc)">workflow processor</text>
+    <text x="504" y="54" font-size="7.4" fill="var(--acc)">repairs it, resubmits it</text>
+    <text x="504" y="132" fill="var(--ink2)">a human dashboard</text>
+    <text x="504" y="144" font-size="7.4" fill="var(--ink2)">when it can't be fixed programmatically</text>
+    <text x="310" y="176" font-size="8.6" fill="var(--ink)">“2WE35HF6DHF,BUY,AAPL,8756 SHARES” — strip the word SHARES, resubmit, done. No human involved.</text>
+    <text x="310" y="196" font-size="8.6" fill="var(--acc)">The cost: repaired messages come back out of order.</text>
+    <text x="310" y="212" font-size="8.2" fill="var(--ink2)">If order matters inside a context — a brokerage account — hold that account's later trades in a FIFO queue until the bad one clears.</text>
+  </g>
+</svg>
+
+<!--@ data-loss -->
+<svg viewBox="0 0 620 236" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="20" y="60" width="104" height="36"/>
+    <rect x="200" y="60" width="70" height="36" stroke="var(--acc)"/>
+    <rect x="346" y="60" width="112" height="36"/>
+    <ellipse cx="546" cy="70" rx="46" ry="9"/><path d="M500 70 v16 a46 9 0 0 0 92 0 v-16"/>
+    <g stroke="var(--ink3)" stroke-width="1.2"><path d="M124 78 H200 M270 78 H346 M458 78 H500"/></g>
+    <g stroke="var(--acc)" stroke-width="2">
+      <path d="M156 62 l14 14 M170 62 l-14 14"/>
+      <path d="M302 62 l14 14 M316 62 l-14 14"/>
+      <path d="M472 62 l14 14 M486 62 l-14 14"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8" text-anchor="middle">
+    <text x="72" y="82" fill="var(--ink2)">producer</text>
+    <text x="235" y="82" fill="var(--acc)">queue</text>
+    <text x="402" y="82" fill="var(--ink2)">consumer</text>
+    <text x="546" y="76" fill="var(--ink2)">database</text>
+    <text x="163" y="50" font-size="8.6" fill="var(--acc)">1</text>
+    <text x="309" y="50" font-size="8.6" fill="var(--acc)">2</text>
+    <text x="479" y="50" font-size="8.6" fill="var(--acc)">3</text>
+    <g font-size="8.4" fill="var(--ink)">
+      <text x="120" y="132">never reached the queue</text>
+      <text x="330" y="132">read it, then crashed</text>
+      <text x="530" y="132">couldn't persist it</text>
+    </g>
+    <g font-size="8.4" fill="var(--acc)">
+      <text x="120" y="156">persistent queues</text><text x="120" y="168">+ synchronous send</text>
+      <text x="330" y="156">client acknowledge mode</text><text x="330" y="168">— it stays in the queue</text>
+      <text x="530" y="156">ACID commit</text><text x="530" y="168">+ last participant support</text>
+    </g>
+    <text x="310" y="204" font-size="8.6" fill="var(--ink)">Figs. 15-20 and 15-21 · the Event Forwarding pattern, for AMQP brokers and for durable JMS subscribers.</text>
+    <text x="310" y="222" font-size="8.4" fill="var(--ink2)">Kafka-style event streaming prevents loss by different means entirely.</text>
+  </g>
+</svg>
+
+<!--@ mediator -->
+<svg viewBox="0 0 620 236" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="8" y="94" width="76" height="32"/>
+    <rect x="130" y="86" width="120" height="48" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.9"/>
+    <path d="M84 110 H130" stroke="var(--ink3)"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <rect x="308" y="24" width="44" height="20"/><rect x="308" y="66" width="44" height="20"/>
+      <rect x="308" y="108" width="44" height="20"/><rect x="308" y="150" width="44" height="20"/>
+      <rect x="308" y="192" width="44" height="20"/>
+      <path d="M250 100 L308 34 M250 104 L308 76 M250 110 H308 M250 118 L308 160 M250 124 L308 202"/>
+    </g>
+    <g stroke="var(--ink)" stroke-width="1.3">
+      <rect x="410" y="20" width="112" height="28"/><rect x="410" y="62" width="112" height="28"/>
+      <rect x="410" y="104" width="112" height="28"/><rect x="410" y="146" width="112" height="28"/>
+      <rect x="410" y="188" width="112" height="28"/>
+      <path d="M352 34 H410 M352 76 H410 M352 118 H410 M352 160 H410 M352 202 H410"/>
+    </g>
+    <g stroke="var(--acc)" stroke-width="1" stroke-dasharray="4 3">
+      <path d="M410 44 C380 56 300 70 250 120"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="7.6">
+    <text x="46" y="114" text-anchor="middle" fill="var(--ink2)">initiating</text>
+    <text x="190" y="106" text-anchor="middle" font-size="9.4" fill="var(--acc)">EVENT MEDIATOR</text>
+    <text x="190" y="120" text-anchor="middle" fill="var(--acc)">holds the workflow and its state</text>
+    <text x="330" y="16" text-anchor="middle" fill="var(--ink3)">queues</text>
+    <g fill="var(--ink2)" text-anchor="middle">
+      <text x="466" y="38">Order Placement</text><text x="466" y="80">Payment</text>
+      <text x="466" y="122">Inventory</text><text x="466" y="164">Fulfillment</text><text x="466" y="206">Shipping</text>
+    </g>
+    <text x="560" y="120" font-size="8" fill="var(--acc)" transform="rotate(-90 560 120)" text-anchor="middle">acknowledge back to the mediator</text>
+    <text x="150" y="164" font-size="8.4" fill="var(--ink)">commands, not events:</text>
+    <text x="150" y="176" font-size="8.4" fill="var(--ink)">ship_order, not order_shipped</text>
+    <text x="150" y="200" font-size="8.2" fill="var(--ink2)">card expired at step 2? the mediator stops,</text>
+    <text x="150" y="211" font-size="8.2" fill="var(--ink2)">persists the state, and resumes at step 3 later.</text>
+    <text x="150" y="228" font-size="8.2" fill="var(--acc)">use several mediators — one per domain — or you own a single point of failure.</text>
+  </g>
+</svg>
+
+<!--@ eda-data -->
+<svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.3" stroke-linejoin="round">
+    <rect x="14" y="40" width="34" height="20"/><rect x="56" y="40" width="34" height="20"/>
+    <rect x="98" y="40" width="34" height="20"/><rect x="140" y="40" width="34" height="20"/>
+    <ellipse cx="94" cy="106" rx="60" ry="9"/><path d="M34 106 v14 a60 9 0 0 0 120 0 v-14"/>
+    <g stroke="var(--ink3)" stroke-width="1"><path d="M31 60 L70 97 M73 60 V97 M115 60 V97 M157 60 L120 97"/></g>
+
+    <rect x="222" y="40" width="34" height="20"/><rect x="264" y="40" width="34" height="20"/>
+    <rect x="322" y="40" width="34" height="20"/><rect x="364" y="40" width="34" height="20"/>
+    <g stroke="var(--acc)" stroke-width="1.3">
+      <ellipse cx="260" cy="106" rx="38" ry="8"/><path d="M222 106 v14 a38 8 0 0 0 76 0 v-14"/>
+      <ellipse cx="360" cy="106" rx="38" ry="8"/><path d="M322 106 v14 a38 8 0 0 0 76 0 v-14"/>
+      <path d="M239 60 L250 98 M281 60 L270 98 M339 60 L350 98 M381 60 L370 98"/>
+    </g>
+    <path d="M298 50 H322" stroke="var(--ink)" stroke-width="1.6"/>
+
+    <rect x="446" y="40" width="34" height="20"/><rect x="490" y="40" width="34" height="20"/>
+    <rect x="534" y="40" width="34" height="20"/><rect x="578" y="40" width="30" height="20"/>
+    <g stroke="var(--acc)" stroke-width="1.2">
+      <ellipse cx="463" cy="104" rx="16" ry="6"/><path d="M447 104 v10 a16 6 0 0 0 32 0 v-10"/>
+      <ellipse cx="507" cy="104" rx="16" ry="6"/><path d="M491 104 v10 a16 6 0 0 0 32 0 v-10"/>
+      <ellipse cx="551" cy="104" rx="16" ry="6"/><path d="M535 104 v10 a16 6 0 0 0 32 0 v-10"/>
+      <ellipse cx="593" cy="104" rx="15" ry="6"/><path d="M578 104 v10 a15 6 0 0 0 30 0 v-10"/>
+      <path d="M463 60 V98 M507 60 V98 M551 60 V98 M593 60 V98"/>
+    </g>
+    <g stroke="var(--ink)" stroke-width="1.6"><path d="M480 50 H490 M524 50 H534 M568 50 H578"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.4">
+    <text x="94" y="28" font-size="9.4" fill="var(--ink)">MONOLITHIC</text>
+    <text x="310" y="28" font-size="9.4" fill="var(--ink)">DOMAIN</text>
+    <text x="527" y="28" font-size="9.4" fill="var(--acc)">DEDICATED</text>
+    <g fill="var(--ink2)" font-size="8">
+      <text x="94" y="152">any processor queries</text><text x="94" y="163">anything it needs</text>
+      <text x="94" y="180">one quantum · one</text><text x="94" y="191">outage takes everything</text>
+      <text x="94" y="202">one schema change,</text><text x="94" y="213">many processors to coordinate</text>
+      <text x="310" y="152">better fault tolerance,</text><text x="310" y="163">scaling and change control</text>
+      <text x="310" y="180">cross-domain data means</text><text x="310" y="191">a synchronous call — the</text>
+      <text x="310" y="202">thing this style exists</text><text x="310" y="213">to avoid</text>
+      <text x="527" y="152">database per service.</text><text x="527" y="163">highest isolation of all three.</text>
+      <text x="527" y="180">expensive, and the</text><text x="527" y="191">synchronous calls multiply</text>
+    </g>
+    <text x="310" y="240" font-size="8.6" fill="var(--ink)">Choose by how self-contained the processors really are. Too many synchronous calls? Move left, not right.</text>
+  </g>
+</svg>

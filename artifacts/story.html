@@ -1,0 +1,202 @@
+<title>The Architect's Notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#E6E8E2; --sheet:#F4F5F0; --sunk:#DCDFD7; --chip:#EDEFE9;
+  --ink:#141B21; --ink2:#4B565F; --ink3:#7E888F;
+  --rule:#C2C7BE; --rule2:#D6DAD1; --hair:rgba(20,27,33,.075);
+  --blue:#0B5FA5; --blueBg:rgba(11,95,165,.10); --blueLine:rgba(11,95,165,.35);
+  --amber:#A9560A; --amberBg:rgba(169,86,10,.13);
+  --green:#256B49; --greenBg:rgba(37,107,73,.13);
+  --red:#9C2B22; --redBg:rgba(156,43,34,.12);
+  --plum:#6A3E7A; --plumBg:rgba(106,62,122,.12);
+  --lift:0 1px 0 rgba(20,27,33,.05), 0 10px 26px -20px rgba(20,27,33,.7);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+    --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+    --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+    --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+    --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+    --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+    --red:#E4776C; --redBg:rgba(228,119,108,.15);
+    --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+    --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C161E; --sheet:#122230; --sunk:#0B141C; --chip:#17303F;
+  --ink:#DCE7EE; --ink2:#9CB1BF; --ink3:#6C8493;
+  --rule:#26404F; --rule2:#1D3340; --hair:rgba(126,196,235,.055);
+  --blue:#5CACE8; --blueBg:rgba(92,172,232,.14); --blueLine:rgba(92,172,232,.4);
+  --amber:#E5A340; --amberBg:rgba(229,163,64,.15);
+  --green:#5CBE8B; --greenBg:rgba(92,190,139,.15);
+  --red:#E4776C; --redBg:rgba(228,119,108,.15);
+  --plum:#B98AC9; --plumBg:rgba(185,138,201,.15);
+  --lift:0 1px 0 rgba(0,0,0,.3), 0 12px 30px -22px #000;
+}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+  background-size:27px 27px;
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Saira Condensed","IBM Plex Sans",sans-serif;font-weight:700;text-wrap:balance;margin:0;line-height:1.05}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem);letter-spacing:.005em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.15rem;letter-spacing:.02em}
+p{margin:0}
+a{color:var(--blue)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,34px)}
+.sheet{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--lift);position:relative}
+.sheet::before,.sheet::after{content:"";position:absolute;width:11px;height:11px;border:1px solid var(--rule);pointer-events:none}
+.sheet::before{top:6px;left:6px;border-right:0;border-bottom:0}
+.sheet::after{bottom:6px;right:6px;border-left:0;border-top:0}
+.tblock{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tcell{padding:8px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:2px;min-width:0}
+.tcell:last-child{border-right:0}
+.tcell .v{font-family:"Saira Condensed",sans-serif;font-weight:600;font-size:1rem;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.tcell.grow{flex:1}
+.btn{font-family:"Saira Condensed",sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.95rem;
+  background:var(--ink);color:var(--sheet);border:1px solid var(--ink);padding:9px 20px;cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.blue,:root:not([data-theme="light"]) .btn.blue{color:#08121A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.blue{color:#fff}}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.stamp{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border:3px double currentColor;padding:4px 14px;display:inline-block;transform:rotate(-3.5deg);font-size:1.1rem;opacity:.92}
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-3.5deg) scale(.94);opacity:1}100%{transform:rotate(-3.5deg) scale(1)}}
+.stamp.hit{animation:stampIn .38s cubic-bezier(.2,1.4,.4,1) both}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:2px 7px;color:var(--ink2);background:var(--chip);white-space:nowrap}
+.rule{height:1px;background:var(--rule2);border:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+[hidden]{display:none !important}
+.a01{--acc:#4F6088;--accBg:rgba(79,96,136,.12)}.a02{--acc:#4B6B4F;--accBg:rgba(75,107,79,.12)}.a03{--acc:#8A5333;--accBg:rgba(138,83,51,.12)}.a04{--acc:#2F6A6E;--accBg:rgba(47,106,110,.12)}.a05{--acc:#6B4276;--accBg:rgba(107,66,118,.12)}.a06{--acc:#6A6329;--accBg:rgba(106,99,41,.12)}.a07{--acc:#3B5F7D;--accBg:rgba(59,95,125,.12)}.a08{--acc:#8C4438;--accBg:rgba(140,68,56,.12)}.a09{--acc:#45566B;--accBg:rgba(69,86,107,.12)}.a10{--acc:#7A6224;--accBg:rgba(122,98,36,.12)}.a11{--acc:#38664B;--accBg:rgba(56,102,75,.12)}.a12{--acc:#8A5220;--accBg:rgba(138,82,32,.12)}.a13{--acc:#5A4E8C;--accBg:rgba(90,78,140,.12)}.a14{--acc:#2E6480;--accBg:rgba(46,100,128,.12)}.a15{--acc:#8A5A12;--accBg:rgba(138,90,18,.12)}.a16{--acc:#4C6478;--accBg:rgba(76,100,120,.12)}.a17{--acc:#7A4A63;--accBg:rgba(122,74,99,.12)}.a18{--acc:#2F6350;--accBg:rgba(47,99,80,.12)}.a19{--acc:#806418;--accBg:rgba(128,100,24,.12)}.a20{--acc:#4A4F8C;--accBg:rgba(74,79,140,.12)}.a21{--acc:#7E3B3B;--accBg:rgba(126,59,59,.12)}.a22{--acc:#8A5C1E;--accBg:rgba(138,92,30,.12)}.a23{--acc:#3D6570;--accBg:rgba(61,101,112,.12)}.a24{--acc:#63528A;--accBg:rgba(99,82,138,.12)}.a25{--acc:#8A4A32;--accBg:rgba(138,74,50,.12)}.a26{--acc:#4E6B58;--accBg:rgba(78,107,88,.12)}.a27{--acc:#3F5B8A;--accBg:rgba(63,91,138,.12)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .a01{--acc:#96A8D0;--accBg:rgba(150,168,208,.12)}:root:not([data-theme="light"]) .a02{--acc:#93BE99;--accBg:rgba(147,190,153,.12)}:root:not([data-theme="light"]) .a03{--acc:#DBA173;--accBg:rgba(219,161,115,.12)}:root:not([data-theme="light"]) .a04{--acc:#86C3C7;--accBg:rgba(134,195,199,.12)}:root:not([data-theme="light"]) .a05{--acc:#C296CE;--accBg:rgba(194,150,206,.12)}:root:not([data-theme="light"]) .a06{--acc:#C6BC72;--accBg:rgba(198,188,114,.12)}:root:not([data-theme="light"]) .a07{--acc:#8FB6D2;--accBg:rgba(143,182,210,.12)}:root:not([data-theme="light"]) .a08{--acc:#DE9186;--accBg:rgba(222,145,134,.12)}:root:not([data-theme="light"]) .a09{--acc:#9FB0C2;--accBg:rgba(159,176,194,.12)}:root:not([data-theme="light"]) .a10{--acc:#D2BC6C;--accBg:rgba(210,188,108,.12)}:root:not([data-theme="light"]) .a11{--acc:#85C09A;--accBg:rgba(133,192,154,.12)}:root:not([data-theme="light"]) .a12{--acc:#DFA25E;--accBg:rgba(223,162,94,.12)}:root:not([data-theme="light"]) .a13{--acc:#ADA2DC;--accBg:rgba(173,162,220,.12)}:root:not([data-theme="light"]) .a14{--acc:#85BCD8;--accBg:rgba(133,188,216,.12)}:root:not([data-theme="light"]) .a15{--acc:#DDA954;--accBg:rgba(221,169,84,.12)}:root:not([data-theme="light"]) .a16{--acc:#A3B8C8;--accBg:rgba(163,184,200,.12)}:root:not([data-theme="light"]) .a17{--acc:#CE9CB6;--accBg:rgba(206,156,182,.12)}:root:not([data-theme="light"]) .a18{--acc:#82BFA8;--accBg:rgba(130,191,168,.12)}:root:not([data-theme="light"]) .a19{--acc:#D6BC5F;--accBg:rgba(214,188,95,.12)}:root:not([data-theme="light"]) .a20{--acc:#A0A5DC;--accBg:rgba(160,165,220,.12)}:root:not([data-theme="light"]) .a21{--acc:#D18E8E;--accBg:rgba(209,142,142,.12)}:root:not([data-theme="light"]) .a22{--acc:#DCA95E;--accBg:rgba(220,169,94,.12)}:root:not([data-theme="light"]) .a23{--acc:#92BCC7;--accBg:rgba(146,188,199,.12)}:root:not([data-theme="light"]) .a24{--acc:#B4A4D9;--accBg:rgba(180,164,217,.12)}:root:not([data-theme="light"]) .a25{--acc:#DB9878;--accBg:rgba(219,152,120,.12)}:root:not([data-theme="light"]) .a26{--acc:#9CC2A9;--accBg:rgba(156,194,169,.12)}:root:not([data-theme="light"]) .a27{--acc:#92AAD6;--accBg:rgba(146,170,214,.12)}}
+:root[data-theme="dark"] .a01{--acc:#96A8D0;--accBg:rgba(150,168,208,.12)}:root[data-theme="dark"] .a02{--acc:#93BE99;--accBg:rgba(147,190,153,.12)}:root[data-theme="dark"] .a03{--acc:#DBA173;--accBg:rgba(219,161,115,.12)}:root[data-theme="dark"] .a04{--acc:#86C3C7;--accBg:rgba(134,195,199,.12)}:root[data-theme="dark"] .a05{--acc:#C296CE;--accBg:rgba(194,150,206,.12)}:root[data-theme="dark"] .a06{--acc:#C6BC72;--accBg:rgba(198,188,114,.12)}:root[data-theme="dark"] .a07{--acc:#8FB6D2;--accBg:rgba(143,182,210,.12)}:root[data-theme="dark"] .a08{--acc:#DE9186;--accBg:rgba(222,145,134,.12)}:root[data-theme="dark"] .a09{--acc:#9FB0C2;--accBg:rgba(159,176,194,.12)}:root[data-theme="dark"] .a10{--acc:#D2BC6C;--accBg:rgba(210,188,108,.12)}:root[data-theme="dark"] .a11{--acc:#85C09A;--accBg:rgba(133,192,154,.12)}:root[data-theme="dark"] .a12{--acc:#DFA25E;--accBg:rgba(223,162,94,.12)}:root[data-theme="dark"] .a13{--acc:#ADA2DC;--accBg:rgba(173,162,220,.12)}:root[data-theme="dark"] .a14{--acc:#85BCD8;--accBg:rgba(133,188,216,.12)}:root[data-theme="dark"] .a15{--acc:#DDA954;--accBg:rgba(221,169,84,.12)}:root[data-theme="dark"] .a16{--acc:#A3B8C8;--accBg:rgba(163,184,200,.12)}:root[data-theme="dark"] .a17{--acc:#CE9CB6;--accBg:rgba(206,156,182,.12)}:root[data-theme="dark"] .a18{--acc:#82BFA8;--accBg:rgba(130,191,168,.12)}:root[data-theme="dark"] .a19{--acc:#D6BC5F;--accBg:rgba(214,188,95,.12)}:root[data-theme="dark"] .a20{--acc:#A0A5DC;--accBg:rgba(160,165,220,.12)}:root[data-theme="dark"] .a21{--acc:#D18E8E;--accBg:rgba(209,142,142,.12)}:root[data-theme="dark"] .a22{--acc:#DCA95E;--accBg:rgba(220,169,94,.12)}:root[data-theme="dark"] .a23{--acc:#92BCC7;--accBg:rgba(146,188,199,.12)}:root[data-theme="dark"] .a24{--acc:#B4A4D9;--accBg:rgba(180,164,217,.12)}:root[data-theme="dark"] .a25{--acc:#DB9878;--accBg:rgba(219,152,120,.12)}:root[data-theme="dark"] .a26{--acc:#9CC2A9;--accBg:rgba(156,194,169,.12)}:root[data-theme="dark"] .a27{--acc:#92AAD6;--accBg:rgba(146,170,214,.12)}
+/* ---------- the serial's contents page ---------- */
+.hero{padding:clamp(24px,4.4vw,52px) clamp(18px,3vw,40px);border-bottom:2px solid var(--ink);background:var(--sheet);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,auto);gap:clamp(18px,3vw,44px);align-items:end}
+@media(max-width:760px){.hero{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.2rem,6.2vw,4rem)}
+.hero .lede{font-size:1.05rem;line-height:1.55;color:var(--ink2);max-width:56ch;margin-top:14px}
+.hero .note{font-family:"IBM Plex Mono",monospace;font-size:.72rem;line-height:1.65;color:var(--ink3);
+  margin-top:16px;border-left:3px solid var(--rule);padding-left:11px;max-width:56ch}
+.tally{display:flex;flex-direction:column;gap:4px;border-left:2px solid var(--ink);padding-left:15px}
+.tally .big{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:clamp(2.4rem,6vw,3.6rem);
+  line-height:.9;font-variant-numeric:tabular-nums}
+.tally .of{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.tally .pbar{height:7px;background:var(--sunk);border:1px solid var(--rule);margin-top:8px;overflow:hidden}
+.tally .pbar i{display:block;height:100%;background:var(--ink)}
+
+.part{padding:clamp(18px,2.6vw,30px) clamp(16px,3vw,34px);border-bottom:1px solid var(--rule)}
+.part:last-of-type{border-bottom:0}
+.parthead{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between;
+  padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid var(--rule2)}
+.parthead h2{font-size:clamp(1.2rem,2.6vw,1.6rem)}
+.rows{display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:0 16px;align-items:center;
+  border:1px solid var(--rule);background:var(--sheet);padding:12px 15px;text-decoration:none;color:inherit}
+@media(max-width:620px){.row{grid-template-columns:44px minmax(0,1fr);row-gap:8px}.row .meta{grid-column:2}}
+a.row:hover{border-color:var(--acc);background:var(--chip)}
+a.row:hover .n{color:var(--acc)}
+.row .n{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:1.7rem;line-height:1;
+  font-variant-numeric:tabular-nums;color:var(--ink3);display:flex;flex-direction:column;gap:6px}
+.row .n .sw{display:block;width:34px;height:5px;background:var(--acc)}
+.row .mid{display:flex;flex-direction:column;gap:3px;min-width:0}
+.row h3{font-size:1.14rem;letter-spacing:.02em}
+.row .bk{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.row .log{font-size:.88rem;line-height:1.5;color:var(--ink2);max-width:74ch}
+.row .meta{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink3);text-align:right;white-space:nowrap;display:flex;flex-direction:column;gap:3px}
+.row .meta .go{color:var(--acc)}
+.row.todo{border-style:dashed;background:transparent}
+.row.todo h3{color:var(--ink2);font-weight:600}
+.row.todo .n{opacity:.55}
+.row.todo .n .sw{opacity:.45}
+
+.foot{display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:space-between;align-items:center;
+  padding:14px 18px;border-top:2px solid var(--ink);background:var(--sunk);font-size:.78rem;color:var(--ink3)}
+.foot a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.foot .cite{font-family:"IBM Plex Mono",monospace;font-size:.68rem;max-width:76ch}
+</style>
+<div class="wrap">
+<div class="sheet">
+  <header class="tblock">
+    <div class="tcell"><span class="lbl">Program</span><span class="v">SaaS Architect</span></div>
+    <div class="tcell"><span class="lbl">Sheet</span><span class="v">Serial</span></div>
+    <div class="tcell grow"><span class="lbl">Drawing</span><span class="v" id="tbT"></span></div>
+    <div class="tcell"><span class="lbl">Chapters</span><span class="v" id="tbN"></span></div>
+    <div class="tcell"><span class="lbl">Drawn</span><span class="v" id="tbD"></span></div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="lbl" id="hEy"></span>
+      <h1 id="hT"></h1>
+      <p class="lede" id="hL"></p>
+      <p class="note" id="hN"></p>
+    </div>
+    <div class="tally">
+      <span class="big" id="tD"></span>
+      <span class="of" id="tO"></span>
+      <div class="pbar"><i id="tB" style="width:0"></i></div>
+    </div>
+  </section>
+
+  <div id="parts"></div>
+
+  <footer class="foot">
+    <span class="cite" id="cite"></span>
+    <span id="links"></span>
+  </footer>
+</div>
+</div>
+<script>
+const D={"title": "The Architect's Notebook", "eyebrow": "Fundamentals of Software Architecture · notes and highlights · 27 chapters", "lede": "One review sheet per chapter of the book. The chapter's main topics as infographics you can re-scan in seconds, the book's own words kept as quotes, and a short worked scene wherever the chapter turns on a decision.", "note": "All twenty-seven are written. Every sheet opens with a one-minute version — the chapter's claims in a single card — so a re-read costs under a minute and you only scroll further when you want the figure or the reasoning behind one of them.", "parts": [{"t": "Before the parts begin", "w": "Chapter 1 · what the job is", "ch": ["01"]}, {"t": "Part I · Foundations", "w": "Chapters 2–8 · characteristics and components", "ch": ["02", "03", "04", "05", "06", "07", "08"]}, {"t": "Part II · Architecture Styles", "w": "Chapters 9–20 · the catalogue", "ch": ["09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]}, {"t": "Part III · Techniques and Soft Skills", "w": "Chapters 21–27 · the half nobody trains for", "ch": ["21", "22", "23", "24", "25", "26", "27"]}], "chapters": [{"ch": "01", "book": "Introduction", "acc": {"l": "#4F6088", "d": "#96A8D0"}, "url": "https://claude.ai/code/artifact/5c63e1b2-6a76-4cf4-a1ce-65c923d7b46d", "t": "What the Job Actually Is", "log": "Before any style or pattern: what the word architecture covers, the three laws that sit under every decision in the rest of the book, and the eight things an architect is expected to do — four of which have nothing to do with code.", "read": "4 min · 40 sec to re-scan", "figs": 11}, {"ch": "02", "book": "Architectural Thinking", "acc": {"l": "#4B6B4F", "d": "#93BE99"}, "url": "https://claude.ai/code/artifact/e327e832-9186-49ac-891b-69c80185642e", "t": "Seeing With an Architect's Eye", "log": "Where architecture stops and design begins, why breadth beats depth once you cross that line, how to keep breadth current on twenty minutes a day, and what trade-off analysis looks like when you actually do it properly.", "read": "5 min · 45 sec to re-scan", "figs": 9}, {"ch": "03", "book": "Modularity", "acc": {"l": "#8A5333", "d": "#DBA173"}, "url": "https://claude.ai/code/artifact/71813562-3557-4247-bf9f-825db8deb1e2", "t": "Measuring How It Holds Together", "log": "Modularity is an organising principle nobody puts in the requirements, and entropy eats it unless you spend energy on it. This chapter gives you the three tools for measuring it — cohesion, coupling and connascence — and the language to argue about coupling precisely.", "read": "5 min · 45 sec to re-scan", "figs": 7}, {"ch": "04", "book": "Architectural Characteristics Defined", "acc": {"l": "#2F6A6E", "d": "#86C3C7"}, "url": "https://claude.ai/code/artifact/c08e9a5d-46dd-4cd9-82aa-e54e6bb9f6bd", "t": "The Capabilities, Not the Behaviour", "log": "What actually qualifies as an architecture characteristic, the four families they fall into, and why supporting more of them makes the design worse rather than better.", "read": "4 min · 40 sec to re-scan", "figs": 6}, {"ch": "05", "book": "Identifying Architectural Characteristics", "acc": {"l": "#6B4276", "d": "#C296CE"}, "url": "https://claude.ai/code/artifact/94f5ab53-07bb-4844-a473-19fc8590b3a9", "t": "Translating What the Business Said", "log": "Stakeholders talk about time to market and user satisfaction; architects talk about deployability and fault tolerance. This chapter is the translation table, the trap of composite characteristics, and a technique for getting a room of people down to three priorities.", "read": "5 min · 45 sec to re-scan", "figs": 6}, {"ch": "06", "book": "Measuring and Governing Architecture Characteristics", "acc": {"l": "#6A6329", "d": "#C6BC72"}, "url": "https://claude.ai/code/artifact/945cfe59-1c03-4929-8324-1b39efbd8301", "t": "From Adjective to Build Failure", "log": "How to turn vague words into numbers you can measure, and then into automated checks that hold the design together when the schedule doesn't.", "read": "5 min · 40 sec to re-scan", "figs": 6}, {"ch": "07", "book": "The Scope of Architectural Characteristics", "acc": {"l": "#3B5F7D", "d": "#8FB6D2"}, "url": "https://claude.ai/code/artifact/86ab4998-06f2-4ad2-a3f1-384e216bc64f", "t": "Where One Set Ends and the Next Begins", "log": "The old frameworks assumed one set of characteristics for a whole system. Modern architectures don't work that way. The architecture quantum is the unit that fixes this — and it turns out to be the thing that chooses your style for you.", "read": "5 min · 40 sec to re-scan", "figs": 6}, {"ch": "08", "book": "Component-Based Thinking", "acc": {"l": "#8C4438", "d": "#DE9186"}, "url": "https://claude.ai/code/artifact/efc7cf01-586e-4483-98a0-e75b5634ff24", "t": "The Building Blocks You Actually Design", "log": "Components are where an architect sees the system — not classes, not services. How to find the first set, how to tell when one is doing too much, and the two coupling metrics that decide how painful the next change will be.", "read": "6 min · 45 sec to re-scan", "figs": 7}, {"ch": "09", "book": "Foundations", "acc": {"l": "#45566B", "d": "#9FB0C2"}, "url": "https://claude.ai/code/artifact/19ccb9d3-d93a-4f19-bae5-addd67d93321", "t": "Before the Catalogue", "log": "What a style actually commits you to, the one partitioning decision that shapes everything after it, and the eleven things about networks that distributed architectures will teach you the hard way if you let them.", "read": "7 min · 50 sec to re-scan", "figs": 7}, {"ch": "10", "book": "Layered Architecture Style", "acc": {"l": "#7A6224", "d": "#D2BC6C"}, "url": "https://claude.ai/code/artifact/f72fba19-5609-4577-9197-a3db3805fd2e", "t": "The One Everybody Already Built", "log": "The default architecture — the one you get by just starting to code. Cheap, simple, familiar, and degrading in every dimension as it grows. Worth knowing precisely, because you will inherit one.", "read": "4 min · 35 sec to re-scan", "figs": 3}, {"ch": "11", "book": "The Modular Monolith Architecture Style", "acc": {"l": "#38664B", "d": "#85C09A"}, "url": "https://claude.ai/code/artifact/b5b4ea38-d24d-4e9e-bf09-9d810013e1b1", "t": "A Monolith With Real Seams", "log": "New to the second edition, and popular for a reason: domain partitioning without the cost of going distributed. One deployment unit, modules by domain, and strict governance holding the boundaries.", "read": "5 min · 40 sec to re-scan", "figs": 4}, {"ch": "12", "book": "Pipeline Architecture Style", "acc": {"l": "#8A5220", "d": "#DFA25E"}, "url": "https://claude.ai/code/artifact/74728373-ee15-4576-941b-ec0d97bc95da", "t": "Pipes, Filters, and One Direction", "log": "Two component types and one rule about direction. It is the architecture behind every Unix shell pipeline, every ETL tool and every Step Function — and its whole value comes from what it refuses to let filters do.", "read": "4 min · 35 sec to re-scan", "figs": 3}, {"ch": "13", "book": "Microkernel Architecture Style", "acc": {"l": "#5A4E8C", "d": "#ADA2DC"}, "url": "https://claude.ai/code/artifact/fff6cb04-0b4f-4e9c-a198-96dc82dc840f", "t": "A Stable Core and Everything Else", "log": "Take the cyclomatic complexity out of the system, put it in plug-ins, and leave a core that does the happy path. The only style that can be either domain- or technically partitioned — and once you see it, you see it everywhere.", "read": "5 min · 40 sec to re-scan", "figs": 4}, {"ch": "14", "book": "Service-Based Architecture Style", "acc": {"l": "#2E6480", "d": "#85BCD8"}, "url": "https://claude.ai/code/artifact/9ed73dcd-2c5f-4fe4-8e84-cb423b112fb7", "t": "The Pragmatic Distributed One", "log": "A handful of coarse-grained domain services, a shared database, and none of the granularity problems. The cheapest way to be distributed — and the only distributed style that still gets ACID transactions.", "read": "5 min · 40 sec to re-scan", "figs": 3}, {"ch": "15", "book": "Event-Driven Architecture Style", "acc": {"l": "#8A5A12", "d": "#DDA954"}, "url": "https://claude.ai/code/artifact/039cbe7e-d75a-4cee-b653-0b3d0f75ab55", "t": "Reacting Instead of Requesting", "log": "The longest chapter in the book, and the densest. Fire-and-forget processors reacting to things that already happened — with a payload decision, a granularity decision, a topology decision and a data decision, each of which can sink it.", "read": "9 min · 60 sec to re-scan", "figs": 10}, {"ch": "16", "book": "Space-Based Architecture Style", "acc": {"l": "#4C6478", "d": "#A3B8C8"}, "url": "https://claude.ai/code/artifact/a6d076a1-c43c-4bd3-961c-e2236e40a411", "t": "Taking the Database Out of the Path", "log": "Built for one problem: extreme and unpredictable concurrency. It solves it by removing the database from the transaction path entirely and replacing it with replicated in-memory grids — and everything hard about it follows from that one move.", "read": "6 min · 45 sec to re-scan", "figs": 5}, {"ch": "17", "book": "Orchestration-Driven Service-Oriented Architecture", "acc": {"l": "#7A4A63", "d": "#CE9CB6"}, "url": "https://claude.ai/code/artifact/1a84aabe-8be7-408f-bbc8-f1a44a1cba75", "t": "The Lesson Reuse Taught", "log": "An architecture that made complete sense in its era and failed anyway. Worth knowing not to build, but to understand what the industry learned — because microservices, DDD and team topologies are all reactions to it.", "read": "4 min · 35 sec to re-scan", "figs": 3}, {"ch": "18", "book": "Microservices Architecture", "acc": {"l": "#2F6350", "d": "#82BFA8"}, "url": "https://claude.ai/code/artifact/6b90bacc-aec3-4cd2-b50d-4dcca171c5d6", "t": "Duplication Over Coupling", "log": "Domain partitioning taken to its physical limit: one bounded context per service, its own database inside it, and duplication preferred to reuse. The style that earns the most five-star ratings in the book, and charges for every one.", "read": "7 min · 50 sec to re-scan", "figs": 5}, {"ch": "19", "book": "Choosing the Appropriate Architecture Style", "acc": {"l": "#806418", "d": "#D6BC5F"}, "url": "https://claude.ai/code/artifact/f1c93f65-99d8-4d87-a53b-8f0e663118b8", "t": "It Depends, With a Method", "log": "The chapter that refuses to answer the question — and then gives you the seven things to know first, the three decisions to make in order, and two worked designs that show what the answer looks like.", "read": "4 min · 35 sec to re-scan", "figs": 4}, {"ch": "20", "book": "Architectural Patterns", "acc": {"l": "#4A4F8C", "d": "#A0A5DC"}, "url": "https://claude.ai/code/artifact/c68478b9-da9e-40de-a713-1a4f51914868", "t": "Patterns Under the Implementations", "log": "A style is a named topology. A pattern is a contextualised solution to a problem. Four patterns that show up inside the styles you've already read — and why naming the pattern before the tool matters.", "read": "4 min · 30 sec to re-scan", "figs": 3}, {"ch": "21", "book": "Architectural Decisions", "acc": {"l": "#7E3B3B", "d": "#D18E8E"}, "url": "https://claude.ai/code/artifact/0e23b1dc-ecda-406c-b984-d714d6d14f8a", "t": "Writing Down the Why", "log": "Three antipatterns that stop decisions from happening, sticking, or being known — and the one-page format that fixes all three, doubles as documentation, and turns standards into something developers will actually follow.", "read": "5 min · 40 sec to re-scan", "figs": 4}, {"ch": "22", "book": "Analyzing Architecture Risk", "acc": {"l": "#8A5C1E", "d": "#DCA95E"}, "url": "https://claude.ai/code/artifact/aa3e1fc8-7d2d-4b4a-a5b8-0ed05eed6a35", "t": "Making Risk a Number", "log": "Risk is an opinion until you multiply two ratings together. A matrix, an assessment grid that shows direction as well as level, and a three-phase collaborative exercise that finds the risks one architect never would.", "read": "5 min · 40 sec to re-scan", "figs": 4}, {"ch": "23", "book": "Diagramming Architecture", "acc": {"l": "#3D6570", "d": "#92BCC7"}, "url": "https://claude.ai/code/artifact/72c77629-8ff4-43a7-b941-56c4c1e5e6b4", "t": "Drawing It So People Understand", "log": "However good the idea, nobody funds or builds what they can't picture. Representational consistency, semantic layers, three standards worth knowing, and the antipattern that makes architects defend bad diagrams.", "read": "3 min · 30 sec to re-scan", "figs": 4}, {"ch": "24", "book": "Making Teams Effective", "acc": {"l": "#63528A", "d": "#B4A4D9"}, "url": "https://claude.ai/code/artifact/fb8a83ac-ee12-4ca3-89aa-a20ce636d120", "t": "The Room You Build For Them", "log": "An architect who designs alone and hands the result over gets an architecture nobody implements correctly. This is the other half of the job: how much to be involved, when the team has grown too big, and how to give guidance that isn't control.", "read": "5 min · 40 sec to re-scan", "figs": 4}, {"ch": "25", "book": "Negotiation and Leadership Skills", "acc": {"l": "#8A4A32", "d": "#DB9878"}, "url": "https://claude.ai/code/artifact/b6ceb8ca-2744-4a71-a271-26e3fa4d9b2a", "t": "Almost Every Decision Gets Challenged", "log": "Roughly half of being an effective architect is people skills. Three negotiations — with stakeholders, with other architects, with developers — and the language changes that decide whether anyone collaborates with you.", "read": "5 min · 40 sec to re-scan", "figs": 4}, {"ch": "26", "book": "Architectural Intersections", "acc": {"l": "#4E6B58", "d": "#9CC2A9"}, "url": "https://claude.ai/code/artifact/d068f55d-22ce-462a-b4a0-bdf513f9ced8", "t": "Nine Things That Must Point the Same Way", "log": "A correct architecture can still fail. Nine alignments decide whether it works in practice — and the ones architects skip are the ones that take systems down at 80,000 concurrent users.", "read": "5 min · 40 sec to re-scan", "figs": 4}, {"ch": "27", "book": "The Laws of Software Architecture, Revisited", "acc": {"l": "#3F5B8A", "d": "#92AAD6"}, "url": "https://claude.ai/code/artifact/d71a7430-2949-409e-87eb-73cdab142d6b", "t": "Only Trade-Offs, All The Way Down", "log": "The three laws again, with the analysis method attached: two worked trade-off tables, the corollary about the trade-off you haven't found yet, and why weighting the criteria matters more than counting them.", "read": "4 min · 35 sec to re-scan", "figs": 4}], "source": "Adapted from Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). The companies, people and incidents in each chapter are invented; the ideas, terms and trade-offs are the book's.", "links": [["The Architect's Atlas", "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"]]};
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const $=s=>document.querySelector(s);
+
+function row(c){
+  const live=!!c.url;
+  const inner='<span class="n a'+c.ch+'">'+esc(c.ch)+'<span class="sw"></span></span>'+
+    '<span class="mid"><span class="bk">Chapter '+(+c.ch)+(live?' &middot; '+esc(c.book):"")+'</span>'+
+    '<h3>'+esc(live?c.t:c.book)+'</h3>'+
+    (c.log?'<span class="log">'+esc(c.log)+'</span>':"")+'</span>'+
+    '<span class="meta">'+(live
+      ? '<span>'+c.figs+' figures</span><span>'+esc(c.read)+'</span><span class="go">Read &rarr;</span>'
+      : '<span>not drawn yet</span>')+'</span>';
+  return live
+    ? '<a class="row a'+c.ch+'" href="'+c.url+'" target="_blank" rel="noopener">'+inner+'</a>'
+    : '<div class="row todo a'+c.ch+'">'+inner+'</div>';
+}
+
+const drawn=D.chapters.filter(c=>c.url).length, N=D.chapters.length;
+$("#tbT").textContent=D.title; $("#tbN").textContent=N; $("#tbD").textContent=drawn+" / "+N;
+$("#hEy").textContent=D.eyebrow; $("#hT").textContent=D.title;
+$("#hL").textContent=D.lede; $("#hN").textContent=D.note;
+$("#tD").textContent=String(drawn).padStart(2,"0");
+$("#tO").textContent="of "+N+" drawn";
+$("#tB").style.width=(drawn/N*100)+"%";
+$("#parts").innerHTML=D.parts.map(p=>
+  '<section class="part"><div class="parthead"><h2>'+esc(p.t)+'</h2>'+
+  '<span class="lbl">'+esc(p.w)+'</span></div><div class="rows">'+
+  D.chapters.filter(c=>p.ch.includes(c.ch)).map(row).join("")+'</div></section>').join("");
+$("#cite").textContent=D.source||"";
+$("#links").innerHTML=(D.links||[]).map(l=>'<a href="'+l[1]+'" target="_blank" rel="noopener">'+
+  esc(l[0])+' &#8599;</a>').join(" &middot; ");
+</script>

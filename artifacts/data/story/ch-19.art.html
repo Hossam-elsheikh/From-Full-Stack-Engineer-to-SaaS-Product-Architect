@@ -1,0 +1,129 @@
+<!-- Drawings for chapter 19 · Choosing the Appropriate Architecture Style -->
+
+<!--@ criteria -->
+<svg viewBox="0 0 620 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="6" y="30" width="196" height="52" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="212" y="30" width="196" height="52" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="418" y="30" width="196" height="52"/>
+    <rect x="6" y="94" width="196" height="52"/><rect x="212" y="94" width="196" height="52"/>
+    <rect x="418" y="94" width="196" height="52"/>
+    <rect x="110" y="158" width="400" height="46" stroke="var(--acc)" stroke-width="1.7"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="6" y="20" text-anchor="start" font-size="8.6" letter-spacing="1.6" fill="var(--ink3)">KNOW ALL SEVEN BEFORE YOU CHOOSE A STYLE</text>
+    <g font-size="9.4" fill="var(--ink)">
+      <text x="104" y="50" fill="var(--acc)">the domain</text>
+      <text x="310" y="50" fill="var(--acc)">architecture characteristics</text>
+      <text x="516" y="50">data architecture</text>
+      <text x="104" y="114">cloud deployment</text>
+      <text x="310" y="114">organisational factors</text>
+      <text x="516" y="114">process, teams, operations</text>
+      <text x="310" y="178" fill="var(--acc)">domain / architecture isomorphism</text>
+    </g>
+    <g font-size="8" fill="var(--ink2)">
+      <text x="104" y="68">not expert — but the parts that</text>
+      <text x="310" y="68">the real difference between styles</text>
+      <text x="516" y="68">especially if an older one already exists</text>
+      <text x="104" y="132">on-prem and cloud are different trade-offs</text>
+      <text x="310" y="132">a vendor's price can veto the right design</text>
+      <text x="516" y="132">no Agile maturity, no microservices</text>
+      <text x="310" y="194">does the shape of the style match the shape of the problem?</text>
+    </g>
+  </g>
+</svg>
+
+<!--@ isomorphism -->
+<svg viewBox="0 0 620 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="20" y="36" width="120" height="14"/><rect x="20" y="56" width="120" height="14"/>
+    <rect x="20" y="76" width="120" height="14"/><rect x="20" y="96" width="120" height="14"/>
+    <g stroke="var(--acc)" stroke-width="1.5">
+      <rect x="182" y="36" width="26" height="74"/><rect x="214" y="36" width="26" height="74"/>
+      <rect x="246" y="36" width="26" height="74"/><rect x="278" y="36" width="26" height="74"/>
+    </g>
+    <rect x="356" y="36" width="106" height="74"/>
+    <g stroke="var(--acc)" stroke-width="1.5">
+      <rect x="498" y="36" width="46" height="30"/><rect x="556" y="36" width="46" height="30"/>
+      <rect x="498" y="80" width="46" height="30"/><rect x="556" y="80" width="46" height="30"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.2">
+    <text x="80" y="26" fill="var(--ink)">LAYERED</text>
+    <text x="243" y="26" fill="var(--acc)">MODULAR MONOLITH</text>
+    <text x="409" y="26" fill="var(--ink)">MONOLITHIC</text>
+    <text x="550" y="26" fill="var(--acc)">DISTRIBUTED</text>
+    <text x="80" y="128" font-size="7.8" fill="var(--ink2)">separated by layer</text>
+    <text x="243" y="128" font-size="7.8" fill="var(--ink2)">separated by domain</text>
+    <text x="409" y="128" font-size="7.8" fill="var(--ink2)">one deployment</text>
+    <text x="550" y="128" font-size="7.8" fill="var(--ink2)">many</text>
+    <text x="310" y="164" font-size="9" fill="var(--ink)">Isomorphism: the generic shape of an architecture — how its components depend on each other.</text>
+    <text x="310" y="184" font-size="8.6" fill="var(--acc)">Microkernel fits customisation. Space-based fits genome analysis — lots of discrete operations.</text>
+    <text x="310" y="204" font-size="8.6" fill="var(--ink2)">A multipage insurance form where every page depends on the last is a *highly coupled problem*.</text>
+    <text x="310" y="218" font-size="8.6" fill="var(--ink2)">Modelling it in microservices fights the domain. Service-based suits it better.</text>
+  </g>
+</svg>
+
+<!--@ three-questions -->
+<svg viewBox="0 0 620 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="14" y="46" width="170" height="54" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="226" y="46" width="170" height="54" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <rect x="438" y="46" width="170" height="54" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <g stroke="var(--ink3)" stroke-width="1.3">
+      <path d="M184 73 H226 M396 73 H438"/>
+      <path d="M218 69 l8 4 l-8 4 M430 69 l8 4 l-8 4"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <g font-size="9.4" fill="var(--acc)">
+      <text x="99" y="70">monolith or distributed?</text>
+      <text x="311" y="70">where does data live?</text>
+      <text x="523" y="70">sync or async?</text>
+    </g>
+    <g font-size="8" fill="var(--ink2)">
+      <text x="99" y="86">one set of characteristics,</text><text x="99" y="96">or several?</text>
+      <text x="311" y="86">which services persist —</text><text x="311" y="96">and how does data flow?</text>
+      <text x="523" y="86">convenience against</text><text x="523" y="96">scale and reliability</text>
+    </g>
+    <text x="310" y="140" font-size="9.4" fill="var(--ink)">Default to synchronous. Go asynchronous only when you must.</text>
+    <text x="310" y="164" font-size="8.6" fill="var(--ink2)">The output is not just a topology: it is the topology, the ADRs for the decisions that took the most work,</text>
+    <text x="310" y="178" font-size="8.6" fill="var(--ink2)">and the fitness functions that protect the principles you just committed to.</text>
+  </g>
+</svg>
+
+<!--@ ggg-quanta -->
+<svg viewBox="0 0 620 240" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <g stroke="var(--acc)" stroke-width="1.7" stroke-dasharray="6 4">
+      <rect x="8" y="30" width="120" height="80" fill="var(--accBg)"/>
+      <rect x="146" y="30" width="150" height="80" fill="var(--accBg)"/>
+      <rect x="314" y="30" width="126" height="80" fill="var(--accBg)"/>
+      <rect x="8" y="130" width="266" height="72" fill="var(--accBg)"/>
+      <rect x="292" y="130" width="148" height="72" fill="var(--accBg)"/>
+      <rect x="458" y="30" width="150" height="172" fill="var(--accBg)"/>
+    </g>
+    <g stroke-width="1.3">
+      <rect x="22" y="50" width="92" height="26"/>
+      <rect x="160" y="50" width="56" height="26"/><rect x="226" y="50" width="56" height="26"/>
+      <rect x="328" y="50" width="98" height="26"/>
+      <rect x="22" y="150" width="110" height="26"/><rect x="148" y="150" width="112" height="26"/>
+      <rect x="306" y="150" width="120" height="26"/>
+      <rect x="474" y="50" width="118" height="26"/><rect x="474" y="100" width="118" height="26"/>
+      <rect x="474" y="150" width="118" height="26"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="7.4">
+    <text x="8" y="20" text-anchor="start" font-size="8.6" letter-spacing="1.4" fill="var(--ink3)">GOING, GOING, GONE — FIVE QUANTA</text>
+    <text x="68" y="67" fill="var(--ink2)">Bid Capture</text>
+    <text x="188" y="67" fill="var(--ink2)">Video Capture</text><text x="254" y="67" fill="var(--ink2)">Video Stream</text>
+    <text x="377" y="67" fill="var(--ink2)">Auctioneer Capture</text>
+    <text x="77" y="167" fill="var(--ink2)">Bid Tracker</text><text x="204" y="167" fill="var(--ink2)">Bid Streamer</text>
+    <text x="366" y="167" fill="var(--ink2)">Auction Session</text>
+    <text x="533" y="67" fill="var(--ink2)">Payment</text>
+    <text x="533" y="117" fill="var(--ink2)">— one every 500 ms</text>
+    <text x="533" y="167" fill="var(--ink2)">third party</text>
+    <text x="310" y="224" font-size="8.6" fill="var(--ink)">Async between Auction Session and Payment: a thousand auctions closing at once against one payment every 500 ms.</text>
+    <text x="310" y="236" font-size="8.4" fill="var(--acc)">Not the correct design. Not the only one. The one with the least worst trade-offs.</text>
+  </g>
+</svg>

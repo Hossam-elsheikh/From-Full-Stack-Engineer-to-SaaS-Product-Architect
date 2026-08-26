@@ -1,0 +1,142 @@
+{
+ "ch": "08",
+ "book": "Chapter 8 · Component-Based Thinking",
+ "pages": "pp. 107–128",
+ "title": "The Building Blocks You Actually Design",
+ "gist": "Components are where an architect sees the system — not classes, not services. How to find the first set, how to tell when one is doing too much, and the two coupling metrics that decide how painful the next change will be.",
+ "read": "6 min · 45 sec to re-scan",
+ "acc": {
+  "l": "#8C4438",
+  "d": "#DE9186"
+ },
+ "minute": [
+  "A **logical component** is a major function of the system, and it lives in a namespace or directory. The **leaf nodes** of the tree are the components; the nodes above them are domains and subdomains.",
+  "Build the **logical** architecture before the physical one. Logical shows what the system does and how the parts meet; physical shows services, UIs and databases. Skip the logical and teams get no guidance on where code goes.",
+  "Find the initial components by **workflow** (a component per step of the happy path) or by **actor/action** (the actions each actor takes — the system is an actor too). Avoid the **Entity Trap**: one component per entity, all named *Manager*.",
+  "Test a component by writing its responsibility out loud. Count the **ands**, *also*, *in addition*, *as well as* and the commas. Too many conjunctions means too many responsibilities.",
+  "**Afferent coupling (Ca)** is who depends on you; **efferent (Ce)** is who you depend on. The **Law of Demeter** — limit what a component *knows* — reduces one component's coupling by moving it elsewhere, not by removing it."
+ ],
+ "sections": [
+  {
+   "t": "A component is a directory",
+   "art": "namespace",
+   "alt": "A directory tree whose leaf node maps to one logical component",
+   "cap": "Fig. 8-3 · `order_entry/ordering/payment` is the Payment Processing component.",
+   "p": "Think of the rooms in a house: kitchen, bedrooms, bathroom, office. Each serves a purpose, and together they are the building. The major functions of a system work the same way — and they are usually manifested as a namespace or a directory holding the source that implements them. Which means you can read an unfamiliar system's logical architecture straight off its directory tree."
+  },
+  {
+   "t": "Logical before physical",
+   "art": "log-vs-phys",
+   "wide": true,
+   "alt": "A logical architecture of components and actors beside a physical architecture of UI, services and a database",
+   "cap": "Figs. 8-4 and 8-5 · one shows where the functionality is; the other shows what gets deployed.",
+   "p": "A logical architecture shows components, their interactions, the actors who use them, and sometimes a repository to show where data moves. It shows no user interface, no database, no services. It is also generally **independent of** the physical architecture: you can draw it before deciding between a monolith and a distributed system.",
+   "items": [
+    "Many architects skip straight to physical. The cost: in a physical diagram, payment-processing logic may be smeared across three services, so you cannot see how it relates to anything.",
+    "The other cost is that development teams get no guidance on how to organise code — which produces unstructured architectures that are hard to maintain, test and deploy.",
+    "The physical architecture should end up closely resembling one of the styles in Part II. The logical one is what tells you which."
+   ]
+  },
+  {
+   "t": "The loop that never closes",
+   "art": "cycle",
+   "alt": "A four-step cycle from identifying components through to analysing characteristics, feeding back to the start",
+   "cap": "Fig. 8-6 · works for greenfield systems and for every feature added to an existing one.",
+   "p": "The common mistake is spending too much effort making the first set of components perfect — at exactly the moment you know least about the system. Make a **best guess** from the core functionality and refine. Initial components are empty buckets: the name states the intended role, and it stays a placeholder until user stories start filling it."
+  },
+  {
+   "t": "Two good approaches and one trap",
+   "art": "approaches",
+   "wide": true,
+   "alt": "Workflow and actor/action approaches beside the entity trap antipattern",
+   "cap": "Both good approaches let you identify components *before* you have detailed requirements.",
+   "items": [
+    "**Workflow** — walk the major happy-path journeys and assign a component to each step. Browse → Item Browser, place → Order Placement, pay → Order Payment. Not every step earns its own: emailing at step 4 and step 7 is the same Customer Notification component.",
+    "**Actor/Action** — list the actors and the major actions each performs. Customer, order packer, and the **system** itself, which does the automated work like billing and restocking. Generally produces more components than workflow.",
+    "**The Entity Trap** — one component per entity: Customer Manager, Item Manager, Order Manager. A suffix like *Manager*, *Supervisor*, *Controller*, *Handler*, *Engine* or *Processor* is the tell."
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "“Order Manager” — what does it do?",
+   "art": "approaches",
+   "wide": true,
+   "alt": "Workflow and actor/action approaches beside the entity trap antipattern",
+   "sit": "You have identified Customer, Item and Order as the primary entities of an order-entry system. The obvious next move is a Customer Manager, an Item Manager and an Order Manager component.",
+   "opts": [
+    [
+     "Go with the entity components. They map to the domain.",
+     "Three problems. The names describe nothing — *what does Order Manager do?* *It manages orders.* They become dumping grounds: validation, placement, history, fulfilment, shipping and tracking all land in one place. And coarse-grained components are hard to maintain, test and deploy."
+    ],
+    [
+     "Derive them from workflow or actor/action instead.",
+     "You get **Validate Order** rather than **Order Manager** — a name that states a role, a component with one job, and a natural size.",
+     1
+    ]
+   ],
+   "verdict": "There is one honest exception. If the system genuinely is CRUD over entities and nothing more, then it **doesn't need an architecture** — it needs a CRUD framework or a low-code environment that generates most of the code. Recognising that is also an architectural decision."
+  },
+  {
+   "k": "decision",
+   "t": "Which component sends the emails?",
+   "art": "responsibility",
+   "alt": "One overloaded component splitting into four with clearer responsibilities",
+   "sit": "A user story: *as a customer, I would like an email each time my order status changes.* Status changes when the order is placed, when it is ready for shipment, and when it ships. Your existing components are Order Placement, Order Fulfillment, Order Shipment and Inventory Management.",
+   "opts": [
+    [
+     "Put the emailing code in all three.",
+     "The story is implemented as source code that has to live in a directory. Replicating it across three components replicates the maintenance three ways."
+    ],
+    [
+     "Create a Customer Notification component and have the three call it.",
+     "One home for the code, three coupling points into it. The components evolved because a user story arrived — which is what the loop is for.",
+     1
+    ]
+   ],
+   "verdict": "This is also the moment to run the **responsibility statement** test on a component that's grown. Write out what Order Placement does — validate, display the cart, determine the address, collect payment information, generate an order ID, *and also* apply payment, *in addition* adjust inventory, *as well as* email the customer. Count the conjunctions. Payment, inventory and notification each leave and become their own component."
+  },
+  {
+   "t": "Coupling between components",
+   "art": "demeter",
+   "alt": "One component depending on four others, then the same component depending on one",
+   "cap": "Figs. 8-14 and 8-15 · applying the Law of Demeter to Order Placement.",
+   "items": [
+    "**Afferent (Ca)** — incoming, fan-in. Customer Notification is called by Order Placement and Order Shipment, so Ca = 2.",
+    "**Efferent (Ce)** — outgoing, fan-out. Order Placement depends on Order Fulfillment, so Ce = 1.",
+    "**Temporal coupling** — a non-static dependency based on timing or transactions: Order Placement must run before Order Shipment. Current tooling can barely detect it, so it surfaces in design documents or in error conditions."
+   ],
+   "p": "The **Law of Demeter** — the Principle of Least Knowledge — says a component should have limited knowledge of other components. Demeter produced the world's grain and had no idea what anyone did with it. Order Placement knowing that inventory must be decremented, that stock may need reordering, that prices may need adjusting and that an email must go out is a lot of knowledge, and knowledge is coupling. Defer the last three to Inventory Management and Order Placement's Ce drops from four to one — **but Inventory Management's rises**. Demeter redistributes coupling; it does not delete it."
+  },
+  {
+   "k": "decision",
+   "t": "One Bid Capture component, or two?",
+   "art": "ggg",
+   "wide": true,
+   "alt": "The Going, Going, Gone components with Bid Capture split into bidder and auctioneer capture",
+   "sit": "In the Going, Going, Gone auction system, bids arrive from two places: thousands of online **bidders**, and one **auctioneer** in the room. Functionally the capture is identical — a bid is a bid.",
+   "opts": [
+    [
+     "One Bid Capture component. Same function, same code.",
+     "Functionally correct, and it forces one set of characteristics on two very different loads. The auctioneer does not need the scalability or elasticity of thousands of bidders."
+    ],
+    [
+     "Split it: Bid Capture and Auctioneer Capture.",
+     "Now each gets the characteristics it actually needs. A bidder losing their connection is bad for business. The **auctioneer** losing theirs stops the auction.",
+     1
+    ]
+   ],
+   "verdict": "This is the fourth step of the loop doing its job: functional analysis says one component, **characteristics analysis says two**. Bid Tracker then becomes the component that unifies two very different streams — one from the auctioneer, thousands from bidders. And this is not the final design either; registration and payment administration are still missing. Don't hunt for the one true design. Assess trade-offs and take the least worst set."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 8: Component-Based Thinking, pp. 107–128. Going, Going, Gone runs as a case study through several later chapters.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

@@ -1,0 +1,123 @@
+{
+ "ch": "21",
+ "book": "Chapter 21 · Architectural Decisions",
+ "pages": "pp. 387–403",
+ "title": "Writing Down the Why",
+ "gist": "Three antipatterns that stop decisions from happening, sticking, or being known — and the one-page format that fixes all three, doubles as documentation, and turns standards into something developers will actually follow.",
+ "read": "5 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#7E3B3B",
+  "d": "#D18E8E"
+ },
+ "minute": [
+  "Three antipatterns in sequence: **Covering Your Assets** (you avoided deciding), **Groundhog Day** (you decided and never justified it), **Email-Driven Architecture** (you justified it in an email nobody can find).",
+  "**Last responsible moment**: decide when the cost of deferring exceeds the risk of deciding. Later means lower risk and higher cost; the crossing point is the moment.",
+  "A decision is **architecturally significant** if it affects structure, non-functional characteristics, dependencies, interfaces, or construction techniques. A technology choice made to protect a characteristic *is* an architectural decision.",
+  "An **ADR** is one to two pages: Title, Status, Context, Decision, Consequences — plus **Compliance** (how it will be governed) and **Notes** (who, when, approved by whom).",
+  "Justify **technically and commercially**. Decoupling for cheaper VMs is a technical justification; *faster time to market* is why the business should pay for it. If there's no business value, reconsider the decision."
+ ],
+ "sections": [
+  {
+   "t": "Three antipatterns, in order",
+   "art": "antipatterns",
+   "wide": true,
+   "alt": "Covering Your Assets leading to Groundhog Day leading to Email-Driven Architecture",
+   "cap": "They chain: solving each one delivers you to the next.",
+   "items": [
+    "**Covering Your Assets** — deferring a decision out of fear of getting it wrong. Two cures: decide at the **last responsible moment**, and **collaborate with the development teams** so you find out early when a decision can't be implemented as designed.",
+    "**Groundhog Day** — nobody knows why the decision was made, so it gets discussed again, and again, and never resolves. The cure is justification, and it must be **both technical and business**: the four common business justifications are cost, time to market, user satisfaction and strategic positioning. Pick the one the stakeholders actually care about.",
+    "**Email-Driven Architecture** — the decision is lost, forgotten, or unknown. Putting the decision *in* an email creates as many systems of record as there are inboxes, usually missing the justification, and there is no way to know who received the revision."
+   ],
+   "p": "The fix is one sentence long: *“I've made an important decision about communication between services that directly impacts you. Please see the decision here: [link].”* Context in the body, decision behind a link — and **“directly impacts you”** is also the test for who needs the email at all."
+  },
+  {
+   "k": "decision",
+   "t": "You don't feel ready to decide yet",
+   "art": "last-moment",
+   "alt": "Cost rising and risk falling over time, crossing at the last responsible moment",
+   "sit": "Teams are waiting on a caching decision. You don't have complete information. More analysis would reduce the risk of being wrong — and every week of analysis costs delivery time.",
+   "opts": [
+    [
+     "Defer until you're confident.",
+     "Cost climbs, and confidence never arrives. This is **Covering Your Assets**, and its terminal form is **Analysis Paralysis** — permanently analysing a decision instead of making it."
+    ],
+    [
+     "Decide at the last responsible moment.",
+     "When there is enough information to justify and validate the decision, but not so late that teams are blocked. **Ask when the cost of deferring exceeds the risk of deciding** — that intersection is the moment.",
+     1
+    ]
+   ],
+   "verdict": "The second cure matters as much: **collaborate with the teams implementing it**. You decide that product reference data will be held in a read-only replicated cache owned by Catalog, to avoid interservice calls. The teams discover that the scalability requirements make the in-process memory unaffordable. Because you were close to them, you learn that in days and adjust — instead of learning it in production."
+  },
+  {
+   "t": "What makes a decision architecturally significant",
+   "art": "adr-structure",
+   "wide": true,
+   "alt": "The seven sections of an architecture decision record with example content",
+   "cap": "Michael Nygard's structure, plus Compliance and Notes.",
+   "items": [
+    "**Structure** — decisions affecting the patterns or styles in use. Sharing code between microservices changes their bounded contexts, and therefore the structure of the system.",
+    "**Non-functional characteristics** — if a technology choice affects a characteristic that matters, it is architectural, even though it names a specific product.",
+    "**Dependencies** — coupling points between components and services, which drive scalability, modularity, agility, testability and reliability.",
+    "**Interfaces** — how things are accessed and orchestrated, which means contracts, versioning and deprecation strategy, which affects everyone using the system.",
+    "**Construction techniques** — platforms, frameworks, tools and even processes that, while technical, touch some aspect of the architecture."
+   ],
+   "p": "On **Status**: *Proposed* needs higher approval, *Accepted* is ready to implement, *Superseded* points at the ADR that replaced it — and the replacement points back. That trail is what prevents someone reopening “but what about messaging?” two years later. A useful fourth status is **RFC with a deadline**, which turns the draft into a real invitation to collaborate before you commit."
+  },
+  {
+   "t": "Why the Decision section is the valuable one",
+   "art": "adr-storage",
+   "alt": "A directory tree with application, common, integration and enterprise ADR folders",
+   "cap": "Fig. 21-5 · a dedicated ADR repository or wiki — not the application's own Git repo.",
+   "p": "State decisions in the **affirmative, commanding voice**: *“We will use asynchronous messaging between services.”* Not *“I think messaging would be best”*, which leaves it unclear whether a decision was even made. Then justify it — because understanding *why* matters far more than understanding how, and people who understand the reasoning are more likely to agree with it.",
+   "items": [
+    "The cautionary example: gRPC was chosen between two services to cut latency, at the cost of tight coupling. Years later a new architect standardised on REST for consistency, not knowing why gRPC was there — and caused timeouts in upstream systems. **An ADR would have prevented it.**",
+    "**Consequences** is where the trade-off analysis lives. Asynchronous review posting takes responsiveness from 3,100 ms to 25 ms and buys complicated error handling. If the discussion with the business is recorded there, the developer who objects can read the answer instead of reopening it.",
+    "**Storage**: a dedicated ADR Git repository everyone can reach, or a wiki, or a shared directory. Not the application's repo — not everyone has access, and integration and enterprise decisions have no application to live under.",
+    "**Structure it by scope**: `application/common`, `application/app1`, `integration`, `enterprise`. An enterprise ADR looks like *“all access to a system database will only be from the owning system.”*"
+   ]
+  },
+  {
+   "k": "decision",
+   "t": "Can an LLM make this architectural decision?",
+   "art": "antipatterns",
+   "wide": true,
+   "alt": "Covering Your Assets leading to Groundhog Day leading to Email-Driven Architecture",
+   "sit": "Should payment processing be one service or one per payment type? Messaging, streaming or event sourcing downstream? One database or several? These are exactly the questions people now put to a model.",
+   "opts": [
+    [
+     "Ask it for the answer.",
+     "LLMs answer largely on **probability** — the most probable answer given the prompt, and the “best practice” for the problem. **Probability and best practices have no place in architectural decisions**, because every situation and environment differs."
+    ],
+    [
+     "Ask it to enumerate the trade-offs you might have missed.",
+     "The authors' own experiments land here: generative AI is useful for outlining possible trade-offs and catching ones you overlooked. **It has knowledge; it lacks the wisdom to choose.**",
+     1
+    ]
+   ],
+   "verdict": "The reason is concrete. One payment service performs better; several are more maintainable. Which is right depends on translating a **business concern** — time to market, say — into an **architectural characteristic**, and that translation takes years of experience and specific context to get right. If time to market dominates, maintainability beats performance and separate services win. Change the business concern and the same question has the opposite answer."
+  },
+  {
+   "t": "Two uses people miss",
+   "art": "adr-storage",
+   "alt": "A directory tree with application, common, integration and enterprise ADR folders",
+   "cap": "ADRs as documentation, and ADRs as standards.",
+   "items": [
+    "**As documentation.** Diagramming has emerging standards — C4, ArchiMate — but documenting architecture has none. ADRs fill the gap: **Context** describes the area of the system and its alternatives, **Decision** records why, and **Consequences** carries the trade-off analysis. That is the best architectural documentation available.",
+    "**As standards.** Very few developers like standards, largely because standards are often about control. An ADR forces a standard to state *why it needs to exist* — which is a good test of whether it should. If you cannot justify it, it is probably not a standard worth enforcing, and the more developers understand the reason, the more they follow it without challenge.",
+    "**On existing systems.** Write ADRs for the significant decisions already made, and use the exercise to ask whether each one is still right. Why *are* those services sharing a database? Often the person who decided has left, and then it falls to you to identify the alternatives, analyse the trade-offs, and either validate the existing decision or find the inefficiency."
+   ]
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 21: Architectural Decisions, pp. 387–403. ADRs are Michael Nygard's, from a 2011 post; Thoughtworks Radar recommended adoption in 2017.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}

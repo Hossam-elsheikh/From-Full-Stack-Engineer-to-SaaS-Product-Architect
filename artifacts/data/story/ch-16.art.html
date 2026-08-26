@@ -1,0 +1,167 @@
+<!-- Drawings for chapter 16 · Space-Based Architecture Style -->
+
+<!--@ bottleneck-triangle -->
+<svg viewBox="0 0 300 216" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="24" y="30" width="252" height="34"/>
+    <rect x="66" y="80" width="168" height="34"/>
+    <rect x="112" y="130" width="76" height="34" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.9"/>
+    <g stroke="var(--ink3)" stroke-width="1.2"><path d="M150 64 V80 M150 114 V130"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.4">
+    <text x="150" y="52" font-size="9.4" fill="var(--ink)">web servers</text>
+    <text x="150" y="102" font-size="9.4" fill="var(--ink)">application servers</text>
+    <text x="150" y="152" font-size="9.4" fill="var(--acc)">database</text>
+    <text x="290" y="52" text-anchor="end" font-size="7.6" fill="var(--ink2)">easy, cheap</text>
+    <text x="290" y="102" text-anchor="end" font-size="7.6" fill="var(--ink2)">harder, dearer</text>
+    <text x="290" y="152" text-anchor="end" font-size="7.6" fill="var(--acc)">hardest</text>
+    <text x="150" y="188" fill="var(--ink)">Scale the top and the bottleneck moves down a layer.</text>
+    <text x="150" y="204" fill="var(--acc)">Eventually it stops moving, and the database is the ceiling.</text>
+  </g>
+</svg>
+
+<!--@ sba-topology -->
+<svg viewBox="0 0 620 270" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="14" y="34" width="316" height="122" stroke="var(--ink3)" stroke-dasharray="6 4"/>
+    <g stroke="var(--acc)" stroke-width="1.6">
+      <rect x="30" y="52" width="90" height="88" fill="var(--accBg)"/>
+      <rect x="132" y="52" width="90" height="88" fill="var(--accBg)"/>
+      <rect x="234" y="52" width="80" height="88" fill="var(--accBg)"/>
+      <path d="M120 96 H132 M222 96 H234" stroke-dasharray="4 3"/>
+      <rect x="42" y="96" width="66" height="30"/><rect x="144" y="96" width="66" height="30"/>
+      <rect x="246" y="96" width="56" height="30"/>
+    </g>
+    <rect x="14" y="176" width="316" height="34"/>
+    <g stroke="var(--ink3)" stroke-width="1.2"><path d="M172 156 V176"/></g>
+    <rect x="378" y="52" width="52" height="30"/><rect x="378" y="110" width="52" height="30"/>
+    <rect x="452" y="52" width="70" height="30"/><rect x="452" y="110" width="70" height="30"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <path d="M330 76 H378 M330 116 H378 M430 67 H452 M430 125 H452"/>
+    </g>
+    <ellipse cx="570" cy="88" rx="42" ry="9"/><path d="M528 88 v16 a42 9 0 0 0 84 0 v-16"/>
+    <g stroke="var(--ink3)" stroke-width="1.2"><path d="M522 74 L534 82 M522 118 L534 104"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="14" y="26" text-anchor="start" font-size="8.6" fill="var(--ink3)">PROCESSING UNITS — application logic + in-memory data grid</text>
+    <g fill="var(--acc)" font-size="7.6">
+      <text x="75" y="72">unit</text><text x="177" y="72">unit</text><text x="274" y="72">unit</text>
+      <text x="75" y="115">cache</text><text x="177" y="115">cache</text><text x="274" y="115">cache</text>
+    </g>
+    <text x="172" y="197" font-size="8.6" fill="var(--ink)">VIRTUALIZED MIDDLEWARE — messaging grid · data grid · processing grid · deployment manager</text>
+    <text x="404" y="71" fill="var(--ink2)">data</text><text x="404" y="80" fill="var(--ink2)">pump</text>
+    <text x="404" y="125" fill="var(--ink2)">reverse</text><text x="404" y="134" fill="var(--ink2)">pump</text>
+    <text x="487" y="71" fill="var(--ink2)">data writer</text>
+    <text x="487" y="129" fill="var(--ink2)">data reader</text>
+    <text x="570" y="93" fill="var(--ink2)">database</text>
+    <text x="310" y="240" font-size="9" fill="var(--ink)">No processing unit reads or writes the database directly. That is the whole trick.</text>
+    <text x="310" y="258" font-size="8.4" fill="var(--acc)">Replication between same-named caches completes in under about 100 ms, asynchronously.</text>
+  </g>
+</svg>
+
+<!--@ caching -->
+<svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <g stroke="var(--acc)" stroke-width="1.6">
+      <rect x="14" y="40" width="66" height="52" fill="var(--accBg)"/><rect x="92" y="40" width="66" height="52" fill="var(--accBg)"/>
+      <rect x="170" y="40" width="66" height="52" fill="var(--accBg)"/>
+      <path d="M80 66 H92 M158 66 H170" stroke-dasharray="4 3"/>
+      <path d="M47 92 C90 116 160 116 203 92" stroke-dasharray="4 3"/>
+    </g>
+    <rect x="332" y="40" width="58" height="34"/><rect x="402" y="40" width="58" height="34"/>
+    <rect x="472" y="40" width="58" height="34"/>
+    <rect x="392" y="112" width="88" height="34" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <g stroke="var(--ink3)" stroke-width="1.2"><path d="M361 74 L420 112 M431 74 V112 M501 74 L452 112"/></g>
+    <path d="M6 168 H614" stroke="var(--rule)"/>
+    <path d="M300 160 V244" stroke="var(--rule)"/>
+    <path d="M452 160 V244" stroke="var(--rule)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8">
+    <text x="125" y="28" text-anchor="middle" font-size="9.4" fill="var(--acc)">REPLICATED</text>
+    <text x="431" y="28" text-anchor="middle" font-size="9.4" fill="var(--ink)">DISTRIBUTED</text>
+    <g fill="var(--ink2)" text-anchor="middle">
+      <text x="47" y="70">cache</text><text x="125" y="70">cache</text><text x="203" y="70">cache</text>
+      <text x="361" y="60">unit</text><text x="431" y="60">unit</text><text x="501" y="60">unit</text>
+      <text x="436" y="133" fill="var(--acc)">one cache server</text>
+    </g>
+    <text x="125" y="126" text-anchor="middle" fill="var(--ink2)">no single point of failure. very fast.</text>
+    <text x="431" y="162" text-anchor="middle" fill="var(--ink2)">consistent, remote, and a single point of failure</text>
+    <g font-size="8.6" text-anchor="end" fill="var(--ink)">
+      <text x="292" y="186">optimises for</text><text x="292" y="204">cache size</text>
+      <text x="292" y="222">data</text><text x="292" y="240">fault tolerance</text>
+    </g>
+    <g font-size="8.6" text-anchor="middle">
+      <text x="376" y="186" fill="var(--acc)">performance</text><text x="376" y="204" fill="var(--acc)">small, under 100 MB</text>
+      <text x="376" y="222" fill="var(--acc)">static, low update rate</text><text x="376" y="240" fill="var(--acc)">high</text>
+      <text x="533" y="186" fill="var(--ink2)">consistency</text><text x="533" y="204" fill="var(--ink2)">large, over 500 MB</text>
+      <text x="533" y="222" fill="var(--ink2)">highly dynamic</text><text x="533" y="240" fill="var(--ink2)">low</text>
+    </g>
+    <text x="150" y="196" text-anchor="middle" font-size="8.6" fill="var(--ink)">Table 16-1 · not a system-wide choice.</text>
+    <text x="150" y="212" text-anchor="middle" font-size="8.6" fill="var(--ink)">Inventory counts want a distributed cache;</text>
+    <text x="150" y="226" text-anchor="middle" font-size="8.6" fill="var(--ink)">customer profiles want a replicated one.</text>
+    <text x="150" y="244" text-anchor="middle" font-size="8.2" fill="var(--acc)">The near-cache hybrid is not recommended here.</text>
+  </g>
+</svg>
+
+<!--@ collision -->
+<svg viewBox="0 0 620 246" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="40" y="44" width="150" height="40" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="240" y="44" width="150" height="40" fill="var(--accBg)" stroke="var(--acc)"/>
+    <g stroke="var(--acc)" stroke-width="1.4" stroke-dasharray="5 4">
+      <path d="M190 56 H240"/><path d="M240 74 H190"/>
+    </g>
+    <path d="M424 34 H614 M424 62 H614 M424 90 H614 M424 118 H614" stroke="var(--rule2)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" font-size="8.2">
+    <text x="115" y="62" text-anchor="middle" font-size="9" fill="var(--acc)">instance A</text>
+    <text x="115" y="76" text-anchor="middle" fill="var(--ink2)">500 → 490 (sold 10)</text>
+    <text x="315" y="62" text-anchor="middle" font-size="9" fill="var(--acc)">instance B</text>
+    <text x="315" y="76" text-anchor="middle" fill="var(--ink2)">500 → 495 (sold 5)</text>
+    <text x="215" y="108" text-anchor="middle" fill="var(--ink)">A replicates → B becomes 490. B replicates → A becomes 495.</text>
+    <text x="215" y="124" text-anchor="middle" fill="var(--acc)">Both wrong. The answer was 485.</text>
+    <text x="215" y="150" text-anchor="middle" font-size="9.6" fill="var(--ink)">collision rate = N × (UR² ÷ S) × RL</text>
+    <text x="215" y="166" text-anchor="middle" font-size="8" fill="var(--ink2)">instances × update rate squared ÷ cache rows × replication latency</text>
+    <text x="424" y="24" font-size="8.6" fill="var(--ink3)">FROM 14.4 COLLISIONS/HOUR, CHANGE ONE THING:</text>
+    <g font-size="8.6" fill="var(--ink)">
+      <text x="424" y="54">RL 100 ms → 1 ms</text>
+      <text x="424" y="82">instances 5 → 2</text>
+      <text x="424" y="110">cache 50,000 → 10,000 rows</text>
+    </g>
+    <g font-size="8.6" text-anchor="end">
+      <text x="614" y="54" fill="var(--acc)">0.1 / hour</text>
+      <text x="614" y="82" fill="var(--acc)">5.8 / hour</text>
+      <text x="614" y="110" fill="var(--ink2)">72 / hour</text>
+    </g>
+    <text x="424" y="140" font-size="8.4" fill="var(--ink2)">Cache size is the one inverse factor:</text>
+    <text x="424" y="152" font-size="8.4" fill="var(--ink2)">a smaller cache collides more.</text>
+    <text x="424" y="176" font-size="8.4" fill="var(--acc)">Measure RL in production. It is never published;</text>
+    <text x="424" y="188" font-size="8.4" fill="var(--acc)">100 ms is the planning number.</text>
+    <text x="310" y="222" font-size="9" text-anchor="middle" fill="var(--ink)">Collisions happen when the update rate outruns replication latency.</text>
+    <text x="310" y="238" font-size="8.4" text-anchor="middle" fill="var(--ink2)">Calculate minimum, normal and peak rates — nobody's update rate is flat across a day.</text>
+  </g>
+</svg>
+
+<!--@ hybrid-cloud -->
+<svg viewBox="0 0 620 210" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="14" y="40" width="300" height="110" stroke="var(--acc)" stroke-width="1.8" stroke-dasharray="7 4" fill="var(--accBg)"/>
+    <g stroke="var(--acc)" stroke-width="1.4">
+      <rect x="34" y="58" width="80" height="34"/><rect x="126" y="58" width="80" height="34"/><rect x="218" y="58" width="76" height="34"/>
+      <rect x="34" y="108" width="260" height="26"/>
+    </g>
+    <rect x="380" y="40" width="226" height="110" stroke="var(--ink3)" stroke-width="1.8" stroke-dasharray="7 4"/>
+    <ellipse cx="493" cy="82" rx="60" ry="10"/><path d="M433 82 v20 a60 10 0 0 0 120 0 v-20"/>
+    <g stroke="var(--ink3)" stroke-width="1.3"><path d="M314 90 H380"/><path d="M372 86 l8 4 l-8 4"/></g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.2">
+    <text x="164" y="30" font-size="9.4" fill="var(--acc)">CLOUD — elastic, transactional</text>
+    <text x="493" y="30" font-size="9.4" fill="var(--ink)">ON-PREMISES — secure, analytical</text>
+    <text x="74" y="79" fill="var(--ink2)">unit</text><text x="166" y="79" fill="var(--ink2)">unit</text><text x="256" y="79" fill="var(--ink2)">unit</text>
+    <text x="164" y="125" fill="var(--ink2)">virtualized middleware</text>
+    <text x="493" y="88" fill="var(--ink2)">physical data · reporting · analytics</text>
+    <text x="347" y="82" font-size="7.4" fill="var(--ink3)">data pump</text>
+    <text x="310" y="180" font-size="9" fill="var(--ink)">Fig. 16-14 · asynchronous pumps and eventual consistency make this split practical.</text>
+    <text x="310" y="198" font-size="8.4" fill="var(--acc)">No other style in the book can be deployed half in the cloud and half on-premises this cleanly.</text>
+  </g>
+</svg>

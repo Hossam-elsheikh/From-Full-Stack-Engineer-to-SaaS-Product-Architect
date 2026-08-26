@@ -1,0 +1,118 @@
+<!-- Drawings for chapter 26 · Architectural Intersections -->
+
+<!--@ intersections -->
+<svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="238" y="102" width="144" height="46" fill="var(--accBg)" stroke="var(--acc)" stroke-width="2"/>
+    <rect x="8" y="34" width="132" height="34"/><rect x="8" y="82" width="132" height="34"/>
+    <rect x="8" y="130" width="132" height="34"/><rect x="8" y="178" width="132" height="34"/>
+    <rect x="480" y="34" width="132" height="34"/><rect x="480" y="82" width="132" height="34"/>
+    <rect x="480" y="130" width="132" height="34"/><rect x="480" y="178" width="132" height="34"/>
+    <rect x="244" y="192" width="132" height="34"/>
+    <g stroke="var(--ink3)" stroke-width="1">
+      <path d="M140 51 L238 108 M140 99 L238 116 M140 147 L238 130 M140 195 L238 142"/>
+      <path d="M480 51 L382 108 M480 99 L382 116 M480 147 L382 130 M480 195 L382 142"/>
+      <path d="M310 148 V192"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="9">
+    <text x="310" y="130" font-size="11" fill="var(--acc)">THE ARCHITECTURE</text>
+    <g fill="var(--ink2)">
+      <text x="74" y="55">implementation</text><text x="74" y="103">infrastructure</text>
+      <text x="74" y="151">data topologies</text><text x="74" y="199">engineering practices</text>
+      <text x="546" y="55">team topologies</text><text x="546" y="103">systems integration</text>
+      <text x="546" y="151">the enterprise</text><text x="546" y="199">the business environment</text>
+      <text x="310" y="213">generative AI</text>
+    </g>
+    <text x="310" y="244" font-size="8.6" fill="var(--ink)">An architecture can be right and still fail, because one of these nine is pointing somewhere else.</text>
+  </g>
+</svg>
+
+<!--@ cache-mismatch -->
+<svg viewBox="0 0 620 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="30" y="46" width="120" height="56"/>
+    <rect x="230" y="46" width="120" height="56"/>
+    <rect x="44" y="72" width="92" height="22" stroke="var(--acc)" stroke-width="1.7" fill="var(--accBg)"/>
+    <rect x="244" y="72" width="92" height="22" stroke="var(--acc)" stroke-width="1.7" fill="var(--accBg)"/>
+    <path d="M150 83 H230" stroke="var(--acc)" stroke-width="1.4" stroke-dasharray="5 4"/>
+    <g stroke="var(--ink3)" stroke-width="1.2">
+      <rect x="418" y="34" width="66" height="24"/><rect x="494" y="34" width="66" height="24"/>
+      <rect x="418" y="66" width="66" height="24"/><rect x="494" y="66" width="66" height="24"/>
+      <rect x="418" y="98" width="66" height="24"/><rect x="494" y="98" width="66" height="24"/>
+    </g>
+    <path d="M436 118 l108 26 M544 118 l-108 26" stroke="var(--acc)" stroke-width="2.4"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8">
+    <text x="90" y="62" fill="var(--ink2)">Inventory</text>
+    <text x="290" y="62" fill="var(--ink2)">Order Placement</text>
+    <text x="90" y="87" font-size="7.4" fill="var(--acc)">writable cache</text>
+    <text x="290" y="87" font-size="7.4" fill="var(--acc)">read-only replica</text>
+    <text x="190" y="76" font-size="7.4" fill="var(--acc)">replicated</text>
+    <text x="490" y="160" font-size="8.4" fill="var(--acc)">out of memory at ~80,000 users</text>
+    <text x="310" y="192" font-size="9" fill="var(--ink)">The architecture optimised for scalability and elasticity. The implementation optimised for responsiveness and decoupling.</text>
+    <text x="310" y="212" font-size="8.6" fill="var(--acc)">Both teams made good decisions. They were serving different goals, and nobody noticed until production.</text>
+  </g>
+</svg>
+
+<!--@ structure -->
+<svg viewBox="0 0 620 226" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.3" stroke-linejoin="round">
+    <rect x="8" y="34" width="290" height="140" stroke="var(--ink3)" stroke-dasharray="6 4"/>
+    <g stroke="var(--ink3)">
+      <rect x="24" y="50" width="72" height="20"/><rect x="112" y="62" width="58" height="20"/>
+      <rect x="186" y="48" width="94" height="20"/><rect x="30" y="86" width="104" height="20"/>
+      <rect x="152" y="94" width="66" height="20"/><rect x="232" y="82" width="52" height="20"/>
+      <rect x="42" y="124" width="86" height="20"/><rect x="146" y="132" width="118" height="20"/>
+      <path d="M96 60 L112 72 M170 72 L186 58 M134 96 L152 104 M218 104 L232 92 M128 134 L146 142"/>
+      <path d="M60 70 L70 86 M100 106 L110 124 M200 68 L210 82 M180 114 L190 132"/>
+    </g>
+    <rect x="322" y="34" width="290" height="140" fill="var(--accBg)" stroke="var(--acc)" stroke-width="1.8"/>
+    <g stroke="var(--acc)" stroke-width="1.5">
+      <rect x="342" y="52" width="112" height="24"/><rect x="480" y="52" width="112" height="24"/>
+      <rect x="342" y="94" width="112" height="24"/><rect x="480" y="94" width="112" height="24"/>
+      <rect x="412" y="136" width="112" height="24"/>
+      <path d="M398 76 V94 M536 76 V94 M454 106 H480 M398 118 L468 136 M536 118 L468 136"/>
+    </g>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle" font-size="8.4">
+    <text x="153" y="24" font-size="9" fill="var(--ink)">NO GOVERNANCE</text>
+    <text x="467" y="24" font-size="9" fill="var(--acc)">ALIGNED</text>
+    <text x="153" y="196" fill="var(--ink2)">developers made directories as they pleased.</text>
+    <text x="153" y="208" fill="var(--ink2)">hard to maintain, test, deploy, evolve.</text>
+    <text x="467" y="196" fill="var(--acc)">the source tree *is* the logical architecture.</text>
+    <text x="467" y="208" fill="var(--acc)">ArchUnit · NetArchTest · PyTestArch · TSArch</text>
+    <text x="310" y="222" font-size="8.2" fill="var(--ink)">Structural integrity: if the directories don't match the logical architecture, the logical architecture is fiction.</text>
+  </g>
+</svg>
+
+<!--@ data-align -->
+<svg viewBox="0 0 620 210" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="var(--ink)" stroke-width="1.4">
+    <rect x="6" y="36" width="146" height="88"/><rect x="160" y="36" width="146" height="88"/>
+    <rect x="314" y="36" width="146" height="88" fill="var(--accBg)" stroke="var(--acc)"/>
+    <rect x="468" y="36" width="146" height="88" fill="var(--accBg)" stroke="var(--acc)"/>
+    <path d="M6 62 H152 M160 62 H306 M314 62 H460 M468 62 H614" stroke="var(--rule)"/>
+  </g>
+  <g stroke="none" font-family="IBM Plex Mono, monospace" text-anchor="middle">
+    <text x="6" y="26" text-anchor="start" font-size="8.6" letter-spacing="1.4" fill="var(--ink3)">FOUR WAYS DATA CAN BE MISALIGNED WITH AN ARCHITECTURE</text>
+    <g font-size="9.6" fill="var(--ink)">
+      <text x="79" y="54">TOPOLOGY</text><text x="233" y="54">CHARACTERISTICS</text>
+      <text x="387" y="54" fill="var(--acc)">STRUCTURE</text><text x="541" y="54" fill="var(--acc)">READ / WRITE</text>
+    </g>
+    <g font-size="8" fill="var(--ink2)">
+      <text x="79" y="80">monolithic, domain,</text><text x="79" y="91">or per service</text>
+      <text x="79" y="108">microservices needs</text><text x="79" y="119">per service. no choice.</text>
+      <text x="233" y="80">databases have superpowers</text><text x="233" y="91">too — match them</text>
+      <text x="233" y="108">key-value and columnar scale,</text><text x="233" y="119">like the styles that need it</text>
+      <text x="387" y="80">relational data in a relational DB.</text><text x="387" y="91">key-value pairs in one: waste.</text>
+      <text x="387" y="108">use polyglot databases</text><text x="387" y="119">wherever feasible</text>
+      <text x="541" y="80">write-heavy → columnar</text><text x="541" y="91">read-heavy → key-value,</text>
+      <text x="541" y="102">document or graph</text>
+      <text x="541" y="119">both → relational, NewSQL</text>
+    </g>
+    <text x="310" y="158" font-size="9" fill="var(--ink)">Monolithic databases give consistency and transactions, and cost scalability and fault tolerance.</text>
+    <text x="310" y="176" font-size="9" fill="var(--acc)">Distributed topologies give scalability and change control, and cost integrity, consistency and performance.</text>
+    <text x="310" y="198" font-size="8.4" fill="var(--ink2)">Choose the wrong one and it cancels out the characteristics you chose the architecture for.</text>
+  </g>
+</svg>

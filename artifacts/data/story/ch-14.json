@@ -1,0 +1,168 @@
+{
+ "ch": "14",
+ "book": "Chapter 14 · Service-Based Architecture Style",
+ "pages": "pp. 209–226",
+ "title": "The Pragmatic Distributed One",
+ "gist": "A handful of coarse-grained domain services, a shared database, and none of the granularity problems. The cheapest way to be distributed — and the only distributed style that still gets ACID transactions.",
+ "read": "5 min · 40 sec to re-scan",
+ "acc": {
+  "l": "#2E6480",
+  "d": "#85BCD8"
+ },
+ "minute": [
+  "Separately deployed UI, **coarse-grained domain services** (keep it under about twelve), and — uniquely among distributed styles — an optional **monolithic database**.",
+  "Because a service covers a whole domain, orchestration happens **inside** it, in classes, not across the network. That is what buys **ACID transactions**: an expired card rolls the whole order back in one commit.",
+  "The price of coarse services: changing order placement means retesting and redeploying payment processing too, and there is more surface area to break.",
+  "The database is the risk. A **single shared entity library** is an antipattern — one table change redeploys every service. Partition the database logically and give each partition its own library.",
+  "No five-star ratings, and a lot of fours: **agility, testability, deployability, fault tolerance**, plus low cost and simplicity for a distributed style. Scalability three, elasticity two."
+ ],
+ "sections": [
+  {
+   "t": "Topology: a distributed macro-layer",
+   "art": "sb-topology",
+   "wide": true,
+   "alt": "A user interface above an optional API gateway above five coarse domain services sharing one database",
+   "cap": "Fig. 14-1 · services deploy like monoliths would — containers optional, not required.",
+   "items": [
+    "Services are reached from the UI over **REST** usually, or messaging, RPC, an API layer, or SOAP. The UI typically embeds a **service locator**; that can also live in a gateway.",
+    "Each domain service is usually **one instance**. Add more only where throughput or failover demands it — which then needs load balancing between UI and service.",
+    "The **UI can be federated** too: one for customers placing orders, one for order packers, one for support. That raises scalability, fault tolerance and agility, and gives you real security separation.",
+    "An **API gateway or reverse proxy** between UI and services is optional and useful: exposing services externally, consolidating metrics, security, auditing and service discovery, and load balancing multi-instance services."
+   ],
+   "p": "Inside, a domain service is usually a small layered architecture — API façade, business, persistence — or partitioned into subdomains like a modular monolith. Whatever the design, it needs an **API access façade** that orchestrates the business request arriving from the UI."
+  },
+  {
+   "k": "decision",
+   "t": "Expired card, halfway through an order",
+   "art": "granularity",
+   "wide": true,
+   "alt": "One coarse service performing four operations in one transaction, beside four fine-grained services doing the same work across the network",
+   "sit": "A customer places an order. The system must create the order, generate an ID, apply payment and update inventory. The card turns out to be expired.",
+   "opts": [
+    [
+     "One coarse OrderService doing all four internally.",
+     "The whole thing is **one atomic transaction**. Standard rollback removes everything written so far, and the customer is told the payment failed. Database integrity is never in question.",
+     1
+    ],
+    [
+     "Four fine-grained services calling each other.",
+     "OrderPlacement has already inserted the order and generated the ID before Payment rejects the card. The data is now inconsistent, and you owe a **compensating update** to put it back — plus an answer for what happens when *that* fails."
+    ]
+   ],
+   "verdict": "This is the central trade of the style. Coarse services buy **ACID** where microservices get **BASE** (basic availability, soft state, eventual consistency) — service-based leverages traditional transactions better than any other distributed style. What you pay: change the order-placement logic and you must test and redeploy payment processing with it, because they ship together. More functionality per deployment means more that can break."
+  },
+  {
+   "k": "decision",
+   "t": "Where do the entity objects live?",
+   "art": "entity-libs",
+   "wide": true,
+   "alt": "A single shared entity library feeding every service, beside four domain-scoped libraries",
+   "sit": "Services share a database, so they share the class files representing its table schemas — the entity objects, usually shipped as a JAR or DLL, sometimes carrying SQL too.",
+   "opts": [
+    [
+     "One shared library with all the entity objects.",
+     "Any change to any table structure changes that library, which means changing and redeploying **every** service — whether or not it touches the altered table. Versioning helps a little; you still can't tell which services are affected without manual analysis. The chapter calls this an antipattern outright."
+    ],
+    [
+     "Partition the database logically; one library per partition.",
+     "Common, customer, invoicing, order, tracking — five domains, five libraries. Change an invoicing table and only the services using `invoicing_entities_lib` are affected. Nothing else is retested or redeployed.",
+     1
+    ]
+   ],
+   "verdict": "**Make the logical partitioning as fine-grained as you can while the data domains still make sense.** The `common` partition is the residual problem — every service uses it, so changing it needs coordination across all of them. A practical control: lock the common entity objects in version control and let only the database team change them, which both limits change and signals how significant those tables are."
+  },
+  {
+   "t": "Risks, governance and teams",
+   "art": "sb-topology",
+   "wide": true,
+   "alt": "A user interface above an optional API gateway above five coarse domain services sharing one database",
+   "cap": "Two failure modes, both about boundaries.",
+   "items": [
+    "**Too much interservice communication.** Normal in microservices, avoided here — domains should be independent, with coupling concentrated at the database. Heavy chatter means the domains were partitioned wrongly, or this is the wrong style for the problem.",
+    "**Too many domain services.** The practical ceiling is about twelve. Past that, testing, deployment, monitoring, database connections and schema changes all start to hurt.",
+    "**Governance**: check that changes don't span multiple domain services. If they routinely do, the boundaries are wrong. Where interservice calls exist, govern how many — orchestration should sit at the UI or gateway level, not between services.",
+    "**Teams**: domain-partitioned, so align teams by domain. Technically organised teams (UI team, backend team, DB team) fit badly. Note the honest caveat about **enabling teams** — this style serves them less well than other distributed styles do, because the services are coarse; you recover some of it by identifying good components *inside* each service."
+   ],
+   "p": "On cloud: it works well, and domain services are usually **containerised rather than serverless**, simply because their scope is too large for a function."
+  },
+  {
+   "t": "Characteristics, and when to reach for it",
+   "wide": true,
+   "gen": {
+    "kind": "ratings",
+    "head": "SERVICE-BASED — DOMAIN PARTITIONED · QUANTUM ≥ 1",
+    "rows": [
+     [
+      "evolvability",
+      4,
+      "change one domain, deploy one service"
+     ],
+     [
+      "testability",
+      4,
+      "scope is one domain"
+     ],
+     [
+      "deployability",
+      4,
+      "frequent, lower risk"
+     ],
+     [
+      "fault tolerance",
+      4,
+      "services are self-contained"
+     ],
+     [
+      "simplicity",
+      4,
+      "cheap, for a distributed style"
+     ],
+     [
+      "overall cost",
+      4,
+      ""
+     ],
+     [
+      "scalability",
+      3,
+      "coarse services replicate a lot"
+     ],
+     [
+      "performance",
+      3,
+      ""
+     ],
+     [
+      "elasticity",
+      2,
+      ""
+     ],
+     [
+      "quantum count",
+      2,
+      "federate the UI and DB to raise it"
+     ]
+    ]
+   },
+   "alt": "Architecture characteristics ratings for the service-based style",
+   "cap": "Fig. 14-8 · no fives. A great many fours, which is the whole argument for it.",
+   "items": [
+    "**Fault tolerance rates four** despite coarse services, because they are self-contained and largely avoid interservice calls. Going Green's Receiving service failing leaves the other six running.",
+    "**Elasticity rates two** because scaling a coarse service replicates far more functionality than you needed — less efficient in machine resources than fine-grained services.",
+    "**Quanta**: greater than or equal to one. Share a UI and database and the whole system is a single quantum; federate them and you get several. In the Going Green example the customer-facing side is one quantum, and internal operations — two UIs, several services, one shared database — is another."
+   ],
+   "p": "A natural fit for **domain-driven design**, and a good choice when you want real modularity without taking on granularity and service-coordination problems. The book's own summary: more powerful distributed styles exist, but many companies find the power costs too much, and others find they never needed it — *like buying a Ferrari to sit in rush-hour traffic*."
+  }
+ ],
+ "source": "Fundamentals of Software Architecture: An Engineering Approach, 2nd ed. — Mark Richards & Neal Ford (O'Reilly, 2025). Chapter 14: Service-Based Architecture Style, pp. 209–226.",
+ "links": [
+  [
+   "All 27 chapters",
+   "https://claude.ai/code/artifact/58ed5102-a32b-464d-b258-5b7a3da53fbb"
+  ],
+  [
+   "The Architect's Atlas",
+   "https://claude.ai/code/artifact/f3e583da-ec48-4778-8d52-e1c0a4764fcd"
+  ]
+ ]
+}
