@@ -94,11 +94,11 @@ def _rgb(h: str):
 
 def accent_css(acc: dict) -> str:
     """One faded spot colour per chapter, emitted for all three theme states so no
-    component rule ever needs a raw hex. --dot is the halftone behind the drawings."""
+    component rule ever needs a raw hex."""
     def block(h):
         r, g, b = _rgb(h)
         return (f"--acc:{h};--accBg:rgba({r},{g},{b},.12);"
-                f"--accLine:rgba({r},{g},{b},.42);--dot:rgba({r},{g},{b},.22)")
+                f"--accLine:rgba({r},{g},{b},.42)")
     return (f':root{{{block(acc["l"])}}}\n'
             f'@media (prefers-color-scheme:dark){{:root:not([data-theme="light"]){{{block(acc["d"])}}}}}\n'
             f':root[data-theme="dark"]{{{block(acc["d"])}}}\n')
